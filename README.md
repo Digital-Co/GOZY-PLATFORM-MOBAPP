@@ -45,6 +45,14 @@ Android and iOS signing files and provisioning profiles are also stored in the p
 flutter run
 ```
 
+To run the Android app against QA instead of production:
+
+```bash
+flutter run --dart-define=GOZY_ENV=qa
+```
+
+The QA endpoint defaults to `https://qa.gozyapp.com/api/graphql`; production remains the default when `GOZY_ENV` is omitted. You can override `GRAPHQL_DOMAIN` or `UPLOAD_URL` with additional `--dart-define` values if the QA services use different hosts.
+
 For iOS, install CocoaPods dependencies when needed:
 
 ```bash

@@ -4,9 +4,9 @@ targets:
       ferry_generator|graphql_builder:
         enabled: true
         options:
-          schema: app_name|lib/graphql/schema.graphql
+          schema: gozy|lib/graphql/schema.graphql
 
       ferry_generator|serializer_builder:
         enabled: true
         options:
-          schema: app_name|lib/graphql/schema.graphql
+          schema: gozy|lib/graphql/schema.graphql

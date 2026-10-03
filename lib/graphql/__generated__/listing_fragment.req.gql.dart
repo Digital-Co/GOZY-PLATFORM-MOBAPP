@@ -5,7 +5,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:ferry_exec/ferry_exec.dart' as _i1;
-import 'package:gql/ast.dart' as _i5;
 import 'package:gozy/graphql/__generated__/listing_fragment.ast.gql.dart'
     as _i4;
 import 'package:gozy/graphql/__generated__/listing_fragment.data.gql.dart'
@@ -13,6 +12,7 @@ import 'package:gozy/graphql/__generated__/listing_fragment.data.gql.dart'
 import 'package:gozy/graphql/__generated__/listing_fragment.var.gql.dart'
     as _i3;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i6;
+import 'package:gql/ast.dart' as _i5;
 
 part 'listing_fragment.req.gql.g.dart';
 

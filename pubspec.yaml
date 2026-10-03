@@ -1,5 +1,6 @@
 name: gozy
 description: A Gozy Flutter project
+publish_to: 'none'
 
 version: 1.0.1
 flutter_sdk: 3.41.2
@@ -26,6 +27,8 @@ dependencies:
   url_launcher: 6.3.2
   lottie: 3.3.2
   gql_http_link: 1.2.0
+  gql: 1.0.1
+  gql_exec: 1.1.1-alpha+1699813812660
   google_sign_in: 7.2.0
   sign_in_with_apple: 6.1.4
   firebase_auth: 6.1.4

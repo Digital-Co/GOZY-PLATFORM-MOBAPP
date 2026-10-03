@@ -12,8 +12,23 @@ import 'graphql/getCountries/__generated__/getcountries.data.gql.dart';
 import 'graphql/servicePlan/__generated__/servicePlan.data.gql.dart';
 
 
-const String UPLOAD_URL = 'https://www.gozyapp.com';
-const String GRAPHQL_DOMAIN = 'https://www.gozyapp.com/api';
+const String _gozyEnvironment =
+    String.fromEnvironment('GOZY_ENV', defaultValue: 'production');
+const String _defaultUploadUrl = _gozyEnvironment == 'qa'
+    ? 'https://qa.gozyapp.com'
+    : 'https://www.gozyapp.com';
+const String _defaultGraphqlDomain = _gozyEnvironment == 'qa'
+    ? 'https://qa.gozyapp.com/api'
+    : 'https://www.gozyapp.com/api';
+
+const String UPLOAD_URL = String.fromEnvironment(
+  'UPLOAD_URL',
+  defaultValue: _defaultUploadUrl,
+);
+const String GRAPHQL_DOMAIN = String.fromEnvironment(
+  'GRAPHQL_DOMAIN',
+  defaultValue: _defaultGraphqlDomain,
+);
 const String GRAPHQL_URL = "$GRAPHQL_DOMAIN/graphql";
 
 String? SECURE_MAP_KEY;

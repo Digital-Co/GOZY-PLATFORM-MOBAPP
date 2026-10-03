@@ -5,14 +5,11 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:ferry_exec/ferry_exec.dart' as _i1;
-import 'package:gql_exec/gql_exec.dart' as _i4;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i6;
-import 'package:gozy/graphql/inbox/__generated__/Inbox.ast.gql.dart'
-    as _i5;
-import 'package:gozy/graphql/inbox/__generated__/Inbox.data.gql.dart'
-    as _i2;
-import 'package:gozy/graphql/inbox/__generated__/Inbox.var.gql.dart'
-    as _i3;
+import 'package:gozy/graphql/inbox/__generated__/Inbox.ast.gql.dart' as _i5;
+import 'package:gozy/graphql/inbox/__generated__/Inbox.data.gql.dart' as _i2;
+import 'package:gozy/graphql/inbox/__generated__/Inbox.var.gql.dart' as _i3;
+import 'package:gql_exec/gql_exec.dart' as _i4;
 
 part 'Inbox.req.gql.g.dart';
 

@@ -8,6 +8,7 @@ import 'package:gozy/resources/app_lang.dart';
 import 'package:gozy/resources/app_layout.dart';
 import 'package:gozy/screens/views/custom_scaffold.dart';
 import 'package:gozy/screens/views/profile/edit_profile/edit_profile_controller.dart';
+import 'package:gozy/screens/views/profile/edit_profile/change_email_page.dart';
 import 'package:gozy/utils/google_signin_setup.dart';
 import 'package:gozy/widgets/bottom_sheet/add_phone_number/add_phone_number_bottom_sheet.dart';
 import 'package:gozy/widgets/common/custom_bottomsheet/custom_bottomsheet.dart';
@@ -54,8 +55,13 @@ class EditProfilePageState extends CustomStatefulWidgetState<EditProfilePage> {
     debugPrint("userid: ${appPreference.userID}");
     if (Get.arguments != null && Get.arguments['email'] != null && Get.arguments['confirm'] != null) {
       Future.delayed(const Duration(seconds: 1)).then((_) {
-        controller.confirmEmailVerification(
-            email: Get.arguments['email'], confirmCode: Get.arguments['confirm']);
+        if (Get.arguments['changeEmail'] == '1') {
+          controller.confirmEmailChange(
+              email: Get.arguments['email'], token: Get.arguments['confirm']);
+        } else {
+          controller.confirmEmailVerification(
+              email: Get.arguments['email'], confirmCode: Get.arguments['confirm']);
+        }
       });
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -306,7 +312,9 @@ class EditProfilePageState extends CustomStatefulWidgetState<EditProfilePage> {
         widgetList.add(_getNavigationView(
             title: element["name"],
             link: element["link"],
-            onClick: element["onTap"],
+            onClick: element["name"] == label_login_email.tr
+                ? () => Get.to(() => ChangeEmailPage(controller: controller))
+                : element["onTap"],
             isDashDivider: isDashDivider,
             isPersonalInfoDividerPadded: isPersonalInfoDividerPadded,
             isLastDividerNeed: controller.personalInfoList.last == element && isLastDividerNeed,

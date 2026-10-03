@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:gql/language.dart';
+import 'package:gql_exec/gql_exec.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:gozy/config/client.dart';
 import 'package:gozy/resources/app_lang.dart';
@@ -349,6 +351,92 @@ class EditProfileController extends BaseController {
 
       personalInfoList.refresh();
     });
+  }
+
+  Future<String> requestEmailChange(String newEmail) async {
+    try {
+      debugPrint('[ChangeEmail] Sending requestEmailChange mutation');
+      final response = await getLink().request(Request(
+        operation: Operation(
+          document: parseString(r'''
+            mutation RequestEmailChange($newEmail: String!) {
+              requestEmailChange(newEmail: $newEmail) { status email }
+            }
+          '''),
+          operationName: 'RequestEmailChange',
+        ),
+        variables: {'newEmail': newEmail.trim().toLowerCase()},
+      )).first;
+      final status = response.data?['requestEmailChange']?['status']
+              ?.toString() ??
+          'failed';
+      debugPrint('[ChangeEmail] Mutation response status=$status');
+      if (response.errors?.isNotEmpty ?? false) {
+        final safeErrors = response.errors!
+            .map((error) => error.message)
+            .join(' | ')
+            .replaceAll(
+              RegExp(
+                r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b',
+                caseSensitive: false,
+              ),
+              '[email]',
+            );
+        debugPrint('[ChangeEmail] GraphQL errors: $safeErrors');
+      }
+      return status;
+    } catch (error, stackTrace) {
+      final safeError = error.toString().replaceAll(
+            RegExp(
+              r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b',
+              caseSensitive: false,
+            ),
+            '[email]',
+          );
+      debugPrint(
+        '[ChangeEmail] Mutation threw ${error.runtimeType}: $safeError',
+      );
+      debugPrintStack(stackTrace: stackTrace);
+      return 'failed';
+    }
+  }
+
+  Future<String> confirmEmailChange({required String email, required String token}) async {
+    try {
+      final response = await getLink().request(Request(
+        operation: Operation(
+          document: parseString(r'''
+            mutation ConfirmEmailChange($token: String!, $email: String!) {
+              confirmEmailChange(token: $token, email: $email) { status email userToken }
+            }
+          '''),
+          operationName: 'ConfirmEmailChange',
+        ),
+        variables: {'token': token, 'email': email.trim().toLowerCase()},
+      )).first;
+      final data = response.data?['confirmEmailChange'];
+      final status = data?['status']?.toString() ?? 'failed';
+      if (status == 'confirmed') {
+        final currentToken = appPreference.accessToken ?? '';
+        if (currentToken.isNotEmpty && data?['userToken'] != null) {
+          appPreference.accessToken = data['userToken'].toString();
+          appPreference.email = data['email']?.toString();
+          getLink();
+          await getProfile();
+        }
+        showToast(email_change_confirmed.tr);
+      } else if (status == 'alreadyConfirmed') {
+        showToast(email_change_already_confirmed.tr);
+      } else if (status == 'email') {
+        showToast(email_change_already_used.tr);
+      } else {
+        showToast(email_change_confirmation_failed.tr);
+      }
+      return status;
+    } catch (_) {
+      showToast(email_change_confirmation_failed.tr);
+      return 'failed';
+    }
   }
 
   void sendEmailVerification() {

@@ -731,6 +731,8 @@ type Mutation {
   createUser(firstName: String, lastName: String, email: String!, password: String!, dateOfBirth: String, deviceType: String!, deviceDetail: String, deviceId: String!, registerType: String): UserCommon
   userLogout(deviceType: String!, deviceId: String!): UserType
   userUpdate(userId: String!, fieldName: String!, fieldValue: String, deviceType: String!, deviceId: String!): UserType
+  requestEmailChange(newEmail: String!): userEditProfile
+  confirmEmailChange(token: String!, email: String!): userEditProfile
   userForgotPassword(email: String!): UserType
   updateForgotPassword(email: String!, password: String!, token: String!): UserType
   CreateEnquiry(listId: Int!, hostId: String!, content: String!, userId: String!, type: String, startDate: String!, endDate: String!, personCapacity: Int, startTime: Float, endTime: Float): Enquiry
@@ -1723,6 +1725,7 @@ type userEditProfile {
   location: String
   info: String
   status: String
+  userToken: String
   country: Int
   verificationCode: Int
   profileId: Int

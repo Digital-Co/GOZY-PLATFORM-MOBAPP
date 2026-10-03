@@ -469,6 +469,16 @@ class StatefulWrapperState extends State<Splash> with TickerProviderStateMixin i
   }
 
   void navigateEditProfileScreen(Map<String, dynamic> param) {
+    if (param['changeEmail'] == '1') {
+      controller.changeTheme(isEnableForceUpdate: true);
+      Get.to(() => EditProfilePage(), binding: MainBinding(), arguments: param)
+          ?.then((value) {
+        if (_isLinkRedirectionEnable) {
+          navigateScreen(SplashScreen.guestHome, {});
+        }
+      });
+      return;
+    }
     if (param['isFromDocument'] == true) {
       if (Get.currentRoute == '/EditProfilePage' || Get.currentRoute.contains("BOTTOMSHEET")) {
         EditProfileController editProfileController = Get.find();

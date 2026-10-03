@@ -2,7 +2,6 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:gql/ast.dart' as _i1;
 import 'package:gozy/graphql/__generated__/base_listing_info_fragment.ast.gql.dart'
     as _i4;
 import 'package:gozy/graphql/__generated__/listing_data_fragment.ast.gql.dart'
@@ -19,6 +18,7 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.ast.gql.dart'
     as _i5;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i6;
+import 'package:gql/ast.dart' as _i1;
 
 const confirmPayPalExecute = _i1.OperationDefinitionNode(
   type: _i1.OperationType.mutation,

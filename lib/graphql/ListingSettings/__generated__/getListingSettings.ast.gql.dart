@@ -2,9 +2,9 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:gql/ast.dart' as _i1;
 import 'package:gozy/graphql/__generated__/listing_settings_fragment.ast.gql.dart'
     as _i2;
+import 'package:gql/ast.dart' as _i1;
 
 const getListingSettings = _i1.OperationDefinitionNode(
   type: _i1.OperationType.query,

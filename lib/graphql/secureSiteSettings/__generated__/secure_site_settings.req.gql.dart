@@ -5,7 +5,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:ferry_exec/ferry_exec.dart' as _i1;
-import 'package:gql_exec/gql_exec.dart' as _i4;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i6;
 import 'package:gozy/graphql/secureSiteSettings/__generated__/secure_site_settings.ast.gql.dart'
     as _i5;
@@ -13,6 +12,7 @@ import 'package:gozy/graphql/secureSiteSettings/__generated__/secure_site_settin
     as _i2;
 import 'package:gozy/graphql/secureSiteSettings/__generated__/secure_site_settings.var.gql.dart'
     as _i3;
+import 'package:gql_exec/gql_exec.dart' as _i4;
 
 part 'secure_site_settings.req.gql.g.dart';
 

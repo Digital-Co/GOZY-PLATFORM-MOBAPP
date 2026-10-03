@@ -2,7 +2,6 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:gql/ast.dart' as _i1;
 import 'package:gozy/graphql/__generated__/base_listing_info_fragment.ast.gql.dart'
     as _i4;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.ast.gql.dart'
@@ -11,6 +10,7 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.ast.gql.dart'
     as _i2;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i3;
+import 'package:gql/ast.dart' as _i1;
 
 const allThreadsFragment = _i1.FragmentDefinitionNode(
   name: _i1.NameNode(value: 'allThreadsFragment'),
