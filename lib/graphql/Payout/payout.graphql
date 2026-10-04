@@ -44,8 +44,8 @@ mutation setDefaultPayout($id: Int!, $type: String!) {
 }
 
 
-query getPaymentMethods{
-  getPaymentMethods {
+query getPaymentMethods($operation: String){
+  getPaymentMethods(operation: $operation) {
     results {
       id
       name

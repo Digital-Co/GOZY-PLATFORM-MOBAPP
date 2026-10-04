@@ -87,6 +87,7 @@ abstract class GgetPaymentMethodsVars
           [void Function(GgetPaymentMethodsVarsBuilder b) updates]) =
       _$GgetPaymentMethodsVars;
 
+  String? get operation;
   static Serializer<GgetPaymentMethodsVars> get serializer =>
       _$ggetPaymentMethodsVarsSerializer;
 

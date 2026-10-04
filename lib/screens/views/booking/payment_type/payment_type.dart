@@ -171,7 +171,9 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
                       20.toHeight(),
                     ]
                   ].toColumn().toScroll()
-                : const SizedBox.shrink();
+                : controller.paymentlist != null
+                    ? CustomTitleText(text: paymentUnavailableMessage)
+                    : const SizedBox.shrink();
           }).toStretch(),
       _showBottomAddPaymentWidget()
     ].toColumn(mainAxisSize: MainAxisSize.min);
@@ -427,6 +429,10 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
         buttonText: btn_label_proceed_to_pay.tr,
         onTap: () {
           debugPrint("isButtonClicked: ${isButtonClicked} -- ${controller.isLoading.value}");
+          if (controller.paymentlist?.isEmpty ?? true) {
+            controller.showSnackBar(paymentUnavailableMessage);
+            return;
+          }
           if (isButtonClicked || controller.isLoading.value) return;
           isButtonClicked = true;
           Future.delayed(Duration(seconds: 2)).then((value) => isButtonClicked = false);

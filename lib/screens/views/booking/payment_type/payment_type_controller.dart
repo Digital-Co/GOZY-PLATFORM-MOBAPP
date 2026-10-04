@@ -75,7 +75,7 @@ void  getpaymentTypes(){
       selectedpaymentCurrency = "${getCurrencySymbol(currency: preferred)} $preferred";
 
       WidgetsBinding.instance.addPostFrameCallback((_){
-        change(rxVariable: rxSelectedPaymentType, value: 2);
+        change(rxVariable: rxSelectedPaymentType, value: paymentlist?.isNotEmpty == true ? (paymentlist!.first?.paymentType ?? 0) : 0);
       });
     });
 

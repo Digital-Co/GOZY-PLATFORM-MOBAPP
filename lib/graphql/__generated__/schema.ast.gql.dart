@@ -10205,7 +10205,20 @@ const Query = _i1.ObjectTypeDefinitionNode(
     _i1.FieldDefinitionNode(
       name: _i1.NameNode(value: 'getPaymentMethods'),
       directives: [],
-      args: [],
+      args: [
+        _i1.InputValueDefinitionNode(
+          name: _i1.NameNode(value: 'operation'),
+          directives: [],
+          type: _i1.NamedTypeNode(
+            name: _i1.NameNode(value: 'String'),
+            isNonNull: false,
+          ),
+          defaultValue: _i1.StringValueNode(
+            value: 'checkout',
+            isBlock: false,
+          ),
+        )
+      ],
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'GetPaymentType'),
         isNonNull: false,

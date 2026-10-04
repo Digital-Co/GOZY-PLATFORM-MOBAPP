@@ -982,7 +982,7 @@ type Query {
   showListPhotos(listId: Int): ListPhotosCommon
   getPayouts: PayoutWholeType
   ManageListings(requestType: String, currentPage: Int): WholeManageListingsType
-  getPaymentMethods: GetPaymentType
+  getPaymentMethods(operation: String = "checkout"): GetPaymentType
   getListBlockedDates(listId: Int!): AllListing
   getListingSpecialPrice(listId: Int!): ListBlockedDatesResponseType
   getActiveSocialLogins: socialLoginsType

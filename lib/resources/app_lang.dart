@@ -828,3 +828,10 @@ const String email_change_send_failed = "email_change_send_failed";
 const String email_change_confirmed = "email_change_confirmed";
 const String email_change_already_confirmed = "email_change_already_confirmed";
 const String email_change_confirmation_failed = "email_change_confirmation_failed";
+
+String get paymentUnavailableMessage => Get.locale?.languageCode == 'fr'
+    ? 'Aucun moyen de paiement disponible.'
+    : 'No payment method available.';
+String get payoutUnavailableMessage => Get.locale?.languageCode == 'fr'
+    ? 'Aucun moyen de reversement disponible.'
+    : 'No payout method available.';

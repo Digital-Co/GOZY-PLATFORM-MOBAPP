@@ -150,7 +150,7 @@ class PayoutPaymentChooseState
               },
             ),
           )
-        ].toColumn(): const SizedBox.shrink();
+        ].toColumn(): CustomTitleText(text: payoutUnavailableMessage);
       })
     ].toColumn().toPad(horizontal: AppDimen.startMargin);
   }

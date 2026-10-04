@@ -10,13 +10,13 @@ mixin PayoutPaymentChooseMixin on ProfileController {
 
 
   Future<void> getPaymentTypes() async {
-    await getPaymentTypeList().then((paymentListData) async {
+    await getPaymentTypeList(operation: 'payout').then((paymentListData) async {
       paymentlist.clear();
       paymentlist.addAll(paymentListData.getPaymentMethods?.results
           ?.where((e) => e != null )
           .toList() ??
           []);
-      selectedpaymentType.value = paymentListData.getPaymentMethods?.results?[0]?.paymentType ?? 1;
+      selectedpaymentType.value = paymentlist.isEmpty ? 0 : (paymentlist.first?.paymentType ?? 0);
       selectedpaymentType.refresh();
     });
     getPayPalCurrencyList();

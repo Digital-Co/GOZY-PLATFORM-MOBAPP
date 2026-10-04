@@ -151,14 +151,38 @@ class _$GgetPaymentMethodsVarsSerializer
   Iterable<Object?> serialize(
       Serializers serializers, GgetPaymentMethodsVars object,
       {FullType specifiedType = FullType.unspecified}) {
-    return <Object?>[];
+    final result = <Object?>[];
+    Object? value;
+    value = object.operation;
+    if (value != null) {
+      result
+        ..add('operation')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
   }
 
   @override
   GgetPaymentMethodsVars deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    return new GgetPaymentMethodsVarsBuilder().build();
+    final result = new GgetPaymentMethodsVarsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'operation':
+          result.operation = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+      }
+    }
+
+    return result.build();
   }
 }
 
@@ -626,11 +650,14 @@ class GsetDefaultPayoutVarsBuilder
 }
 
 class _$GgetPaymentMethodsVars extends GgetPaymentMethodsVars {
+  @override
+  final String? operation;
+
   factory _$GgetPaymentMethodsVars(
           [void Function(GgetPaymentMethodsVarsBuilder)? updates]) =>
       (new GgetPaymentMethodsVarsBuilder()..update(updates))._build();
 
-  _$GgetPaymentMethodsVars._() : super._();
+  _$GgetPaymentMethodsVars._({this.operation}) : super._();
 
   @override
   GgetPaymentMethodsVars rebuild(
@@ -644,17 +671,22 @@ class _$GgetPaymentMethodsVars extends GgetPaymentMethodsVars {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GgetPaymentMethodsVars;
+    return other is GgetPaymentMethodsVars && operation == other.operation;
   }
 
   @override
   int get hashCode {
-    return 79101008;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, operation.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
   String toString() {
-    return newBuiltValueToStringHelper(r'GgetPaymentMethodsVars').toString();
+    return (newBuiltValueToStringHelper(r'GgetPaymentMethodsVars')
+          ..add('operation', operation))
+        .toString();
   }
 }
 
@@ -662,7 +694,20 @@ class GgetPaymentMethodsVarsBuilder
     implements Builder<GgetPaymentMethodsVars, GgetPaymentMethodsVarsBuilder> {
   _$GgetPaymentMethodsVars? _$v;
 
+  String? _operation;
+  String? get operation => _$this._operation;
+  set operation(String? operation) => _$this._operation = operation;
+
   GgetPaymentMethodsVarsBuilder();
+
+  GgetPaymentMethodsVarsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _operation = $v.operation;
+      _$v = null;
+    }
+    return this;
+  }
 
   @override
   void replace(GgetPaymentMethodsVars other) {
@@ -679,7 +724,8 @@ class GgetPaymentMethodsVarsBuilder
   GgetPaymentMethodsVars build() => _build();
 
   _$GgetPaymentMethodsVars _build() {
-    final _$result = _$v ?? new _$GgetPaymentMethodsVars._();
+    final _$result =
+        _$v ?? new _$GgetPaymentMethodsVars._(operation: operation);
     replace(_$result);
     return _$result;
   }
