@@ -9,7 +9,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart' as map;
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart'
+    as map;
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -35,6 +36,7 @@ import 'package:gozy/resources/app_colors.dart';
 import 'package:gozy/resources/app_font.dart';
 import 'package:gozy/resources/app_lang.dart';
 import 'package:gozy/resources/app_style.dart';
+import 'package:gozy/utils/localized_date_time.dart';
 import 'package:gozy/screens/views/auth/login/login.dart';
 import 'package:gozy/screens/views/home/home_controller.dart';
 import 'package:gozy/widgets/common/custom_dialog/custom_dialog.dart';
@@ -69,12 +71,15 @@ part 'base_controller_part3.dart';
 AppTheme appTheme = AppTheme();
 AppColors appColors = AppColors();
 
-class BaseController extends FullLifeCycleController with FullLifeCycleMixin implements DisposableInterface {
+class BaseController extends FullLifeCycleController
+    with FullLifeCycleMixin
+    implements DisposableInterface {
   RxBool isLoading = false.obs;
   RxBool isTapEnabled = true.obs;
   bool isSaveAndExit = false;
   SnackbarController? retrySnackController;
-  var isRxBottomSheetLoading = ReactiveVariable("isRxBottomSheetLoading", false);
+  var isRxBottomSheetLoading =
+      ReactiveVariable("isRxBottomSheetLoading", false);
   HomeNavigator? homeNavigator;
   final Connectivity _connectivity = Connectivity();
   final AppPreference appPreference = Get.find();
@@ -94,7 +99,11 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   static Socket socketIO = io(
       '${Constants.UPLOAD_URL}/',
       OptionBuilder()
-          .setQuery({"auth": "---", "info": "new connection", "timestamp": DateTime.now().toString()})
+          .setQuery({
+            "auth": "---",
+            "info": "new connection",
+            "timestamp": DateTime.now().toString()
+          })
           .setTransports(['websocket'])
           .setExtraHeaders({'auth': Constants.authToken})
           .enableAutoConnect()
@@ -102,7 +111,6 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   Function? netOFFFunction;
   double previousprogress = 0.0;
   RxString uploadProgress = '0'.obs;
-
 
   void change({required ReactiveVariable rxVariable, required dynamic value}) {
     rxVariable.updateValue(value);
@@ -161,10 +169,10 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   }
 
   void showSnackBar(
-      String? msg, {
-        bool isltralign = false,
-        double? borderRadius,
-      }) {
+    String? msg, {
+    bool isltralign = false,
+    double? borderRadius,
+  }) {
     print("msg----> $msg");
     if (msg == null) return;
 
@@ -194,7 +202,6 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
         duration: const Duration(milliseconds: 5000),
         isDismissible: true,
         dismissDirection: DismissDirection.horizontal,
-
         messageText: ConditionalParentWidget(
           condition: isltralign,
           parentBuilder: (Widget child) => Directionality(
@@ -203,8 +210,7 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
           ),
           child: Text(
             msg,
-            textAlign: intl.Bidi.isRtlLanguage(
-                Get.locale?.languageCode)
+            textAlign: intl.Bidi.isRtlLanguage(Get.locale?.languageCode)
                 ? TextAlign.end
                 : TextAlign.start,
             style: TextStyle(
@@ -214,7 +220,6 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
             ),
           ),
         ),
-
         mainButton: IconButton(
           icon: Icon(Icons.close, color: appColors.white),
           onPressed: closeSnackBar,
@@ -223,9 +228,8 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
     );
   }
 
-
-
-  String getAddressText({required dynamic itemInfo, bool isAfterBooking = false}) {
+  String getAddressText(
+      {required dynamic itemInfo, bool isAfterBooking = false}) {
     List<String> addressParts = [];
 
     if (itemInfo.street != null && isAfterBooking) {
@@ -246,8 +250,9 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
     return addressParts.join(', ');
   }
 
-  void showUserLogout({String? msg, bool? isHomePage}) async{
-    print("showUserLogoutmsg:1 ${appPreference.defaultLanguages} --- ${appPreference.preferredLanguage} --- ${appPreference.downloadedLanguages}");
+  void showUserLogout({String? msg, bool? isHomePage}) async {
+    print(
+        "showUserLogoutmsg:1 ${appPreference.defaultLanguages} --- ${appPreference.preferredLanguage} --- ${appPreference.downloadedLanguages}");
     appPreference.removePreference();
     resetFerryClient();
     FirebaseMessaging.instance.deleteToken().then((value) {
@@ -255,7 +260,9 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
     });
     appPreference.preferredCurrency = defaultCurrency;
     changeTheme(isEnableForceUpdate: false);
-    await LocalizationService.readJson(language: appPreference.defaultLanguages?? defaultLanguage, isUpdate: false);
+    await LocalizationService.readJson(
+        language: appPreference.defaultLanguages ?? defaultLanguage,
+        isUpdate: false);
     changeLanguage();
     if (isHomePage != null && isHomePage) {
       resetLogin(isLogin: false);
@@ -265,10 +272,15 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   }
 
   void showSnackBarWithRetry(Function calledFunction,
-      {String? msg, bool isNeedRetry = true, double? borderRadius, bool? isMessageTextWidget})
-  {
-    String messageContent =  you_are_offline.tr ==  you_are_offline ? 'You are offline' :  you_are_offline.tr;
-    String retryContent = label_retry.tr ==  label_retry ? 'Retry' : label_retry.tr;
+      {String? msg,
+      bool isNeedRetry = true,
+      double? borderRadius,
+      bool? isMessageTextWidget}) {
+    String messageContent = you_are_offline.tr == you_are_offline
+        ? 'You are offline'
+        : you_are_offline.tr;
+    String retryContent =
+        label_retry.tr == label_retry ? 'Retry' : label_retry.tr;
 
     SnackbarController? localController;
 
@@ -289,12 +301,15 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
     }
 
     GetSnackBar snackBar = GetSnackBar(
-      messageText: CustomText(text: msg ?? messageContent, color: appColors.white),
+      messageText:
+          CustomText(text: msg ?? messageContent, color: appColors.white),
       snackPosition: SnackPosition.BOTTOM,
       borderWidth: 2,
-      borderRadius: borderRadius ?? appLayoutMap[AppLayout.buttonType]?.borderRadius ?? 0,
+      borderRadius:
+          borderRadius ?? appLayoutMap[AppLayout.buttonType]?.borderRadius ?? 0,
       backgroundColor: appColors.black,
-      duration: isNeedRetry ? const Duration(days: 1) : const Duration(seconds: 5),
+      duration:
+          isNeedRetry ? const Duration(days: 1) : const Duration(seconds: 5),
       margin: const EdgeInsets.all(16),
       animationDuration: const Duration(milliseconds: 400),
       mainButton: isNeedRetry
@@ -321,12 +336,14 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   }
 
   bool isValidEmail(String email) {
-    debugPrint("isValidEmailcheck: ${email.isEmpty}----${(email.isEmail && (email[email.length - 1].isAlphabetOnly || email[email.length - 1].isNumericOnly))}");
+    debugPrint(
+        "isValidEmailcheck: ${email.isEmpty}----${(email.isEmail && (email[email.length - 1].isAlphabetOnly || email[email.length - 1].isNumericOnly))}");
     if (email.isEmpty) {
       return false;
     } else {
       return (email.isEmail &&
-          (email[email.length - 1].isAlphabetOnly || email[email.length - 1].isNumericOnly));
+          (email[email.length - 1].isAlphabetOnly ||
+              email[email.length - 1].isNumericOnly));
     }
   }
 
@@ -351,7 +368,6 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
       });
     }
   }
-
 
   Future<bool> isNetworkConnected({bool isshowToast = true}) async {
     List<ConnectivityResult> connectivityResult;
@@ -401,7 +417,7 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
       if (value == null || value.isEmpty) {
         value = data[defaultLanguage]?.toString().trim();
       }
-      if(value!.isEmpty) return null;
+      if (value!.isEmpty) return null;
       return value;
     } catch (e) {
       return null;
@@ -411,7 +427,8 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   String getLocalizedItemName(dynamic item) {
     if (item == null) return "";
     try {
-      Map<String, dynamic> itemMap = item is Map<String, dynamic> ? item : item.toJson();
+      Map<String, dynamic> itemMap =
+          item is Map<String, dynamic> ? item : item.toJson();
       return itemMap['itemName']?.toString() ?? "";
     } catch (e) {
       debugPrint("getLocalizedItemName error: $e");
@@ -445,7 +462,9 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   double convertTo24Hour(String timeString) {
     if (timeString.isEmpty) return 0.0;
     try {
-      DateTime dateTime = intl.DateFormat(receiptTimeFormat).parse(timeString);
+      final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+      final dateTime = LocalizedDateTime.tryParseTime(timeString, locale);
+      if (dateTime == null) return 0.0;
 
       double hour = double.parse(intl.DateFormat('H').format(dateTime));
       double minute = double.parse(intl.DateFormat('m').format(dateTime));
@@ -468,23 +487,22 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
     const flexible = 'Flexible';
 
     starttime = switch ((checkinstart, checkinend)) {
-      (flexible, flexible) =>
-      label_flexible_checkin_time.tr,
-
+      (flexible, flexible) => label_flexible_checkin_time.tr,
       (var start, flexible) when start != flexible =>
-      '${label_from.tr}: ${getcheckinTime(start)}',
-
+        '${label_from.tr}: ${getcheckinTime(start)}',
       (flexible, var end) when end != flexible =>
-      '${label_upto.tr}: ${getcheckinTime(end)}',
-
+        '${label_upto.tr}: ${getcheckinTime(end)}',
       (var start, var end) =>
-      '${getcheckinTime(start)} - ${getcheckinTime(end)}',
+        '${getcheckinTime(start)} - ${getcheckinTime(end)}',
     };
     return starttime;
   }
 
   String formatBookingTime(String? time) {
-    if (time == null || time.isEmpty || time.contains('null') || time.contains('undefined')) return "";
+    if (time == null ||
+        time.isEmpty ||
+        time.contains('null') ||
+        time.contains('undefined')) return "";
     try {
       double timeValue = double.parse(time);
       int hours = timeValue.floor();
@@ -499,106 +517,112 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
     }
   }
 
-  Widget reservationDateInfo(
-      {required String checkinDate,
-      required String checkoutDate,
-      required String checkinTime,
-      required String checkoutTime,
-      String isFrom = '',
-      Color? headerColor,
-      Color? dateColor,
-      Color? timeColor,
-      double? headerFontSize,
-      CrossAxisAlignment endCrossAxisAlignment = CrossAxisAlignment.end,
-      double? fontSize, FontWeight? fontWeight,
-        bool isFromCancelTrip = false,
-        FontWeight? headerFontWeight,
-        GestureTapCallback? onTap,
-      }) {
-    String startdate = getDateFormat(dateFormat: reservationDateformat, milliSec: checkinDate).$1;
-    String enddate = getDateFormat(dateFormat: reservationDateformat, milliSec: checkoutDate).$1;
+  Widget reservationDateInfo({
+    required String checkinDate,
+    required String checkoutDate,
+    required String checkinTime,
+    required String checkoutTime,
+    String isFrom = '',
+    Color? headerColor,
+    Color? dateColor,
+    Color? timeColor,
+    double? headerFontSize,
+    CrossAxisAlignment endCrossAxisAlignment = CrossAxisAlignment.end,
+    double? fontSize,
+    FontWeight? fontWeight,
+    bool isFromCancelTrip = false,
+    FontWeight? headerFontWeight,
+    GestureTapCallback? onTap,
+  }) {
+    String startdate =
+        getDateFormat(dateFormat: reservationDateformat, milliSec: checkinDate)
+            .$1;
+    String enddate =
+        getDateFormat(dateFormat: reservationDateformat, milliSec: checkoutDate)
+            .$1;
     return IntrinsicHeight(
       child: [
         Expanded(
           child: toOnTap(
               child: _customDateTimeView(
-                headerFontWeight: headerFontWeight ?? AppFont.medium,
-                headerText: label_trip_start.tr,
-                date: startdate,
-                time: isFrom == "review_pay"
-                    ? checkinTime
-                    : formatBookingTime(checkinTime),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                headerColor: headerColor,
-                headerFontSize: headerFontSize,
-                dateColor: dateColor,
-                timeColor: timeColor,
-                fontSize: fontSize,
-                fontWeight: fontWeight
-              ),
-              onTap: onTap ??() {
-                FocusManager.instance.primaryFocus?.unfocus();
-                if (!isFromCancelTrip) {
-                  controllers.homeItemDetailNavigator?.navigateScreen(
-                      HomeItemDetailScreen.Calendar, "");
-                }
-              }),
+                  headerFontWeight: headerFontWeight ?? AppFont.medium,
+                  headerText: label_trip_start.tr,
+                  date: startdate,
+                  time: isFrom == "review_pay"
+                      ? checkinTime
+                      : formatBookingTime(checkinTime),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  headerColor: headerColor,
+                  headerFontSize: headerFontSize,
+                  dateColor: dateColor,
+                  timeColor: timeColor,
+                  fontSize: fontSize,
+                  fontWeight: fontWeight),
+              onTap: onTap ??
+                  () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    if (!isFromCancelTrip) {
+                      controllers.homeItemDetailNavigator
+                          ?.navigateScreen(HomeItemDetailScreen.Calendar, "");
+                    }
+                  }),
         ),
-    Align(
-    alignment: Alignment.center,
-    child:
-        ViewdetailArrowsvg!.toSVG(
-            quarterTurns: intl.Bidi.isRtlLanguage(Get.locale?.languageCode) ? 2 : 0,
-            size: 15,
-            colour: appColors.black,
-            replaceableValues: {'stroke-width="0.1"': 'stroke-width="0.5"'}).toPad(end: 24),
-    ),
-
+        Align(
+          alignment: Alignment.center,
+          child: ViewdetailArrowsvg!.toSVG(
+              quarterTurns:
+                  intl.Bidi.isRtlLanguage(Get.locale?.languageCode) ? 2 : 0,
+              size: 15,
+              colour: appColors.black,
+              replaceableValues: {
+                'stroke-width="0.1"': 'stroke-width="0.5"'
+              }).toPad(end: 24),
+        ),
         Expanded(
           child: toOnTap(
               child: _customDateTimeView(
                   headerFontWeight: headerFontWeight ?? AppFont.medium,
-                headerText: label_trip_end.tr,
-                date: enddate,
-                time: isFrom == "review_pay"
-                    ? checkoutTime
-                    : formatBookingTime(checkoutTime),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                textAlign: TextAlign.start,
-                headerColor: headerColor,
-                headerFontSize: headerFontSize,
-                dateColor: dateColor,
-                timeColor: timeColor,
-                fontSize: fontSize,
-                  fontWeight: fontWeight
-              ),
-              onTap: onTap ??() {
-                FocusManager.instance.primaryFocus?.unfocus();
-                if (!isFromCancelTrip) {
-                  controllers.homeItemDetailNavigator?.navigateScreen(
-                      HomeItemDetailScreen.Calendar, "");
-                }
-              }),
+                  headerText: label_trip_end.tr,
+                  date: enddate,
+                  time: isFrom == "review_pay"
+                      ? checkoutTime
+                      : formatBookingTime(checkoutTime),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  textAlign: TextAlign.start,
+                  headerColor: headerColor,
+                  headerFontSize: headerFontSize,
+                  dateColor: dateColor,
+                  timeColor: timeColor,
+                  fontSize: fontSize,
+                  fontWeight: fontWeight),
+              onTap: onTap ??
+                  () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    if (!isFromCancelTrip) {
+                      controllers.homeItemDetailNavigator
+                          ?.navigateScreen(HomeItemDetailScreen.Calendar, "");
+                    }
+                  }),
         )
       ].toRow(
-          mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start),
     );
   }
 
-  Widget _customDateTimeView({
-    required String headerText,
-    required String date,
-    required String time,
-    required CrossAxisAlignment crossAxisAlignment,
-    TextAlign textAlign = TextAlign.start,
-    Color? headerColor,
-    Color? dateColor,
-    Color? timeColor,
-    double? headerFontSize,
-    double? fontSize,
-    FontWeight? fontWeight,
-    FontWeight? headerFontWeight
-  }) {
+  Widget _customDateTimeView(
+      {required String headerText,
+      required String date,
+      required String time,
+      required CrossAxisAlignment crossAxisAlignment,
+      TextAlign textAlign = TextAlign.start,
+      Color? headerColor,
+      Color? dateColor,
+      Color? timeColor,
+      double? headerFontSize,
+      double? fontSize,
+      FontWeight? fontWeight,
+      FontWeight? headerFontWeight}) {
     return [
       CustomText(
         text: headerText,
@@ -629,9 +653,9 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
           maxLines: 1,
           textDirection: TextDirection.ltr,
           textAlign: textAlign),
-    ].toColumn(mainAxisSize: MainAxisSize.min, crossAxisAlignment: crossAxisAlignment);
+    ].toColumn(
+        mainAxisSize: MainAxisSize.min, crossAxisAlignment: crossAxisAlignment);
   }
-
 
   String getCurrencySymbol({String? currency}) {
     final code = currency ?? appPreference.preferredCurrency;
@@ -670,7 +694,6 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   bool isRTL() {
     return intl.Bidi.isRtlLanguage(Get.locale?.languageCode);
   }
-
 
   @override
   void onDetached() {}

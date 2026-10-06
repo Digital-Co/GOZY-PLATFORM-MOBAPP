@@ -15,6 +15,7 @@ import 'package:gozy/resources/app_layout.dart';
 import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/utils/common_api_controller.dart';
 import 'package:gozy/utils/common_file_picker.dart';
+import 'package:gozy/utils/localized_date_time.dart';
 import 'package:gozy/widgets/bottom_sheet/add_phone_number/add_phone_number_bottom_sheet.dart';
 import 'package:gozy/widgets/bottom_sheet/bottom_sheet_refresh_controller.dart';
 import 'package:gozy/widgets/conditional_parent_widget.dart';
@@ -130,16 +131,13 @@ class EditProfileController extends BaseController {
             : VerifyStatusForEmail.Verify;
 
     try {
+      final parsedBirthDate = getDateFromString(appPreference.birthDate ?? '');
       dob = (
-        appPreference.birthDate ?? '',
-        getDateFromString(appPreference.birthDate ?? '')
+        _localizedBirthDate(parsedBirthDate),
+        parsedBirthDate,
       );
-    } catch (e) {
-      if (appPreference.birthDate?.isEmpty == true) {
-        dob = (dob.$2.convert_MDY(format: dobformat).$1, lastDate);
-      } else {
-        dob = (appPreference.birthDate ?? '', DateTime.now());
-      }
+    } catch (_) {
+      dob = (_localizedBirthDate(lastDate), lastDate);
     }
 
     personalInfoList.value = [
@@ -154,7 +152,7 @@ class EditProfileController extends BaseController {
         "name": label_birth_date.tr,
         "link": appPreference.birthDate?.isEmpty == true
             ? ''
-            : dob.$2.convert_MDY(format: dobformat).$1,
+            : _localizedBirthDate(dob.$2),
         "onTap": () async {
           DateTime firstDate = DateTime(1920, 01, 01);
           showAppDatePicker(
@@ -320,7 +318,8 @@ class EditProfileController extends BaseController {
         case EditProfileField.dateOfBirth:
           fieldName = field.name;
           fieldValue = dob.$2.convert_MDY(format: dobAPIFormat).$1;
-          appPreference.birthDate = dob.$1;
+          appPreference.birthDate = fieldValue;
+          dob = (_localizedBirthDate(dob.$2), dob.$2);
           personalInfoList[1]['link'] = dob.$1;
           userUpdate();
 
@@ -333,6 +332,11 @@ class EditProfileController extends BaseController {
         case EditProfileField.isPhoneVerified:
       }
     });
+  }
+
+  String _localizedBirthDate(DateTime value) {
+    final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+    return LocalizedDateTime.shortDate(value, locale);
   }
 
   void userUpdate() {

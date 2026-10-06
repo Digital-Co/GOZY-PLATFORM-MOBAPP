@@ -165,6 +165,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
           .serializer)
       ..add(GManageListingsReq.serializer)
       ..add(GManageListingsVars.serializer)
+      ..add(GPawaPayOperation.serializer)
       ..add(GRemoveDocumentsData.serializer)
       ..add(GRemoveDocumentsData_removeDocuments.serializer)
       ..add(GRemoveDocumentsReq.serializer)
@@ -271,6 +272,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GVerifyPhoneNumberData_VerifyPhoneNumber.serializer)
       ..add(GVerifyPhoneNumberReq.serializer)
       ..add(GVerifyPhoneNumberVars.serializer)
+      ..add(GaddPawaPayPayoutAccountData.serializer)
+      ..add(GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount.serializer)
+      ..add(GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result
+          .serializer)
+      ..add(GaddPawaPayPayoutAccountReq.serializer)
+      ..add(GaddPawaPayPayoutAccountVars.serializer)
       ..add(GaddPayoutData.serializer)
       ..add(GaddPayoutData_addPayout.serializer)
       ..add(GaddPayoutReq.serializer)
@@ -1055,6 +1062,22 @@ Serializers _$serializers = (new Serializers().toBuilder()
           GgetListingSpecialPriceData_getListingSpecialPrice_results.serializer)
       ..add(GgetListingSpecialPriceReq.serializer)
       ..add(GgetListingSpecialPriceVars.serializer)
+      ..add(GgetPawaPayDepositStatusData.serializer)
+      ..add(GgetPawaPayDepositStatusData_getPawaPayDepositStatus.serializer)
+      ..add(GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation
+          .serializer)
+      ..add(GgetPawaPayDepositStatusReq.serializer)
+      ..add(GgetPawaPayDepositStatusVars.serializer)
+      ..add(GgetPawaPayOptionsData.serializer)
+      ..add(GgetPawaPayOptionsData_getPawaPayOptions.serializer)
+      ..add(GgetPawaPayOptionsData_getPawaPayOptions_countries.serializer)
+      ..add(GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies
+          .serializer)
+      ..add(
+          GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers
+              .serializer)
+      ..add(GgetPawaPayOptionsReq.serializer)
+      ..add(GgetPawaPayOptionsVars.serializer)
       ..add(GgetPaymentMethodsData.serializer)
       ..add(GgetPaymentMethodsData_getPaymentMethods.serializer)
       ..add(GgetPaymentMethodsData_getPaymentMethods_results.serializer)
@@ -1528,6 +1551,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
               .serializer)
       ..add(GgetWishListGroupReq.serializer)
       ..add(GgetWishListGroupVars.serializer)
+      ..add(GinitiatePawaPayDepositData.serializer)
+      ..add(GinitiatePawaPayDepositData_initiatePawaPayDeposit.serializer)
+      ..add(GinitiatePawaPayDepositReq.serializer)
+      ..add(GinitiatePawaPayDepositVars.serializer)
       ..add(GlistBlockedDatesData.serializer)
       ..add(GlistBlockedDatesData_getListBlockedDates.serializer)
       ..add(GlistBlockedDatesData_getListBlockedDates_results.serializer)
@@ -1898,6 +1925,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GwriteUserReviewData_writeUserReview.serializer)
       ..add(GwriteUserReviewReq.serializer)
       ..add(GwriteUserReviewVars.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
@@ -2556,6 +2586,27 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new ListBuilder<
               GgetListingSpecialPriceData_getListingSpecialPrice_results?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetPawaPayOptionsData_getPawaPayOptions_countries)
+          ]),
+          () => new ListBuilder<
+              GgetPawaPayOptionsData_getPawaPayOptions_countries?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies)
+          ]),
+          () => new ListBuilder<
+              GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers)
+          ]),
+          () => new ListBuilder<
+              GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(

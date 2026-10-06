@@ -19,6 +19,7 @@ import 'package:gozy/screens/views/custom_scaffold.dart';
 import 'package:gozy/screens/views/guest/filter/filter_calendar.dart';
 import 'package:gozy/screens/views/home_item_detail/home_item_detail_navigator.dart';
 import 'package:gozy/utils/common_api_controller.dart';
+import 'package:gozy/utils/duration_discount.dart';
 import 'package:gozy/widgets/bottom_sheet/bottom_sheet_refresh_controller.dart';
 import 'package:gozy/widgets/cancellation_policy_view.dart';
 import 'package:gozy/widgets/checkbox_group.dart';
@@ -39,6 +40,7 @@ import 'package:gozy/widgets/custom_stateful_widget.dart';
 import 'package:gozy/widgets/custom_text.dart';
 import 'package:gozy/widgets/custom_textfield.dart';
 import 'package:gozy/widgets/dotted_border/dotted_border.dart';
+import 'package:gozy/widgets/duration_discount_widgets.dart';
 import 'package:gozy/widgets/explore_listing_item_widgets.dart';
 import 'package:gozy/widgets/rect_getter.dart';
 import 'package:gozy/widgets/show_done_view.dart';
@@ -106,7 +108,8 @@ class ConfirmAndPayPageState
       if (_isUpdatingFromCalendar) return;
       _setStartAndEndTime(value, "end");
     });
-    reasonForBooking = App().buildReasonList( reasons: reasonForBooking, labelsString:App().getReasonBooking() );
+    reasonForBooking = App().buildReasonList(
+        reasons: reasonForBooking, labelsString: App().getReasonBooking());
     super.initState();
   }
 
@@ -293,7 +296,8 @@ class ConfirmAndPayPageState
         ).toPad(bottom: 16),
       ],
       if (confirmpaycontroller.pageType != 'pay')
-        if (aiTextGeneration && (guestContactMessage || renterServicePlanAIFeatureStatus))
+        if (aiTextGeneration &&
+            (guestContactMessage || renterServicePlanAIFeatureStatus))
           confirmpaycontroller.buildGenerateWithAIView(
               label: isWritten.value
                   ? label_rewrite_with_ai.tr
@@ -559,9 +563,11 @@ class ConfirmAndPayPageState
 
   Widget _showBottomAddPaymentWidget() {
     GgetBillingCalculationData_getBillingCalculation_result? billingdata =
-        widget.controller.billingCalcuationData.value?.getBillingCalculation?.result;
+        widget.controller.billingCalcuationData.value?.getBillingCalculation
+            ?.result;
     debugPrint("billingdata111: ${billingdata}");
-    billingdata ??= confirmpaycontroller.billingCalcuationData.value?.getBillingCalculation?.result;
+    billingdata ??= confirmpaycontroller
+        .billingCalcuationData.value?.getBillingCalculation?.result;
     debugPrint("billingdata222: ${billingdata}");
     debugPrint("_showBottomAddPaymentWidget: ${contactHostBookingType}");
     return confirmpaycontroller.pageType == 'pay'
@@ -622,9 +628,27 @@ class ConfirmAndPayPageState
         currentBillingData ??= confirmpaycontroller
             .billingCalcuationData.value?.getBillingCalculation?.result;
         currentBillingData ??= billingdata;
+        final currentDays = (currentBillingData?.days ?? 0).toInt();
+        final nextOffer = DurationDiscountPresentation.nextOffer(
+          weeklyDiscount:
+              widget.controller.itemInfo?.listingData?.weeklyDiscount,
+          monthlyDiscount:
+              widget.controller.itemInfo?.listingData?.monthlyDiscount,
+          days: currentDays,
+        );
+        final maxDays = widget.controller.itemInfo?.listingData?.maxDay as int?;
         return [
+          if (nextOffer != null &&
+              (maxDays == null ||
+                  maxDays <= 0 ||
+                  nextOffer.thresholdDays <= maxDays))
+            DurationDiscountExtensionPanel(
+              offer: nextOffer,
+              currentDays: currentDays,
+              onAddDays: () =>
+                  _extendToDiscountThreshold(nextOffer, currentDays),
+            ),
           CustomBottomItemShadowContainer(
-                  height: 100,
                   color: appColors.white,
                   padding: pad(w: 20, top: 25, bottom: 20),
                   borderRadiusGeometry: BorderRadiusDirectional.vertical(
@@ -658,7 +682,8 @@ class ConfirmAndPayPageState
                                   : (widget.controller.totalValue.value))
                               .currencyConverted(
                                   convertedCurrency:
-                                      currentBillingData?.currency ?? defaultCurrency)
+                                      currentBillingData?.currency ??
+                                          defaultCurrency)
                               .toNumberFormat(
                                   symbol:
                                       widget.controller.getCurrencySymbol()),
@@ -677,7 +702,8 @@ class ConfirmAndPayPageState
                             isWrapContent: true,
                             isResizeText: true,
                             buttonText:
-                                (widget.controller.itemInfo.bookingType == 'instant' ||
+                                (widget.controller.itemInfo.bookingType ==
+                                            'instant' ||
                                         contactHostBookingType == 'instant')
                                     ? label_book.tr
                                     : label_request_to_book.tr,
@@ -693,10 +719,28 @@ class ConfirmAndPayPageState
                             padding: pad(w: 10))
                         .toStretch(isExpanded: true)
                   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceBetween))
-              .toStretch()
-        ].toRow();
+        ].toColumn(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch);
       },
     );
+  }
+
+  Future<void> _extendToDiscountThreshold(
+      DurationDiscountOffer offer, int currentDays) async {
+    final wasExtended = await widget.controller.extendToDiscountThreshold(
+      offer: offer,
+      currentDays: currentDays,
+      targetDates: widget.controller.selectedDates,
+      startTimeValue: widget.controller.selectedStartTime.value,
+      endTimeValue: widget.controller.selectedEndTime.value,
+    );
+    if (wasExtended) {
+      confirmpaycontroller.change(
+        rxVariable: confirmpaycontroller.rxSelectedDates,
+        value: widget.controller.selectedDates.toList(),
+      );
+    }
   }
 
   Future<void> confirmPayment() async {
@@ -890,6 +934,13 @@ class ConfirmAndPayPageState
               amountFontSize: fontsize,
             ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0)
           : const SizedBox.shrink(),
+      if ((receiptItem.discount ?? 0.0) > 0.0)
+        DurationDiscountSavingsPanel(
+          formattedSavings: (receiptItem.discount ?? 0.0)
+              .currencyConverted(
+                  convertedCurrency: receiptItem.currency ?? defaultCurrency)
+              .toNumberFormat(symbol: confirmpaycontroller.getCurrencySymbol()),
+        ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0),
       widget.controller.isPromoApplied.value
           ? CustomPriceBreakdownText(
               isDiscount: true,
@@ -937,7 +988,6 @@ class ConfirmAndPayPageState
       ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0),
     ].toColumn();
   }
-
 
   dynamic _getToolTipWidget(
       {required String content,

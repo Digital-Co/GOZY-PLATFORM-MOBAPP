@@ -220,6 +220,8 @@ import 'package:gozy/graphql/__generated__/reviews_fragment.req.gql.dart'
     show GreviewsFragmentReq;
 import 'package:gozy/graphql/__generated__/reviews_fragment.var.gql.dart'
     show GreviewsFragmentVars;
+import 'package:gozy/graphql/__generated__/schema.schema.gql.dart'
+    show GPawaPayOperation;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
     show GthreadItemsFragmentData;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.req.gql.dart'
@@ -890,10 +892,21 @@ import 'package:gozy/graphql/manageListings/__generated__/manageListings.var.gql
         GlistBlockedDatesVars;
 import 'package:gozy/graphql/Payout/__generated__/payout.data.gql.dart'
     show
+        GaddPawaPayPayoutAccountData,
+        GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount,
+        GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result,
         GaddPayoutData,
         GaddPayoutData_addPayout,
         GconfirmPayoutData,
         GconfirmPayoutData_confirmPayout,
+        GgetPawaPayDepositStatusData,
+        GgetPawaPayDepositStatusData_getPawaPayDepositStatus,
+        GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation,
+        GgetPawaPayOptionsData,
+        GgetPawaPayOptionsData_getPawaPayOptions,
+        GgetPawaPayOptionsData_getPawaPayOptions_countries,
+        GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies,
+        GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers,
         GgetPaymentMethodsData,
         GgetPaymentMethodsData_getPaymentMethods,
         GgetPaymentMethodsData_getPaymentMethods_results,
@@ -901,24 +914,34 @@ import 'package:gozy/graphql/Payout/__generated__/payout.data.gql.dart'
         GgetPayoutsData_getPayouts,
         GgetPayoutsData_getPayouts_results,
         GgetPayoutsData_getPayouts_results_paymentMethod,
+        GinitiatePawaPayDepositData,
+        GinitiatePawaPayDepositData_initiatePawaPayDeposit,
         GsetDefaultPayoutData,
         GsetDefaultPayoutData_setDefaultPayout,
         GverifyPayoutData,
         GverifyPayoutData_verifyPayout;
 import 'package:gozy/graphql/Payout/__generated__/payout.req.gql.dart'
     show
+        GaddPawaPayPayoutAccountReq,
         GaddPayoutReq,
         GconfirmPayoutReq,
+        GgetPawaPayDepositStatusReq,
+        GgetPawaPayOptionsReq,
         GgetPaymentMethodsReq,
         GgetPayoutsReq,
+        GinitiatePawaPayDepositReq,
         GsetDefaultPayoutReq,
         GverifyPayoutReq;
 import 'package:gozy/graphql/Payout/__generated__/payout.var.gql.dart'
     show
+        GaddPawaPayPayoutAccountVars,
         GaddPayoutVars,
         GconfirmPayoutVars,
+        GgetPawaPayDepositStatusVars,
+        GgetPawaPayOptionsVars,
         GgetPaymentMethodsVars,
         GgetPayoutsVars,
+        GinitiatePawaPayDepositVars,
         GsetDefaultPayoutVars,
         GverifyPayoutVars;
 import 'package:gozy/graphql/payout_updated/__generated__/updatePayoutForReservation.data.gql.dart'
@@ -1496,6 +1519,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GManageListingsData_ManageListings_results_user_verification,
   GManageListingsReq,
   GManageListingsVars,
+  GPawaPayOperation,
   GRemoveDocumentsData,
   GRemoveDocumentsData_removeDocuments,
   GRemoveDocumentsReq,
@@ -1594,6 +1618,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GVerifyPhoneNumberData_VerifyPhoneNumber,
   GVerifyPhoneNumberReq,
   GVerifyPhoneNumberVars,
+  GaddPawaPayPayoutAccountData,
+  GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount,
+  GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result,
+  GaddPawaPayPayoutAccountReq,
+  GaddPawaPayPayoutAccountVars,
   GaddPayoutData,
   GaddPayoutData_addPayout,
   GaddPayoutReq,
@@ -2010,6 +2039,18 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetListingSpecialPriceData_getListingSpecialPrice_results,
   GgetListingSpecialPriceReq,
   GgetListingSpecialPriceVars,
+  GgetPawaPayDepositStatusData,
+  GgetPawaPayDepositStatusData_getPawaPayDepositStatus,
+  GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation,
+  GgetPawaPayDepositStatusReq,
+  GgetPawaPayDepositStatusVars,
+  GgetPawaPayOptionsData,
+  GgetPawaPayOptionsData_getPawaPayOptions,
+  GgetPawaPayOptionsData_getPawaPayOptions_countries,
+  GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies,
+  GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers,
+  GgetPawaPayOptionsReq,
+  GgetPawaPayOptionsVars,
   GgetPaymentMethodsData,
   GgetPaymentMethodsData_getPaymentMethods,
   GgetPaymentMethodsData_getPaymentMethods_results,
@@ -2265,6 +2306,10 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingData,
   GgetWishListGroupReq,
   GgetWishListGroupVars,
+  GinitiatePawaPayDepositData,
+  GinitiatePawaPayDepositData_initiatePawaPayDeposit,
+  GinitiatePawaPayDepositReq,
+  GinitiatePawaPayDepositVars,
   GlistBlockedDatesData,
   GlistBlockedDatesData_getListBlockedDates,
   GlistBlockedDatesData_getListBlockedDates_results,

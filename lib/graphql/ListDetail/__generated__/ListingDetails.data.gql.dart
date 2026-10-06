@@ -927,6 +927,10 @@ abstract class GgetSimilarListingData_getSimilarListing_results_listingData
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<
           GgetSimilarListingData_getSimilarListing_results_listingData>
       get serializer =>

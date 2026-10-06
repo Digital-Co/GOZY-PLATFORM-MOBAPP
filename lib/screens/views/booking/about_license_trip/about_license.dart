@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as intl;
+import 'package:gozy/utils/localized_date_time.dart';
 import 'package:gozy/constant.dart';
 import 'package:gozy/generated/assets.dart';
 import 'package:gozy/graphql/booking/getBillingCalculation/__generated__/get_billing_calculation.data.gql.dart';
@@ -163,11 +163,10 @@ class AboutLicenseState extends HomeItemDetailState {
 
   DateTime? _parseDob(String text) {
     if (text.isEmpty) return null;
-    try {
-      return intl.DateFormat(dobDialogFormat).parseStrict(text);
-    } catch (_) {
-      return null;
-    }
+    return LocalizedDateTime.tryParseDisplayDate(
+      text,
+      (Get.locale ?? const Locale('en')).toLanguageTag(),
+    );
   }
 
   DateTime _clampDate(DateTime date, DateTime firstDate, DateTime lastDate) {
@@ -259,7 +258,7 @@ class AboutLicenseState extends HomeItemDetailState {
                       super.controller.lastNameController.text =
                           aboutLicenceController.lastNameController.text.trim();
                       super.controller.dateOfBirthController.text =
-                          aboutLicenceController.dobController.text.trim();
+                          LocalizedDateTime.apiDate(aboutLicenceController.initialDobDate!);
                       super.controller.countryController.text = aboutLicenceController.selectedCountryCode;
                       super
                           .controller

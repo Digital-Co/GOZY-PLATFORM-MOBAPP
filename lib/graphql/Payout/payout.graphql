@@ -44,8 +44,8 @@ mutation setDefaultPayout($id: Int!, $type: String!) {
 }
 
 
-query getPaymentMethods{
-  getPaymentMethods {
+query getPaymentMethods($operation: String, $supportedPaymentTypes: [Int!]){
+  getPaymentMethods(operation: $operation, supportedPaymentTypes: $supportedPaymentTypes) {
     results {
       id
       name
@@ -56,6 +56,7 @@ query getPaymentMethods{
       details
       isEnable
       paymentType
+      imageUrl
     }
     status
     errorMessage
@@ -121,4 +122,64 @@ mutation verifyPayout(
         failureUrl
         stripeAccountId
     }
+}
+
+query getPawaPayOptions($operation: PawaPayOperation!) {
+  getPawaPayOptions(operation: $operation) {
+    status
+    errorMessage
+    recommendedCountry
+    countries {
+      country
+      displayName
+      prefix
+      flag
+      currencies {
+        currency
+        providers {
+          provider
+          displayName
+        }
+      }
+    }
+  }
+}
+
+mutation initiatePawaPayDeposit($reservationId: Int!, $country: String!, $currency: String!, $phoneNumber: String!, $provider: String!) {
+  initiatePawaPayDeposit(reservationId: $reservationId, country: $country, currency: $currency, phoneNumber: $phoneNumber, provider: $provider) {
+    status
+    errorMessage
+    depositId
+    paymentStatus
+  }
+}
+
+query getPawaPayDepositStatus($reservationId: Int!) {
+  getPawaPayDepositStatus(reservationId: $reservationId) {
+    status
+    errorMessage
+    paymentStatus
+    reservation {
+      id
+      paymentState
+      reservationState
+    }
+  }
+}
+
+mutation addPawaPayPayoutAccount($phoneNumber: String!, $country: String!, $currency: String!, $provider: String!) {
+  addPawaPayPayoutAccount(phoneNumber: $phoneNumber, country: $country, currency: $currency, provider: $provider) {
+    status
+    errorMessage
+    result {
+      id
+      methodId
+      payEmail
+      address1
+      country
+      currency
+      default
+      isVerified
+    }
+  }
 }

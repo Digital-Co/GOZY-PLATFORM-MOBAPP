@@ -1,3 +1,4 @@
+import 'package:ferry/ferry.dart' show FetchPolicy;
 import 'dart:async';
 import 'dart:io';
 
@@ -35,10 +36,10 @@ GgetAllReportTypeData? createReportUserData;
 GgetImageBannerData? homeBannerData;
 
 extension CommonApiController on BaseController {
-  Future<GgetCurrenciesListData> getCurrencyList({bool isAutoCloseLoader = true}) {
+  Future<GgetCurrenciesListData> getCurrencyList({bool isAutoCloseLoader = true, bool isStartLoader = true}) {
     Completer<GgetCurrenciesListData> currencyListCompleter = Completer<GgetCurrenciesListData>();
     final params = GgetCurrenciesListReq((b) => b..vars.build());
-    FerryLoggerClient.makeRequest(params, this, getCurrencyList, isAutoCloseLoader: isAutoCloseLoader)?.then((res) {
+    FerryLoggerClient.makeRequest(params, this, getCurrencyList, isAutoCloseLoader: isAutoCloseLoader, isStartLoader: isStartLoader)?.then((res) {
       GgetCurrenciesListData currencyListData = res.data as GgetCurrenciesListData;
       if (isAutoCloseLoader) {
         isLoading.value = false;
@@ -48,10 +49,13 @@ extension CommonApiController on BaseController {
     return currencyListCompleter.future;
   }
 
-  Future<GgetPaymentMethodsData> getPaymentTypeList() {
+  Future<GgetPaymentMethodsData> getPaymentTypeList({String operation = 'checkout', List<int> supportedPaymentTypes = const [1, 2, 3]}) {
     Completer<GgetPaymentMethodsData> paymentsListCompleter = Completer<GgetPaymentMethodsData>();
-    final params = GgetPaymentMethodsReq((b) => b..vars.build());
-    FerryLoggerClient.makeRequest(params, this, getPaymentTypeList)?.then((res) {
+    final params = GgetPaymentMethodsReq((b) => b
+      ..fetchPolicy = FetchPolicy.NetworkOnly
+      ..vars.operation = operation
+      ..vars.supportedPaymentTypes.replace(supportedPaymentTypes));
+    FerryLoggerClient.makeRequest(params, this, () => getPaymentTypeList(operation: operation, supportedPaymentTypes: supportedPaymentTypes))?.then((res) {
       GgetPaymentMethodsData paymentListData = res.data as GgetPaymentMethodsData;
       isLoading.value = false;
       paymentsListCompleter.complete(paymentListData);

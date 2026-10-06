@@ -354,6 +354,10 @@ abstract class GallThreadsFragment_listData_listingData
   @override
   String? get currency;
   @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
+  @override
   Map<String, dynamic> toJson();
 }
 
@@ -1380,6 +1384,10 @@ abstract class GallThreadsFragmentData_listData_listingData
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<GallThreadsFragmentData_listData_listingData>
       get serializer => _$gallThreadsFragmentDataListDataListingDataSerializer;
 

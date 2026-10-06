@@ -169,6 +169,20 @@ class AppPreference  {
     pref.write("birthDate", birthDate);
   }
 
+  int? get pendingPawaPayReservationId => pref.read('pendingPawaPayReservationId');
+  set pendingPawaPayReservationId(int? value) {
+    value == null
+        ? pref.remove('pendingPawaPayReservationId')
+        : pref.write('pendingPawaPayReservationId', value);
+  }
+
+  int? get pendingPawaPayListingId => pref.read('pendingPawaPayListingId');
+  set pendingPawaPayListingId(int? value) {
+    value == null
+        ? pref.remove('pendingPawaPayListingId')
+        : pref.write('pendingPawaPayListingId', value);
+  }
+
   String? get location => pref.read("location") ?? "";
   set location(String? location) {
     pref.write("location", location);

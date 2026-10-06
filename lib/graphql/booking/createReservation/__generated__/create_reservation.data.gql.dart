@@ -1287,6 +1287,10 @@ abstract class GcreateReservationData_createReservation_results_listData_listing
   @override
   String? get currency;
   @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
+  @override
   String? get bookingNoticeTime;
   @override
   String? get checkInStart;
@@ -1308,10 +1312,6 @@ abstract class GcreateReservationData_createReservation_results_listData_listing
   String? get minDayOtherItemLabel;
   @override
   double? get delivery;
-  @override
-  double? get weeklyDiscount;
-  @override
-  double? get monthlyDiscount;
   @override
   int? get cancellationPolicy;
   @override

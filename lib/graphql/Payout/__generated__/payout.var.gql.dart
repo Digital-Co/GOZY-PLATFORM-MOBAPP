@@ -2,8 +2,10 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:gozy/graphql/__generated__/schema.schema.gql.dart' as _i2;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
 
 part 'payout.var.gql.g.dart';
@@ -87,6 +89,8 @@ abstract class GgetPaymentMethodsVars
           [void Function(GgetPaymentMethodsVarsBuilder b) updates]) =
       _$GgetPaymentMethodsVars;
 
+  String? get operation;
+  BuiltList<int>? get supportedPaymentTypes;
   static Serializer<GgetPaymentMethodsVars> get serializer =>
       _$ggetPaymentMethodsVarsSerializer;
 
@@ -160,6 +164,114 @@ abstract class GverifyPayoutVars
   static GverifyPayoutVars? fromJson(Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GverifyPayoutVars.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayOptionsVars
+    implements Built<GgetPawaPayOptionsVars, GgetPawaPayOptionsVarsBuilder> {
+  GgetPawaPayOptionsVars._();
+
+  factory GgetPawaPayOptionsVars(
+          [void Function(GgetPawaPayOptionsVarsBuilder b) updates]) =
+      _$GgetPawaPayOptionsVars;
+
+  _i2.GPawaPayOperation get operation;
+  static Serializer<GgetPawaPayOptionsVars> get serializer =>
+      _$ggetPawaPayOptionsVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayOptionsVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayOptionsVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetPawaPayOptionsVars.serializer,
+        json,
+      );
+}
+
+abstract class GinitiatePawaPayDepositVars
+    implements
+        Built<GinitiatePawaPayDepositVars, GinitiatePawaPayDepositVarsBuilder> {
+  GinitiatePawaPayDepositVars._();
+
+  factory GinitiatePawaPayDepositVars(
+          [void Function(GinitiatePawaPayDepositVarsBuilder b) updates]) =
+      _$GinitiatePawaPayDepositVars;
+
+  int get reservationId;
+  String get country;
+  String get currency;
+  String get phoneNumber;
+  String get provider;
+  static Serializer<GinitiatePawaPayDepositVars> get serializer =>
+      _$ginitiatePawaPayDepositVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GinitiatePawaPayDepositVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GinitiatePawaPayDepositVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GinitiatePawaPayDepositVars.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayDepositStatusVars
+    implements
+        Built<GgetPawaPayDepositStatusVars,
+            GgetPawaPayDepositStatusVarsBuilder> {
+  GgetPawaPayDepositStatusVars._();
+
+  factory GgetPawaPayDepositStatusVars(
+          [void Function(GgetPawaPayDepositStatusVarsBuilder b) updates]) =
+      _$GgetPawaPayDepositStatusVars;
+
+  int get reservationId;
+  static Serializer<GgetPawaPayDepositStatusVars> get serializer =>
+      _$ggetPawaPayDepositStatusVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayDepositStatusVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayDepositStatusVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetPawaPayDepositStatusVars.serializer,
+        json,
+      );
+}
+
+abstract class GaddPawaPayPayoutAccountVars
+    implements
+        Built<GaddPawaPayPayoutAccountVars,
+            GaddPawaPayPayoutAccountVarsBuilder> {
+  GaddPawaPayPayoutAccountVars._();
+
+  factory GaddPawaPayPayoutAccountVars(
+          [void Function(GaddPawaPayPayoutAccountVarsBuilder b) updates]) =
+      _$GaddPawaPayPayoutAccountVars;
+
+  String get phoneNumber;
+  String get country;
+  String get currency;
+  String get provider;
+  static Serializer<GaddPawaPayPayoutAccountVars> get serializer =>
+      _$gaddPawaPayPayoutAccountVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GaddPawaPayPayoutAccountVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GaddPawaPayPayoutAccountVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GaddPawaPayPayoutAccountVars.serializer,
         json,
       );
 }

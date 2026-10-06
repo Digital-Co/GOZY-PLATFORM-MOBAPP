@@ -1019,6 +1019,10 @@ abstract class GCancellationDataData_cancelReservationData_results_listData_list
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<
           GCancellationDataData_cancelReservationData_results_listData_listingData>
       get serializer =>

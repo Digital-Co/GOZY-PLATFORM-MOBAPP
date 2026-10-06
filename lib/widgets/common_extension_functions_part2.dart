@@ -621,7 +621,8 @@ int calculateAccurateBillingDays({
 
     // Parse time strings ("h:mm a" format, e.g. "1:30 PM")
     // Use fallback to catching other formats if needed
-    intl.DateFormat timeFormat = intl.DateFormat("h:mm a");
+    final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+    intl.DateFormat timeFormat = intl.DateFormat.jm(locale);
     DateTime startT = timeFormat.parse(startTimeStr);
     DateTime endT = timeFormat.parse(endTimeStr);
 

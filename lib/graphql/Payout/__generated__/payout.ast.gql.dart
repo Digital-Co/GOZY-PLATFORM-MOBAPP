@@ -283,13 +283,46 @@ const setDefaultPayout = _i1.OperationDefinitionNode(
 const getPaymentMethods = _i1.OperationDefinitionNode(
   type: _i1.OperationType.query,
   name: _i1.NameNode(value: 'getPaymentMethods'),
-  variableDefinitions: [],
+  variableDefinitions: [
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'operation')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: false,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable:
+          _i1.VariableNode(name: _i1.NameNode(value: 'supportedPaymentTypes')),
+      type: _i1.ListTypeNode(
+        type: _i1.NamedTypeNode(
+          name: _i1.NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        isNonNull: false,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+  ],
   directives: [],
   selectionSet: _i1.SelectionSetNode(selections: [
     _i1.FieldNode(
       name: _i1.NameNode(value: 'getPaymentMethods'),
       alias: null,
-      arguments: [],
+      arguments: [
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'operation'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'operation')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'supportedPaymentTypes'),
+          value: _i1.VariableNode(
+              name: _i1.NameNode(value: 'supportedPaymentTypes')),
+        ),
+      ],
       directives: [],
       selectionSet: _i1.SelectionSetNode(selections: [
         _i1.FieldNode(
@@ -349,6 +382,13 @@ const getPaymentMethods = _i1.OperationDefinitionNode(
             ),
             _i1.FieldNode(
               name: _i1.NameNode(value: 'paymentType'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'imageUrl'),
               alias: null,
               arguments: [],
               directives: [],
@@ -715,6 +755,471 @@ const verifyPayout = _i1.OperationDefinitionNode(
     )
   ]),
 );
+const getPawaPayOptions = _i1.OperationDefinitionNode(
+  type: _i1.OperationType.query,
+  name: _i1.NameNode(value: 'getPawaPayOptions'),
+  variableDefinitions: [
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'operation')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'PawaPayOperation'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    )
+  ],
+  directives: [],
+  selectionSet: _i1.SelectionSetNode(selections: [
+    _i1.FieldNode(
+      name: _i1.NameNode(value: 'getPawaPayOptions'),
+      alias: null,
+      arguments: [
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'operation'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'operation')),
+        )
+      ],
+      directives: [],
+      selectionSet: _i1.SelectionSetNode(selections: [
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'status'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'errorMessage'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'recommendedCountry'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'countries'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: _i1.SelectionSetNode(selections: [
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'country'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'displayName'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'prefix'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'flag'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'currencies'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: _i1.SelectionSetNode(selections: [
+                _i1.FieldNode(
+                  name: _i1.NameNode(value: 'currency'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+                _i1.FieldNode(
+                  name: _i1.NameNode(value: 'providers'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: _i1.SelectionSetNode(selections: [
+                    _i1.FieldNode(
+                      name: _i1.NameNode(value: 'provider'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null,
+                    ),
+                    _i1.FieldNode(
+                      name: _i1.NameNode(value: 'displayName'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null,
+                    ),
+                  ]),
+                ),
+              ]),
+            ),
+          ]),
+        ),
+      ]),
+    )
+  ]),
+);
+const initiatePawaPayDeposit = _i1.OperationDefinitionNode(
+  type: _i1.OperationType.mutation,
+  name: _i1.NameNode(value: 'initiatePawaPayDeposit'),
+  variableDefinitions: [
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'reservationId')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'Int'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'country')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'currency')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'phoneNumber')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'provider')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+  ],
+  directives: [],
+  selectionSet: _i1.SelectionSetNode(selections: [
+    _i1.FieldNode(
+      name: _i1.NameNode(value: 'initiatePawaPayDeposit'),
+      alias: null,
+      arguments: [
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'reservationId'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'reservationId')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'country'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'country')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'currency'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'currency')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'phoneNumber'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'phoneNumber')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'provider'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'provider')),
+        ),
+      ],
+      directives: [],
+      selectionSet: _i1.SelectionSetNode(selections: [
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'status'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'errorMessage'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'depositId'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'paymentStatus'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+      ]),
+    )
+  ]),
+);
+const getPawaPayDepositStatus = _i1.OperationDefinitionNode(
+  type: _i1.OperationType.query,
+  name: _i1.NameNode(value: 'getPawaPayDepositStatus'),
+  variableDefinitions: [
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'reservationId')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'Int'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    )
+  ],
+  directives: [],
+  selectionSet: _i1.SelectionSetNode(selections: [
+    _i1.FieldNode(
+      name: _i1.NameNode(value: 'getPawaPayDepositStatus'),
+      alias: null,
+      arguments: [
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'reservationId'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'reservationId')),
+        )
+      ],
+      directives: [],
+      selectionSet: _i1.SelectionSetNode(selections: [
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'status'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'errorMessage'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'paymentStatus'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'reservation'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: _i1.SelectionSetNode(selections: [
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'id'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'paymentState'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'reservationState'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+          ]),
+        ),
+      ]),
+    )
+  ]),
+);
+const addPawaPayPayoutAccount = _i1.OperationDefinitionNode(
+  type: _i1.OperationType.mutation,
+  name: _i1.NameNode(value: 'addPawaPayPayoutAccount'),
+  variableDefinitions: [
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'phoneNumber')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'country')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'currency')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'provider')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'String'),
+        isNonNull: true,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+  ],
+  directives: [],
+  selectionSet: _i1.SelectionSetNode(selections: [
+    _i1.FieldNode(
+      name: _i1.NameNode(value: 'addPawaPayPayoutAccount'),
+      alias: null,
+      arguments: [
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'phoneNumber'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'phoneNumber')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'country'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'country')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'currency'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'currency')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'provider'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'provider')),
+        ),
+      ],
+      directives: [],
+      selectionSet: _i1.SelectionSetNode(selections: [
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'status'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'errorMessage'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'result'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: _i1.SelectionSetNode(selections: [
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'id'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'methodId'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'payEmail'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'address1'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'country'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'currency'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'default'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            _i1.FieldNode(
+              name: _i1.NameNode(value: 'isVerified'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+          ]),
+        ),
+      ]),
+    )
+  ]),
+);
 const document = _i1.DocumentNode(definitions: [
   getPayouts,
   confirmPayout,
@@ -722,4 +1227,8 @@ const document = _i1.DocumentNode(definitions: [
   getPaymentMethods,
   addPayout,
   verifyPayout,
+  getPawaPayOptions,
+  initiatePawaPayDeposit,
+  getPawaPayDepositStatus,
+  addPawaPayPayoutAccount,
 ]);

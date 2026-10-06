@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart' as intl;
 import 'package:get/get.dart';
 import 'package:gozy/config/client.dart';
 import 'package:gozy/constant.dart';
@@ -10,10 +9,12 @@ import 'package:gozy/resources/app_lang.dart';
 import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/screens/views/home_item_detail/home_item_detail_controller.dart';
 import 'package:gozy/utils/text_editing_controller.dart';
+import 'package:gozy/utils/localized_date_time.dart';
 import 'package:gozy/widgets/common_extension_functions.dart';
 
 class ConfirmAndPayPageController extends BaseController {
-  Rxn<GgetBillingCalculationData> billingCalcuationData = Rxn<GgetBillingCalculationData>();
+  Rxn<GgetBillingCalculationData> billingCalcuationData =
+      Rxn<GgetBillingCalculationData>();
   var rxUpdatedGuestCount = ReactiveVariable("rxUpdatedGuestCount", 1);
   dynamic itemInfo;
   List<DateTime> contactHostDates = <DateTime>[];
@@ -26,22 +27,35 @@ class ConfirmAndPayPageController extends BaseController {
 
   bool validateCredentials(CustomTextEditingController textController) {
     Map<String, bool> results = {
-      label_please_select_start_time.tr : rxSelectedStartTime.value.isEmpty,
-      label_error_msg_please_enter_the_message.tr: textController.Ttext.toString().trim().isEmpty,
+      label_please_select_start_time.tr: rxSelectedStartTime.value.isEmpty,
+      label_error_msg_please_enter_the_message.tr:
+          textController.Ttext.toString().trim().isEmpty,
     };
 
     if (pageType == 'pay') {
       results.addAll(checkUserVerficiation());
     } else {
-      results[label_please_select_the_date_to_proceed.tr] = rxSelectedDates.value.isEmpty;
-      results[label_please_select_start_time.tr] = rxSelectedStartTime.value.isEmpty;
-      results[label_please_select_end_time.tr] = rxSelectedEndTime.value.isEmpty;
+      results[label_please_select_the_date_to_proceed.tr] =
+          rxSelectedDates.value.isEmpty;
+      results[label_please_select_start_time.tr] =
+          rxSelectedStartTime.value.isEmpty;
+      results[label_please_select_end_time.tr] =
+          rxSelectedEndTime.value.isEmpty;
 
-      if (rxSelectedStartTime.value.isNotEmpty && rxSelectedEndTime.value.isNotEmpty) {
-        if (rxSelectedDates.value.isNotEmpty && rxSelectedDates.value.first == rxSelectedDates.value.last) {
+      if (rxSelectedStartTime.value.isNotEmpty &&
+          rxSelectedEndTime.value.isNotEmpty) {
+        if (rxSelectedDates.value.isNotEmpty &&
+            rxSelectedDates.value.first == rxSelectedDates.value.last) {
           try {
-            DateTime startTime = intl.DateFormat("h:mm a").parse(rxSelectedStartTime.value);
-            DateTime endTime = intl.DateFormat("h:mm a").parse(rxSelectedEndTime.value);
+            final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+            final startTime = LocalizedDateTime.tryParseTime(
+                rxSelectedStartTime.value, locale);
+            final endTime =
+                LocalizedDateTime.tryParseTime(rxSelectedEndTime.value, locale);
+            if (startTime == null || endTime == null) {
+              results[error_msg_choose_different_end_time.tr] = true;
+              return results.isValidate(controller: this);
+            }
 
             if (startTime.isAtSameMomentAs(endTime)) {
               results[error_msg_choose_different_end_time.tr] = true;
@@ -66,10 +80,13 @@ class ConfirmAndPayPageController extends BaseController {
   void contactHost() {
     double startTime = convertTo24Hour(rxSelectedStartTime.value);
     double endTime = convertTo24Hour(rxSelectedEndTime.value);
-    debugPrint("contactHostrxSelectedStartTime.value: ${startTime} --- ${endTime}");
+    debugPrint(
+        "contactHostrxSelectedStartTime.value: ${startTime} --- ${endTime}");
     isLoading.value = true;
-    String startDate = rxSelectedDates.value.first.convert_MDY(format: commonDateFormat).$1;
-    String endDate = rxSelectedDates.value.last.convert_MDY(format: commonDateFormat).$1;
+    String startDate =
+        rxSelectedDates.value.first.convert_MDY(format: commonDateFormat).$1;
+    String endDate =
+        rxSelectedDates.value.last.convert_MDY(format: commonDateFormat).$1;
     final getcontactHostReq = GContactHostReq((b) => b
       ..vars.listId = itemInfo.id
       ..vars.startDate = startDate
@@ -84,10 +101,12 @@ class ConfirmAndPayPageController extends BaseController {
       ..vars.build());
     debugPrint("_getcontactHostReq: $getcontactHostReq---$isShowLoader");
 
-    FerryLoggerClient.makeRequest(getcontactHostReq, this, contactHost,isToGet400Message: true)?.then((res) {
+    FerryLoggerClient.makeRequest(getcontactHostReq, this, contactHost,
+            isToGet400Message: true)
+        ?.then((res) {
       HomeItemDetailController controller = Get.find();
       controller.isLoading.value = false;
-      
+
       GContactHostData? contactHostData = res.data as GContactHostData?;
       if (contactHostData?.createEnquiry?.status == 200) {
         showToast(label_sent_to_host.tr);
@@ -108,6 +127,7 @@ class ConfirmAndPayPageController extends BaseController {
       }
     });
   }
+
   void clearBookingData() {
     billingCalcuationData.value = null;
     rxUpdatedGuestCount.value = 1;

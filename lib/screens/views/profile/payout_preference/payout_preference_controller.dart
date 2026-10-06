@@ -6,9 +6,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:gozy/app.dart';
 import 'package:gozy/graphql/Payout/__generated__/payout.req.gql.dart';
+import 'package:gozy/graphql/__generated__/schema.schema.gql.dart';
 import 'package:gozy/screens/views/home/home_controller.dart';
 import 'package:gozy/screens/views/profile/payout_preference/payout_preference_navigator.dart';
 import 'package:gozy/utils/common_api_controller.dart';
+import 'package:gozy/utils/mobile_payment_gateway.dart';
 import 'package:gozy/utils/text_editing_controller.dart';
 import 'package:gozy/widgets/common_extension_functions.dart';
 
@@ -37,6 +39,68 @@ class PayoutPreferenceController extends ProfileController
   RxBool isPayoutLoading = false.obs;
   RxBool isNextButtonLoading = false.obs;
   RxBool isVerifyButtonLoading = false.obs;
+  final TextEditingController pawaPayPhoneController = TextEditingController();
+  List<GgetPawaPayOptionsData_getPawaPayOptions_countries?> pawaPayPayoutCountries = [];
+  String? pawaPayPayoutCountry;
+  String? pawaPayPayoutCurrency;
+  String? pawaPayPayoutProvider;
+
+  Future<void> loadPawaPayPayoutOptions() async {
+    final completer = Completer<void>();
+    final params = GgetPawaPayOptionsReq((b) => b.vars.operation = GPawaPayOperation.PAYOUT);
+    FerryLoggerClient.makeRequest(params, this, loadPawaPayPayoutOptions, isToGet400Message: true)?.then((response) {
+      final data = response.data as GgetPawaPayOptionsData;
+      pawaPayPayoutCountries = data.getPawaPayOptions?.countries?.toList() ?? [];
+      final recommended = data.getPawaPayOptions?.recommendedCountry;
+      final country = pawaPayPayoutCountries.whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
+          .where((item) => item.country == recommended).firstOrNull
+        ?? pawaPayPayoutCountries.whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>().firstOrNull;
+      selectPawaPayPayoutCountry(country?.country);
+      update();
+      completer.complete();
+    });
+    return completer.future;
+  }
+
+  void selectPawaPayPayoutCountry(String? value) {
+    pawaPayPayoutCountry = value;
+    final country = pawaPayPayoutCountries.whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
+        .where((item) => item.country == value).firstOrNull;
+    pawaPayPayoutCurrency = country?.currencies?.firstOrNull?.currency;
+    pawaPayPayoutProvider = country?.currencies?.firstOrNull?.providers?.firstOrNull?.provider;
+    update();
+  }
+
+  void selectPawaPayPayoutCurrency(String? value) {
+    pawaPayPayoutCurrency = value;
+    final country = pawaPayPayoutCountries.whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
+        .where((item) => item.country == pawaPayPayoutCountry).firstOrNull;
+    final currency = country?.currencies?.whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies>()
+        .where((item) => item.currency == value).firstOrNull;
+    pawaPayPayoutProvider = currency?.providers?.firstOrNull?.provider;
+    update();
+  }
+
+  Future<void> addPawaPayPayoutAccount() async {
+    if (pawaPayPhoneController.text.trim().isEmpty || pawaPayPayoutCountry == null || pawaPayPayoutCurrency == null || pawaPayPayoutProvider == null) {
+      showSnackBar(pawapay_required_fields.tr);
+      return;
+    }
+    final params = GaddPawaPayPayoutAccountReq((b) => b.vars
+      ..phoneNumber = pawaPayPhoneController.text.trim()
+      ..country = pawaPayPayoutCountry
+      ..currency = pawaPayPayoutCurrency
+      ..provider = pawaPayPayoutProvider);
+    FerryLoggerClient.makeRequest(params, this, addPawaPayPayoutAccount, isToGet400Message: true)?.then((response) async {
+      final data = response.data as GaddPawaPayPayoutAccountData;
+      if (data.addPawaPayPayoutAccount?.status == 200) {
+        Get.back();
+        getPayouts();
+      } else {
+        showSnackBar(data.addPawaPayPayoutAccount?.errorMessage ?? pawapay_payment_failed.tr);
+      }
+    });
+  }
 
   @override
   onReady() {

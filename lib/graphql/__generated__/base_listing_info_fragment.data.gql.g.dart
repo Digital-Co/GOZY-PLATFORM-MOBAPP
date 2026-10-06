@@ -1875,6 +1875,20 @@ class _$GviewListingShortFragmentData_listingDataSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.weeklyDiscount;
+    if (value != null) {
+      result
+        ..add('weeklyDiscount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.monthlyDiscount;
+    if (value != null) {
+      result
+        ..add('monthlyDiscount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     return result;
   }
 
@@ -1901,6 +1915,14 @@ class _$GviewListingShortFragmentData_listingDataSerializer
         case 'currency':
           result.currency = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'weeklyDiscount':
+          result.weeklyDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'monthlyDiscount':
+          result.monthlyDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
           break;
       }
     }
@@ -4732,6 +4754,10 @@ class _$GviewListingShortFragmentData_listingData
   final double? basePrice;
   @override
   final String? currency;
+  @override
+  final double? weeklyDiscount;
+  @override
+  final double? monthlyDiscount;
 
   factory _$GviewListingShortFragmentData_listingData(
           [void Function(GviewListingShortFragmentData_listingDataBuilder)?
@@ -4740,7 +4766,11 @@ class _$GviewListingShortFragmentData_listingData
           ._build();
 
   _$GviewListingShortFragmentData_listingData._(
-      {required this.G__typename, this.basePrice, this.currency})
+      {required this.G__typename,
+      this.basePrice,
+      this.currency,
+      this.weeklyDiscount,
+      this.monthlyDiscount})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
         r'GviewListingShortFragmentData_listingData', 'G__typename');
@@ -4762,7 +4792,9 @@ class _$GviewListingShortFragmentData_listingData
     return other is GviewListingShortFragmentData_listingData &&
         G__typename == other.G__typename &&
         basePrice == other.basePrice &&
-        currency == other.currency;
+        currency == other.currency &&
+        weeklyDiscount == other.weeklyDiscount &&
+        monthlyDiscount == other.monthlyDiscount;
   }
 
   @override
@@ -4771,6 +4803,8 @@ class _$GviewListingShortFragmentData_listingData
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, basePrice.hashCode);
     _$hash = $jc(_$hash, currency.hashCode);
+    _$hash = $jc(_$hash, weeklyDiscount.hashCode);
+    _$hash = $jc(_$hash, monthlyDiscount.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -4781,7 +4815,9 @@ class _$GviewListingShortFragmentData_listingData
             r'GviewListingShortFragmentData_listingData')
           ..add('G__typename', G__typename)
           ..add('basePrice', basePrice)
-          ..add('currency', currency))
+          ..add('currency', currency)
+          ..add('weeklyDiscount', weeklyDiscount)
+          ..add('monthlyDiscount', monthlyDiscount))
         .toString();
   }
 }
@@ -4804,6 +4840,16 @@ class GviewListingShortFragmentData_listingDataBuilder
   String? get currency => _$this._currency;
   set currency(String? currency) => _$this._currency = currency;
 
+  double? _weeklyDiscount;
+  double? get weeklyDiscount => _$this._weeklyDiscount;
+  set weeklyDiscount(double? weeklyDiscount) =>
+      _$this._weeklyDiscount = weeklyDiscount;
+
+  double? _monthlyDiscount;
+  double? get monthlyDiscount => _$this._monthlyDiscount;
+  set monthlyDiscount(double? monthlyDiscount) =>
+      _$this._monthlyDiscount = monthlyDiscount;
+
   GviewListingShortFragmentData_listingDataBuilder() {
     GviewListingShortFragmentData_listingData._initializeBuilder(this);
   }
@@ -4814,6 +4860,8 @@ class GviewListingShortFragmentData_listingDataBuilder
       _G__typename = $v.G__typename;
       _basePrice = $v.basePrice;
       _currency = $v.currency;
+      _weeklyDiscount = $v.weeklyDiscount;
+      _monthlyDiscount = $v.monthlyDiscount;
       _$v = null;
     }
     return this;
@@ -4841,7 +4889,9 @@ class GviewListingShortFragmentData_listingDataBuilder
             G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
                 r'GviewListingShortFragmentData_listingData', 'G__typename'),
             basePrice: basePrice,
-            currency: currency);
+            currency: currency,
+            weeklyDiscount: weeklyDiscount,
+            monthlyDiscount: monthlyDiscount);
     replace(_$result);
     return _$result;
   }
