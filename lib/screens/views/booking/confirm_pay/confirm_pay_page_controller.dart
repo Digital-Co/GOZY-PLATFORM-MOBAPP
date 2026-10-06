@@ -40,8 +40,9 @@ class ConfirmAndPayPageController extends BaseController {
       if (rxSelectedStartTime.value.isNotEmpty && rxSelectedEndTime.value.isNotEmpty) {
         if (rxSelectedDates.value.isNotEmpty && rxSelectedDates.value.first == rxSelectedDates.value.last) {
           try {
-            DateTime startTime = intl.DateFormat("h:mm a").parse(rxSelectedStartTime.value);
-            DateTime endTime = intl.DateFormat("h:mm a").parse(rxSelectedEndTime.value);
+            final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+            DateTime startTime = intl.DateFormat.jm(locale).parse(rxSelectedStartTime.value);
+            DateTime endTime = intl.DateFormat.jm(locale).parse(rxSelectedEndTime.value);
 
             if (startTime.isAtSameMomentAs(endTime)) {
               results[error_msg_choose_different_end_time.tr] = true;

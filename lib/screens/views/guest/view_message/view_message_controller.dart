@@ -130,10 +130,10 @@ class ViewMessageController extends InboxController {
       ..vars.threadId = threadid
       ..vars.startDate = messageType == 'message'
           ? null
-          : getDateFormat(dateFormat: preApprovalDateFormat, milliSec: threadItemForType?.startDate).$1
+          : getDateFormat(dateFormat: preApprovalDateFormat, milliSec: threadItemForType?.startDate, localized: false).$1
       ..vars.endDate = messageType == 'message'
           ? null
-          : getDateFormat(dateFormat: preApprovalDateFormat, milliSec: threadItemForType?.endDate).$1
+          : getDateFormat(dateFormat: preApprovalDateFormat, milliSec: threadItemForType?.endDate, localized: false).$1
       ..vars.personCapacity = messageType == 'message' ? null : threadItemForType?.personCapacity
       ..vars.startTime = double.tryParse(threadItemForType?.startTime.toString() ?? '0.0')
       ..vars.endTime = double.tryParse(threadItemForType?.endTime.toString() ?? '0.0')
@@ -220,9 +220,9 @@ class ViewMessageController extends InboxController {
 
   void getBillingcalculationData() {
     (String, DateTime) startDate =
-        getDateFormat(dateFormat: commonDateFormat, milliSec: threadItemForType?.startDate);
+        getDateFormat(dateFormat: commonDateFormat, milliSec: threadItemForType?.startDate, localized: false);
     (String, DateTime) endDate =
-        getDateFormat(dateFormat: commonDateFormat, milliSec: threadItemForType?.endDate);
+        getDateFormat(dateFormat: commonDateFormat, milliSec: threadItemForType?.endDate, localized: false);
 
     debugPrint('threadItemForType: $threadItemForType');
     final getBillingCalculationReq = GgetBillingCalculationReq((b) => b

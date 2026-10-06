@@ -1,5 +1,11 @@
 import 'package:get/get.dart';
 
+const String duration_discount_from_days = 'duration_discount_from_days';
+const String duration_discount_offers = 'duration_discount_offers';
+const String duration_discount_you_save = 'duration_discount_you_save';
+const String duration_discount_add_days = 'duration_discount_add_days';
+const String duration_discount_unlock = 'duration_discount_unlock';
+
 /*
 * /Users/radicalstart-m1/Documents/flutter_3.16.1/bin/flutter pub run customization:customization lang==you_are_offline='You are offline'
 to generate multilang file for respective tiles
@@ -828,10 +834,16 @@ const String email_change_send_failed = "email_change_send_failed";
 const String email_change_confirmed = "email_change_confirmed";
 const String email_change_already_confirmed = "email_change_already_confirmed";
 const String email_change_confirmation_failed = "email_change_confirmation_failed";
+const String payment_unavailable = "payment_unavailable";
+const String payout_unavailable = "payout_unavailable";
+const String pawapay_phone_number = "pawapay_phone_number";
+const String pawapay_country = "pawapay_country";
+const String pawapay_currency = "pawapay_currency";
+const String pawapay_provider = "pawapay_provider";
+const String pawapay_required_fields = "pawapay_required_fields";
+const String pawapay_payment_pending = "pawapay_payment_pending";
+const String pawapay_payment_failed = "pawapay_payment_failed";
+const String pawapay_check_status = "pawapay_check_status";
 
-String get paymentUnavailableMessage => Get.locale?.languageCode == 'fr'
-    ? 'Aucun moyen de paiement disponible.'
-    : 'No payment method available.';
-String get payoutUnavailableMessage => Get.locale?.languageCode == 'fr'
-    ? 'Aucun moyen de reversement disponible.'
-    : 'No payout method available.';
+String get paymentUnavailableMessage => payment_unavailable.tr;
+String get payoutUnavailableMessage => payout_unavailable.tr;

@@ -108,5 +108,7 @@ fragment viewListingShortFragment on ShowListing {
      listingData {
          basePrice
          currency
+         weeklyDiscount
+         monthlyDiscount
      }
 }

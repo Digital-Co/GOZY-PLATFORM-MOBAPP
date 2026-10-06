@@ -3406,6 +3406,20 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.weeklyDiscount;
+    if (value != null) {
+      result
+        ..add('weeklyDiscount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.monthlyDiscount;
+    if (value != null) {
+      result
+        ..add('monthlyDiscount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     value = object.bookingNoticeTime;
     if (value != null) {
       result
@@ -3481,20 +3495,6 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    value = object.weeklyDiscount;
-    if (value != null) {
-      result
-        ..add('weeklyDiscount')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(double)));
-    }
-    value = object.monthlyDiscount;
-    if (value != null) {
-      result
-        ..add('monthlyDiscount')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(double)));
-    }
     value = object.cancellationPolicy;
     if (value != null) {
       result
@@ -3544,6 +3544,14 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
           result.currency = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'weeklyDiscount':
+          result.weeklyDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'monthlyDiscount':
+          result.monthlyDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
         case 'bookingNoticeTime':
           result.bookingNoticeTime = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -3586,14 +3594,6 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
           break;
         case 'delivery':
           result.delivery = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double?;
-          break;
-        case 'weeklyDiscount':
-          result.weeklyDiscount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double?;
-          break;
-        case 'monthlyDiscount':
-          result.monthlyDiscount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
         case 'cancellationPolicy':
@@ -11169,6 +11169,10 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
   @override
   final String? currency;
   @override
+  final double? weeklyDiscount;
+  @override
+  final double? monthlyDiscount;
+  @override
   final String? bookingNoticeTime;
   @override
   final String? checkInStart;
@@ -11191,10 +11195,6 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
   @override
   final double? delivery;
   @override
-  final double? weeklyDiscount;
-  @override
-  final double? monthlyDiscount;
-  @override
   final int? cancellationPolicy;
   @override
   final double? securityDeposit;
@@ -11214,6 +11214,8 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
       {required this.G__typename,
       this.basePrice,
       this.currency,
+      this.weeklyDiscount,
+      this.monthlyDiscount,
       this.bookingNoticeTime,
       this.checkInStart,
       this.checkInEnd,
@@ -11225,8 +11227,6 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
       this.minDayItemLabel,
       this.minDayOtherItemLabel,
       this.delivery,
-      this.weeklyDiscount,
-      this.monthlyDiscount,
       this.cancellationPolicy,
       this.securityDeposit,
       this.cancellation})
@@ -11259,6 +11259,8 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
         G__typename == other.G__typename &&
         basePrice == other.basePrice &&
         currency == other.currency &&
+        weeklyDiscount == other.weeklyDiscount &&
+        monthlyDiscount == other.monthlyDiscount &&
         bookingNoticeTime == other.bookingNoticeTime &&
         checkInStart == other.checkInStart &&
         checkInEnd == other.checkInEnd &&
@@ -11270,8 +11272,6 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
         minDayItemLabel == other.minDayItemLabel &&
         minDayOtherItemLabel == other.minDayOtherItemLabel &&
         delivery == other.delivery &&
-        weeklyDiscount == other.weeklyDiscount &&
-        monthlyDiscount == other.monthlyDiscount &&
         cancellationPolicy == other.cancellationPolicy &&
         securityDeposit == other.securityDeposit &&
         cancellation == other.cancellation;
@@ -11283,6 +11283,8 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, basePrice.hashCode);
     _$hash = $jc(_$hash, currency.hashCode);
+    _$hash = $jc(_$hash, weeklyDiscount.hashCode);
+    _$hash = $jc(_$hash, monthlyDiscount.hashCode);
     _$hash = $jc(_$hash, bookingNoticeTime.hashCode);
     _$hash = $jc(_$hash, checkInStart.hashCode);
     _$hash = $jc(_$hash, checkInEnd.hashCode);
@@ -11294,8 +11296,6 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
     _$hash = $jc(_$hash, minDayItemLabel.hashCode);
     _$hash = $jc(_$hash, minDayOtherItemLabel.hashCode);
     _$hash = $jc(_$hash, delivery.hashCode);
-    _$hash = $jc(_$hash, weeklyDiscount.hashCode);
-    _$hash = $jc(_$hash, monthlyDiscount.hashCode);
     _$hash = $jc(_$hash, cancellationPolicy.hashCode);
     _$hash = $jc(_$hash, securityDeposit.hashCode);
     _$hash = $jc(_$hash, cancellation.hashCode);
@@ -11310,6 +11310,8 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
           ..add('G__typename', G__typename)
           ..add('basePrice', basePrice)
           ..add('currency', currency)
+          ..add('weeklyDiscount', weeklyDiscount)
+          ..add('monthlyDiscount', monthlyDiscount)
           ..add('bookingNoticeTime', bookingNoticeTime)
           ..add('checkInStart', checkInStart)
           ..add('checkInEnd', checkInEnd)
@@ -11321,8 +11323,6 @@ class _$GgetTransactionHistoryData_getTransactionHistory_reservationData_listDat
           ..add('minDayItemLabel', minDayItemLabel)
           ..add('minDayOtherItemLabel', minDayOtherItemLabel)
           ..add('delivery', delivery)
-          ..add('weeklyDiscount', weeklyDiscount)
-          ..add('monthlyDiscount', monthlyDiscount)
           ..add('cancellationPolicy', cancellationPolicy)
           ..add('securityDeposit', securityDeposit)
           ..add('cancellation', cancellation))
@@ -11349,6 +11349,16 @@ class GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_
   String? _currency;
   String? get currency => _$this._currency;
   set currency(String? currency) => _$this._currency = currency;
+
+  double? _weeklyDiscount;
+  double? get weeklyDiscount => _$this._weeklyDiscount;
+  set weeklyDiscount(double? weeklyDiscount) =>
+      _$this._weeklyDiscount = weeklyDiscount;
+
+  double? _monthlyDiscount;
+  double? get monthlyDiscount => _$this._monthlyDiscount;
+  set monthlyDiscount(double? monthlyDiscount) =>
+      _$this._monthlyDiscount = monthlyDiscount;
 
   String? _bookingNoticeTime;
   String? get bookingNoticeTime => _$this._bookingNoticeTime;
@@ -11400,16 +11410,6 @@ class GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_
   double? get delivery => _$this._delivery;
   set delivery(double? delivery) => _$this._delivery = delivery;
 
-  double? _weeklyDiscount;
-  double? get weeklyDiscount => _$this._weeklyDiscount;
-  set weeklyDiscount(double? weeklyDiscount) =>
-      _$this._weeklyDiscount = weeklyDiscount;
-
-  double? _monthlyDiscount;
-  double? get monthlyDiscount => _$this._monthlyDiscount;
-  set monthlyDiscount(double? monthlyDiscount) =>
-      _$this._monthlyDiscount = monthlyDiscount;
-
   int? _cancellationPolicy;
   int? get cancellationPolicy => _$this._cancellationPolicy;
   set cancellationPolicy(int? cancellationPolicy) =>
@@ -11442,6 +11442,8 @@ class GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_
       _G__typename = $v.G__typename;
       _basePrice = $v.basePrice;
       _currency = $v.currency;
+      _weeklyDiscount = $v.weeklyDiscount;
+      _monthlyDiscount = $v.monthlyDiscount;
       _bookingNoticeTime = $v.bookingNoticeTime;
       _checkInStart = $v.checkInStart;
       _checkInEnd = $v.checkInEnd;
@@ -11453,8 +11455,6 @@ class GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_
       _minDayItemLabel = $v.minDayItemLabel;
       _minDayOtherItemLabel = $v.minDayOtherItemLabel;
       _delivery = $v.delivery;
-      _weeklyDiscount = $v.weeklyDiscount;
-      _monthlyDiscount = $v.monthlyDiscount;
       _cancellationPolicy = $v.cancellationPolicy;
       _securityDeposit = $v.securityDeposit;
       _cancellation = $v.cancellation?.toBuilder();
@@ -11498,6 +11498,8 @@ class GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_
                   'G__typename'),
               basePrice: basePrice,
               currency: currency,
+              weeklyDiscount: weeklyDiscount,
+              monthlyDiscount: monthlyDiscount,
               bookingNoticeTime: bookingNoticeTime,
               checkInStart: checkInStart,
               checkInEnd: checkInEnd,
@@ -11509,8 +11511,6 @@ class GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_
               minDayItemLabel: minDayItemLabel,
               minDayOtherItemLabel: minDayOtherItemLabel,
               delivery: delivery,
-              weeklyDiscount: weeklyDiscount,
-              monthlyDiscount: monthlyDiscount,
               cancellationPolicy: cancellationPolicy,
               securityDeposit: securityDeposit,
               cancellation: _cancellation?.build());

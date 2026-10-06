@@ -183,6 +183,8 @@ abstract class GviewListingShortFragment_listingData {
   String get G__typename;
   double? get basePrice;
   String? get currency;
+  double? get weeklyDiscount;
+  double? get monthlyDiscount;
   Map<String, dynamic> toJson();
 }
 
@@ -933,6 +935,10 @@ abstract class GviewListingShortFragmentData_listingData
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<GviewListingShortFragmentData_listingData> get serializer =>
       _$gviewListingShortFragmentDataListingDataSerializer;
 

@@ -1143,6 +1143,10 @@ abstract class GgetAllWishListGroupData_getAllWishListGroup_results_wishListCove
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<
           GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listData_listingData>
       get serializer =>
@@ -2329,6 +2333,10 @@ abstract class GgetWishListGroupData_getWishListGroup_results_wishLists_listData
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<
           GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingData>
       get serializer =>

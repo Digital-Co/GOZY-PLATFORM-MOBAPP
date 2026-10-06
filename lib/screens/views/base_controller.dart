@@ -445,7 +445,8 @@ class BaseController extends FullLifeCycleController with FullLifeCycleMixin imp
   double convertTo24Hour(String timeString) {
     if (timeString.isEmpty) return 0.0;
     try {
-      DateTime dateTime = intl.DateFormat(receiptTimeFormat).parse(timeString);
+      final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+      DateTime dateTime = intl.DateFormat.jm(locale).parse(timeString);
 
       double hour = double.parse(intl.DateFormat('H').format(dateTime));
       double minute = double.parse(intl.DateFormat('m').format(dateTime));

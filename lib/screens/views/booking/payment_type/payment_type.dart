@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gozy/config/client.dart';
@@ -13,6 +11,7 @@ import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/screens/views/booking/booking_navigator.dart';
 import 'package:gozy/screens/views/booking/payment_type/payment_type_controller.dart';
 import 'package:gozy/screens/views/custom_scaffold.dart';
+import 'package:gozy/utils/mobile_payment_gateway.dart';
 import 'package:gozy/widgets/bottom_sheet/bottom_sheet_refresh_controller.dart';
 import 'package:gozy/widgets/cancellation_policy_view.dart';
 import 'package:gozy/widgets/common/custom_bottomsheet/custom_bottomsheet.dart';
@@ -43,7 +42,8 @@ class PaymentTypePage extends CustomStatefulWidget {
   PaymentTypePageState createState() => PaymentTypePageState();
 }
 
-class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> with TickerProviderStateMixin {
+class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
+    with TickerProviderStateMixin {
   PaymentTypeController controller = Get.find();
 
   bool? showBillingBorder;
@@ -65,7 +65,8 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
       controller.rxSelectedPaymentType.value = 0;
       if (Get.arguments != null) {
         if (Get.arguments.containsKey("")) {}
-        if (Get.arguments.containsKey("isFrom") && Get.arguments["isFrom"] == "servicePlan") {
+        if (Get.arguments.containsKey("isFrom") &&
+            Get.arguments["isFrom"] == "servicePlan") {
           isPaymentFrom = Get.arguments["isFrom"];
           servicePlanList = Get.arguments["itemInfo"];
           controller.userType = Get.arguments["userType"];
@@ -74,9 +75,11 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
           isFromBooking = true;
           isPaymentFrom = "";
           controller.itemInfo = Get.arguments['itemInfo'];
-          controller.billingCalcuationData.value = Get.arguments['billingCalcuationData'];
+          controller.billingCalcuationData.value =
+              Get.arguments['billingCalcuationData'];
           controller.message = Get.arguments['message'];
-          controller.isDeliveryCheck = Get.arguments['isDeliveryCheck'] ?? false;
+          controller.isDeliveryCheck =
+              Get.arguments['isDeliveryCheck'] ?? false;
           controller.startTime = Get.arguments['startTime'];
           controller.endTime = Get.arguments['endTime'];
           controller.licenceNumber = Get.arguments['licenceNumber'];
@@ -86,6 +89,7 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
           controller.country = Get.arguments['country'];
           controller.couponCode = Get.arguments['couponCode'] ?? "";
           controller.isPromoApplied = Get.arguments['isPromoApplied'] ?? false;
+          controller.restorePendingPawaPay();
         }
       }
       controller.checkNetwork(controller.getpaymentTypes);
@@ -131,7 +135,8 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
                     isBorderNeeded
                         ? CustomBorderContainer(
                             color: paymentsContainerColor,
-                            borderRadius: isBorderNeeded ? billingBorderRadius : null,
+                            borderRadius:
+                                isBorderNeeded ? billingBorderRadius : null,
                             borderColor: appColors.myTripsDividerColor,
                             body: _paymentListWidget(),
                           ).toPad(horizontal: AppDimen.startMargin)
@@ -141,7 +146,9 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
                           ).toPad(horizontal: AppDimen.startMargin),
                     20.toHeight(),
                     if (isPaymentFrom == "servicePlan") ...[
-                      filterDivider.toPad(horizontal: !isBorderNeeded ? 0 : AppDimen.startMargin),
+                      filterDivider.toPad(
+                          horizontal:
+                              !isBorderNeeded ? 0 : AppDimen.startMargin),
                       [
                         CustomText(
                           text: label_doesnt_auto_renew_content.tr,
@@ -154,20 +161,30 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
                           size: AppDimen.textSize_14,
                           fontWeight: AppFont.regular,
                         ),
-                      ].toColumn().toPad(horizontal: AppDimen.startMargin, top: 10),
+                      ]
+                          .toColumn()
+                          .toPad(horizontal: AppDimen.startMargin, top: 10),
                     ] else ...[
                       !isBorderNeeded
-                          ? filterDivider.toPad(horizontal: !isBorderNeeded ? 0 : AppDimen.startMargin)
+                          ? filterDivider.toPad(
+                              horizontal:
+                                  !isBorderNeeded ? 0 : AppDimen.startMargin)
                           : 0.toHeight(),
-                      if(overALLThemeType==1||overALLThemeType==2||overALLThemeType==3)...[
-                        filterDivider.toPad(horizontal:AppDimen.startMargin),
+                      if (overALLThemeType == 1 ||
+                          overALLThemeType == 2 ||
+                          overALLThemeType == 3) ...[
+                        filterDivider.toPad(horizontal: AppDimen.startMargin),
                       ],
                       18.toHeight(),
-                      _showReservationCharges().toPad(horizontal: AppDimen.startMargin),
+                      _showReservationCharges()
+                          .toPad(horizontal: AppDimen.startMargin),
                       5.toHeight(),
-                      filterDivider.toPad(horizontal: !isBorderNeeded ? 0 : AppDimen.startMargin),
+                      filterDivider.toPad(
+                          horizontal:
+                              !isBorderNeeded ? 0 : AppDimen.startMargin),
                       20.toHeight(),
-                      _buildCancellationPolicyInfo().toPad(horizontal: AppDimen.startMargin),
+                      _buildCancellationPolicyInfo()
+                          .toPad(horizontal: AppDimen.startMargin),
                       20.toHeight(),
                     ]
                   ].toColumn().toScroll()
@@ -183,11 +200,13 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
     GgetBillingCalculationData_getBillingCalculation_result? billingdata =
         controller.billingCalcuationData.value?.getBillingCalculation?.result;
     double fontsize = (maxwidthamountWidget /
-        ((billingdata?.priceForDays.toNumberFormat(symbol: controller.getCurrencySymbol()))
+        ((billingdata?.priceForDays
+                .toNumberFormat(symbol: controller.getCurrencySymbol()))
             .toString()
             .length) *
         1.7);
-    fontsize = fontsize > AppDimen.textSize_16 ? AppDimen.textSize_16 : fontsize;
+    fontsize =
+        fontsize > AppDimen.textSize_16 ? AppDimen.textSize_16 : fontsize;
     return [
       CustomTitleText(
         text: label_reservation_charges.tr,
@@ -205,30 +224,35 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
         controller.paymentlist?[i]?.isEnable ?? true
             ? toOnTap(
                     onTap: () {
-                      controller.rxSelectedPaymentType.value = controller.paymentlist?[i]?.paymentType ?? 1;
+                      controller.rxSelectedPaymentType.value =
+                          controller.paymentlist?[i]?.paymentType ?? 1;
                       controller.change(
                           rxVariable: controller.rxSelectedPaymentType,
                           value: controller.paymentlist?[i]?.paymentType ?? 1);
                     },
                     child: PaymentTypeSelectionView(
-                        paymentTypeIcon:
-                            (controller.paymentlist?[i]?.name ?? '').toLowerCase() == 'bank account'
-                                ? Assets.drawableStripe
-                                : Assets.drawablePaypal,
+                        paymentTypeIcon: _paymentIcon(
+                            controller.paymentlist?[i]?.paymentType),
+                        imageUrl: controller.paymentlist?[i]?.imageUrl,
                         paymentTypeTitle:
-                            '${(controller.paymentlist?[i]?.name ?? '').toLowerCase() == 'bank account' ? label_card_card_by_stripe.tr : controller.paymentlist?[i]?.name}',
-                        ispaymentTypeSelected: (controller.rxSelectedPaymentType.value ==
-                            controller.paymentlist?[i]?.paymentType)))
+                            controller.paymentlist?[i]?.paymentType == 2
+                                ? label_card_card_by_stripe.tr
+                                : (controller.paymentlist?[i]?.name ?? ''),
+                        ispaymentTypeSelected:
+                            (controller.rxSelectedPaymentType.value ==
+                                controller.paymentlist?[i]?.paymentType)))
                 .toPad(start: 15)
             : const SizedBox.shrink(),
         15.toHeight(),
         if ((controller.paymentlist?[i]?.isEnable ?? true) &&
-            (controller.paymentlist?[i]?.name.toString().toLowerCase() == label_paypal.toLowerCase() &&
-                controller.rxSelectedPaymentType.value == controller.paymentlist?[i]?.paymentType)) ...[
+            (controller.paymentlist?[i]?.paymentType == 1 &&
+                controller.rxSelectedPaymentType.value ==
+                    controller.paymentlist?[i]?.paymentType)) ...[
           CancelButton(
               borderColor: overALLThemeType == 2 ? Colors.transparent : null,
               isExpand: false,
-              buttonText: controller.selectedpaymentCurrency ?? appPreference.preferredCurrency,
+              buttonText: controller.selectedpaymentCurrency ??
+                  appPreference.preferredCurrency,
               borderRadius: overALLThemeType == 4
                   ? 19
                   : overALLAppLayoutModel?.borderRadius,
@@ -259,7 +283,8 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
                           .toList(),
                       borderRadius: overALLAppLayoutModel?.borderRadius,
                       themeType: overALLThemeType,
-                      selectedValue: controller.selectedpaymentCurrency ?? appPreference.preferredCurrency,
+                      selectedValue: controller.selectedpaymentCurrency ??
+                          appPreference.preferredCurrency,
                       isShowCircleTick: true,
                       title: label_choose_currency.tr,
                       isMaterialLocalization: true,
@@ -273,6 +298,10 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
                 );
               }).toPad(bottom: 15, start: 15),
         ],
+        if (controller.paymentlist?[i]?.paymentType == 3 &&
+            controller.rxSelectedPaymentType.value == 3) ...[
+          _pawaPayFields().toPad(horizontal: 15, bottom: 15),
+        ],
         if (i < (controller.paymentlist?.length ?? 1) - 1) ...[
           filterDivider,
           15.toHeight(),
@@ -281,7 +310,84 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
     ].toColumn();
   }
 
-  Widget _priceDetailWidget({GgetBillingCalculationData_getBillingCalculation_result? receiptItem}) {
+  String _paymentIcon(int? paymentType) {
+    switch (mobilePaymentGatewayForType(paymentType)) {
+      case MobilePaymentGateway.paypal:
+        return Assets.drawablePaypal;
+      case MobilePaymentGateway.stripe:
+        return Assets.drawableStripe;
+      case MobilePaymentGateway.pawaPay:
+        return 'res/drawable/pawapay.svg';
+      case null:
+        return '';
+    }
+  }
+
+  Widget _pawaPayFields() {
+    final countries = controller.pawaPayCountries
+        .whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
+        .toList();
+    final selectedCountry = countries
+        .firstWhereOrNull((item) => item.country == controller.pawaPayCountry);
+    final currencies = selectedCountry?.currencies
+            ?.whereType<
+                GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies>()
+            .toList() ??
+        [];
+    final selectedCurrency = currencies.firstWhereOrNull(
+        (item) => item.currency == controller.pawaPayCurrency);
+    final providers = selectedCurrency?.providers
+            ?.whereType<
+                GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers>()
+            .toList() ??
+        [];
+    return [
+      DropdownButtonFormField<String>(
+        value: controller.pawaPayCountry,
+        decoration: InputDecoration(labelText: pawapay_country.tr),
+        items: countries
+            .map((item) => DropdownMenuItem(
+                value: item.country,
+                child: Text(item.displayName ?? item.country ?? '')))
+            .toList(),
+        onChanged: controller.selectPawaPayCountry,
+      ),
+      DropdownButtonFormField<String>(
+        value: controller.pawaPayCurrency,
+        decoration: InputDecoration(labelText: pawapay_currency.tr),
+        items: currencies
+            .map((item) => DropdownMenuItem(
+                value: item.currency, child: Text(item.currency ?? '')))
+            .toList(),
+        onChanged: controller.selectPawaPayCurrency,
+      ),
+      DropdownButtonFormField<String>(
+        value: controller.pawaPayProvider,
+        decoration: InputDecoration(labelText: pawapay_provider.tr),
+        items: providers
+            .map((item) => DropdownMenuItem(
+                value: item.provider,
+                child: Text(item.displayName ?? item.provider ?? '')))
+            .toList(),
+        onChanged: (value) {
+          controller.pawaPayProvider = value;
+          controller.update();
+        },
+      ),
+      TextField(
+        controller: controller.pawaPayPhoneController,
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(labelText: pawapay_phone_number.tr),
+      ),
+      if (controller.pawaPayPendingMessage != null)
+        TextButton(
+            onPressed: controller.resumePawaPayPayment,
+            child: Text(pawapay_check_status.tr)),
+    ].toColumn();
+  }
+
+  Widget _priceDetailWidget(
+      {GgetBillingCalculationData_getBillingCalculation_result? receiptItem}) {
     return [
       10.toHeight(),
       (showBillingBorder ?? false)
@@ -290,42 +396,55 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
               borderColor: overALLThemeType == 3
                   ? Colors.transparent
                   : appColors.myTripsDividerColor,
-              color: (showBillingColor ?? false) ? appColors.viewMessageReceiverBGColor : null,
+              color: (showBillingColor ?? false)
+                  ? appColors.viewMessageReceiverBGColor
+                  : null,
               borderRadius: billingBorderRadius,
               body: priceBreakDownWidget(receiptItem: receiptItem),
             )
           : CustomContainer(
-              color: (showBillingColor ?? false) ? appColors.viewMessageReceiverBGColor : null,
+              color: (showBillingColor ?? false)
+                  ? appColors.viewMessageReceiverBGColor
+                  : null,
               body: priceBreakDownWidget(receiptItem: receiptItem),
             ),
       if (overALLThemeType != 2) 20.toHeight(),
     ].toColumn();
   }
 
-  Widget priceBreakDownWidget({GgetBillingCalculationData_getBillingCalculation_result? receiptItem}) {
+  Widget priceBreakDownWidget(
+      {GgetBillingCalculationData_getBillingCalculation_result? receiptItem}) {
     final double days = (receiptItem?.days ?? 0).toDouble();
     final double basePrice = receiptItem?.basePrice ?? 0.0;
     final double priceForDays = receiptItem?.priceForDays ?? 0.0;
-    final double totalForDays = priceForDays > 0 ? priceForDays : (basePrice * days);
+    final double totalForDays =
+        priceForDays > 0 ? priceForDays : (basePrice * days);
     final double perDayPrice = days > 0 ? (totalForDays / days) : basePrice;
 
     double fontsize = (maxwidthamountWidget /
-        ((double.parse(receiptItem!.total.toString()).toNumberFormat(symbol: controller.getCurrencySymbol()))
+        ((double.parse(receiptItem!.total.toString())
+                .toNumberFormat(symbol: controller.getCurrencySymbol()))
             .toString()
             .length) *
         1.7);
-    fontsize = fontsize > AppDimen.textSize_16 ? AppDimen.textSize_16 : AppDimen.textSize_16;
+    fontsize = fontsize > AppDimen.textSize_16
+        ? AppDimen.textSize_16
+        : AppDimen.textSize_16;
 
     return [
       CustomPriceBreakdownText(
               label:
                   '${perDayPrice.currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency).toNumberFormat(symbol: controller.getCurrencySymbol())} X ${receiptItem.days} ${label_day.trPlural(dayPlural.tr, receiptItem.days)}',
-              amount: totalForDays.currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency),
+              amount: totalForDays.currencyConverted(
+                  convertedCurrency: receiptItem.currency ?? defaultCurrency),
               amountFontSize: fontsize,
               isToolTipFirst: true,
               tooltipWidget: (receiptItem.isSpecialPriceAssigned ?? false)
-                  ? _getToolTipWidget(content: label_spl_price_tooltip_content.tr, colors: appColors.secondaryColor, globalKey: RectGetter.createGlobalKey())
-          : const SizedBox.shrink())
+                  ? _getToolTipWidget(
+                      content: label_spl_price_tooltip_content.tr,
+                      colors: appColors.secondaryColor,
+                      globalKey: RectGetter.createGlobalKey())
+                  : const SizedBox.shrink())
           .toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0),
       ((receiptItem.discount ?? 0.0) > 0.0 &&
               (receiptItem.discountLabel ?? '').trim().isNotEmpty)
@@ -343,7 +462,10 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
               isDiscount: true,
               isSelectedSymbolNotNeeded: true,
               label: controller.couponCode ?? "",
-              tooltipWidget: _getToolTipWidget(content: receiptItem.promoCodeDescription??"", colors: appColors.secondaryColor, globalKey: RectGetter.createGlobalKey()),
+              tooltipWidget: _getToolTipWidget(
+                  content: receiptItem.promoCodeDescription ?? "",
+                  colors: appColors.secondaryColor,
+                  globalKey: RectGetter.createGlobalKey()),
               isToolTipFirst: true,
               amount:
                   '${receiptItem.promoDiscount?.currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency)}',
@@ -401,53 +523,62 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
               backIcon: overALLAppLayoutModel!.backIcon,
             ),
             contentWidget: GetBuilder<BottomSheetController>(
-                builder: (newController) =>
-                    CancellationPolicyView(cancellation: cancellation, controller: controller)),
+                builder: (newController) => CancellationPolicyView(
+                    cancellation: cancellation, controller: controller)),
             title: label_cancellation_policy.tr,
           );
         },
       ),
-      Assets.drawableRightArrow.toSVG(colour: appColors.secondaryColor, size: 10,onTap: (){
-        showCustomBottomSheet(
-          backButtonWidget: getBackIconWidget(
-            backIcon: overALLAppLayoutModel!.backIcon,
-          ),
-          contentWidget: GetBuilder<BottomSheetController>(
-              builder: (newController) =>
-                  CancellationPolicyView(cancellation: cancellation, controller: controller)),
-          title: label_cancellation_policy.tr,
-        );
-      }).toPad(start: 5)
+      Assets.drawableRightArrow
+          .toSVG(
+              colour: appColors.secondaryColor,
+              size: 10,
+              onTap: () {
+                showCustomBottomSheet(
+                  backButtonWidget: getBackIconWidget(
+                    backIcon: overALLAppLayoutModel!.backIcon,
+                  ),
+                  contentWidget: GetBuilder<BottomSheetController>(
+                      builder: (newController) => CancellationPolicyView(
+                          cancellation: cancellation, controller: controller)),
+                  title: label_cancellation_policy.tr,
+                );
+              })
+          .toPad(start: 5)
     ].toRow();
   }
 
   Widget _showBottomAddPaymentWidget() {
     return BottomShadowButton(
         buttonPadding: pad(a: 20),
-        borderRadiusGeometry:
-            BorderRadiusDirectional.only(topStart: Radius.circular(20), topEnd: Radius.circular(20)),
+        borderRadiusGeometry: BorderRadiusDirectional.only(
+            topStart: Radius.circular(20), topEnd: Radius.circular(20)),
         buttonText: btn_label_proceed_to_pay.tr,
         onTap: () {
-          debugPrint("isButtonClicked: ${isButtonClicked} -- ${controller.isLoading.value}");
+          debugPrint(
+              "isButtonClicked: ${isButtonClicked} -- ${controller.isLoading.value}");
           if (controller.paymentlist?.isEmpty ?? true) {
             controller.showSnackBar(paymentUnavailableMessage);
             return;
           }
           if (isButtonClicked || controller.isLoading.value) return;
           isButtonClicked = true;
-          Future.delayed(Duration(seconds: 2)).then((value) => isButtonClicked = false);
+          Future.delayed(Duration(seconds: 2))
+              .then((value) => isButtonClicked = false);
 
-
-          for (GgetPaymentMethodsData_getPaymentMethods_results? payment in controller.paymentlist!) {
-
-            if (payment?.name.toString().toLowerCase() == label_paypal.toLowerCase()) {
-              if (controller.rxSelectedPaymentType.value == payment?.paymentType &&
+          for (GgetPaymentMethodsData_getPaymentMethods_results? payment
+              in controller.paymentlist!) {
+            final gateway = mobilePaymentGatewayForType(payment?.paymentType);
+            if (gateway == MobilePaymentGateway.paypal) {
+              if (controller.rxSelectedPaymentType.value ==
+                      payment?.paymentType &&
                   controller.selectedpaymentCurrency == null) {
                 controller.showSnackBar(
                   error_msg_currency_selection.tr,
                 );
                 break;
-              } else if (controller.rxSelectedPaymentType.value == payment?.paymentType) {
+              } else if (controller.rxSelectedPaymentType.value ==
+                  payment?.paymentType) {
                 if (isPaymentFrom == "servicePlan") {
                   controller.isLoading.value = true;
                   controller.checkNetwork(() {
@@ -455,9 +586,11 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
                       isButtonClicked = false;
                       controller.isLoading.value = false;
                       if (value.createPurchaseServicePlan?.status == 200) {
-                        controller.bookingnavigator.navigateScreen(BookingScreen.PayFromWeb, Get.arguments);
+                        controller.bookingnavigator.navigateScreen(
+                            BookingScreen.PayFromWeb, Get.arguments);
                       } else {
-                        controller.showSnackBar(value.createPurchaseServicePlan?.errorMessage);
+                        controller.showSnackBar(
+                            value.createPurchaseServicePlan?.errorMessage);
                       }
                     });
                   });
@@ -467,14 +600,24 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
                 }
                 break;
               }
-            } else {
-              if (controller.rxSelectedPaymentType.value == payment?.paymentType) {
+            } else if (gateway == MobilePaymentGateway.stripe) {
+              if (controller.rxSelectedPaymentType.value ==
+                  payment?.paymentType) {
                 if (!isFromBooking) {
                   servicePlanList = Get.arguments["itemInfo"];
                 }
                 controller.checkNetwork(controller.startCardPaymentSheet);
                 break;
               }
+            } else if (gateway == MobilePaymentGateway.pawaPay &&
+                controller.rxSelectedPaymentType.value == 3 &&
+                isFromBooking) {
+              controller.payWithPawaPay();
+              break;
+            } else if (controller.rxSelectedPaymentType.value ==
+                payment?.paymentType) {
+              controller.showSnackBar(paymentUnavailableMessage);
+              break;
             }
           }
         });
@@ -483,8 +626,10 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
   Widget _showTitleWidget() {
     return [
       CustomTitleText(
-          text: isPaymentFrom == "servicePlan" ? label_payment.tr : '4. ${label_payment.tr}',
-          size: AppDimen.textSize_22,
+        text: isPaymentFrom == "servicePlan"
+            ? label_payment.tr
+            : '4. ${label_payment.tr}',
+        size: AppDimen.textSize_22,
         fontWeight: AppFont.semiBold,
       ),
       12.toHeight(),
@@ -536,7 +681,8 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
       isButtonClicked = false;
       controller.isLoading.value = false;
       if (value.createReservation?.status == 200) {
-        controller.bookingnavigator.navigateScreen(BookingScreen.PayFromWeb, Get.arguments);
+        controller.bookingnavigator
+            .navigateScreen(BookingScreen.PayFromWeb, Get.arguments);
       } else {
         controller.showSnackBar(value.createReservation?.errorMessage);
       }
@@ -553,18 +699,18 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage> wi
         isDisableStroke: true,
         contentBGColor: appColors.black,
         padding: overALLThemeType == 3
-            ? EdgeInsets.only(left: 18,right: 18,bottom: 7,top: 5)
+            ? EdgeInsets.only(left: 18, right: 18, bottom: 7, top: 5)
             : null,
         textColor: appColors.white,
-        content: content
-    );
+        content: content);
     return getToolTipWidget(
       startMargin: 0,
       customShapePointer: customShapePointer,
       controller: controller,
       globalKey: globalKey,
       pagetype: 'profile',
-      overlayWidget: Assets.drawableInfoToolTip.toSVG(size: 13, fit: BoxFit.scaleDown, colour: colors),
+      overlayWidget: Assets.drawableInfoToolTip
+          .toSVG(size: 13, fit: BoxFit.scaleDown, colour: colors),
     ).toPad(end: 4);
   }
 }

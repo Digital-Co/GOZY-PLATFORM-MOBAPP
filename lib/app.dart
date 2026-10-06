@@ -74,14 +74,17 @@ class App extends StatelessWidget {
           FallbackLocalizationDelegate()
         ],
         home: splash,
-        builder: (context, child) {
-          return MediaQuery.withNoTextScaling(child: child!);
-        });
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.5),
+          ),
+          child: child!,
+        ));
   }
 
   static Map<String, String> generateTimeList({required String locale}) {
     final Map<String, String> timeList = {};
-    final DateFormat formatter = DateFormat(receiptTimeFormat);
+    final DateFormat formatter = DateFormat.jm(locale);
     double timeIndicator = 0.0;
     DateTime currentTime = DateTime(2000, 1, 1, 0, 0);
     for (int hour = 0; hour < 24; hour++) {

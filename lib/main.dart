@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:get_secure_storage/get_secure_storage.dart';
 import 'package:gozy/constant.dart';
 import 'package:gozy/firebase_options.dart';
@@ -33,6 +34,7 @@ Future<void> _firebaseMessagingBGHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
   await Firebase.initializeApp(
     name: APP_NAME.replaceAll(' ', '_'),

@@ -872,6 +872,10 @@ abstract class GSearchListingData_searchListing_results_listingData
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<GSearchListingData_searchListing_results_listingData>
       get serializer =>
           _$gSearchListingDataSearchListingResultsListingDataSerializer;

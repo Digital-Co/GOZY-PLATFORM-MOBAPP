@@ -1016,6 +1016,10 @@ abstract class GgetAllThreadsData_getAllThreads_results_listData_listingData
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<
           GgetAllThreadsData_getAllThreads_results_listData_listingData>
       get serializer =>

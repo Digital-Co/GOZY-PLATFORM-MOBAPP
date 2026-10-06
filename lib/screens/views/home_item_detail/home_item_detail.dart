@@ -46,6 +46,7 @@ import 'package:gozy/widgets/custom_stateful_widget.dart';
 import 'package:gozy/widgets/custom_text.dart';
 import 'package:gozy/widgets/dialog/homeitem_share_dialog.dart';
 import 'package:gozy/widgets/dotted_border/dotted_border.dart';
+import 'package:gozy/widgets/duration_discount_widgets.dart';
 import 'package:gozy/widgets/explore_listing_item_widgets.dart';
 import 'package:gozy/widgets/rect_getter.dart';
 import 'package:gozy/widgets/report_user_view.dart';
@@ -105,6 +106,11 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
 
   Color? mapLocationCircleColor;
   String? _itemAddress;
+
+  Widget _showDurationDiscounts() => DurationDiscountOffersPanel(
+        weeklyDiscount: controller.itemInfo?.listingData?.weeklyDiscount,
+        monthlyDiscount: controller.itemInfo?.listingData?.monthlyDiscount,
+      ).toPad(bottom: 16);
 
   Color? _shareView_IconBGColor;
   double? _insideImageBorderRadius;
@@ -310,7 +316,9 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         !(controller.itemInfo?.userId != controller.appPreference.userID) ? 12 : -1
       },
     );
-    return ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin);
+    return [_showDurationDiscounts(), ListItemWidgetsWithDivider.toColumn()]
+        .toColumn()
+        .toPad(horizontal: AppDimen.startMargin);
   }
 
   Widget _showTheme2BodyContent() {
@@ -358,7 +366,9 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         !(controller.itemInfo?.userId != controller.appPreference.userID) ? 12 : -1
       },
     );
-    return listItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin);
+    return [_showDurationDiscounts(), listItemWidgetsWithDivider.toColumn()]
+        .toColumn()
+        .toPad(horizontal: AppDimen.startMargin);
   }
 
   Widget _showTheme3BodyContent() {
@@ -446,7 +456,9 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         !(rateandreview.$1 != null && rateandreview.$2 != 0) ? 7 : -1,
       },
     );
-    return ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin);
+    return [_showDurationDiscounts(), ListItemWidgetsWithDivider.toColumn()]
+        .toColumn()
+        .toPad(horizontal: AppDimen.startMargin);
   }
 
   Widget _showTheme4BodyContent() {
@@ -501,7 +513,9 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         !(controller.itemInfo?.userId != controller.appPreference.userID) ? 12 : -1
       },
     );
-    return ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin);
+    return [_showDurationDiscounts(), ListItemWidgetsWithDivider.toColumn()]
+        .toColumn()
+        .toPad(horizontal: AppDimen.startMargin);
   }
 
   Widget _showCarFeatureList({Color? fillColor, Color? iconFillColor, Color? iconColor, Axis? direction}) {

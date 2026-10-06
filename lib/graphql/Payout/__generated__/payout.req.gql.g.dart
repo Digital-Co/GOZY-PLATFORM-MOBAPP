@@ -18,6 +18,16 @@ Serializer<GaddPayoutReq> _$gaddPayoutReqSerializer =
     new _$GaddPayoutReqSerializer();
 Serializer<GverifyPayoutReq> _$gverifyPayoutReqSerializer =
     new _$GverifyPayoutReqSerializer();
+Serializer<GgetPawaPayOptionsReq> _$ggetPawaPayOptionsReqSerializer =
+    new _$GgetPawaPayOptionsReqSerializer();
+Serializer<GinitiatePawaPayDepositReq> _$ginitiatePawaPayDepositReqSerializer =
+    new _$GinitiatePawaPayDepositReqSerializer();
+Serializer<GgetPawaPayDepositStatusReq>
+    _$ggetPawaPayDepositStatusReqSerializer =
+    new _$GgetPawaPayDepositStatusReqSerializer();
+Serializer<GaddPawaPayPayoutAccountReq>
+    _$gaddPawaPayPayoutAccountReqSerializer =
+    new _$GaddPawaPayPayoutAccountReqSerializer();
 
 class _$GgetPayoutsReqSerializer
     implements StructuredSerializer<GgetPayoutsReq> {
@@ -706,6 +716,500 @@ class _$GverifyPayoutReqSerializer
           result.optimisticResponse.replace(serializers.deserialize(value,
                   specifiedType: const FullType(_i2.GverifyPayoutData))!
               as _i2.GverifyPayoutData);
+          break;
+        case 'updateCacheHandlerKey':
+          result.updateCacheHandlerKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'updateCacheHandlerContext':
+          result.updateCacheHandlerContext = serializers.deserialize(value,
+              specifiedType: const FullType(Map, const [
+                const FullType(String),
+                const FullType(dynamic)
+              ])) as Map<String, dynamic>?;
+          break;
+        case 'fetchPolicy':
+          result.fetchPolicy = serializers.deserialize(value,
+                  specifiedType: const FullType(_i1.FetchPolicy))
+              as _i1.FetchPolicy?;
+          break;
+        case 'executeOnListen':
+          result.executeOnListen = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GgetPawaPayOptionsReqSerializer
+    implements StructuredSerializer<GgetPawaPayOptionsReq> {
+  @override
+  final Iterable<Type> types = const [
+    GgetPawaPayOptionsReq,
+    _$GgetPawaPayOptionsReq
+  ];
+  @override
+  final String wireName = 'GgetPawaPayOptionsReq';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GgetPawaPayOptionsReq object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'vars',
+      serializers.serialize(object.vars,
+          specifiedType: const FullType(_i3.GgetPawaPayOptionsVars)),
+      'operation',
+      serializers.serialize(object.operation,
+          specifiedType: const FullType(_i4.Operation)),
+      'executeOnListen',
+      serializers.serialize(object.executeOnListen,
+          specifiedType: const FullType(bool)),
+    ];
+    Object? value;
+    value = object.requestId;
+    if (value != null) {
+      result
+        ..add('requestId')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.optimisticResponse;
+    if (value != null) {
+      result
+        ..add('optimisticResponse')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i2.GgetPawaPayOptionsData)));
+    }
+    value = object.updateCacheHandlerKey;
+    if (value != null) {
+      result
+        ..add('updateCacheHandlerKey')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.updateCacheHandlerContext;
+    if (value != null) {
+      result
+        ..add('updateCacheHandlerContext')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                Map, const [const FullType(String), const FullType(dynamic)])));
+    }
+    value = object.fetchPolicy;
+    if (value != null) {
+      result
+        ..add('fetchPolicy')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i1.FetchPolicy)));
+    }
+    return result;
+  }
+
+  @override
+  GgetPawaPayOptionsReq deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GgetPawaPayOptionsReqBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'vars':
+          result.vars.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(_i3.GgetPawaPayOptionsVars))!
+              as _i3.GgetPawaPayOptionsVars);
+          break;
+        case 'operation':
+          result.operation = serializers.deserialize(value,
+              specifiedType: const FullType(_i4.Operation))! as _i4.Operation;
+          break;
+        case 'requestId':
+          result.requestId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'optimisticResponse':
+          result.optimisticResponse.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(_i2.GgetPawaPayOptionsData))!
+              as _i2.GgetPawaPayOptionsData);
+          break;
+        case 'updateCacheHandlerKey':
+          result.updateCacheHandlerKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'updateCacheHandlerContext':
+          result.updateCacheHandlerContext = serializers.deserialize(value,
+              specifiedType: const FullType(Map, const [
+                const FullType(String),
+                const FullType(dynamic)
+              ])) as Map<String, dynamic>?;
+          break;
+        case 'fetchPolicy':
+          result.fetchPolicy = serializers.deserialize(value,
+                  specifiedType: const FullType(_i1.FetchPolicy))
+              as _i1.FetchPolicy?;
+          break;
+        case 'executeOnListen':
+          result.executeOnListen = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GinitiatePawaPayDepositReqSerializer
+    implements StructuredSerializer<GinitiatePawaPayDepositReq> {
+  @override
+  final Iterable<Type> types = const [
+    GinitiatePawaPayDepositReq,
+    _$GinitiatePawaPayDepositReq
+  ];
+  @override
+  final String wireName = 'GinitiatePawaPayDepositReq';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GinitiatePawaPayDepositReq object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'vars',
+      serializers.serialize(object.vars,
+          specifiedType: const FullType(_i3.GinitiatePawaPayDepositVars)),
+      'operation',
+      serializers.serialize(object.operation,
+          specifiedType: const FullType(_i4.Operation)),
+      'executeOnListen',
+      serializers.serialize(object.executeOnListen,
+          specifiedType: const FullType(bool)),
+    ];
+    Object? value;
+    value = object.requestId;
+    if (value != null) {
+      result
+        ..add('requestId')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.optimisticResponse;
+    if (value != null) {
+      result
+        ..add('optimisticResponse')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i2.GinitiatePawaPayDepositData)));
+    }
+    value = object.updateCacheHandlerKey;
+    if (value != null) {
+      result
+        ..add('updateCacheHandlerKey')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.updateCacheHandlerContext;
+    if (value != null) {
+      result
+        ..add('updateCacheHandlerContext')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                Map, const [const FullType(String), const FullType(dynamic)])));
+    }
+    value = object.fetchPolicy;
+    if (value != null) {
+      result
+        ..add('fetchPolicy')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i1.FetchPolicy)));
+    }
+    return result;
+  }
+
+  @override
+  GinitiatePawaPayDepositReq deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GinitiatePawaPayDepositReqBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'vars':
+          result.vars.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(_i3.GinitiatePawaPayDepositVars))!
+              as _i3.GinitiatePawaPayDepositVars);
+          break;
+        case 'operation':
+          result.operation = serializers.deserialize(value,
+              specifiedType: const FullType(_i4.Operation))! as _i4.Operation;
+          break;
+        case 'requestId':
+          result.requestId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'optimisticResponse':
+          result.optimisticResponse.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(_i2.GinitiatePawaPayDepositData))!
+              as _i2.GinitiatePawaPayDepositData);
+          break;
+        case 'updateCacheHandlerKey':
+          result.updateCacheHandlerKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'updateCacheHandlerContext':
+          result.updateCacheHandlerContext = serializers.deserialize(value,
+              specifiedType: const FullType(Map, const [
+                const FullType(String),
+                const FullType(dynamic)
+              ])) as Map<String, dynamic>?;
+          break;
+        case 'fetchPolicy':
+          result.fetchPolicy = serializers.deserialize(value,
+                  specifiedType: const FullType(_i1.FetchPolicy))
+              as _i1.FetchPolicy?;
+          break;
+        case 'executeOnListen':
+          result.executeOnListen = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GgetPawaPayDepositStatusReqSerializer
+    implements StructuredSerializer<GgetPawaPayDepositStatusReq> {
+  @override
+  final Iterable<Type> types = const [
+    GgetPawaPayDepositStatusReq,
+    _$GgetPawaPayDepositStatusReq
+  ];
+  @override
+  final String wireName = 'GgetPawaPayDepositStatusReq';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GgetPawaPayDepositStatusReq object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'vars',
+      serializers.serialize(object.vars,
+          specifiedType: const FullType(_i3.GgetPawaPayDepositStatusVars)),
+      'operation',
+      serializers.serialize(object.operation,
+          specifiedType: const FullType(_i4.Operation)),
+      'executeOnListen',
+      serializers.serialize(object.executeOnListen,
+          specifiedType: const FullType(bool)),
+    ];
+    Object? value;
+    value = object.requestId;
+    if (value != null) {
+      result
+        ..add('requestId')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.optimisticResponse;
+    if (value != null) {
+      result
+        ..add('optimisticResponse')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i2.GgetPawaPayDepositStatusData)));
+    }
+    value = object.updateCacheHandlerKey;
+    if (value != null) {
+      result
+        ..add('updateCacheHandlerKey')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.updateCacheHandlerContext;
+    if (value != null) {
+      result
+        ..add('updateCacheHandlerContext')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                Map, const [const FullType(String), const FullType(dynamic)])));
+    }
+    value = object.fetchPolicy;
+    if (value != null) {
+      result
+        ..add('fetchPolicy')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i1.FetchPolicy)));
+    }
+    return result;
+  }
+
+  @override
+  GgetPawaPayDepositStatusReq deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GgetPawaPayDepositStatusReqBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'vars':
+          result.vars.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(_i3.GgetPawaPayDepositStatusVars))!
+              as _i3.GgetPawaPayDepositStatusVars);
+          break;
+        case 'operation':
+          result.operation = serializers.deserialize(value,
+              specifiedType: const FullType(_i4.Operation))! as _i4.Operation;
+          break;
+        case 'requestId':
+          result.requestId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'optimisticResponse':
+          result.optimisticResponse.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(_i2.GgetPawaPayDepositStatusData))!
+              as _i2.GgetPawaPayDepositStatusData);
+          break;
+        case 'updateCacheHandlerKey':
+          result.updateCacheHandlerKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'updateCacheHandlerContext':
+          result.updateCacheHandlerContext = serializers.deserialize(value,
+              specifiedType: const FullType(Map, const [
+                const FullType(String),
+                const FullType(dynamic)
+              ])) as Map<String, dynamic>?;
+          break;
+        case 'fetchPolicy':
+          result.fetchPolicy = serializers.deserialize(value,
+                  specifiedType: const FullType(_i1.FetchPolicy))
+              as _i1.FetchPolicy?;
+          break;
+        case 'executeOnListen':
+          result.executeOnListen = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GaddPawaPayPayoutAccountReqSerializer
+    implements StructuredSerializer<GaddPawaPayPayoutAccountReq> {
+  @override
+  final Iterable<Type> types = const [
+    GaddPawaPayPayoutAccountReq,
+    _$GaddPawaPayPayoutAccountReq
+  ];
+  @override
+  final String wireName = 'GaddPawaPayPayoutAccountReq';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GaddPawaPayPayoutAccountReq object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'vars',
+      serializers.serialize(object.vars,
+          specifiedType: const FullType(_i3.GaddPawaPayPayoutAccountVars)),
+      'operation',
+      serializers.serialize(object.operation,
+          specifiedType: const FullType(_i4.Operation)),
+      'executeOnListen',
+      serializers.serialize(object.executeOnListen,
+          specifiedType: const FullType(bool)),
+    ];
+    Object? value;
+    value = object.requestId;
+    if (value != null) {
+      result
+        ..add('requestId')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.optimisticResponse;
+    if (value != null) {
+      result
+        ..add('optimisticResponse')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i2.GaddPawaPayPayoutAccountData)));
+    }
+    value = object.updateCacheHandlerKey;
+    if (value != null) {
+      result
+        ..add('updateCacheHandlerKey')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.updateCacheHandlerContext;
+    if (value != null) {
+      result
+        ..add('updateCacheHandlerContext')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                Map, const [const FullType(String), const FullType(dynamic)])));
+    }
+    value = object.fetchPolicy;
+    if (value != null) {
+      result
+        ..add('fetchPolicy')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i1.FetchPolicy)));
+    }
+    return result;
+  }
+
+  @override
+  GaddPawaPayPayoutAccountReq deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GaddPawaPayPayoutAccountReqBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'vars':
+          result.vars.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(_i3.GaddPawaPayPayoutAccountVars))!
+              as _i3.GaddPawaPayPayoutAccountVars);
+          break;
+        case 'operation':
+          result.operation = serializers.deserialize(value,
+              specifiedType: const FullType(_i4.Operation))! as _i4.Operation;
+          break;
+        case 'requestId':
+          result.requestId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'optimisticResponse':
+          result.optimisticResponse.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(_i2.GaddPawaPayPayoutAccountData))!
+              as _i2.GaddPawaPayPayoutAccountData);
           break;
         case 'updateCacheHandlerKey':
           result.updateCacheHandlerKey = serializers.deserialize(value,
@@ -2149,6 +2653,991 @@ class GverifyPayoutReqBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GverifyPayoutReq', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetPawaPayOptionsReq extends GgetPawaPayOptionsReq {
+  @override
+  final _i3.GgetPawaPayOptionsVars vars;
+  @override
+  final _i4.Operation operation;
+  @override
+  final String? requestId;
+  @override
+  final _i2.GgetPawaPayOptionsData? Function(
+      _i2.GgetPawaPayOptionsData?, _i2.GgetPawaPayOptionsData?)? updateResult;
+  @override
+  final _i2.GgetPawaPayOptionsData? optimisticResponse;
+  @override
+  final String? updateCacheHandlerKey;
+  @override
+  final Map<String, dynamic>? updateCacheHandlerContext;
+  @override
+  final _i1.FetchPolicy? fetchPolicy;
+  @override
+  final bool executeOnListen;
+  @override
+  final _i4.Context? context;
+
+  factory _$GgetPawaPayOptionsReq(
+          [void Function(GgetPawaPayOptionsReqBuilder)? updates]) =>
+      (new GgetPawaPayOptionsReqBuilder()..update(updates))._build();
+
+  _$GgetPawaPayOptionsReq._(
+      {required this.vars,
+      required this.operation,
+      this.requestId,
+      this.updateResult,
+      this.optimisticResponse,
+      this.updateCacheHandlerKey,
+      this.updateCacheHandlerContext,
+      this.fetchPolicy,
+      required this.executeOnListen,
+      this.context})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        vars, r'GgetPawaPayOptionsReq', 'vars');
+    BuiltValueNullFieldError.checkNotNull(
+        operation, r'GgetPawaPayOptionsReq', 'operation');
+    BuiltValueNullFieldError.checkNotNull(
+        executeOnListen, r'GgetPawaPayOptionsReq', 'executeOnListen');
+  }
+
+  @override
+  GgetPawaPayOptionsReq rebuild(
+          void Function(GgetPawaPayOptionsReqBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetPawaPayOptionsReqBuilder toBuilder() =>
+      new GgetPawaPayOptionsReqBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    final dynamic _$dynamicOther = other;
+    return other is GgetPawaPayOptionsReq &&
+        vars == other.vars &&
+        operation == other.operation &&
+        requestId == other.requestId &&
+        updateResult == _$dynamicOther.updateResult &&
+        optimisticResponse == other.optimisticResponse &&
+        updateCacheHandlerKey == other.updateCacheHandlerKey &&
+        updateCacheHandlerContext == other.updateCacheHandlerContext &&
+        fetchPolicy == other.fetchPolicy &&
+        executeOnListen == other.executeOnListen &&
+        context == other.context;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, vars.hashCode);
+    _$hash = $jc(_$hash, operation.hashCode);
+    _$hash = $jc(_$hash, requestId.hashCode);
+    _$hash = $jc(_$hash, updateResult.hashCode);
+    _$hash = $jc(_$hash, optimisticResponse.hashCode);
+    _$hash = $jc(_$hash, updateCacheHandlerKey.hashCode);
+    _$hash = $jc(_$hash, updateCacheHandlerContext.hashCode);
+    _$hash = $jc(_$hash, fetchPolicy.hashCode);
+    _$hash = $jc(_$hash, executeOnListen.hashCode);
+    _$hash = $jc(_$hash, context.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GgetPawaPayOptionsReq')
+          ..add('vars', vars)
+          ..add('operation', operation)
+          ..add('requestId', requestId)
+          ..add('updateResult', updateResult)
+          ..add('optimisticResponse', optimisticResponse)
+          ..add('updateCacheHandlerKey', updateCacheHandlerKey)
+          ..add('updateCacheHandlerContext', updateCacheHandlerContext)
+          ..add('fetchPolicy', fetchPolicy)
+          ..add('executeOnListen', executeOnListen)
+          ..add('context', context))
+        .toString();
+  }
+}
+
+class GgetPawaPayOptionsReqBuilder
+    implements Builder<GgetPawaPayOptionsReq, GgetPawaPayOptionsReqBuilder> {
+  _$GgetPawaPayOptionsReq? _$v;
+
+  _i3.GgetPawaPayOptionsVarsBuilder? _vars;
+  _i3.GgetPawaPayOptionsVarsBuilder get vars =>
+      _$this._vars ??= new _i3.GgetPawaPayOptionsVarsBuilder();
+  set vars(_i3.GgetPawaPayOptionsVarsBuilder? vars) => _$this._vars = vars;
+
+  _i4.Operation? _operation;
+  _i4.Operation? get operation => _$this._operation;
+  set operation(_i4.Operation? operation) => _$this._operation = operation;
+
+  String? _requestId;
+  String? get requestId => _$this._requestId;
+  set requestId(String? requestId) => _$this._requestId = requestId;
+
+  _i2.GgetPawaPayOptionsData? Function(
+      _i2.GgetPawaPayOptionsData?, _i2.GgetPawaPayOptionsData?)? _updateResult;
+  _i2.GgetPawaPayOptionsData? Function(
+          _i2.GgetPawaPayOptionsData?, _i2.GgetPawaPayOptionsData?)?
+      get updateResult => _$this._updateResult;
+  set updateResult(
+          _i2.GgetPawaPayOptionsData? Function(
+                  _i2.GgetPawaPayOptionsData?, _i2.GgetPawaPayOptionsData?)?
+              updateResult) =>
+      _$this._updateResult = updateResult;
+
+  _i2.GgetPawaPayOptionsDataBuilder? _optimisticResponse;
+  _i2.GgetPawaPayOptionsDataBuilder get optimisticResponse =>
+      _$this._optimisticResponse ??= new _i2.GgetPawaPayOptionsDataBuilder();
+  set optimisticResponse(
+          _i2.GgetPawaPayOptionsDataBuilder? optimisticResponse) =>
+      _$this._optimisticResponse = optimisticResponse;
+
+  String? _updateCacheHandlerKey;
+  String? get updateCacheHandlerKey => _$this._updateCacheHandlerKey;
+  set updateCacheHandlerKey(String? updateCacheHandlerKey) =>
+      _$this._updateCacheHandlerKey = updateCacheHandlerKey;
+
+  Map<String, dynamic>? _updateCacheHandlerContext;
+  Map<String, dynamic>? get updateCacheHandlerContext =>
+      _$this._updateCacheHandlerContext;
+  set updateCacheHandlerContext(
+          Map<String, dynamic>? updateCacheHandlerContext) =>
+      _$this._updateCacheHandlerContext = updateCacheHandlerContext;
+
+  _i1.FetchPolicy? _fetchPolicy;
+  _i1.FetchPolicy? get fetchPolicy => _$this._fetchPolicy;
+  set fetchPolicy(_i1.FetchPolicy? fetchPolicy) =>
+      _$this._fetchPolicy = fetchPolicy;
+
+  bool? _executeOnListen;
+  bool? get executeOnListen => _$this._executeOnListen;
+  set executeOnListen(bool? executeOnListen) =>
+      _$this._executeOnListen = executeOnListen;
+
+  _i4.Context? _context;
+  _i4.Context? get context => _$this._context;
+  set context(_i4.Context? context) => _$this._context = context;
+
+  GgetPawaPayOptionsReqBuilder() {
+    GgetPawaPayOptionsReq._initializeBuilder(this);
+  }
+
+  GgetPawaPayOptionsReqBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _vars = $v.vars.toBuilder();
+      _operation = $v.operation;
+      _requestId = $v.requestId;
+      _updateResult = $v.updateResult;
+      _optimisticResponse = $v.optimisticResponse?.toBuilder();
+      _updateCacheHandlerKey = $v.updateCacheHandlerKey;
+      _updateCacheHandlerContext = $v.updateCacheHandlerContext;
+      _fetchPolicy = $v.fetchPolicy;
+      _executeOnListen = $v.executeOnListen;
+      _context = $v.context;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GgetPawaPayOptionsReq other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetPawaPayOptionsReq;
+  }
+
+  @override
+  void update(void Function(GgetPawaPayOptionsReqBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetPawaPayOptionsReq build() => _build();
+
+  _$GgetPawaPayOptionsReq _build() {
+    _$GgetPawaPayOptionsReq _$result;
+    try {
+      _$result = _$v ??
+          new _$GgetPawaPayOptionsReq._(
+              vars: vars.build(),
+              operation: BuiltValueNullFieldError.checkNotNull(
+                  operation, r'GgetPawaPayOptionsReq', 'operation'),
+              requestId: requestId,
+              updateResult: updateResult,
+              optimisticResponse: _optimisticResponse?.build(),
+              updateCacheHandlerKey: updateCacheHandlerKey,
+              updateCacheHandlerContext: updateCacheHandlerContext,
+              fetchPolicy: fetchPolicy,
+              executeOnListen: BuiltValueNullFieldError.checkNotNull(
+                  executeOnListen, r'GgetPawaPayOptionsReq', 'executeOnListen'),
+              context: context);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'vars';
+        vars.build();
+
+        _$failedField = 'optimisticResponse';
+        _optimisticResponse?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GgetPawaPayOptionsReq', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GinitiatePawaPayDepositReq extends GinitiatePawaPayDepositReq {
+  @override
+  final _i3.GinitiatePawaPayDepositVars vars;
+  @override
+  final _i4.Operation operation;
+  @override
+  final String? requestId;
+  @override
+  final _i2.GinitiatePawaPayDepositData? Function(
+          _i2.GinitiatePawaPayDepositData?, _i2.GinitiatePawaPayDepositData?)?
+      updateResult;
+  @override
+  final _i2.GinitiatePawaPayDepositData? optimisticResponse;
+  @override
+  final String? updateCacheHandlerKey;
+  @override
+  final Map<String, dynamic>? updateCacheHandlerContext;
+  @override
+  final _i1.FetchPolicy? fetchPolicy;
+  @override
+  final bool executeOnListen;
+  @override
+  final _i4.Context? context;
+
+  factory _$GinitiatePawaPayDepositReq(
+          [void Function(GinitiatePawaPayDepositReqBuilder)? updates]) =>
+      (new GinitiatePawaPayDepositReqBuilder()..update(updates))._build();
+
+  _$GinitiatePawaPayDepositReq._(
+      {required this.vars,
+      required this.operation,
+      this.requestId,
+      this.updateResult,
+      this.optimisticResponse,
+      this.updateCacheHandlerKey,
+      this.updateCacheHandlerContext,
+      this.fetchPolicy,
+      required this.executeOnListen,
+      this.context})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        vars, r'GinitiatePawaPayDepositReq', 'vars');
+    BuiltValueNullFieldError.checkNotNull(
+        operation, r'GinitiatePawaPayDepositReq', 'operation');
+    BuiltValueNullFieldError.checkNotNull(
+        executeOnListen, r'GinitiatePawaPayDepositReq', 'executeOnListen');
+  }
+
+  @override
+  GinitiatePawaPayDepositReq rebuild(
+          void Function(GinitiatePawaPayDepositReqBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GinitiatePawaPayDepositReqBuilder toBuilder() =>
+      new GinitiatePawaPayDepositReqBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    final dynamic _$dynamicOther = other;
+    return other is GinitiatePawaPayDepositReq &&
+        vars == other.vars &&
+        operation == other.operation &&
+        requestId == other.requestId &&
+        updateResult == _$dynamicOther.updateResult &&
+        optimisticResponse == other.optimisticResponse &&
+        updateCacheHandlerKey == other.updateCacheHandlerKey &&
+        updateCacheHandlerContext == other.updateCacheHandlerContext &&
+        fetchPolicy == other.fetchPolicy &&
+        executeOnListen == other.executeOnListen &&
+        context == other.context;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, vars.hashCode);
+    _$hash = $jc(_$hash, operation.hashCode);
+    _$hash = $jc(_$hash, requestId.hashCode);
+    _$hash = $jc(_$hash, updateResult.hashCode);
+    _$hash = $jc(_$hash, optimisticResponse.hashCode);
+    _$hash = $jc(_$hash, updateCacheHandlerKey.hashCode);
+    _$hash = $jc(_$hash, updateCacheHandlerContext.hashCode);
+    _$hash = $jc(_$hash, fetchPolicy.hashCode);
+    _$hash = $jc(_$hash, executeOnListen.hashCode);
+    _$hash = $jc(_$hash, context.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GinitiatePawaPayDepositReq')
+          ..add('vars', vars)
+          ..add('operation', operation)
+          ..add('requestId', requestId)
+          ..add('updateResult', updateResult)
+          ..add('optimisticResponse', optimisticResponse)
+          ..add('updateCacheHandlerKey', updateCacheHandlerKey)
+          ..add('updateCacheHandlerContext', updateCacheHandlerContext)
+          ..add('fetchPolicy', fetchPolicy)
+          ..add('executeOnListen', executeOnListen)
+          ..add('context', context))
+        .toString();
+  }
+}
+
+class GinitiatePawaPayDepositReqBuilder
+    implements
+        Builder<GinitiatePawaPayDepositReq, GinitiatePawaPayDepositReqBuilder> {
+  _$GinitiatePawaPayDepositReq? _$v;
+
+  _i3.GinitiatePawaPayDepositVarsBuilder? _vars;
+  _i3.GinitiatePawaPayDepositVarsBuilder get vars =>
+      _$this._vars ??= new _i3.GinitiatePawaPayDepositVarsBuilder();
+  set vars(_i3.GinitiatePawaPayDepositVarsBuilder? vars) => _$this._vars = vars;
+
+  _i4.Operation? _operation;
+  _i4.Operation? get operation => _$this._operation;
+  set operation(_i4.Operation? operation) => _$this._operation = operation;
+
+  String? _requestId;
+  String? get requestId => _$this._requestId;
+  set requestId(String? requestId) => _$this._requestId = requestId;
+
+  _i2.GinitiatePawaPayDepositData? Function(
+          _i2.GinitiatePawaPayDepositData?, _i2.GinitiatePawaPayDepositData?)?
+      _updateResult;
+  _i2.GinitiatePawaPayDepositData? Function(
+          _i2.GinitiatePawaPayDepositData?, _i2.GinitiatePawaPayDepositData?)?
+      get updateResult => _$this._updateResult;
+  set updateResult(
+          _i2.GinitiatePawaPayDepositData? Function(
+                  _i2.GinitiatePawaPayDepositData?,
+                  _i2.GinitiatePawaPayDepositData?)?
+              updateResult) =>
+      _$this._updateResult = updateResult;
+
+  _i2.GinitiatePawaPayDepositDataBuilder? _optimisticResponse;
+  _i2.GinitiatePawaPayDepositDataBuilder get optimisticResponse =>
+      _$this._optimisticResponse ??=
+          new _i2.GinitiatePawaPayDepositDataBuilder();
+  set optimisticResponse(
+          _i2.GinitiatePawaPayDepositDataBuilder? optimisticResponse) =>
+      _$this._optimisticResponse = optimisticResponse;
+
+  String? _updateCacheHandlerKey;
+  String? get updateCacheHandlerKey => _$this._updateCacheHandlerKey;
+  set updateCacheHandlerKey(String? updateCacheHandlerKey) =>
+      _$this._updateCacheHandlerKey = updateCacheHandlerKey;
+
+  Map<String, dynamic>? _updateCacheHandlerContext;
+  Map<String, dynamic>? get updateCacheHandlerContext =>
+      _$this._updateCacheHandlerContext;
+  set updateCacheHandlerContext(
+          Map<String, dynamic>? updateCacheHandlerContext) =>
+      _$this._updateCacheHandlerContext = updateCacheHandlerContext;
+
+  _i1.FetchPolicy? _fetchPolicy;
+  _i1.FetchPolicy? get fetchPolicy => _$this._fetchPolicy;
+  set fetchPolicy(_i1.FetchPolicy? fetchPolicy) =>
+      _$this._fetchPolicy = fetchPolicy;
+
+  bool? _executeOnListen;
+  bool? get executeOnListen => _$this._executeOnListen;
+  set executeOnListen(bool? executeOnListen) =>
+      _$this._executeOnListen = executeOnListen;
+
+  _i4.Context? _context;
+  _i4.Context? get context => _$this._context;
+  set context(_i4.Context? context) => _$this._context = context;
+
+  GinitiatePawaPayDepositReqBuilder() {
+    GinitiatePawaPayDepositReq._initializeBuilder(this);
+  }
+
+  GinitiatePawaPayDepositReqBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _vars = $v.vars.toBuilder();
+      _operation = $v.operation;
+      _requestId = $v.requestId;
+      _updateResult = $v.updateResult;
+      _optimisticResponse = $v.optimisticResponse?.toBuilder();
+      _updateCacheHandlerKey = $v.updateCacheHandlerKey;
+      _updateCacheHandlerContext = $v.updateCacheHandlerContext;
+      _fetchPolicy = $v.fetchPolicy;
+      _executeOnListen = $v.executeOnListen;
+      _context = $v.context;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GinitiatePawaPayDepositReq other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GinitiatePawaPayDepositReq;
+  }
+
+  @override
+  void update(void Function(GinitiatePawaPayDepositReqBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GinitiatePawaPayDepositReq build() => _build();
+
+  _$GinitiatePawaPayDepositReq _build() {
+    _$GinitiatePawaPayDepositReq _$result;
+    try {
+      _$result = _$v ??
+          new _$GinitiatePawaPayDepositReq._(
+              vars: vars.build(),
+              operation: BuiltValueNullFieldError.checkNotNull(
+                  operation, r'GinitiatePawaPayDepositReq', 'operation'),
+              requestId: requestId,
+              updateResult: updateResult,
+              optimisticResponse: _optimisticResponse?.build(),
+              updateCacheHandlerKey: updateCacheHandlerKey,
+              updateCacheHandlerContext: updateCacheHandlerContext,
+              fetchPolicy: fetchPolicy,
+              executeOnListen: BuiltValueNullFieldError.checkNotNull(
+                  executeOnListen,
+                  r'GinitiatePawaPayDepositReq',
+                  'executeOnListen'),
+              context: context);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'vars';
+        vars.build();
+
+        _$failedField = 'optimisticResponse';
+        _optimisticResponse?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GinitiatePawaPayDepositReq', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetPawaPayDepositStatusReq extends GgetPawaPayDepositStatusReq {
+  @override
+  final _i3.GgetPawaPayDepositStatusVars vars;
+  @override
+  final _i4.Operation operation;
+  @override
+  final String? requestId;
+  @override
+  final _i2.GgetPawaPayDepositStatusData? Function(
+          _i2.GgetPawaPayDepositStatusData?, _i2.GgetPawaPayDepositStatusData?)?
+      updateResult;
+  @override
+  final _i2.GgetPawaPayDepositStatusData? optimisticResponse;
+  @override
+  final String? updateCacheHandlerKey;
+  @override
+  final Map<String, dynamic>? updateCacheHandlerContext;
+  @override
+  final _i1.FetchPolicy? fetchPolicy;
+  @override
+  final bool executeOnListen;
+  @override
+  final _i4.Context? context;
+
+  factory _$GgetPawaPayDepositStatusReq(
+          [void Function(GgetPawaPayDepositStatusReqBuilder)? updates]) =>
+      (new GgetPawaPayDepositStatusReqBuilder()..update(updates))._build();
+
+  _$GgetPawaPayDepositStatusReq._(
+      {required this.vars,
+      required this.operation,
+      this.requestId,
+      this.updateResult,
+      this.optimisticResponse,
+      this.updateCacheHandlerKey,
+      this.updateCacheHandlerContext,
+      this.fetchPolicy,
+      required this.executeOnListen,
+      this.context})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        vars, r'GgetPawaPayDepositStatusReq', 'vars');
+    BuiltValueNullFieldError.checkNotNull(
+        operation, r'GgetPawaPayDepositStatusReq', 'operation');
+    BuiltValueNullFieldError.checkNotNull(
+        executeOnListen, r'GgetPawaPayDepositStatusReq', 'executeOnListen');
+  }
+
+  @override
+  GgetPawaPayDepositStatusReq rebuild(
+          void Function(GgetPawaPayDepositStatusReqBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetPawaPayDepositStatusReqBuilder toBuilder() =>
+      new GgetPawaPayDepositStatusReqBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    final dynamic _$dynamicOther = other;
+    return other is GgetPawaPayDepositStatusReq &&
+        vars == other.vars &&
+        operation == other.operation &&
+        requestId == other.requestId &&
+        updateResult == _$dynamicOther.updateResult &&
+        optimisticResponse == other.optimisticResponse &&
+        updateCacheHandlerKey == other.updateCacheHandlerKey &&
+        updateCacheHandlerContext == other.updateCacheHandlerContext &&
+        fetchPolicy == other.fetchPolicy &&
+        executeOnListen == other.executeOnListen &&
+        context == other.context;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, vars.hashCode);
+    _$hash = $jc(_$hash, operation.hashCode);
+    _$hash = $jc(_$hash, requestId.hashCode);
+    _$hash = $jc(_$hash, updateResult.hashCode);
+    _$hash = $jc(_$hash, optimisticResponse.hashCode);
+    _$hash = $jc(_$hash, updateCacheHandlerKey.hashCode);
+    _$hash = $jc(_$hash, updateCacheHandlerContext.hashCode);
+    _$hash = $jc(_$hash, fetchPolicy.hashCode);
+    _$hash = $jc(_$hash, executeOnListen.hashCode);
+    _$hash = $jc(_$hash, context.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GgetPawaPayDepositStatusReq')
+          ..add('vars', vars)
+          ..add('operation', operation)
+          ..add('requestId', requestId)
+          ..add('updateResult', updateResult)
+          ..add('optimisticResponse', optimisticResponse)
+          ..add('updateCacheHandlerKey', updateCacheHandlerKey)
+          ..add('updateCacheHandlerContext', updateCacheHandlerContext)
+          ..add('fetchPolicy', fetchPolicy)
+          ..add('executeOnListen', executeOnListen)
+          ..add('context', context))
+        .toString();
+  }
+}
+
+class GgetPawaPayDepositStatusReqBuilder
+    implements
+        Builder<GgetPawaPayDepositStatusReq,
+            GgetPawaPayDepositStatusReqBuilder> {
+  _$GgetPawaPayDepositStatusReq? _$v;
+
+  _i3.GgetPawaPayDepositStatusVarsBuilder? _vars;
+  _i3.GgetPawaPayDepositStatusVarsBuilder get vars =>
+      _$this._vars ??= new _i3.GgetPawaPayDepositStatusVarsBuilder();
+  set vars(_i3.GgetPawaPayDepositStatusVarsBuilder? vars) =>
+      _$this._vars = vars;
+
+  _i4.Operation? _operation;
+  _i4.Operation? get operation => _$this._operation;
+  set operation(_i4.Operation? operation) => _$this._operation = operation;
+
+  String? _requestId;
+  String? get requestId => _$this._requestId;
+  set requestId(String? requestId) => _$this._requestId = requestId;
+
+  _i2.GgetPawaPayDepositStatusData? Function(
+          _i2.GgetPawaPayDepositStatusData?, _i2.GgetPawaPayDepositStatusData?)?
+      _updateResult;
+  _i2.GgetPawaPayDepositStatusData? Function(
+          _i2.GgetPawaPayDepositStatusData?, _i2.GgetPawaPayDepositStatusData?)?
+      get updateResult => _$this._updateResult;
+  set updateResult(
+          _i2.GgetPawaPayDepositStatusData? Function(
+                  _i2.GgetPawaPayDepositStatusData?,
+                  _i2.GgetPawaPayDepositStatusData?)?
+              updateResult) =>
+      _$this._updateResult = updateResult;
+
+  _i2.GgetPawaPayDepositStatusDataBuilder? _optimisticResponse;
+  _i2.GgetPawaPayDepositStatusDataBuilder get optimisticResponse =>
+      _$this._optimisticResponse ??=
+          new _i2.GgetPawaPayDepositStatusDataBuilder();
+  set optimisticResponse(
+          _i2.GgetPawaPayDepositStatusDataBuilder? optimisticResponse) =>
+      _$this._optimisticResponse = optimisticResponse;
+
+  String? _updateCacheHandlerKey;
+  String? get updateCacheHandlerKey => _$this._updateCacheHandlerKey;
+  set updateCacheHandlerKey(String? updateCacheHandlerKey) =>
+      _$this._updateCacheHandlerKey = updateCacheHandlerKey;
+
+  Map<String, dynamic>? _updateCacheHandlerContext;
+  Map<String, dynamic>? get updateCacheHandlerContext =>
+      _$this._updateCacheHandlerContext;
+  set updateCacheHandlerContext(
+          Map<String, dynamic>? updateCacheHandlerContext) =>
+      _$this._updateCacheHandlerContext = updateCacheHandlerContext;
+
+  _i1.FetchPolicy? _fetchPolicy;
+  _i1.FetchPolicy? get fetchPolicy => _$this._fetchPolicy;
+  set fetchPolicy(_i1.FetchPolicy? fetchPolicy) =>
+      _$this._fetchPolicy = fetchPolicy;
+
+  bool? _executeOnListen;
+  bool? get executeOnListen => _$this._executeOnListen;
+  set executeOnListen(bool? executeOnListen) =>
+      _$this._executeOnListen = executeOnListen;
+
+  _i4.Context? _context;
+  _i4.Context? get context => _$this._context;
+  set context(_i4.Context? context) => _$this._context = context;
+
+  GgetPawaPayDepositStatusReqBuilder() {
+    GgetPawaPayDepositStatusReq._initializeBuilder(this);
+  }
+
+  GgetPawaPayDepositStatusReqBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _vars = $v.vars.toBuilder();
+      _operation = $v.operation;
+      _requestId = $v.requestId;
+      _updateResult = $v.updateResult;
+      _optimisticResponse = $v.optimisticResponse?.toBuilder();
+      _updateCacheHandlerKey = $v.updateCacheHandlerKey;
+      _updateCacheHandlerContext = $v.updateCacheHandlerContext;
+      _fetchPolicy = $v.fetchPolicy;
+      _executeOnListen = $v.executeOnListen;
+      _context = $v.context;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GgetPawaPayDepositStatusReq other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetPawaPayDepositStatusReq;
+  }
+
+  @override
+  void update(void Function(GgetPawaPayDepositStatusReqBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetPawaPayDepositStatusReq build() => _build();
+
+  _$GgetPawaPayDepositStatusReq _build() {
+    _$GgetPawaPayDepositStatusReq _$result;
+    try {
+      _$result = _$v ??
+          new _$GgetPawaPayDepositStatusReq._(
+              vars: vars.build(),
+              operation: BuiltValueNullFieldError.checkNotNull(
+                  operation, r'GgetPawaPayDepositStatusReq', 'operation'),
+              requestId: requestId,
+              updateResult: updateResult,
+              optimisticResponse: _optimisticResponse?.build(),
+              updateCacheHandlerKey: updateCacheHandlerKey,
+              updateCacheHandlerContext: updateCacheHandlerContext,
+              fetchPolicy: fetchPolicy,
+              executeOnListen: BuiltValueNullFieldError.checkNotNull(
+                  executeOnListen,
+                  r'GgetPawaPayDepositStatusReq',
+                  'executeOnListen'),
+              context: context);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'vars';
+        vars.build();
+
+        _$failedField = 'optimisticResponse';
+        _optimisticResponse?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GgetPawaPayDepositStatusReq', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GaddPawaPayPayoutAccountReq extends GaddPawaPayPayoutAccountReq {
+  @override
+  final _i3.GaddPawaPayPayoutAccountVars vars;
+  @override
+  final _i4.Operation operation;
+  @override
+  final String? requestId;
+  @override
+  final _i2.GaddPawaPayPayoutAccountData? Function(
+          _i2.GaddPawaPayPayoutAccountData?, _i2.GaddPawaPayPayoutAccountData?)?
+      updateResult;
+  @override
+  final _i2.GaddPawaPayPayoutAccountData? optimisticResponse;
+  @override
+  final String? updateCacheHandlerKey;
+  @override
+  final Map<String, dynamic>? updateCacheHandlerContext;
+  @override
+  final _i1.FetchPolicy? fetchPolicy;
+  @override
+  final bool executeOnListen;
+  @override
+  final _i4.Context? context;
+
+  factory _$GaddPawaPayPayoutAccountReq(
+          [void Function(GaddPawaPayPayoutAccountReqBuilder)? updates]) =>
+      (new GaddPawaPayPayoutAccountReqBuilder()..update(updates))._build();
+
+  _$GaddPawaPayPayoutAccountReq._(
+      {required this.vars,
+      required this.operation,
+      this.requestId,
+      this.updateResult,
+      this.optimisticResponse,
+      this.updateCacheHandlerKey,
+      this.updateCacheHandlerContext,
+      this.fetchPolicy,
+      required this.executeOnListen,
+      this.context})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        vars, r'GaddPawaPayPayoutAccountReq', 'vars');
+    BuiltValueNullFieldError.checkNotNull(
+        operation, r'GaddPawaPayPayoutAccountReq', 'operation');
+    BuiltValueNullFieldError.checkNotNull(
+        executeOnListen, r'GaddPawaPayPayoutAccountReq', 'executeOnListen');
+  }
+
+  @override
+  GaddPawaPayPayoutAccountReq rebuild(
+          void Function(GaddPawaPayPayoutAccountReqBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GaddPawaPayPayoutAccountReqBuilder toBuilder() =>
+      new GaddPawaPayPayoutAccountReqBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    final dynamic _$dynamicOther = other;
+    return other is GaddPawaPayPayoutAccountReq &&
+        vars == other.vars &&
+        operation == other.operation &&
+        requestId == other.requestId &&
+        updateResult == _$dynamicOther.updateResult &&
+        optimisticResponse == other.optimisticResponse &&
+        updateCacheHandlerKey == other.updateCacheHandlerKey &&
+        updateCacheHandlerContext == other.updateCacheHandlerContext &&
+        fetchPolicy == other.fetchPolicy &&
+        executeOnListen == other.executeOnListen &&
+        context == other.context;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, vars.hashCode);
+    _$hash = $jc(_$hash, operation.hashCode);
+    _$hash = $jc(_$hash, requestId.hashCode);
+    _$hash = $jc(_$hash, updateResult.hashCode);
+    _$hash = $jc(_$hash, optimisticResponse.hashCode);
+    _$hash = $jc(_$hash, updateCacheHandlerKey.hashCode);
+    _$hash = $jc(_$hash, updateCacheHandlerContext.hashCode);
+    _$hash = $jc(_$hash, fetchPolicy.hashCode);
+    _$hash = $jc(_$hash, executeOnListen.hashCode);
+    _$hash = $jc(_$hash, context.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GaddPawaPayPayoutAccountReq')
+          ..add('vars', vars)
+          ..add('operation', operation)
+          ..add('requestId', requestId)
+          ..add('updateResult', updateResult)
+          ..add('optimisticResponse', optimisticResponse)
+          ..add('updateCacheHandlerKey', updateCacheHandlerKey)
+          ..add('updateCacheHandlerContext', updateCacheHandlerContext)
+          ..add('fetchPolicy', fetchPolicy)
+          ..add('executeOnListen', executeOnListen)
+          ..add('context', context))
+        .toString();
+  }
+}
+
+class GaddPawaPayPayoutAccountReqBuilder
+    implements
+        Builder<GaddPawaPayPayoutAccountReq,
+            GaddPawaPayPayoutAccountReqBuilder> {
+  _$GaddPawaPayPayoutAccountReq? _$v;
+
+  _i3.GaddPawaPayPayoutAccountVarsBuilder? _vars;
+  _i3.GaddPawaPayPayoutAccountVarsBuilder get vars =>
+      _$this._vars ??= new _i3.GaddPawaPayPayoutAccountVarsBuilder();
+  set vars(_i3.GaddPawaPayPayoutAccountVarsBuilder? vars) =>
+      _$this._vars = vars;
+
+  _i4.Operation? _operation;
+  _i4.Operation? get operation => _$this._operation;
+  set operation(_i4.Operation? operation) => _$this._operation = operation;
+
+  String? _requestId;
+  String? get requestId => _$this._requestId;
+  set requestId(String? requestId) => _$this._requestId = requestId;
+
+  _i2.GaddPawaPayPayoutAccountData? Function(
+          _i2.GaddPawaPayPayoutAccountData?, _i2.GaddPawaPayPayoutAccountData?)?
+      _updateResult;
+  _i2.GaddPawaPayPayoutAccountData? Function(
+          _i2.GaddPawaPayPayoutAccountData?, _i2.GaddPawaPayPayoutAccountData?)?
+      get updateResult => _$this._updateResult;
+  set updateResult(
+          _i2.GaddPawaPayPayoutAccountData? Function(
+                  _i2.GaddPawaPayPayoutAccountData?,
+                  _i2.GaddPawaPayPayoutAccountData?)?
+              updateResult) =>
+      _$this._updateResult = updateResult;
+
+  _i2.GaddPawaPayPayoutAccountDataBuilder? _optimisticResponse;
+  _i2.GaddPawaPayPayoutAccountDataBuilder get optimisticResponse =>
+      _$this._optimisticResponse ??=
+          new _i2.GaddPawaPayPayoutAccountDataBuilder();
+  set optimisticResponse(
+          _i2.GaddPawaPayPayoutAccountDataBuilder? optimisticResponse) =>
+      _$this._optimisticResponse = optimisticResponse;
+
+  String? _updateCacheHandlerKey;
+  String? get updateCacheHandlerKey => _$this._updateCacheHandlerKey;
+  set updateCacheHandlerKey(String? updateCacheHandlerKey) =>
+      _$this._updateCacheHandlerKey = updateCacheHandlerKey;
+
+  Map<String, dynamic>? _updateCacheHandlerContext;
+  Map<String, dynamic>? get updateCacheHandlerContext =>
+      _$this._updateCacheHandlerContext;
+  set updateCacheHandlerContext(
+          Map<String, dynamic>? updateCacheHandlerContext) =>
+      _$this._updateCacheHandlerContext = updateCacheHandlerContext;
+
+  _i1.FetchPolicy? _fetchPolicy;
+  _i1.FetchPolicy? get fetchPolicy => _$this._fetchPolicy;
+  set fetchPolicy(_i1.FetchPolicy? fetchPolicy) =>
+      _$this._fetchPolicy = fetchPolicy;
+
+  bool? _executeOnListen;
+  bool? get executeOnListen => _$this._executeOnListen;
+  set executeOnListen(bool? executeOnListen) =>
+      _$this._executeOnListen = executeOnListen;
+
+  _i4.Context? _context;
+  _i4.Context? get context => _$this._context;
+  set context(_i4.Context? context) => _$this._context = context;
+
+  GaddPawaPayPayoutAccountReqBuilder() {
+    GaddPawaPayPayoutAccountReq._initializeBuilder(this);
+  }
+
+  GaddPawaPayPayoutAccountReqBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _vars = $v.vars.toBuilder();
+      _operation = $v.operation;
+      _requestId = $v.requestId;
+      _updateResult = $v.updateResult;
+      _optimisticResponse = $v.optimisticResponse?.toBuilder();
+      _updateCacheHandlerKey = $v.updateCacheHandlerKey;
+      _updateCacheHandlerContext = $v.updateCacheHandlerContext;
+      _fetchPolicy = $v.fetchPolicy;
+      _executeOnListen = $v.executeOnListen;
+      _context = $v.context;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GaddPawaPayPayoutAccountReq other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GaddPawaPayPayoutAccountReq;
+  }
+
+  @override
+  void update(void Function(GaddPawaPayPayoutAccountReqBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GaddPawaPayPayoutAccountReq build() => _build();
+
+  _$GaddPawaPayPayoutAccountReq _build() {
+    _$GaddPawaPayPayoutAccountReq _$result;
+    try {
+      _$result = _$v ??
+          new _$GaddPawaPayPayoutAccountReq._(
+              vars: vars.build(),
+              operation: BuiltValueNullFieldError.checkNotNull(
+                  operation, r'GaddPawaPayPayoutAccountReq', 'operation'),
+              requestId: requestId,
+              updateResult: updateResult,
+              optimisticResponse: _optimisticResponse?.build(),
+              updateCacheHandlerKey: updateCacheHandlerKey,
+              updateCacheHandlerContext: updateCacheHandlerContext,
+              fetchPolicy: fetchPolicy,
+              executeOnListen: BuiltValueNullFieldError.checkNotNull(
+                  executeOnListen,
+                  r'GaddPawaPayPayoutAccountReq',
+                  'executeOnListen'),
+              context: context);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'vars';
+        vars.build();
+
+        _$failedField = 'optimisticResponse';
+        _optimisticResponse?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GaddPawaPayPayoutAccountReq', _$failedField, e.toString());
       }
       rethrow;
     }

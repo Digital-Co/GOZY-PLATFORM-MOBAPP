@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gozy/app.dart';
 import 'package:gozy/constant.dart';
@@ -408,7 +409,9 @@ class HomeItemDetailController extends BaseController {
   }
 
   String availabilityFormat({required List<DateTime> DateList}) {
-    return '${getMultilangMonth(DateList.first.convert_MDY(format: checkAvailabilityCalenderFormat).$1)} - ${getMultilangMonth(DateList.last.convert_MDY(format: checkAvailabilityCalenderFormat).$1)}';
+    final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+    final formatter = intl.DateFormat.MMMd(locale);
+    return '${formatter.format(DateList.first)} - ${formatter.format(DateList.last)}';
   }
 
   String getMultilangMonth(String monthDate) {

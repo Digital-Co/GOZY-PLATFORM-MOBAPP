@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:gozy/generated/assets.dart';
 import 'package:gozy/resources/app_dimen.dart';
@@ -12,17 +14,19 @@ class PaymentTypeSelectionView extends GetView{
 String paymentTypeIcon;
 String paymentTypeTitle;
 bool ispaymentTypeSelected;
+String? imageUrl;
 
 PaymentTypeSelectionView({super.key,
     required this.paymentTypeIcon,
     required this.paymentTypeTitle,
     required this.ispaymentTypeSelected,
+    this.imageUrl,
   });
 
   @override
   Widget build(BuildContext context) {
     return [
-      paymentTypeIcon.toSVG(size: 30),
+      _paymentIcon(),
       15.toWidth(),
       CustomText(
         text: paymentTypeTitle,
@@ -42,6 +46,22 @@ PaymentTypeSelectionView({super.key,
             : null,
       ).toPad(end: 10)
     ].toRow();
+  }
+
+  Widget _paymentIcon() {
+    final url = imageUrl?.trim() ?? '';
+    final fallback = paymentTypeIcon.toSVG(size: 30);
+    if (url.isEmpty) return fallback;
+    if (url.toLowerCase().endsWith('.svg')) {
+      return SvgPicture.network(url, width: 30, height: 30, placeholderBuilder: (_) => fallback);
+    }
+    return CachedNetworkImage(
+      imageUrl: url,
+      width: 30,
+      height: 30,
+      fit: BoxFit.contain,
+      errorWidget: (_, __, ___) => fallback,
+    );
   }
 
 

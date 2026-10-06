@@ -454,8 +454,9 @@ class _StatefulWrapperState extends CustomStatefulWidgetState<FilterCalendar>
     }
 
     if (widget.selectedDates.first.isSameDate(widget.selectedDates.last)) {
-      DateTime startTime = intl.DateFormat(receiptTimeFormat).parse(widget.selectedStartTime!.value);
-      DateTime endTime = intl.DateFormat(receiptTimeFormat).parse(widget.selectedEndTime!.value);
+      final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+      DateTime startTime = intl.DateFormat.jm(locale).parse(widget.selectedStartTime!.value);
+      DateTime endTime = intl.DateFormat.jm(locale).parse(widget.selectedEndTime!.value);
       if (startTime.isAfter(endTime) || startTime.isAtSameMomentAs(endTime)) {
         return error_msg_choose_different_end_time.tr;
       }

@@ -486,3 +486,330 @@ abstract class GverifyPayoutReq
         json,
       );
 }
+
+abstract class GgetPawaPayOptionsReq
+    implements
+        Built<GgetPawaPayOptionsReq, GgetPawaPayOptionsReqBuilder>,
+        _i1.OperationRequest<_i2.GgetPawaPayOptionsData,
+            _i3.GgetPawaPayOptionsVars> {
+  GgetPawaPayOptionsReq._();
+
+  factory GgetPawaPayOptionsReq(
+          [void Function(GgetPawaPayOptionsReqBuilder b) updates]) =
+      _$GgetPawaPayOptionsReq;
+
+  static void _initializeBuilder(GgetPawaPayOptionsReqBuilder b) => b
+    ..operation = _i4.Operation(
+      document: _i5.document,
+      operationName: 'getPawaPayOptions',
+    )
+    ..executeOnListen = true;
+
+  @override
+  _i3.GgetPawaPayOptionsVars get vars;
+  @override
+  _i4.Operation get operation;
+  @override
+  _i4.Request get execRequest => _i4.Request(
+        operation: operation,
+        variables: vars.toJson(),
+        context: context ?? const _i4.Context(),
+      );
+
+  @override
+  String? get requestId;
+  @override
+  @BuiltValueField(serialize: false)
+  _i2.GgetPawaPayOptionsData? Function(
+    _i2.GgetPawaPayOptionsData?,
+    _i2.GgetPawaPayOptionsData?,
+  )? get updateResult;
+  @override
+  _i2.GgetPawaPayOptionsData? get optimisticResponse;
+  @override
+  String? get updateCacheHandlerKey;
+  @override
+  Map<String, dynamic>? get updateCacheHandlerContext;
+  @override
+  _i1.FetchPolicy? get fetchPolicy;
+  @override
+  bool get executeOnListen;
+  @override
+  @BuiltValueField(serialize: false)
+  _i4.Context? get context;
+  @override
+  _i2.GgetPawaPayOptionsData? parseData(Map<String, dynamic> json) =>
+      _i2.GgetPawaPayOptionsData.fromJson(json);
+
+  @override
+  Map<String, dynamic> varsToJson() => vars.toJson();
+
+  @override
+  Map<String, dynamic> dataToJson(_i2.GgetPawaPayOptionsData data) =>
+      data.toJson();
+
+  @override
+  _i1.OperationRequest<_i2.GgetPawaPayOptionsData, _i3.GgetPawaPayOptionsVars>
+      transformOperation(_i4.Operation Function(_i4.Operation) transform) =>
+          this.rebuild((b) => b..operation = transform(operation));
+
+  static Serializer<GgetPawaPayOptionsReq> get serializer =>
+      _$ggetPawaPayOptionsReqSerializer;
+
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GgetPawaPayOptionsReq.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayOptionsReq? fromJson(Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GgetPawaPayOptionsReq.serializer,
+        json,
+      );
+}
+
+abstract class GinitiatePawaPayDepositReq
+    implements
+        Built<GinitiatePawaPayDepositReq, GinitiatePawaPayDepositReqBuilder>,
+        _i1.OperationRequest<_i2.GinitiatePawaPayDepositData,
+            _i3.GinitiatePawaPayDepositVars> {
+  GinitiatePawaPayDepositReq._();
+
+  factory GinitiatePawaPayDepositReq(
+          [void Function(GinitiatePawaPayDepositReqBuilder b) updates]) =
+      _$GinitiatePawaPayDepositReq;
+
+  static void _initializeBuilder(GinitiatePawaPayDepositReqBuilder b) => b
+    ..operation = _i4.Operation(
+      document: _i5.document,
+      operationName: 'initiatePawaPayDeposit',
+    )
+    ..executeOnListen = true;
+
+  @override
+  _i3.GinitiatePawaPayDepositVars get vars;
+  @override
+  _i4.Operation get operation;
+  @override
+  _i4.Request get execRequest => _i4.Request(
+        operation: operation,
+        variables: vars.toJson(),
+        context: context ?? const _i4.Context(),
+      );
+
+  @override
+  String? get requestId;
+  @override
+  @BuiltValueField(serialize: false)
+  _i2.GinitiatePawaPayDepositData? Function(
+    _i2.GinitiatePawaPayDepositData?,
+    _i2.GinitiatePawaPayDepositData?,
+  )? get updateResult;
+  @override
+  _i2.GinitiatePawaPayDepositData? get optimisticResponse;
+  @override
+  String? get updateCacheHandlerKey;
+  @override
+  Map<String, dynamic>? get updateCacheHandlerContext;
+  @override
+  _i1.FetchPolicy? get fetchPolicy;
+  @override
+  bool get executeOnListen;
+  @override
+  @BuiltValueField(serialize: false)
+  _i4.Context? get context;
+  @override
+  _i2.GinitiatePawaPayDepositData? parseData(Map<String, dynamic> json) =>
+      _i2.GinitiatePawaPayDepositData.fromJson(json);
+
+  @override
+  Map<String, dynamic> varsToJson() => vars.toJson();
+
+  @override
+  Map<String, dynamic> dataToJson(_i2.GinitiatePawaPayDepositData data) =>
+      data.toJson();
+
+  @override
+  _i1.OperationRequest<_i2.GinitiatePawaPayDepositData,
+      _i3.GinitiatePawaPayDepositVars> transformOperation(
+          _i4.Operation Function(_i4.Operation) transform) =>
+      this.rebuild((b) => b..operation = transform(operation));
+
+  static Serializer<GinitiatePawaPayDepositReq> get serializer =>
+      _$ginitiatePawaPayDepositReqSerializer;
+
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GinitiatePawaPayDepositReq.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GinitiatePawaPayDepositReq? fromJson(Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GinitiatePawaPayDepositReq.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayDepositStatusReq
+    implements
+        Built<GgetPawaPayDepositStatusReq, GgetPawaPayDepositStatusReqBuilder>,
+        _i1.OperationRequest<_i2.GgetPawaPayDepositStatusData,
+            _i3.GgetPawaPayDepositStatusVars> {
+  GgetPawaPayDepositStatusReq._();
+
+  factory GgetPawaPayDepositStatusReq(
+          [void Function(GgetPawaPayDepositStatusReqBuilder b) updates]) =
+      _$GgetPawaPayDepositStatusReq;
+
+  static void _initializeBuilder(GgetPawaPayDepositStatusReqBuilder b) => b
+    ..operation = _i4.Operation(
+      document: _i5.document,
+      operationName: 'getPawaPayDepositStatus',
+    )
+    ..executeOnListen = true;
+
+  @override
+  _i3.GgetPawaPayDepositStatusVars get vars;
+  @override
+  _i4.Operation get operation;
+  @override
+  _i4.Request get execRequest => _i4.Request(
+        operation: operation,
+        variables: vars.toJson(),
+        context: context ?? const _i4.Context(),
+      );
+
+  @override
+  String? get requestId;
+  @override
+  @BuiltValueField(serialize: false)
+  _i2.GgetPawaPayDepositStatusData? Function(
+    _i2.GgetPawaPayDepositStatusData?,
+    _i2.GgetPawaPayDepositStatusData?,
+  )? get updateResult;
+  @override
+  _i2.GgetPawaPayDepositStatusData? get optimisticResponse;
+  @override
+  String? get updateCacheHandlerKey;
+  @override
+  Map<String, dynamic>? get updateCacheHandlerContext;
+  @override
+  _i1.FetchPolicy? get fetchPolicy;
+  @override
+  bool get executeOnListen;
+  @override
+  @BuiltValueField(serialize: false)
+  _i4.Context? get context;
+  @override
+  _i2.GgetPawaPayDepositStatusData? parseData(Map<String, dynamic> json) =>
+      _i2.GgetPawaPayDepositStatusData.fromJson(json);
+
+  @override
+  Map<String, dynamic> varsToJson() => vars.toJson();
+
+  @override
+  Map<String, dynamic> dataToJson(_i2.GgetPawaPayDepositStatusData data) =>
+      data.toJson();
+
+  @override
+  _i1.OperationRequest<_i2.GgetPawaPayDepositStatusData,
+      _i3.GgetPawaPayDepositStatusVars> transformOperation(
+          _i4.Operation Function(_i4.Operation) transform) =>
+      this.rebuild((b) => b..operation = transform(operation));
+
+  static Serializer<GgetPawaPayDepositStatusReq> get serializer =>
+      _$ggetPawaPayDepositStatusReqSerializer;
+
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GgetPawaPayDepositStatusReq.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayDepositStatusReq? fromJson(Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GgetPawaPayDepositStatusReq.serializer,
+        json,
+      );
+}
+
+abstract class GaddPawaPayPayoutAccountReq
+    implements
+        Built<GaddPawaPayPayoutAccountReq, GaddPawaPayPayoutAccountReqBuilder>,
+        _i1.OperationRequest<_i2.GaddPawaPayPayoutAccountData,
+            _i3.GaddPawaPayPayoutAccountVars> {
+  GaddPawaPayPayoutAccountReq._();
+
+  factory GaddPawaPayPayoutAccountReq(
+          [void Function(GaddPawaPayPayoutAccountReqBuilder b) updates]) =
+      _$GaddPawaPayPayoutAccountReq;
+
+  static void _initializeBuilder(GaddPawaPayPayoutAccountReqBuilder b) => b
+    ..operation = _i4.Operation(
+      document: _i5.document,
+      operationName: 'addPawaPayPayoutAccount',
+    )
+    ..executeOnListen = true;
+
+  @override
+  _i3.GaddPawaPayPayoutAccountVars get vars;
+  @override
+  _i4.Operation get operation;
+  @override
+  _i4.Request get execRequest => _i4.Request(
+        operation: operation,
+        variables: vars.toJson(),
+        context: context ?? const _i4.Context(),
+      );
+
+  @override
+  String? get requestId;
+  @override
+  @BuiltValueField(serialize: false)
+  _i2.GaddPawaPayPayoutAccountData? Function(
+    _i2.GaddPawaPayPayoutAccountData?,
+    _i2.GaddPawaPayPayoutAccountData?,
+  )? get updateResult;
+  @override
+  _i2.GaddPawaPayPayoutAccountData? get optimisticResponse;
+  @override
+  String? get updateCacheHandlerKey;
+  @override
+  Map<String, dynamic>? get updateCacheHandlerContext;
+  @override
+  _i1.FetchPolicy? get fetchPolicy;
+  @override
+  bool get executeOnListen;
+  @override
+  @BuiltValueField(serialize: false)
+  _i4.Context? get context;
+  @override
+  _i2.GaddPawaPayPayoutAccountData? parseData(Map<String, dynamic> json) =>
+      _i2.GaddPawaPayPayoutAccountData.fromJson(json);
+
+  @override
+  Map<String, dynamic> varsToJson() => vars.toJson();
+
+  @override
+  Map<String, dynamic> dataToJson(_i2.GaddPawaPayPayoutAccountData data) =>
+      data.toJson();
+
+  @override
+  _i1.OperationRequest<_i2.GaddPawaPayPayoutAccountData,
+      _i3.GaddPawaPayPayoutAccountVars> transformOperation(
+          _i4.Operation Function(_i4.Operation) transform) =>
+      this.rebuild((b) => b..operation = transform(operation));
+
+  static Serializer<GaddPawaPayPayoutAccountReq> get serializer =>
+      _$gaddPawaPayPayoutAccountReqSerializer;
+
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GaddPawaPayPayoutAccountReq.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GaddPawaPayPayoutAccountReq? fromJson(Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GaddPawaPayPayoutAccountReq.serializer,
+        json,
+      );
+}

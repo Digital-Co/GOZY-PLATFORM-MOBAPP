@@ -779,6 +779,52 @@ type Mutation {
   createPurchaseServicePlan(servicePlanId: Int!, startDate: String!, endDate: String!, paymentType: Int, cardToken: String, paymentCurrency: String): PurchaseServicePlanCommonType
   cancelPurchasePlan(id: Int!): PurchaseServicePlanCommonType
   confirmPurchaseServicePlan(servicePlanId: Int!, paymentIntentId: String!): PurchaseServicePlanCommonType
+  initiatePawaPayDeposit(reservationId: Int!, country: String!, currency: String!, phoneNumber: String!, provider: String!): PawaPayDeposit
+  addPawaPayPayoutAccount(phoneNumber: String!, country: String!, currency: String!, provider: String!): PawaPayPayoutAccount
+}
+
+enum PawaPayOperation {
+  DEPOSIT
+  PAYOUT
+}
+
+type PawaPayProvider {
+  provider: String
+  displayName: String
+}
+
+type PawaPayCurrency {
+  currency: String
+  providers: [PawaPayProvider]
+}
+
+type PawaPayCountry {
+  country: String
+  displayName: String
+  prefix: String
+  flag: String
+  currencies: [PawaPayCurrency]
+}
+
+type PawaPayOptions {
+  status: Int
+  errorMessage: String
+  recommendedCountry: String
+  countries: [PawaPayCountry]
+}
+
+type PawaPayDeposit {
+  status: Int
+  errorMessage: String
+  depositId: String
+  paymentStatus: String
+  reservation: Reservation
+}
+
+type PawaPayPayoutAccount {
+  status: Int
+  errorMessage: String
+  result: Payout
 }
 
 type NewThreadsCommonType {
@@ -982,7 +1028,9 @@ type Query {
   showListPhotos(listId: Int): ListPhotosCommon
   getPayouts: PayoutWholeType
   ManageListings(requestType: String, currentPage: Int): WholeManageListingsType
-  getPaymentMethods(operation: String = "checkout"): GetPaymentType
+  getPaymentMethods(operation: String = "checkout", supportedPaymentTypes: [Int!]): GetPaymentType
+  getPawaPayOptions(operation: PawaPayOperation!): PawaPayOptions
+  getPawaPayDepositStatus(reservationId: Int!): PawaPayDeposit
   getListBlockedDates(listId: Int!): AllListing
   getListingSpecialPrice(listId: Int!): ListBlockedDatesResponseType
   getActiveSocialLogins: socialLoginsType

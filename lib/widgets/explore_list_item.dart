@@ -15,6 +15,7 @@ import 'package:gozy/widgets/common/custom_network_image/custom_clip_network_ima
 import 'package:gozy/widgets/common_extension_functions.dart';
 import 'package:gozy/widgets/common/custom_container/custom_container.dart';
 import 'package:gozy/widgets/custom_text.dart';
+import 'package:gozy/widgets/duration_discount_widgets.dart';
 import 'package:gozy/widgets/wishlist_modification_sheet.dart';
 
 import 'explore_listing_item_widgets.dart';
@@ -493,6 +494,15 @@ class ListingItem extends GetView {
               count: listPhotos != null ? listPhotos!.length : 0,
               height: listingHeight),
         ].toStack(),
+      if (!isshimmerview!)
+        PositionedDirectional(
+          top: 12,
+          start: 12,
+          child: DurationDiscountBadge(
+            weeklyDiscount: itemInfo?.listingData?.weeklyDiscount,
+            monthlyDiscount: itemInfo?.listingData?.monthlyDiscount,
+          ),
+        ),
       if (!isshimmerview!)
         if (controller?.appPreference.userID != hostId)
           CustomWishlistContainer(

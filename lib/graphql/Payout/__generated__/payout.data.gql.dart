@@ -366,6 +366,7 @@ abstract class GgetPaymentMethodsData_getPaymentMethods_results
   String? get details;
   bool? get isEnable;
   int? get paymentType;
+  String? get imageUrl;
   static Serializer<GgetPaymentMethodsData_getPaymentMethods_results>
       get serializer =>
           _$ggetPaymentMethodsDataGetPaymentMethodsResultsSerializer;
@@ -507,6 +508,492 @@ abstract class GverifyPayoutData_verifyPayout
   static GverifyPayoutData_verifyPayout? fromJson(Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GverifyPayoutData_verifyPayout.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayOptionsData
+    implements Built<GgetPawaPayOptionsData, GgetPawaPayOptionsDataBuilder> {
+  GgetPawaPayOptionsData._();
+
+  factory GgetPawaPayOptionsData(
+          [void Function(GgetPawaPayOptionsDataBuilder b) updates]) =
+      _$GgetPawaPayOptionsData;
+
+  static void _initializeBuilder(GgetPawaPayOptionsDataBuilder b) =>
+      b..G__typename = 'Query';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  GgetPawaPayOptionsData_getPawaPayOptions? get getPawaPayOptions;
+  static Serializer<GgetPawaPayOptionsData> get serializer =>
+      _$ggetPawaPayOptionsDataSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayOptionsData.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayOptionsData? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetPawaPayOptionsData.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayOptionsData_getPawaPayOptions
+    implements
+        Built<GgetPawaPayOptionsData_getPawaPayOptions,
+            GgetPawaPayOptionsData_getPawaPayOptionsBuilder> {
+  GgetPawaPayOptionsData_getPawaPayOptions._();
+
+  factory GgetPawaPayOptionsData_getPawaPayOptions(
+      [void Function(GgetPawaPayOptionsData_getPawaPayOptionsBuilder b)
+          updates]) = _$GgetPawaPayOptionsData_getPawaPayOptions;
+
+  static void _initializeBuilder(
+          GgetPawaPayOptionsData_getPawaPayOptionsBuilder b) =>
+      b..G__typename = 'PawaPayOptions';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  int? get status;
+  String? get errorMessage;
+  String? get recommendedCountry;
+  BuiltList<GgetPawaPayOptionsData_getPawaPayOptions_countries?>? get countries;
+  static Serializer<GgetPawaPayOptionsData_getPawaPayOptions> get serializer =>
+      _$ggetPawaPayOptionsDataGetPawaPayOptionsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayOptionsData_getPawaPayOptions.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayOptionsData_getPawaPayOptions? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetPawaPayOptionsData_getPawaPayOptions.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayOptionsData_getPawaPayOptions_countries
+    implements
+        Built<GgetPawaPayOptionsData_getPawaPayOptions_countries,
+            GgetPawaPayOptionsData_getPawaPayOptions_countriesBuilder> {
+  GgetPawaPayOptionsData_getPawaPayOptions_countries._();
+
+  factory GgetPawaPayOptionsData_getPawaPayOptions_countries(
+      [void Function(
+              GgetPawaPayOptionsData_getPawaPayOptions_countriesBuilder b)
+          updates]) = _$GgetPawaPayOptionsData_getPawaPayOptions_countries;
+
+  static void _initializeBuilder(
+          GgetPawaPayOptionsData_getPawaPayOptions_countriesBuilder b) =>
+      b..G__typename = 'PawaPayCountry';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  String? get country;
+  String? get displayName;
+  String? get prefix;
+  String? get flag;
+  BuiltList<GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies?>?
+      get currencies;
+  static Serializer<GgetPawaPayOptionsData_getPawaPayOptions_countries>
+      get serializer =>
+          _$ggetPawaPayOptionsDataGetPawaPayOptionsCountriesSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayOptionsData_getPawaPayOptions_countries.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayOptionsData_getPawaPayOptions_countries? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetPawaPayOptionsData_getPawaPayOptions_countries.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies
+    implements
+        Built<GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies,
+            GgetPawaPayOptionsData_getPawaPayOptions_countries_currenciesBuilder> {
+  GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies._();
+
+  factory GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies(
+          [void Function(
+                  GgetPawaPayOptionsData_getPawaPayOptions_countries_currenciesBuilder
+                      b)
+              updates]) =
+      _$GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies;
+
+  static void _initializeBuilder(
+          GgetPawaPayOptionsData_getPawaPayOptions_countries_currenciesBuilder
+              b) =>
+      b..G__typename = 'PawaPayCurrency';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  String? get currency;
+  BuiltList<
+          GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers?>?
+      get providers;
+  static Serializer<
+          GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies>
+      get serializer =>
+          _$ggetPawaPayOptionsDataGetPawaPayOptionsCountriesCurrenciesSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies
+                .serializer,
+            json,
+          );
+}
+
+abstract class GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers
+    implements
+        Built<
+            GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers,
+            GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providersBuilder> {
+  GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers._();
+
+  factory GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers(
+          [void Function(
+                  GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providersBuilder
+                      b)
+              updates]) =
+      _$GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers;
+
+  static void _initializeBuilder(
+          GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providersBuilder
+              b) =>
+      b..G__typename = 'PawaPayProvider';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  String? get provider;
+  String? get displayName;
+  static Serializer<
+          GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers>
+      get serializer =>
+          _$ggetPawaPayOptionsDataGetPawaPayOptionsCountriesCurrenciesProvidersSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers
+                .serializer,
+            json,
+          );
+}
+
+abstract class GinitiatePawaPayDepositData
+    implements
+        Built<GinitiatePawaPayDepositData, GinitiatePawaPayDepositDataBuilder> {
+  GinitiatePawaPayDepositData._();
+
+  factory GinitiatePawaPayDepositData(
+          [void Function(GinitiatePawaPayDepositDataBuilder b) updates]) =
+      _$GinitiatePawaPayDepositData;
+
+  static void _initializeBuilder(GinitiatePawaPayDepositDataBuilder b) =>
+      b..G__typename = 'Mutation';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  GinitiatePawaPayDepositData_initiatePawaPayDeposit?
+      get initiatePawaPayDeposit;
+  static Serializer<GinitiatePawaPayDepositData> get serializer =>
+      _$ginitiatePawaPayDepositDataSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GinitiatePawaPayDepositData.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GinitiatePawaPayDepositData? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GinitiatePawaPayDepositData.serializer,
+        json,
+      );
+}
+
+abstract class GinitiatePawaPayDepositData_initiatePawaPayDeposit
+    implements
+        Built<GinitiatePawaPayDepositData_initiatePawaPayDeposit,
+            GinitiatePawaPayDepositData_initiatePawaPayDepositBuilder> {
+  GinitiatePawaPayDepositData_initiatePawaPayDeposit._();
+
+  factory GinitiatePawaPayDepositData_initiatePawaPayDeposit(
+      [void Function(
+              GinitiatePawaPayDepositData_initiatePawaPayDepositBuilder b)
+          updates]) = _$GinitiatePawaPayDepositData_initiatePawaPayDeposit;
+
+  static void _initializeBuilder(
+          GinitiatePawaPayDepositData_initiatePawaPayDepositBuilder b) =>
+      b..G__typename = 'PawaPayDeposit';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  int? get status;
+  String? get errorMessage;
+  String? get depositId;
+  String? get paymentStatus;
+  static Serializer<GinitiatePawaPayDepositData_initiatePawaPayDeposit>
+      get serializer =>
+          _$ginitiatePawaPayDepositDataInitiatePawaPayDepositSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GinitiatePawaPayDepositData_initiatePawaPayDeposit.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GinitiatePawaPayDepositData_initiatePawaPayDeposit? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GinitiatePawaPayDepositData_initiatePawaPayDeposit.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayDepositStatusData
+    implements
+        Built<GgetPawaPayDepositStatusData,
+            GgetPawaPayDepositStatusDataBuilder> {
+  GgetPawaPayDepositStatusData._();
+
+  factory GgetPawaPayDepositStatusData(
+          [void Function(GgetPawaPayDepositStatusDataBuilder b) updates]) =
+      _$GgetPawaPayDepositStatusData;
+
+  static void _initializeBuilder(GgetPawaPayDepositStatusDataBuilder b) =>
+      b..G__typename = 'Query';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  GgetPawaPayDepositStatusData_getPawaPayDepositStatus?
+      get getPawaPayDepositStatus;
+  static Serializer<GgetPawaPayDepositStatusData> get serializer =>
+      _$ggetPawaPayDepositStatusDataSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayDepositStatusData.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayDepositStatusData? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetPawaPayDepositStatusData.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayDepositStatusData_getPawaPayDepositStatus
+    implements
+        Built<GgetPawaPayDepositStatusData_getPawaPayDepositStatus,
+            GgetPawaPayDepositStatusData_getPawaPayDepositStatusBuilder> {
+  GgetPawaPayDepositStatusData_getPawaPayDepositStatus._();
+
+  factory GgetPawaPayDepositStatusData_getPawaPayDepositStatus(
+      [void Function(
+              GgetPawaPayDepositStatusData_getPawaPayDepositStatusBuilder b)
+          updates]) = _$GgetPawaPayDepositStatusData_getPawaPayDepositStatus;
+
+  static void _initializeBuilder(
+          GgetPawaPayDepositStatusData_getPawaPayDepositStatusBuilder b) =>
+      b..G__typename = 'PawaPayDeposit';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  int? get status;
+  String? get errorMessage;
+  String? get paymentStatus;
+  GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation?
+      get reservation;
+  static Serializer<GgetPawaPayDepositStatusData_getPawaPayDepositStatus>
+      get serializer =>
+          _$ggetPawaPayDepositStatusDataGetPawaPayDepositStatusSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayDepositStatusData_getPawaPayDepositStatus.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayDepositStatusData_getPawaPayDepositStatus? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetPawaPayDepositStatusData_getPawaPayDepositStatus.serializer,
+        json,
+      );
+}
+
+abstract class GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation
+    implements
+        Built<GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation,
+            GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservationBuilder> {
+  GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation._();
+
+  factory GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation(
+          [void Function(
+                  GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservationBuilder
+                      b)
+              updates]) =
+      _$GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation;
+
+  static void _initializeBuilder(
+          GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservationBuilder
+              b) =>
+      b..G__typename = 'Reservation';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  int? get id;
+  String? get paymentState;
+  String? get reservationState;
+  static Serializer<
+          GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation>
+      get serializer =>
+          _$ggetPawaPayDepositStatusDataGetPawaPayDepositStatusReservationSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation
+                .serializer,
+            json,
+          );
+}
+
+abstract class GaddPawaPayPayoutAccountData
+    implements
+        Built<GaddPawaPayPayoutAccountData,
+            GaddPawaPayPayoutAccountDataBuilder> {
+  GaddPawaPayPayoutAccountData._();
+
+  factory GaddPawaPayPayoutAccountData(
+          [void Function(GaddPawaPayPayoutAccountDataBuilder b) updates]) =
+      _$GaddPawaPayPayoutAccountData;
+
+  static void _initializeBuilder(GaddPawaPayPayoutAccountDataBuilder b) =>
+      b..G__typename = 'Mutation';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount?
+      get addPawaPayPayoutAccount;
+  static Serializer<GaddPawaPayPayoutAccountData> get serializer =>
+      _$gaddPawaPayPayoutAccountDataSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GaddPawaPayPayoutAccountData.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GaddPawaPayPayoutAccountData? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GaddPawaPayPayoutAccountData.serializer,
+        json,
+      );
+}
+
+abstract class GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount
+    implements
+        Built<GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount,
+            GaddPawaPayPayoutAccountData_addPawaPayPayoutAccountBuilder> {
+  GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount._();
+
+  factory GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount(
+      [void Function(
+              GaddPawaPayPayoutAccountData_addPawaPayPayoutAccountBuilder b)
+          updates]) = _$GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount;
+
+  static void _initializeBuilder(
+          GaddPawaPayPayoutAccountData_addPawaPayPayoutAccountBuilder b) =>
+      b..G__typename = 'PawaPayPayoutAccount';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  int? get status;
+  String? get errorMessage;
+  GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result? get result;
+  static Serializer<GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount>
+      get serializer =>
+          _$gaddPawaPayPayoutAccountDataAddPawaPayPayoutAccountSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount.serializer,
+        json,
+      );
+}
+
+abstract class GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result
+    implements
+        Built<GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result,
+            GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_resultBuilder> {
+  GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result._();
+
+  factory GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result(
+      [void Function(
+              GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_resultBuilder
+                  b)
+          updates]) = _$GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result;
+
+  static void _initializeBuilder(
+          GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_resultBuilder
+              b) =>
+      b..G__typename = 'Payout';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  int? get id;
+  int? get methodId;
+  String? get payEmail;
+  String? get address1;
+  String? get country;
+  String? get currency;
+  @BuiltValueField(wireName: 'default')
+  bool? get Gdefault;
+  bool? get isVerified;
+  static Serializer<GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result>
+      get serializer =>
+          _$gaddPawaPayPayoutAccountDataAddPawaPayPayoutAccountResultSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result.serializer,
         json,
       );
 }

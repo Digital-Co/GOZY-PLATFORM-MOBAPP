@@ -6,6 +6,8 @@ mixin PayoutPaymentChooseMixin on ProfileController {
   RxInt selectedpaymentType = 0.obs;
   List<dynamic>? listOfPayPalCurrencies = [];
 
+  Future<void> loadPawaPayPayoutOptions();
+
 
 
 
@@ -13,11 +15,14 @@ mixin PayoutPaymentChooseMixin on ProfileController {
     await getPaymentTypeList(operation: 'payout').then((paymentListData) async {
       paymentlist.clear();
       paymentlist.addAll(paymentListData.getPaymentMethods?.results
-          ?.where((e) => e != null )
+          ?.where((item) => mobilePaymentGatewayForType(item?.paymentType) != null)
           .toList() ??
           []);
       selectedpaymentType.value = paymentlist.isEmpty ? 0 : (paymentlist.first?.paymentType ?? 0);
       selectedpaymentType.refresh();
+      if (paymentlist.any((item) => item?.paymentType == 3)) {
+        await loadPawaPayPayoutOptions();
+      }
     });
     getPayPalCurrencyList();
   }

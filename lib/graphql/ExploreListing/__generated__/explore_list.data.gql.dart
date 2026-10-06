@@ -1012,6 +1012,10 @@ abstract class GgetExploreListingsData_getMostViewedListing_results_listingData
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<
           GgetExploreListingsData_getMostViewedListing_results_listingData>
       get serializer =>
@@ -1882,6 +1886,10 @@ abstract class GgetExploreListingsData_getRecommend_results_listingData
   double? get basePrice;
   @override
   String? get currency;
+  @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
   static Serializer<GgetExploreListingsData_getRecommend_results_listingData>
       get serializer =>
           _$ggetExploreListingsDataGetRecommendResultsListingDataSerializer;

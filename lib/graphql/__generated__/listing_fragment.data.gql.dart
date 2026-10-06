@@ -355,6 +355,10 @@ abstract class GviewListingDetailsFragment_listingData
   @override
   String? get currency;
   @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
+  @override
   String? get bookingNoticeTime;
   @override
   String? get checkInStart;
@@ -376,10 +380,6 @@ abstract class GviewListingDetailsFragment_listingData
   String? get minDayOtherItemLabel;
   @override
   double? get delivery;
-  @override
-  double? get weeklyDiscount;
-  @override
-  double? get monthlyDiscount;
   @override
   int? get cancellationPolicy;
   @override
@@ -1328,6 +1328,10 @@ abstract class GviewListingDetailsFragmentData_listingData
   @override
   String? get currency;
   @override
+  double? get weeklyDiscount;
+  @override
+  double? get monthlyDiscount;
+  @override
   String? get bookingNoticeTime;
   @override
   String? get checkInStart;
@@ -1349,10 +1353,6 @@ abstract class GviewListingDetailsFragmentData_listingData
   String? get minDayOtherItemLabel;
   @override
   double? get delivery;
-  @override
-  double? get weeklyDiscount;
-  @override
-  double? get monthlyDiscount;
   @override
   int? get cancellationPolicy;
   @override

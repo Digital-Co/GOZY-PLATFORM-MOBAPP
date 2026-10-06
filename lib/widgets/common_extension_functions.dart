@@ -23,6 +23,7 @@ import 'package:gozy/resources/app_font.dart';
 import 'package:gozy/resources/app_lang.dart';
 import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/utils/text_editing_controller.dart';
+import 'package:gozy/utils/localized_date_time.dart';
 import 'package:gozy/widgets/bottom_sheet/bottom_sheet_refresh_controller.dart';
 import 'package:gozy/widgets/common/custom_container/custom_border_container.dart';
 import 'package:gozy/widgets/common/custom_network_image/custom_clip_network_image.dart';
@@ -1016,12 +1017,35 @@ Widget showSearchableSpanWidget(
 }
 
 
-(String,DateTime) getDateFormat({String? dateFormat,required dynamic milliSec, }) {
+(String,DateTime) getDateFormat({String? dateFormat, required dynamic milliSec, bool localized = true}) {
   String msStr = milliSec?.toString() ?? "";
   if (msStr == "null" || msStr.isEmpty || msStr == "undefined") {
     msStr = DateTime.now().millisecondsSinceEpoch.toString();
   }
-  return DateTime.fromMillisecondsSinceEpoch(int.parse(msStr)).convert_MDY(format: dateFormat ?? commonDateFormat);
+  final value = DateTime.fromMillisecondsSinceEpoch(int.parse(msStr));
+  final pattern = dateFormat ?? commonDateFormat;
+  if (!localized) return value.convert_MDY(format: pattern);
+
+  final locale = (Get.locale ?? const Locale('en')).toLanguageTag();
+  if (pattern == commonDateFormat || pattern == dobformat) {
+    return (LocalizedDateTime.shortDate(value, locale), value);
+  }
+  if (pattern == userProfileCreateFormat) {
+    return (intl.DateFormat.yMMM(locale).format(value), value);
+  }
+  if (pattern == checkAvailabilityCalenderFormat || pattern == transactionFromatMD) {
+    return (intl.DateFormat.MMMd(locale).format(value), value);
+  }
+  if (pattern == filterCalendarformat) {
+    return ('${intl.DateFormat.E(locale).format(value)}\n${intl.DateFormat.MMMd(locale).format(value)}', value);
+  }
+  if (pattern == reservationDateformat || pattern == servicePlanDateFormat) {
+    return (LocalizedDateTime.dateWithWeekday(value, locale), value);
+  }
+  if (pattern == filterselectedDateformat || pattern == propertyListDateformat || pattern == transactionFromat) {
+    return (LocalizedDateTime.mediumDate(value, locale), value);
+  }
+  return (intl.DateFormat(pattern, locale).format(value), value);
 }
 
 extension FormattedPrice on num {

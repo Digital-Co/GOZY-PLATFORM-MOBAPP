@@ -2668,6 +2668,20 @@ class _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listD
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.weeklyDiscount;
+    if (value != null) {
+      result
+        ..add('weeklyDiscount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.monthlyDiscount;
+    if (value != null) {
+      result
+        ..add('monthlyDiscount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     return result;
   }
 
@@ -2695,6 +2709,14 @@ class _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listD
         case 'currency':
           result.currency = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'weeklyDiscount':
+          result.weeklyDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'monthlyDiscount':
+          result.monthlyDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
           break;
       }
     }
@@ -5223,6 +5245,20 @@ class _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listin
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.weeklyDiscount;
+    if (value != null) {
+      result
+        ..add('weeklyDiscount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.monthlyDiscount;
+    if (value != null) {
+      result
+        ..add('monthlyDiscount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     return result;
   }
 
@@ -5250,6 +5286,14 @@ class _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listin
         case 'currency':
           result.currency = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'weeklyDiscount':
+          result.weeklyDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'monthlyDiscount':
+          result.monthlyDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
           break;
       }
     }
@@ -9782,6 +9826,10 @@ class _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listD
   final double? basePrice;
   @override
   final String? currency;
+  @override
+  final double? weeklyDiscount;
+  @override
+  final double? monthlyDiscount;
 
   factory _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listData_listingData(
           [void Function(
@@ -9792,7 +9840,11 @@ class _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listD
           ._build();
 
   _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listData_listingData._(
-      {required this.G__typename, this.basePrice, this.currency})
+      {required this.G__typename,
+      this.basePrice,
+      this.currency,
+      this.weeklyDiscount,
+      this.monthlyDiscount})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         G__typename,
@@ -9821,7 +9873,9 @@ class _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listD
             is GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listData_listingData &&
         G__typename == other.G__typename &&
         basePrice == other.basePrice &&
-        currency == other.currency;
+        currency == other.currency &&
+        weeklyDiscount == other.weeklyDiscount &&
+        monthlyDiscount == other.monthlyDiscount;
   }
 
   @override
@@ -9830,6 +9884,8 @@ class _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listD
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, basePrice.hashCode);
     _$hash = $jc(_$hash, currency.hashCode);
+    _$hash = $jc(_$hash, weeklyDiscount.hashCode);
+    _$hash = $jc(_$hash, monthlyDiscount.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -9840,7 +9896,9 @@ class _$GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listD
             r'GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listData_listingData')
           ..add('G__typename', G__typename)
           ..add('basePrice', basePrice)
-          ..add('currency', currency))
+          ..add('currency', currency)
+          ..add('weeklyDiscount', weeklyDiscount)
+          ..add('monthlyDiscount', monthlyDiscount))
         .toString();
   }
 }
@@ -9865,6 +9923,16 @@ class GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listDat
   String? get currency => _$this._currency;
   set currency(String? currency) => _$this._currency = currency;
 
+  double? _weeklyDiscount;
+  double? get weeklyDiscount => _$this._weeklyDiscount;
+  set weeklyDiscount(double? weeklyDiscount) =>
+      _$this._weeklyDiscount = weeklyDiscount;
+
+  double? _monthlyDiscount;
+  double? get monthlyDiscount => _$this._monthlyDiscount;
+  set monthlyDiscount(double? monthlyDiscount) =>
+      _$this._monthlyDiscount = monthlyDiscount;
+
   GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listData_listingDataBuilder() {
     GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listData_listingData
         ._initializeBuilder(this);
@@ -9877,6 +9945,8 @@ class GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listDat
       _G__typename = $v.G__typename;
       _basePrice = $v.basePrice;
       _currency = $v.currency;
+      _weeklyDiscount = $v.weeklyDiscount;
+      _monthlyDiscount = $v.monthlyDiscount;
       _$v = null;
     }
     return this;
@@ -9913,7 +9983,9 @@ class GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listDat
                 r'GgetAllWishListGroupData_getAllWishListGroup_results_wishListCover_listData_listingData',
                 'G__typename'),
             basePrice: basePrice,
-            currency: currency);
+            currency: currency,
+            weeklyDiscount: weeklyDiscount,
+            monthlyDiscount: monthlyDiscount);
     replace(_$result);
     return _$result;
   }
@@ -14279,6 +14351,10 @@ class _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listin
   final double? basePrice;
   @override
   final String? currency;
+  @override
+  final double? weeklyDiscount;
+  @override
+  final double? monthlyDiscount;
 
   factory _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingData(
           [void Function(
@@ -14289,7 +14365,11 @@ class _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listin
           ._build();
 
   _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingData._(
-      {required this.G__typename, this.basePrice, this.currency})
+      {required this.G__typename,
+      this.basePrice,
+      this.currency,
+      this.weeklyDiscount,
+      this.monthlyDiscount})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         G__typename,
@@ -14318,7 +14398,9 @@ class _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listin
             is GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingData &&
         G__typename == other.G__typename &&
         basePrice == other.basePrice &&
-        currency == other.currency;
+        currency == other.currency &&
+        weeklyDiscount == other.weeklyDiscount &&
+        monthlyDiscount == other.monthlyDiscount;
   }
 
   @override
@@ -14327,6 +14409,8 @@ class _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listin
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, basePrice.hashCode);
     _$hash = $jc(_$hash, currency.hashCode);
+    _$hash = $jc(_$hash, weeklyDiscount.hashCode);
+    _$hash = $jc(_$hash, monthlyDiscount.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -14337,7 +14421,9 @@ class _$GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listin
             r'GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingData')
           ..add('G__typename', G__typename)
           ..add('basePrice', basePrice)
-          ..add('currency', currency))
+          ..add('currency', currency)
+          ..add('weeklyDiscount', weeklyDiscount)
+          ..add('monthlyDiscount', monthlyDiscount))
         .toString();
   }
 }
@@ -14362,6 +14448,16 @@ class GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingD
   String? get currency => _$this._currency;
   set currency(String? currency) => _$this._currency = currency;
 
+  double? _weeklyDiscount;
+  double? get weeklyDiscount => _$this._weeklyDiscount;
+  set weeklyDiscount(double? weeklyDiscount) =>
+      _$this._weeklyDiscount = weeklyDiscount;
+
+  double? _monthlyDiscount;
+  double? get monthlyDiscount => _$this._monthlyDiscount;
+  set monthlyDiscount(double? monthlyDiscount) =>
+      _$this._monthlyDiscount = monthlyDiscount;
+
   GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingDataBuilder() {
     GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingData
         ._initializeBuilder(this);
@@ -14374,6 +14470,8 @@ class GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingD
       _G__typename = $v.G__typename;
       _basePrice = $v.basePrice;
       _currency = $v.currency;
+      _weeklyDiscount = $v.weeklyDiscount;
+      _monthlyDiscount = $v.monthlyDiscount;
       _$v = null;
     }
     return this;
@@ -14410,7 +14508,9 @@ class GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingD
                 r'GgetWishListGroupData_getWishListGroup_results_wishLists_listData_listingData',
                 'G__typename'),
             basePrice: basePrice,
-            currency: currency);
+            currency: currency,
+            weeklyDiscount: weeklyDiscount,
+            monthlyDiscount: monthlyDiscount);
     replace(_$result);
     return _$result;
   }

@@ -18,6 +18,17 @@ Serializer<GaddPayoutVars> _$gaddPayoutVarsSerializer =
     new _$GaddPayoutVarsSerializer();
 Serializer<GverifyPayoutVars> _$gverifyPayoutVarsSerializer =
     new _$GverifyPayoutVarsSerializer();
+Serializer<GgetPawaPayOptionsVars> _$ggetPawaPayOptionsVarsSerializer =
+    new _$GgetPawaPayOptionsVarsSerializer();
+Serializer<GinitiatePawaPayDepositVars>
+    _$ginitiatePawaPayDepositVarsSerializer =
+    new _$GinitiatePawaPayDepositVarsSerializer();
+Serializer<GgetPawaPayDepositStatusVars>
+    _$ggetPawaPayDepositStatusVarsSerializer =
+    new _$GgetPawaPayDepositStatusVarsSerializer();
+Serializer<GaddPawaPayPayoutAccountVars>
+    _$gaddPawaPayPayoutAccountVarsSerializer =
+    new _$GaddPawaPayPayoutAccountVarsSerializer();
 
 class _$GgetPayoutsVarsSerializer
     implements StructuredSerializer<GgetPayoutsVars> {
@@ -160,6 +171,14 @@ class _$GgetPaymentMethodsVarsSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.supportedPaymentTypes;
+    if (value != null) {
+      result
+        ..add('supportedPaymentTypes')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(int)])));
+    }
     return result;
   }
 
@@ -178,6 +197,12 @@ class _$GgetPaymentMethodsVarsSerializer
         case 'operation':
           result.operation = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'supportedPaymentTypes':
+          result.supportedPaymentTypes.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(int)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -397,6 +422,240 @@ class _$GverifyPayoutVarsSerializer
         case 'stripeAccount':
           result.stripeAccount = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GgetPawaPayOptionsVarsSerializer
+    implements StructuredSerializer<GgetPawaPayOptionsVars> {
+  @override
+  final Iterable<Type> types = const [
+    GgetPawaPayOptionsVars,
+    _$GgetPawaPayOptionsVars
+  ];
+  @override
+  final String wireName = 'GgetPawaPayOptionsVars';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GgetPawaPayOptionsVars object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'operation',
+      serializers.serialize(object.operation,
+          specifiedType: const FullType(_i2.GPawaPayOperation)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GgetPawaPayOptionsVars deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GgetPawaPayOptionsVarsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'operation':
+          result.operation = serializers.deserialize(value,
+                  specifiedType: const FullType(_i2.GPawaPayOperation))!
+              as _i2.GPawaPayOperation;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GinitiatePawaPayDepositVarsSerializer
+    implements StructuredSerializer<GinitiatePawaPayDepositVars> {
+  @override
+  final Iterable<Type> types = const [
+    GinitiatePawaPayDepositVars,
+    _$GinitiatePawaPayDepositVars
+  ];
+  @override
+  final String wireName = 'GinitiatePawaPayDepositVars';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GinitiatePawaPayDepositVars object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'reservationId',
+      serializers.serialize(object.reservationId,
+          specifiedType: const FullType(int)),
+      'country',
+      serializers.serialize(object.country,
+          specifiedType: const FullType(String)),
+      'currency',
+      serializers.serialize(object.currency,
+          specifiedType: const FullType(String)),
+      'phoneNumber',
+      serializers.serialize(object.phoneNumber,
+          specifiedType: const FullType(String)),
+      'provider',
+      serializers.serialize(object.provider,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GinitiatePawaPayDepositVars deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GinitiatePawaPayDepositVarsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'reservationId':
+          result.reservationId = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'country':
+          result.country = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'currency':
+          result.currency = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'phoneNumber':
+          result.phoneNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'provider':
+          result.provider = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GgetPawaPayDepositStatusVarsSerializer
+    implements StructuredSerializer<GgetPawaPayDepositStatusVars> {
+  @override
+  final Iterable<Type> types = const [
+    GgetPawaPayDepositStatusVars,
+    _$GgetPawaPayDepositStatusVars
+  ];
+  @override
+  final String wireName = 'GgetPawaPayDepositStatusVars';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GgetPawaPayDepositStatusVars object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'reservationId',
+      serializers.serialize(object.reservationId,
+          specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GgetPawaPayDepositStatusVars deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GgetPawaPayDepositStatusVarsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'reservationId':
+          result.reservationId = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GaddPawaPayPayoutAccountVarsSerializer
+    implements StructuredSerializer<GaddPawaPayPayoutAccountVars> {
+  @override
+  final Iterable<Type> types = const [
+    GaddPawaPayPayoutAccountVars,
+    _$GaddPawaPayPayoutAccountVars
+  ];
+  @override
+  final String wireName = 'GaddPawaPayPayoutAccountVars';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GaddPawaPayPayoutAccountVars object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'phoneNumber',
+      serializers.serialize(object.phoneNumber,
+          specifiedType: const FullType(String)),
+      'country',
+      serializers.serialize(object.country,
+          specifiedType: const FullType(String)),
+      'currency',
+      serializers.serialize(object.currency,
+          specifiedType: const FullType(String)),
+      'provider',
+      serializers.serialize(object.provider,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GaddPawaPayPayoutAccountVars deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GaddPawaPayPayoutAccountVarsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'phoneNumber':
+          result.phoneNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'country':
+          result.country = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'currency':
+          result.currency = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'provider':
+          result.provider = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -652,12 +911,15 @@ class GsetDefaultPayoutVarsBuilder
 class _$GgetPaymentMethodsVars extends GgetPaymentMethodsVars {
   @override
   final String? operation;
+  @override
+  final BuiltList<int>? supportedPaymentTypes;
 
   factory _$GgetPaymentMethodsVars(
           [void Function(GgetPaymentMethodsVarsBuilder)? updates]) =>
       (new GgetPaymentMethodsVarsBuilder()..update(updates))._build();
 
-  _$GgetPaymentMethodsVars._({this.operation}) : super._();
+  _$GgetPaymentMethodsVars._({this.operation, this.supportedPaymentTypes})
+      : super._();
 
   @override
   GgetPaymentMethodsVars rebuild(
@@ -671,13 +933,16 @@ class _$GgetPaymentMethodsVars extends GgetPaymentMethodsVars {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GgetPaymentMethodsVars && operation == other.operation;
+    return other is GgetPaymentMethodsVars &&
+        operation == other.operation &&
+        supportedPaymentTypes == other.supportedPaymentTypes;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, operation.hashCode);
+    _$hash = $jc(_$hash, supportedPaymentTypes.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -685,7 +950,8 @@ class _$GgetPaymentMethodsVars extends GgetPaymentMethodsVars {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'GgetPaymentMethodsVars')
-          ..add('operation', operation))
+          ..add('operation', operation)
+          ..add('supportedPaymentTypes', supportedPaymentTypes))
         .toString();
   }
 }
@@ -698,12 +964,19 @@ class GgetPaymentMethodsVarsBuilder
   String? get operation => _$this._operation;
   set operation(String? operation) => _$this._operation = operation;
 
+  ListBuilder<int>? _supportedPaymentTypes;
+  ListBuilder<int> get supportedPaymentTypes =>
+      _$this._supportedPaymentTypes ??= new ListBuilder<int>();
+  set supportedPaymentTypes(ListBuilder<int>? supportedPaymentTypes) =>
+      _$this._supportedPaymentTypes = supportedPaymentTypes;
+
   GgetPaymentMethodsVarsBuilder();
 
   GgetPaymentMethodsVarsBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _operation = $v.operation;
+      _supportedPaymentTypes = $v.supportedPaymentTypes?.toBuilder();
       _$v = null;
     }
     return this;
@@ -724,8 +997,23 @@ class GgetPaymentMethodsVarsBuilder
   GgetPaymentMethodsVars build() => _build();
 
   _$GgetPaymentMethodsVars _build() {
-    final _$result =
-        _$v ?? new _$GgetPaymentMethodsVars._(operation: operation);
+    _$GgetPaymentMethodsVars _$result;
+    try {
+      _$result = _$v ??
+          new _$GgetPaymentMethodsVars._(
+              operation: operation,
+              supportedPaymentTypes: _supportedPaymentTypes?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'supportedPaymentTypes';
+        _supportedPaymentTypes?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GgetPaymentMethodsVars', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
@@ -1100,6 +1388,475 @@ class GverifyPayoutVarsBuilder
   _$GverifyPayoutVars _build() {
     final _$result =
         _$v ?? new _$GverifyPayoutVars._(stripeAccount: stripeAccount);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetPawaPayOptionsVars extends GgetPawaPayOptionsVars {
+  @override
+  final _i2.GPawaPayOperation operation;
+
+  factory _$GgetPawaPayOptionsVars(
+          [void Function(GgetPawaPayOptionsVarsBuilder)? updates]) =>
+      (new GgetPawaPayOptionsVarsBuilder()..update(updates))._build();
+
+  _$GgetPawaPayOptionsVars._({required this.operation}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        operation, r'GgetPawaPayOptionsVars', 'operation');
+  }
+
+  @override
+  GgetPawaPayOptionsVars rebuild(
+          void Function(GgetPawaPayOptionsVarsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetPawaPayOptionsVarsBuilder toBuilder() =>
+      new GgetPawaPayOptionsVarsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GgetPawaPayOptionsVars && operation == other.operation;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, operation.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GgetPawaPayOptionsVars')
+          ..add('operation', operation))
+        .toString();
+  }
+}
+
+class GgetPawaPayOptionsVarsBuilder
+    implements Builder<GgetPawaPayOptionsVars, GgetPawaPayOptionsVarsBuilder> {
+  _$GgetPawaPayOptionsVars? _$v;
+
+  _i2.GPawaPayOperation? _operation;
+  _i2.GPawaPayOperation? get operation => _$this._operation;
+  set operation(_i2.GPawaPayOperation? operation) =>
+      _$this._operation = operation;
+
+  GgetPawaPayOptionsVarsBuilder();
+
+  GgetPawaPayOptionsVarsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _operation = $v.operation;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GgetPawaPayOptionsVars other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetPawaPayOptionsVars;
+  }
+
+  @override
+  void update(void Function(GgetPawaPayOptionsVarsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetPawaPayOptionsVars build() => _build();
+
+  _$GgetPawaPayOptionsVars _build() {
+    final _$result = _$v ??
+        new _$GgetPawaPayOptionsVars._(
+            operation: BuiltValueNullFieldError.checkNotNull(
+                operation, r'GgetPawaPayOptionsVars', 'operation'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GinitiatePawaPayDepositVars extends GinitiatePawaPayDepositVars {
+  @override
+  final int reservationId;
+  @override
+  final String country;
+  @override
+  final String currency;
+  @override
+  final String phoneNumber;
+  @override
+  final String provider;
+
+  factory _$GinitiatePawaPayDepositVars(
+          [void Function(GinitiatePawaPayDepositVarsBuilder)? updates]) =>
+      (new GinitiatePawaPayDepositVarsBuilder()..update(updates))._build();
+
+  _$GinitiatePawaPayDepositVars._(
+      {required this.reservationId,
+      required this.country,
+      required this.currency,
+      required this.phoneNumber,
+      required this.provider})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        reservationId, r'GinitiatePawaPayDepositVars', 'reservationId');
+    BuiltValueNullFieldError.checkNotNull(
+        country, r'GinitiatePawaPayDepositVars', 'country');
+    BuiltValueNullFieldError.checkNotNull(
+        currency, r'GinitiatePawaPayDepositVars', 'currency');
+    BuiltValueNullFieldError.checkNotNull(
+        phoneNumber, r'GinitiatePawaPayDepositVars', 'phoneNumber');
+    BuiltValueNullFieldError.checkNotNull(
+        provider, r'GinitiatePawaPayDepositVars', 'provider');
+  }
+
+  @override
+  GinitiatePawaPayDepositVars rebuild(
+          void Function(GinitiatePawaPayDepositVarsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GinitiatePawaPayDepositVarsBuilder toBuilder() =>
+      new GinitiatePawaPayDepositVarsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GinitiatePawaPayDepositVars &&
+        reservationId == other.reservationId &&
+        country == other.country &&
+        currency == other.currency &&
+        phoneNumber == other.phoneNumber &&
+        provider == other.provider;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, reservationId.hashCode);
+    _$hash = $jc(_$hash, country.hashCode);
+    _$hash = $jc(_$hash, currency.hashCode);
+    _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, provider.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GinitiatePawaPayDepositVars')
+          ..add('reservationId', reservationId)
+          ..add('country', country)
+          ..add('currency', currency)
+          ..add('phoneNumber', phoneNumber)
+          ..add('provider', provider))
+        .toString();
+  }
+}
+
+class GinitiatePawaPayDepositVarsBuilder
+    implements
+        Builder<GinitiatePawaPayDepositVars,
+            GinitiatePawaPayDepositVarsBuilder> {
+  _$GinitiatePawaPayDepositVars? _$v;
+
+  int? _reservationId;
+  int? get reservationId => _$this._reservationId;
+  set reservationId(int? reservationId) =>
+      _$this._reservationId = reservationId;
+
+  String? _country;
+  String? get country => _$this._country;
+  set country(String? country) => _$this._country = country;
+
+  String? _currency;
+  String? get currency => _$this._currency;
+  set currency(String? currency) => _$this._currency = currency;
+
+  String? _phoneNumber;
+  String? get phoneNumber => _$this._phoneNumber;
+  set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
+
+  String? _provider;
+  String? get provider => _$this._provider;
+  set provider(String? provider) => _$this._provider = provider;
+
+  GinitiatePawaPayDepositVarsBuilder();
+
+  GinitiatePawaPayDepositVarsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _reservationId = $v.reservationId;
+      _country = $v.country;
+      _currency = $v.currency;
+      _phoneNumber = $v.phoneNumber;
+      _provider = $v.provider;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GinitiatePawaPayDepositVars other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GinitiatePawaPayDepositVars;
+  }
+
+  @override
+  void update(void Function(GinitiatePawaPayDepositVarsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GinitiatePawaPayDepositVars build() => _build();
+
+  _$GinitiatePawaPayDepositVars _build() {
+    final _$result = _$v ??
+        new _$GinitiatePawaPayDepositVars._(
+            reservationId: BuiltValueNullFieldError.checkNotNull(
+                reservationId, r'GinitiatePawaPayDepositVars', 'reservationId'),
+            country: BuiltValueNullFieldError.checkNotNull(
+                country, r'GinitiatePawaPayDepositVars', 'country'),
+            currency: BuiltValueNullFieldError.checkNotNull(
+                currency, r'GinitiatePawaPayDepositVars', 'currency'),
+            phoneNumber: BuiltValueNullFieldError.checkNotNull(
+                phoneNumber, r'GinitiatePawaPayDepositVars', 'phoneNumber'),
+            provider: BuiltValueNullFieldError.checkNotNull(
+                provider, r'GinitiatePawaPayDepositVars', 'provider'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetPawaPayDepositStatusVars extends GgetPawaPayDepositStatusVars {
+  @override
+  final int reservationId;
+
+  factory _$GgetPawaPayDepositStatusVars(
+          [void Function(GgetPawaPayDepositStatusVarsBuilder)? updates]) =>
+      (new GgetPawaPayDepositStatusVarsBuilder()..update(updates))._build();
+
+  _$GgetPawaPayDepositStatusVars._({required this.reservationId}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        reservationId, r'GgetPawaPayDepositStatusVars', 'reservationId');
+  }
+
+  @override
+  GgetPawaPayDepositStatusVars rebuild(
+          void Function(GgetPawaPayDepositStatusVarsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetPawaPayDepositStatusVarsBuilder toBuilder() =>
+      new GgetPawaPayDepositStatusVarsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GgetPawaPayDepositStatusVars &&
+        reservationId == other.reservationId;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, reservationId.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GgetPawaPayDepositStatusVars')
+          ..add('reservationId', reservationId))
+        .toString();
+  }
+}
+
+class GgetPawaPayDepositStatusVarsBuilder
+    implements
+        Builder<GgetPawaPayDepositStatusVars,
+            GgetPawaPayDepositStatusVarsBuilder> {
+  _$GgetPawaPayDepositStatusVars? _$v;
+
+  int? _reservationId;
+  int? get reservationId => _$this._reservationId;
+  set reservationId(int? reservationId) =>
+      _$this._reservationId = reservationId;
+
+  GgetPawaPayDepositStatusVarsBuilder();
+
+  GgetPawaPayDepositStatusVarsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _reservationId = $v.reservationId;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GgetPawaPayDepositStatusVars other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetPawaPayDepositStatusVars;
+  }
+
+  @override
+  void update(void Function(GgetPawaPayDepositStatusVarsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetPawaPayDepositStatusVars build() => _build();
+
+  _$GgetPawaPayDepositStatusVars _build() {
+    final _$result = _$v ??
+        new _$GgetPawaPayDepositStatusVars._(
+            reservationId: BuiltValueNullFieldError.checkNotNull(reservationId,
+                r'GgetPawaPayDepositStatusVars', 'reservationId'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GaddPawaPayPayoutAccountVars extends GaddPawaPayPayoutAccountVars {
+  @override
+  final String phoneNumber;
+  @override
+  final String country;
+  @override
+  final String currency;
+  @override
+  final String provider;
+
+  factory _$GaddPawaPayPayoutAccountVars(
+          [void Function(GaddPawaPayPayoutAccountVarsBuilder)? updates]) =>
+      (new GaddPawaPayPayoutAccountVarsBuilder()..update(updates))._build();
+
+  _$GaddPawaPayPayoutAccountVars._(
+      {required this.phoneNumber,
+      required this.country,
+      required this.currency,
+      required this.provider})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        phoneNumber, r'GaddPawaPayPayoutAccountVars', 'phoneNumber');
+    BuiltValueNullFieldError.checkNotNull(
+        country, r'GaddPawaPayPayoutAccountVars', 'country');
+    BuiltValueNullFieldError.checkNotNull(
+        currency, r'GaddPawaPayPayoutAccountVars', 'currency');
+    BuiltValueNullFieldError.checkNotNull(
+        provider, r'GaddPawaPayPayoutAccountVars', 'provider');
+  }
+
+  @override
+  GaddPawaPayPayoutAccountVars rebuild(
+          void Function(GaddPawaPayPayoutAccountVarsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GaddPawaPayPayoutAccountVarsBuilder toBuilder() =>
+      new GaddPawaPayPayoutAccountVarsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GaddPawaPayPayoutAccountVars &&
+        phoneNumber == other.phoneNumber &&
+        country == other.country &&
+        currency == other.currency &&
+        provider == other.provider;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, country.hashCode);
+    _$hash = $jc(_$hash, currency.hashCode);
+    _$hash = $jc(_$hash, provider.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GaddPawaPayPayoutAccountVars')
+          ..add('phoneNumber', phoneNumber)
+          ..add('country', country)
+          ..add('currency', currency)
+          ..add('provider', provider))
+        .toString();
+  }
+}
+
+class GaddPawaPayPayoutAccountVarsBuilder
+    implements
+        Builder<GaddPawaPayPayoutAccountVars,
+            GaddPawaPayPayoutAccountVarsBuilder> {
+  _$GaddPawaPayPayoutAccountVars? _$v;
+
+  String? _phoneNumber;
+  String? get phoneNumber => _$this._phoneNumber;
+  set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
+
+  String? _country;
+  String? get country => _$this._country;
+  set country(String? country) => _$this._country = country;
+
+  String? _currency;
+  String? get currency => _$this._currency;
+  set currency(String? currency) => _$this._currency = currency;
+
+  String? _provider;
+  String? get provider => _$this._provider;
+  set provider(String? provider) => _$this._provider = provider;
+
+  GaddPawaPayPayoutAccountVarsBuilder();
+
+  GaddPawaPayPayoutAccountVarsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _phoneNumber = $v.phoneNumber;
+      _country = $v.country;
+      _currency = $v.currency;
+      _provider = $v.provider;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GaddPawaPayPayoutAccountVars other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GaddPawaPayPayoutAccountVars;
+  }
+
+  @override
+  void update(void Function(GaddPawaPayPayoutAccountVarsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GaddPawaPayPayoutAccountVars build() => _build();
+
+  _$GaddPawaPayPayoutAccountVars _build() {
+    final _$result = _$v ??
+        new _$GaddPawaPayPayoutAccountVars._(
+            phoneNumber: BuiltValueNullFieldError.checkNotNull(
+                phoneNumber, r'GaddPawaPayPayoutAccountVars', 'phoneNumber'),
+            country: BuiltValueNullFieldError.checkNotNull(
+                country, r'GaddPawaPayPayoutAccountVars', 'country'),
+            currency: BuiltValueNullFieldError.checkNotNull(
+                currency, r'GaddPawaPayPayoutAccountVars', 'currency'),
+            provider: BuiltValueNullFieldError.checkNotNull(
+                provider, r'GaddPawaPayPayoutAccountVars', 'provider'));
     replace(_$result);
     return _$result;
   }
