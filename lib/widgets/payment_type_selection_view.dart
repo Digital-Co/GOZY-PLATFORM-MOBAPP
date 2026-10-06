@@ -48,25 +48,30 @@ PaymentTypeSelectionView({super.key,
     ].toRow();
   }
 
-  Widget _paymentIcon() {
-    final url = imageUrl?.trim() ?? '';
-    final fallback = paymentTypeIcon.toSVG(size: 30);
-    if (url.isEmpty) return fallback;
-    if (url.toLowerCase().endsWith('.svg')) {
-      return SvgPicture.network(url, width: 30, height: 30, placeholderBuilder: (_) => fallback);
-    }
-    return CachedNetworkImage(
-      imageUrl: url,
-      width: 30,
-      height: 30,
-      fit: BoxFit.contain,
-      errorWidget: (_, __, ___) => fallback,
-    );
+  Widget _paymentIcon() => paymentMethodIcon(
+      fallbackAsset: paymentTypeIcon, imageUrl: imageUrl, size: 30);
+
+}
+
+/// Logo of a payment gateway: the API image when available, otherwise the
+/// bundled [fallbackAsset].
+Widget paymentMethodIcon({
+  required String fallbackAsset,
+  String? imageUrl,
+  double size = 30,
+}) {
+  final url = imageUrl?.trim() ?? '';
+  final fallback = fallbackAsset.toSVG(size: size);
+  if (url.isEmpty) return fallback;
+  if (url.toLowerCase().endsWith('.svg')) {
+    return SvgPicture.network(url,
+        width: size, height: size, placeholderBuilder: (_) => fallback);
   }
-
-
-
-
-
-
+  return CachedNetworkImage(
+    imageUrl: url,
+    width: size,
+    height: size,
+    fit: BoxFit.contain,
+    errorWidget: (_, __, ___) => fallback,
+  );
 }

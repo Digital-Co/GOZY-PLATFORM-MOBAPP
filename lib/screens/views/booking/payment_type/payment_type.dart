@@ -28,7 +28,7 @@ import 'package:gozy/widgets/common/custom_container/custom_container.dart';
 import 'package:gozy/widgets/custom_stateful_widget.dart';
 import 'package:gozy/widgets/custom_text.dart';
 import 'package:gozy/widgets/custom_tool_tip.dart';
-import 'package:gozy/widgets/payment_type_selection_view.dart';
+import 'package:gozy/widgets/payment_method_card.dart';
 import 'package:gozy/widgets/owner/step_item_model.dart';
 import 'package:gozy/widgets/rect_getter.dart';
 
@@ -132,18 +132,8 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
           builder: (context) {
             return controller.rxSelectedPaymentType.value != 0
                 ? [
-                    isBorderNeeded
-                        ? CustomBorderContainer(
-                            color: paymentsContainerColor,
-                            borderRadius:
-                                isBorderNeeded ? billingBorderRadius : null,
-                            borderColor: appColors.myTripsDividerColor,
-                            body: _paymentListWidget(),
-                          ).toPad(horizontal: AppDimen.startMargin)
-                        : CustomContainer(
-                            color: paymentsContainerColor,
-                            body: _paymentListWidget(),
-                          ).toPad(horizontal: AppDimen.startMargin),
+                    _paymentMethodsSection()
+                        .toPad(horizontal: AppDimen.startMargin),
                     20.toHeight(),
                     if (isPaymentFrom == "servicePlan") ...[
                       filterDivider.toPad(
@@ -217,97 +207,139 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
     ].toColumn();
   }
 
-  Widget _paymentListWidget() {
+  void _selectPaymentType(int type) => controller.selectPaymentType(type);
+
+  double get _fieldRadius =>
+      (overALLAppLayoutModel?.borderRadius ?? 12).toDouble();
+
+  Widget _paymentMethodsSection() {
+    final methods = (controller.paymentlist ?? [])
+        .where((item) => item != null && (item.isEnable ?? true))
+        .cast<GgetPaymentMethodsData_getPaymentMethods_results>()
+        .toList();
+    final selected = methods.firstWhereOrNull(
+        (item) => item.paymentType == controller.rxSelectedPaymentType.value);
+    final panel = selected == null ? null : _selectedMethodPanel(selected);
     return [
-      for (var i = 0; i < (controller.paymentlist?.length ?? 0); i++) ...[
-        i == 0 ? 15.toHeight() : 0.toHeight(),
-        controller.paymentlist?[i]?.isEnable ?? true
-            ? toOnTap(
-                    onTap: () {
-                      controller.rxSelectedPaymentType.value =
-                          controller.paymentlist?[i]?.paymentType ?? 1;
+      LayoutBuilder(builder: (context, constraints) {
+        const gap = 12.0;
+        final cardWidth = (constraints.maxWidth - gap) / 2;
+        return Wrap(
+          spacing: gap,
+          runSpacing: gap,
+          children: [
+            for (final method in methods)
+              SizedBox(
+                width: cardWidth,
+                child: PaymentMethodCard(
+                  title: method.paymentType == 2
+                      ? label_card_card_by_stripe.tr
+                      : (method.name ?? ''),
+                  fallbackIcon: _paymentIcon(method.paymentType),
+                  imageUrl: method.imageUrl,
+                  borderRadius: _fieldRadius,
+                  isSelected: method.paymentType ==
+                      controller.rxSelectedPaymentType.value,
+                  onTap: () => _selectPaymentType(method.paymentType ?? 1),
+                ),
+              ),
+          ],
+        );
+      }),
+      if (panel != null) panel,
+    ].toColumn(crossAxisAlignment: CrossAxisAlignment.stretch);
+  }
+
+  Widget? _selectedMethodPanel(
+      GgetPaymentMethodsData_getPaymentMethods_results method) {
+    final content = switch (mobilePaymentGatewayForType(method.paymentType)) {
+      MobilePaymentGateway.paypal => _paypalCurrencyField(),
+      MobilePaymentGateway.pawaPay => _pawaPayFields(),
+      _ => null,
+    };
+    if (content == null) return null;
+    return Container(
+      margin: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: appColors.white,
+        borderRadius: BorderRadius.circular(_fieldRadius),
+        border: Border.all(color: appColors.customBorderColor),
+      ),
+      child: content,
+    );
+  }
+
+  Widget _paypalCurrencyField() {
+    return [
+      CustomText(
+        text: label_choose_currency.tr,
+        size: AppDimen.textSize_14,
+        fontWeight: AppFont.semiBold,
+      ),
+      10.toHeight(),
+      if (controller.isCurrenciesLoading)
+        SizedBox(
+          height: 44,
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                  strokeWidth: 2.5, color: appColors.secondaryColor),
+            ),
+          ),
+        )
+      else
+        CancelButton(
+            borderColor: overALLThemeType == 2 ? Colors.transparent : null,
+            isExpand: false,
+            buttonText: controller.selectedpaymentCurrency ??
+                appPreference.preferredCurrency,
+            borderRadius: overALLThemeType == 4 ? 19 : _fieldRadius,
+            fillcolor: currencyContainerColor,
+            horizontalPadding: 10,
+            textColor: appColors.black,
+            textSize: AppDimen.textSize_14,
+            symbol: controller.selectedpaymentCurrency != null
+                ? controller.selectedpaymentCurrency!.split(' ')[0]
+                : appPreference.preferredCurrency!.split(' ')[0],
+            height: 44,
+            dotWidget: Assets.drawableFilterCalendarArrow
+                .toSVG(quarterTurns: 3, colour: appColors.black, size: 12)
+                .toPad(top: 0, start: 10),
+            color: (currencyContainerBorderNeeded ?? true)
+                ? appColors.myTripsDividerColor
+                : null,
+            onTap: () {
+              if (controller.listOfCurrencies?.isEmpty ?? true) {
+                controller.ensureCurrenciesLoaded();
+                return;
+              }
+              GetXBottomSheet(
+                bottomSheetWidget: getDraggableSheetWidget(
+                    controller: controller,
+                    listItems: (controller.listOfCurrencies ?? [])
+                        .map((e) => StepItemModel(itemName: e, itemValue: e))
+                        .toList(),
+                    borderRadius: overALLAppLayoutModel?.borderRadius,
+                    themeType: overALLThemeType,
+                    selectedValue: controller.selectedpaymentCurrency ??
+                        appPreference.preferredCurrency,
+                    isShowCircleTick: true,
+                    title: label_choose_currency.tr,
+                    isMaterialLocalization: true,
+                    fontFamily: 'Roboto',
+                    onItemSelected: (value) {
+                      controller.selectedpaymentCurrency = value.itemValue;
                       controller.change(
                           rxVariable: controller.rxSelectedPaymentType,
-                          value: controller.paymentlist?[i]?.paymentType ?? 1);
-                    },
-                    child: PaymentTypeSelectionView(
-                        paymentTypeIcon: _paymentIcon(
-                            controller.paymentlist?[i]?.paymentType),
-                        imageUrl: controller.paymentlist?[i]?.imageUrl,
-                        paymentTypeTitle:
-                            controller.paymentlist?[i]?.paymentType == 2
-                                ? label_card_card_by_stripe.tr
-                                : (controller.paymentlist?[i]?.name ?? ''),
-                        ispaymentTypeSelected:
-                            (controller.rxSelectedPaymentType.value ==
-                                controller.paymentlist?[i]?.paymentType)))
-                .toPad(start: 15)
-            : const SizedBox.shrink(),
-        15.toHeight(),
-        if ((controller.paymentlist?[i]?.isEnable ?? true) &&
-            (controller.paymentlist?[i]?.paymentType == 1 &&
-                controller.rxSelectedPaymentType.value ==
-                    controller.paymentlist?[i]?.paymentType)) ...[
-          CancelButton(
-              borderColor: overALLThemeType == 2 ? Colors.transparent : null,
-              isExpand: false,
-              buttonText: controller.selectedpaymentCurrency ??
-                  appPreference.preferredCurrency,
-              borderRadius: overALLThemeType == 4
-                  ? 19
-                  : overALLAppLayoutModel?.borderRadius,
-              fillcolor: currencyContainerColor,
-              horizontalPadding: 10,
-              textColor: appColors.black,
-              textSize: AppDimen.textSize_14,
-              symbol: controller.selectedpaymentCurrency != null
-                  ? controller.selectedpaymentCurrency!.split(' ')[0]
-                  : appPreference.preferredCurrency!.split(' ')[0],
-              height: controller.rxSelectedPaymentType.value ==
-                      controller.paymentlist?[i]?.paymentType
-                  ? 40
-                  : 0,
-              dotWidget: Assets.drawableFilterCalendarArrow
-                  .toSVG(quarterTurns: 3, colour: appColors.black, size: 12)
-                  .toPad(top: 0, start: 10),
-              color: currencyContainerBorderNeeded!
-                  ? appColors.myTripsDividerColor
-                  : null,
-              onTap: () {
-                print("currency :::${appPreference.preferredCurrency}");
-                GetXBottomSheet(
-                  bottomSheetWidget: getDraggableSheetWidget(
-                      controller: controller,
-                      listItems: (controller.listOfCurrencies ?? [])
-                          .map((e) => StepItemModel(itemName: e, itemValue: e))
-                          .toList(),
-                      borderRadius: overALLAppLayoutModel?.borderRadius,
-                      themeType: overALLThemeType,
-                      selectedValue: controller.selectedpaymentCurrency ??
-                          appPreference.preferredCurrency,
-                      isShowCircleTick: true,
-                      title: label_choose_currency.tr,
-                      isMaterialLocalization: true,
-                      fontFamily: 'Roboto',
-                      onItemSelected: (value) {
-                        controller.selectedpaymentCurrency = value.itemValue;
-                        controller.change(
-                            rxVariable: controller.rxSelectedPaymentType,
-                            value: controller.rxSelectedPaymentType.value);
-                      }),
-                );
-              }).toPad(bottom: 15, start: 15),
-        ],
-        if (controller.paymentlist?[i]?.paymentType == 3 &&
-            controller.rxSelectedPaymentType.value == 3) ...[
-          _pawaPayFields().toPad(horizontal: 15, bottom: 15),
-        ],
-        if (i < (controller.paymentlist?.length ?? 1) - 1) ...[
-          filterDivider,
-          15.toHeight(),
-        ]
-      ],
-    ].toColumn();
+                          value: controller.rxSelectedPaymentType.value);
+                    }),
+              );
+            }),
+    ].toColumn(crossAxisAlignment: CrossAxisAlignment.start);
   }
 
   String _paymentIcon(int? paymentType) {
@@ -341,10 +373,31 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
                 GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies_providers>()
             .toList() ??
         [];
+    final fieldStyle = TextStyle(
+        color: appColors.textColor,
+        fontFamily: AppFont.font,
+        fontSize: AppDimen.textSize_16);
+    Widget dropdown({
+      required String label,
+      required String? value,
+      required List<DropdownMenuItem<String>> items,
+      required ValueChanged<String?> onChanged,
+    }) =>
+        DropdownButtonFormField<String>(
+          value: items.any((item) => item.value == value) ? value : null,
+          isExpanded: true,
+          style: fieldStyle,
+          borderRadius: BorderRadius.circular(_fieldRadius),
+          icon: Icon(Icons.keyboard_arrow_down_rounded,
+              color: appColors.placeholderColor),
+          decoration: _fieldDecoration(label),
+          items: items,
+          onChanged: onChanged,
+        );
     return [
-      DropdownButtonFormField<String>(
+      dropdown(
+        label: pawapay_country.tr,
         value: controller.pawaPayCountry,
-        decoration: InputDecoration(labelText: pawapay_country.tr),
         items: countries
             .map((item) => DropdownMenuItem(
                 value: item.country,
@@ -352,18 +405,20 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
             .toList(),
         onChanged: controller.selectPawaPayCountry,
       ),
-      DropdownButtonFormField<String>(
+      14.toHeight(),
+      dropdown(
+        label: pawapay_currency.tr,
         value: controller.pawaPayCurrency,
-        decoration: InputDecoration(labelText: pawapay_currency.tr),
         items: currencies
             .map((item) => DropdownMenuItem(
                 value: item.currency, child: Text(item.currency ?? '')))
             .toList(),
         onChanged: controller.selectPawaPayCurrency,
       ),
-      DropdownButtonFormField<String>(
+      14.toHeight(),
+      dropdown(
+        label: pawapay_provider.tr,
         value: controller.pawaPayProvider,
-        decoration: InputDecoration(labelText: pawapay_provider.tr),
         items: providers
             .map((item) => DropdownMenuItem(
                 value: item.provider,
@@ -374,16 +429,43 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
           controller.update();
         },
       ),
+      14.toHeight(),
       TextField(
         controller: controller.pawaPayPhoneController,
         keyboardType: TextInputType.phone,
-        decoration: InputDecoration(labelText: pawapay_phone_number.tr),
+        style: fieldStyle,
+        cursorColor: appColors.secondaryColor,
+        decoration: _fieldDecoration(pawapay_phone_number.tr),
       ),
       if (controller.pawaPayPendingMessage != null)
         TextButton(
             onPressed: controller.resumePawaPayPayment,
             child: Text(pawapay_check_status.tr)),
-    ].toColumn();
+    ].toColumn(crossAxisAlignment: CrossAxisAlignment.stretch);
+  }
+
+  InputDecoration _fieldDecoration(String label) {
+    OutlineInputBorder border(Color color, double width) => OutlineInputBorder(
+          borderRadius: BorderRadius.circular(_fieldRadius),
+          borderSide: BorderSide(color: color, width: width),
+        );
+    return InputDecoration(
+      labelText: label,
+      labelStyle: TextStyle(
+          color: appColors.placeholderColor,
+          fontFamily: AppFont.font,
+          fontSize: AppDimen.textSize_14),
+      floatingLabelStyle: TextStyle(
+          color: appColors.secondaryColor,
+          fontFamily: AppFont.font,
+          fontWeight: AppFont.semiBold),
+      filled: true,
+      fillColor: appColors.white,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      border: border(appColors.customBorderColor, 1),
+      enabledBorder: border(appColors.customBorderColor, 1),
+      focusedBorder: border(appColors.secondaryColor, 1.5),
+    );
   }
 
   Widget _priceDetailWidget(

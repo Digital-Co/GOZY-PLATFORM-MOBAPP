@@ -74,6 +74,9 @@ class PaymentTypeController extends BaseController {
             supportedPaymentTypes:
                 isPaymentFrom == "servicePlan" ? const [1, 2] : const [1, 2, 3])
         .then((paymentListData) {
+      final methods = paymentListData.getPaymentMethods;
+      debugPrint('getPaymentMethods -> status=${methods?.status} '
+          'error=${methods?.errorMessage} results=${methods?.results?.map((e) => '#${e?.id} ${e?.name} type=${e?.paymentType} enabled=${e?.isEnable}').toList()}');
       paymentlist = paymentListData.getPaymentMethods?.results?.where((item) {
         final gateway = mobilePaymentGatewayForType(item?.paymentType);
         return gateway != null &&
@@ -83,28 +86,74 @@ class PaymentTypeController extends BaseController {
           isPaymentFrom != "servicePlan") {
         loadPawaPayOptions();
       }
-      getCurrencyList().then((currencylistdata) {
-        listOfCurrencies?.clear();
-        currencylistdata.getCurrencies?.results?.forEach((p0) {
-          if ((p0?.isEnable ?? false) && (p0?.isPayment ?? false)) {
-            String currency =
-                "${getCurrencySymbol(currency: p0?.symbol)} ${p0?.symbol}";
-            listOfCurrencies?.add(currency);
-          }
-        });
-        String preferred = appPreference.preferredCurrency ?? "";
-        if (preferred.isEmpty) preferred = defaultCurrency;
-        selectedpaymentCurrency =
-            "${getCurrencySymbol(currency: preferred)} $preferred";
+      // The currency list is only needed by the PayPal picker: it is fetched
+      // when PayPal is selected (see ensureCurrenciesLoaded), not up front.
+      String preferred = appPreference.preferredCurrency ?? "";
+      if (preferred.isEmpty) preferred = defaultCurrency;
+      selectedpaymentCurrency =
+          "${getCurrencySymbol(currency: preferred)} $preferred";
+      _selectDefaultPaymentType();
+    });
+  }
 
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          change(
-              rxVariable: rxSelectedPaymentType,
-              value: paymentlist?.isNotEmpty == true
-                  ? (paymentlist!.first?.paymentType ?? 0)
-                  : 0);
-        });
+  bool isCurrenciesLoading = false;
+
+  /// Currency the guest picked for the selected payment method: the PawaPay
+  /// currency for PawaPay, otherwise the currency chosen in the payment
+  /// screen (PayPal picker, or the default preferred currency).
+  String? get selectedPaymentCurrencyCode {
+    if (mobilePaymentGatewayForType(rxSelectedPaymentType.value) ==
+        MobilePaymentGateway.pawaPay) {
+      return pawaPayCurrency;
+    }
+    return selectedpaymentCurrency?.split(' ').last;
+  }
+
+  void _refreshPaymentUi() => change(
+      rxVariable: rxSelectedPaymentType, value: rxSelectedPaymentType.value);
+
+  /// Selects a payment method and loads what it needs (PayPal: currencies).
+  void selectPaymentType(int type) {
+    rxSelectedPaymentType.value = type;
+    change(rxVariable: rxSelectedPaymentType, value: type);
+    if (mobilePaymentGatewayForType(type) == MobilePaymentGateway.paypal) {
+      ensureCurrenciesLoaded();
+    }
+  }
+
+  /// Loads the general currency list once, without the page-wide loader. The
+  /// PayPal panel shows its own spinner while [isCurrenciesLoading] is true.
+  Future<void> ensureCurrenciesLoaded() async {
+    if (isCurrenciesLoading || (listOfCurrencies?.isNotEmpty ?? false)) return;
+    isCurrenciesLoading = true;
+    _refreshPaymentUi();
+    try {
+      final data = await getCurrencyList(
+              isAutoCloseLoader: false, isStartLoader: false)
+          .timeout(const Duration(seconds: 20));
+      listOfCurrencies?.clear();
+      data.getCurrencies?.results?.forEach((p0) {
+        if ((p0?.isEnable ?? false) && (p0?.isPayment ?? false)) {
+          listOfCurrencies
+              ?.add("${getCurrencySymbol(currency: p0?.symbol)} ${p0?.symbol}");
+        }
       });
+    } catch (e) {
+      debugPrint('ensureCurrenciesLoaded failed: $e');
+    } finally {
+      isCurrenciesLoading = false;
+      _refreshPaymentUi();
+    }
+  }
+
+  void _selectDefaultPaymentType() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final type = rxSelectedPaymentType.value != 0
+          ? rxSelectedPaymentType.value
+          : (paymentlist?.isNotEmpty == true
+              ? (paymentlist!.first?.paymentType ?? 0)
+              : 0);
+      selectPaymentType(type);
     });
   }
 
@@ -464,7 +513,7 @@ class PaymentTypeController extends BaseController {
         ..vars.isDeliveryIncluded = isDeliveryCheck
         ..vars.averagePrice = billingdata?.averagePrice
         ..vars.days = billingdata?.days
-        ..vars.paymentCurrency = selectedpaymentCurrency?.split(' ')[1];
+        ..vars.paymentCurrency = selectedPaymentCurrencyCode;
       if (isPromoApplied) {
         b.vars.promoCode = couponCode;
       }

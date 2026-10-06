@@ -36,10 +36,10 @@ GgetAllReportTypeData? createReportUserData;
 GgetImageBannerData? homeBannerData;
 
 extension CommonApiController on BaseController {
-  Future<GgetCurrenciesListData> getCurrencyList({bool isAutoCloseLoader = true}) {
+  Future<GgetCurrenciesListData> getCurrencyList({bool isAutoCloseLoader = true, bool isStartLoader = true}) {
     Completer<GgetCurrenciesListData> currencyListCompleter = Completer<GgetCurrenciesListData>();
     final params = GgetCurrenciesListReq((b) => b..vars.build());
-    FerryLoggerClient.makeRequest(params, this, getCurrencyList, isAutoCloseLoader: isAutoCloseLoader)?.then((res) {
+    FerryLoggerClient.makeRequest(params, this, getCurrencyList, isAutoCloseLoader: isAutoCloseLoader, isStartLoader: isStartLoader)?.then((res) {
       GgetCurrenciesListData currencyListData = res.data as GgetCurrenciesListData;
       if (isAutoCloseLoader) {
         isLoading.value = false;
