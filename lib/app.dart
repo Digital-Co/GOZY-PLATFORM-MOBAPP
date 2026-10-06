@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
@@ -68,18 +69,18 @@ class App extends StatelessWidget {
         defaultTransition: Transition.leftToRight,
         translations: localizationService,
         title: APP_NAME,
-        localizationsDelegates: [
-          DefaultWidgetsLocalizations.delegate,
-          DefaultMaterialLocalizations.delegate,
-          FallbackLocalizationDelegate()
-        ],
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        supportedLocales: kMaterialSupportedLanguages
+            .map((languageCode) => Locale(languageCode))
+            .toList(),
         home: splash,
         builder: (context, child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.5),
-          ),
-          child: child!,
-        ));
+              data: MediaQuery.of(context).copyWith(
+                textScaler:
+                    MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.5),
+              ),
+              child: child!,
+            ));
   }
 
   static Map<String, String> generateTimeList({required String locale}) {
@@ -281,6 +282,7 @@ class App extends StatelessWidget {
     );
     sdkversion = result;
   }
+
   Future<bool> EnableLocationService() async {
     try {
       bool location = await appChannel.invokeMethod('EnableLocationService');
@@ -628,25 +630,24 @@ class App extends StatelessWidget {
       "label_others".tr
     ];
   }
+
   List<ReasonGuestsModel> buildReasonList({
     required List<ReasonGuestsModel> reasons,
     required List<String> labelsString,
   }) {
-
-
     return reasons.asMap().entries.map((entry) {
       final index = entry.key;
       final item = entry.value;
 
       return ReasonGuestsModel(
         id: item.id ?? 0,
-        itemValue:  index < labelsString.length
+        itemValue: index < labelsString.length
             ? labelsString[index]
             : (item.label ?? ""),
         label: index < labelsString.length
             ? labelsString[index]
             : (item.label ?? ""),
-        itemName:  index < labelsString.length
+        itemName: index < labelsString.length
             ? labelsString[index]
             : (item.label ?? ""),
       );
