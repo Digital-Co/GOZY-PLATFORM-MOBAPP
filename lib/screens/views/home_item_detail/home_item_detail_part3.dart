@@ -1,7 +1,8 @@
 part of 'home_item_detail.dart';
 
 extension HomeItemDetailPart3 on HomeItemDetailState {
-  Widget _getDescriptionText({int? maxLines, ValueChanged<bool>? onTextOverflowed}) {
+  Widget _getDescriptionText(
+      {int? maxLines, ValueChanged<bool>? onTextOverflowed}) {
     return CustomOverflowFunctionText(
       text: controller.itemInfo.description.toString().trim(),
       fontWeight: AppFont.regular,
@@ -15,90 +16,120 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
 
   Widget _showBottomCheckAvailability() {
     String baseprice = '0';
-    if (controller.itemInfo != null && controller.itemInfo.listingData != null) {
-      baseprice = double.parse(controller.itemInfo.listingData!.basePrice!.toString())
-          .currencyConverted(convertedCurrency: controller.itemInfo.listingData!.currency!);
+    if (controller.itemInfo != null &&
+        controller.itemInfo.listingData != null) {
+      baseprice =
+          double.parse(controller.itemInfo.listingData!.basePrice!.toString())
+              .currencyConverted(
+                  convertedCurrency:
+                      controller.itemInfo.listingData!.currency!);
     }
 
     return CustomBottomItemShadowContainer(
-      height: 110,
       color: appColors.white,
       padding: pad(w: 20, top: 25, bottom: 20),
-      body: [
-        Obx(() => [
-              if (double.parse(baseprice) > 0)
-                getPriceTextView(
-                  currencySymbol: controller.getCurrencySymbol(),
-                  basePrice: baseprice,
-                  selectedDates: controller.selectedDates,
-                  instantBookIcon: HomeItemDetailState._onViewCarInstantBookIcon,
-                  bookingType: controller.itemInfo.bookingType,
-                  themeType: HomeItemDetailState._onViewCarThemeType,
-                  controller: controller,
+      body: SafeArea(
+        top: false,
+        child: [
+          Obx(() => [
+                    if (double.parse(baseprice) > 0)
+                      getPriceTextView(
+                        currencySymbol: controller.getCurrencySymbol(),
+                        basePrice: baseprice,
+                        selectedDates: controller.selectedDates,
+                        instantBookIcon:
+                            HomeItemDetailState._onViewCarInstantBookIcon,
+                        bookingType: controller.itemInfo.bookingType,
+                        themeType: HomeItemDetailState._onViewCarThemeType,
+                        controller: controller,
+                      ),
+                    toOnTap(
+                      onTap: () {
+                        controller.homeItemDetailNavigator
+                            ?.navigateScreen(HomeItemDetailScreen.Calendar, '');
+                      },
+                      child: [
+                        5.toHeight(),
+                        Obx(() => controller.selectedDates.isNotEmpty
+                            ? IntrinsicWidth(
+                                child: [
+                                CustomUnderlineContainer(
+                                    onTap: () {
+                                      controller.homeItemDetailNavigator
+                                          ?.navigateScreen(
+                                              HomeItemDetailScreen.Calendar,
+                                              '');
+                                    },
+                                    borderColor: appColors.secondaryColor,
+                                    body: [
+                                      20.toHeight(),
+                                      CustomText(
+                                          text: controller.availabilityFormat(
+                                              DateList:
+                                                  controller.selectedDates),
+                                          size: AppDimen.textSize_12,
+                                          color: appColors.secondaryColor),
+                                      3.toWidth(),
+                                      Assets.drawableDownArrow
+                                          .toSVG(
+                                              colour: appColors.secondaryColor)
+                                          .toPad(top: 3),
+                                    ].toRow(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start)),
+                                30.toWidth()
+                              ].toRow())
+                            : const SizedBox.shrink()),
+                      ].toColumn(),
+                    )
+                  ].toColumn(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center))
+              .toStretch(),
+          24.toWidth(),
+          Obx(() => SizedBox(
+                height: 50,
+                child: PrimaryButton(
+                  padding: pad(
+                      w: controller.selectedDates.isNotEmpty &&
+                              controller.itemInfo.bookingType == 'instant'
+                          ? 10
+                          : 10),
+                  buttonText: HomeItemDetailState._onViewCarThemeType == 1 ||
+                          HomeItemDetailState._onViewCarThemeType == 2
+                      ? label_continue.tr
+                      : label_book_now.tr,
+                  isResizeText: true,
+                  onTap: () {
+                    controller.isDeliveryCheck.value = false;
+                    if ((controller.appPreference.accessToken!.isNotEmpty &&
+                            controller.itemInfo?.userId ==
+                                controller.appPreference.userID) ||
+                        controller.itemInfo?.listingData?.maxDaysNotice ==
+                            null ||
+                        controller.itemInfo?.listingData?.maxDaysNotice ==
+                            'unavailable') {
+                      controller.showToast(
+                          error_msg_this_listing_not_available_to_book.tr);
+                    } else if (controller.selectedDates.isNotEmpty &&
+                        controller.selectedStartTime.value.isNotEmpty &&
+                        controller.selectedEndTime.value.isNotEmpty &&
+                        controller.appPreference.accessToken!.isNotEmpty) {
+                      controller.checkNetwork(() =>
+                          controller.getBillingCalculation(isNavigate: true));
+                    } else if (controller
+                        .appPreference.accessToken!.isNotEmpty) {
+                      controller.homeItemDetailNavigator
+                          ?.navigateScreen(HomeItemDetailScreen.Calendar, '');
+                    } else {
+                      controller.homeItemDetailNavigator
+                          ?.navigateSigninScreen();
+                    }
+                  },
                 ),
-              toOnTap(
-                onTap: () {
-                  controller.homeItemDetailNavigator?.navigateScreen(HomeItemDetailScreen.Calendar, '');
-                },
-                child: [
-                  5.toHeight(),
-                  Obx(() => controller.selectedDates.isNotEmpty
-                      ? IntrinsicWidth(
-                          child: [
-                          CustomUnderlineContainer(
-                              onTap: () {
-                                controller.homeItemDetailNavigator
-                                    ?.navigateScreen(HomeItemDetailScreen.Calendar, '');
-                              },
-                              borderColor: appColors.secondaryColor,
-                              body: [
-                                20.toHeight(),
-                                CustomText(
-                                    text: controller.availabilityFormat(DateList: controller.selectedDates),
-                                    size: AppDimen.textSize_12,
-                                    color: appColors.secondaryColor),
-                                3.toWidth(),
-                                Assets.drawableDownArrow
-                                    .toSVG(colour: appColors.secondaryColor)
-                                    .toPad(top: 3),
-                              ].toRow(mainAxisAlignment: MainAxisAlignment.start)),
-                          30.toWidth()
-                        ].toRow())
-                      : const SizedBox.shrink()),
-                ].toColumn(),
-              )
-            ].toColumn(mainAxisAlignment: MainAxisAlignment.center)).toStretch(),
-        24.toWidth(),
-        Obx(() => SizedBox(
-              height: 50,
-              child: PrimaryButton(
-                padding: pad(w: controller.selectedDates.isNotEmpty && controller.itemInfo.bookingType == 'instant' ? 10 : 10),
-                buttonText: HomeItemDetailState._onViewCarThemeType == 1 ||
-                        HomeItemDetailState._onViewCarThemeType == 2
-                    ? label_continue.tr
-                    : label_book_now.tr,
-                isResizeText: true,
-                onTap: () {
-                  controller.isDeliveryCheck.value = false;
-                  if ((controller.appPreference.accessToken!.isNotEmpty &&
-                          controller.itemInfo?.userId == controller.appPreference.userID) ||
-                      controller.itemInfo?.listingData?.maxDaysNotice == null ||
-                      controller.itemInfo?.listingData?.maxDaysNotice == 'unavailable') {
-                    controller.showToast(error_msg_this_listing_not_available_to_book.tr);
-                  } else if (controller.selectedDates.isNotEmpty &&
-                      controller.selectedStartTime.value.isNotEmpty &&
-                      controller.selectedEndTime.value.isNotEmpty &&
-                      controller.appPreference.accessToken!.isNotEmpty) {
-                    controller.checkNetwork(() => controller.getBillingCalculation(isNavigate: true));
-                  } else if (controller.appPreference.accessToken!.isNotEmpty) {
-                    controller.homeItemDetailNavigator?.navigateScreen(HomeItemDetailScreen.Calendar, '');
-                  } else {
-                    controller.homeItemDetailNavigator?.navigateSigninScreen();
-                  }
-                },
-              ),
-            ).toStretch(isExpanded: false))
-      ].toRow(mainAxisAlignment: MainAxisAlignment.center),
+              ).toStretch(isExpanded: false))
+        ].toRow(mainAxisAlignment: MainAxisAlignment.center),
+      ),
     );
   }
 
@@ -123,11 +154,15 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
       reviewsStr =
           '${effectiveCount} ${label_review.trPlural(reviewPlural.tr, effectiveCount).toLowerCase()}';
     }
-    debugPrint("rateandreview123: ${itemReviews.length} <-> ${controller.itemReviewsInfo.length}");
+    debugPrint(
+        "rateandreview123: ${itemReviews.length} <-> ${controller.itemReviewsInfo.length}");
     isUserReview;
     final reviewList = controller.userReviewsInfo[controller.selectedProfileid];
 
-    final reviewCount = count ?? ((reviewList != null && reviewList.isNotEmpty) ? (controller.userReviewsCount[controller.selectedProfileid] ?? 0) : 0);
+    final reviewCount = count ??
+        ((reviewList != null && reviewList.isNotEmpty)
+            ? (controller.userReviewsCount[controller.selectedProfileid] ?? 0)
+            : 0);
     return [
       toReviewList(
           scrollDirection: reviewCount != 0 ? Axis.horizontal : Axis.vertical,
@@ -153,8 +188,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                               reviewFontWeight: FontWeight.w600,
                               reviews: reviewsStr),
                         ),
-                        contentWidget:
-                            (bottomSheetWidget ?? _getReviewList()).toPad(horizontal: AppDimen.startMargin),
+                        contentWidget: (bottomSheetWidget ?? _getReviewList())
+                            .toPad(horizontal: AppDimen.startMargin),
                       );
                     },
                     index: index,
@@ -168,7 +203,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                   ? 140
                   : 164
               : double.infinity),
-      if (reviewCount != 0 && ((itemReviews).length > 3 || (itemReviews.length > 3)))
+      if (reviewCount != 0 &&
+          ((itemReviews).length > 3 || (itemReviews.length > 3)))
         getShowMoreWidget(
                 onTap: () {
                   showCustomBottomSheet(
@@ -180,7 +216,9 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                       builder: (newController) => getRatingTextView(
                           icon: HomeItemDetailState._onViewCarRatingIcon,
                           iconColor:
-                              HomeItemDetailState._onViewCarThemeType == 3 ? appColors.textColor : null,
+                              HomeItemDetailState._onViewCarThemeType == 3
+                                  ? appColors.textColor
+                                  : null,
                           dotSize: 0,
                           iconSize: 20,
                           textColor: appColors.black,
@@ -188,7 +226,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                           rating: '',
                           reviewFontWeight: FontWeight.w500,
                           reviews: (isUserReview ?? false)
-                              ? '$reviewCount ' '${label_review.trPlural(reviewPlural.tr, reviewCount)}'
+                              ? '$reviewCount '
+                                  '${label_review.trPlural(reviewPlural.tr, reviewCount)}'
                               : reviewsStr),
                     ),
                     contentWidget: (bottomSheetWidget ?? _getReviewList())
@@ -209,11 +248,14 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
               builder: (newController) => [
                     [
                       showGoogleMap(
-                              initialLatLng: LatLng(controller.itemInfo.lat, controller.itemInfo.lng),
+                              initialLatLng: LatLng(controller.itemInfo.lat,
+                                  controller.itemInfo.lng),
                               controller: controller,
-                              borderRadius: HomeItemDetailState._onViewCarBorderRadius,
+                              borderRadius:
+                                  HomeItemDetailState._onViewCarBorderRadius,
                               isBottomOnly: true,
-                              circles: controller.getCircle(fillColor: appColors.black))
+                              circles: controller.getCircle(
+                                  fillColor: appColors.black))
                           .toStretch(),
                       Center(
                         child: CustomTitleText(
@@ -221,7 +263,9 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                               '${controller.itemInfo.title} in ${controller.getAddressText(itemInfo: controller.itemInfo)}',
                           textAlign: TextAlign.center,
                           size: AppDimen.textSize_16,
-                        ).toPad(horizontal: AppDimen.startMargin, top: AppDimen.startMargin / 2),
+                        ).toPad(
+                            horizontal: AppDimen.startMargin,
+                            top: AppDimen.startMargin / 2),
                       ),
                       5.toHeight(),
                       Center(
@@ -230,17 +274,18 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                           color: appColors.placeholderColor,
                           textAlign: TextAlign.center,
                           size: AppDimen.textSize_12,
-                        ).toPad(horizontal: AppDimen.startMargin, bottom: AppDimen.startMargin / 2),
+                        ).toPad(
+                            horizontal: AppDimen.startMargin,
+                            bottom: AppDimen.startMargin / 2),
                       ),
                     ].toColumn().toFitToDeviceWidth(),
                     Align(
                         alignment: AlignmentDirectional.topStart,
                         child: getBackIconWidget(
-                          iconBGColor: AppColors.staticwhite,
-                          themeType: HomeItemDetailState._onViewCarThemeType,
-                          iconColor: AppColors.staticblack,
-                          backIcon: Assets.drawableSignupClose
-                        )),
+                            iconBGColor: AppColors.staticwhite,
+                            themeType: HomeItemDetailState._onViewCarThemeType,
+                            iconColor: AppColors.staticblack,
+                            backIcon: Assets.drawableSignupClose)),
                   ].toStack()),
         );
       },
@@ -256,7 +301,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
             absorbing: true,
             child: showGoogleMap(
               borderRadius: HomeItemDetailState._onViewCarBorderRadius,
-              initialLatLng: LatLng(controller.itemInfo.lat ?? 0.0, controller.itemInfo.lng ?? 0.0),
+              initialLatLng: LatLng(controller.itemInfo.lat ?? 0.0,
+                  controller.itemInfo.lng ?? 0.0),
               controller: controller,
             ),
           ),
@@ -271,7 +317,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
               alignment: AlignmentDirectional.center,
               body: [
                 CustomText(
-                  text: controller.getAddressText(itemInfo: controller.itemInfo),
+                  text:
+                      controller.getAddressText(itemInfo: controller.itemInfo),
                   size: AppDimen.textSize_14,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -294,7 +341,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
             height: 120,
             width: 120,
             margin: pad(top: 95, bottom: 20),
-            color: (mapLocationCircleColor ?? appColors.secondaryColor).withValues(alpha: 0.2),
+            color: (mapLocationCircleColor ?? appColors.secondaryColor)
+                .withValues(alpha: 0.2),
             borderColor: appColors.primaryColor,
             alignment: AlignmentDirectional.center,
             body: SizedBox(),
@@ -337,7 +385,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
     });
   }
 
-  Widget _showCancellationPolicyInfo({int? iconView, bool? isRemoveDivider, bool? isIconSize}) {
+  Widget _showCancellationPolicyInfo(
+      {int? iconView, bool? isRemoveDivider, bool? isIconSize}) {
     return _getsingleView(
         title: label_cancellation_policy.tr,
         isIconSize: isIconSize,
@@ -368,7 +417,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
         : 0.toHeight();
   }
 
-  Widget _showContactHostInfo({int? iconView, String? linkText, bool? isIconSize}) {
+  Widget _showContactHostInfo(
+      {int? iconView, String? linkText, bool? isIconSize}) {
     return controller.itemInfo?.userId != controller.appPreference.userID
         ? _getsingleView(
                 isIconSize: isIconSize,
@@ -376,7 +426,10 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                 link: label_message.tr,
                 iconView: iconView,
                 type: 'contacthost')
-            .toPad(bottom: controller.similiarlistingInfo.isEmpty ? 100 + bottomViewPadding : 0)
+            .toPad(
+                bottom: controller.similiarlistingInfo.isEmpty
+                    ? 100 + bottomViewPadding
+                    : 0)
         : 0.toHeight();
   }
 
@@ -435,18 +488,24 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
           if (controller.appPreference.accessToken!.isEmpty) {
             controller.homeItemDetailNavigator?.navigateSigninScreen();
           } else if (controller.itemInfo?.listingData?.maxDaysNotice == null ||
-              controller.itemInfo?.listingData?.maxDaysNotice == 'unavailable') {
-            controller.showToast(error_msg_this_listing_not_available_to_book.tr);
+              controller.itemInfo?.listingData?.maxDaysNotice ==
+                  'unavailable') {
+            controller
+                .showToast(error_msg_this_listing_not_available_to_book.tr);
           } else {
             print("unwanted Navigate to Contact host Screen");
-            controller.homeItemDetailNavigator?.navigateScreen(HomeItemDetailScreen.ContactHost, '');
+            controller.homeItemDetailNavigator
+                ?.navigateScreen(HomeItemDetailScreen.ContactHost, '');
           }
         } else if (type == 'calendar') {
           if (controller.itemInfo?.listingData?.maxDaysNotice == null ||
-              controller.itemInfo?.listingData?.maxDaysNotice == 'unavailable') {
-            controller.showToast(error_msg_this_listing_not_available_to_book.tr);
+              controller.itemInfo?.listingData?.maxDaysNotice ==
+                  'unavailable') {
+            controller
+                .showToast(error_msg_this_listing_not_available_to_book.tr);
           } else {
-            controller.homeItemDetailNavigator?.navigateScreen(HomeItemDetailScreen.Calendar, '');
+            controller.homeItemDetailNavigator
+                ?.navigateScreen(HomeItemDetailScreen.Calendar, '');
           }
         } else {
           showCustomBottomSheet(
@@ -486,7 +545,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
             size: AppDimen.textSize_16,
             icon: HomeItemDetailState._onViewCarRatingIcon,
             rating: rateandreview.$1,
-            reviews: '${rateandreview.$2} ${label_review.trPlural(reviewPlural.tr, rateandreview.$2)}',
+            reviews:
+                '${rateandreview.$2} ${label_review.trPlural(reviewPlural.tr, rateandreview.$2)}',
             textColor: appColors.customTextColor,
             iconColor: iconColor)
         : 0.toHeight();
@@ -495,7 +555,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
   dynamic _getCarItemIndicatorWidget() {
     if (carFeatureItemIcon != null && carFeatureItemIcon != 'dotindicator') {
       return carFeatureItemIcon;
-    } else if (carFeatureItemIcon != null && carFeatureItemIcon == 'dotindicator') {
+    } else if (carFeatureItemIcon != null &&
+        carFeatureItemIcon == 'dotindicator') {
       return const SizedBox(
         width: 6,
         height: 6,
@@ -510,7 +571,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
     controller.userReviewListpage.value = 1;
     controller.selectedProfileid = profileId;
     controller.checkNetwork(controller.getUserReviews);
-    debugPrint("controller.userReviewsInfo: ${controller.userReviewsInfo[controller.selectedProfileid]}");
+    debugPrint(
+        "controller.userReviewsInfo: ${controller.userReviewsInfo[controller.selectedProfileid]}");
     showCustomBottomSheet(
         backButtonWidget: GetBuilder<BottomSheetController>(
           builder: (newController) => getBackIconWidget(
@@ -522,17 +584,23 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
           builder: (newController) => hostInfoItem(
               hostItem: hostItem,
               profileId: profileId,
-              profileIconType: appLayoutMap[AppLayout.profile]?.profileIconType ?? '',
+              profileIconType:
+                  appLayoutMap[AppLayout.profile]?.profileIconType ?? '',
               controller: controller,
               ownerNameColor: ownerNameColor,
               isHost: isHost,
               isBackarrow: true,
-              isNotEmptyUserReviews: controller.userReviewsInfo[controller.selectedProfileid] != null &&
-                  controller.userReviewsInfo[controller.selectedProfileid]!.isNotEmpty,
+              isNotEmptyUserReviews:
+                  controller.userReviewsInfo[controller.selectedProfileid] !=
+                          null &&
+                      controller.userReviewsInfo[controller.selectedProfileid]!
+                          .isNotEmpty,
               userReviewList: _showCarReviewsInfo(
                 isUserReview: true,
-                itemReviews: controller.userReviewsInfo[controller.selectedProfileid],
-                count: controller.userReviewsCount[controller.selectedProfileid],
+                itemReviews:
+                    controller.userReviewsInfo[controller.selectedProfileid],
+                count:
+                    controller.userReviewsCount[controller.selectedProfileid],
                 bottomSheetWidget: _getUserReviewList(),
               ),
               borderRadius: HomeItemDetailState._onViewCarBorderRadius,
@@ -542,7 +610,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
         ),
         titleFontSize: AppDimen.textSize_18,
         sheetCloseListener: () {
-          controller.profileIdList.removeAt(controller.profileIdList.length - 1);
+          controller.profileIdList
+              .removeAt(controller.profileIdList.length - 1);
           if (controller.profileIdList.isNotEmpty) {
             controller.selectedProfileid = controller.profileIdList.last;
             controller.userReviewListpage.value = 1;
@@ -556,7 +625,8 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
         });
   }
 
-  void showHostInfoFromProfileTap({dynamic hostItem, int? profileId, required bool isHost}) {
+  void showHostInfoFromProfileTap(
+      {dynamic hostItem, int? profileId, required bool isHost}) {
     _showHostInfo(hostItem: hostItem, profileId: profileId, isHost: isHost);
   }
 
@@ -568,9 +638,12 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
           reviewList: controller.userReviewsInfo[controller.selectedProfileid],
           reviewType: 'ListDetail',
           reviewsCount: controller.userReviewsInfo.isNotEmpty &&
-                  controller.userReviewsInfo[controller.selectedProfileid!] != null &&
-                  controller.userReviewsInfo[controller.selectedProfileid!]!.isNotEmpty
-              ? (controller.userReviewsInfo[controller.selectedProfileid!]?[0].yourReviewsCount)
+                  controller.userReviewsInfo[controller.selectedProfileid!] !=
+                      null &&
+                  controller.userReviewsInfo[controller.selectedProfileid!]!
+                      .isNotEmpty
+              ? (controller.userReviewsInfo[controller.selectedProfileid!]?[0]
+                  .yourReviewsCount)
               : null,
           isAddListener: isAddListener,
           onApiFunction: controller.getUserReviews,
@@ -578,13 +651,17 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
           itemBuilder: (context, index) {
             return reviewSectionItem(
                     index: index,
-                    itemReviews: controller.userReviewsInfo[controller.selectedProfileid],
+                    itemReviews: controller
+                        .userReviewsInfo[controller.selectedProfileid],
                     maxLines: 2)
                 .toPad(bottom: 15);
           },
           currentPage: controller.userReviewListpage,
           onSelectedHost: (dynamic hostItem) {
-            _showHostInfo(hostItem: hostItem, profileId: hostItem?.authorData?.profileId, isHost: false);
+            _showHostInfo(
+                hostItem: hostItem,
+                profileId: hostItem?.authorData?.profileId,
+                isHost: false);
           });
     });
   }
@@ -598,19 +675,24 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
         onApiFunction: controller.getPropertyReviews,
         controller: controller,
         itemBuilder: (context, index) {
-          return reviewSectionItem(index: index, itemReviews: controller.itemReviewsInfo, maxLines: 2)
+          return reviewSectionItem(
+                  index: index,
+                  itemReviews: controller.itemReviewsInfo,
+                  maxLines: 2)
               .toPad(bottom: 15);
         },
         currentPage: controller.propertyListpage,
         onSelectedHost: (dynamic hostItem) {
-          _showHostInfo(hostItem: hostItem, profileId: hostItem?.authorData?.profileId, isHost: false);
+          _showHostInfo(
+              hostItem: hostItem,
+              profileId: hostItem?.authorData?.profileId,
+              isHost: false);
         }));
   }
 
-
-
   void _reportAboutUser() {
-    if (controller.appPreference.accessToken != null && controller.appPreference.accessToken!.isNotEmpty) {
+    if (controller.appPreference.accessToken != null &&
+        controller.appPreference.accessToken!.isNotEmpty) {
       controller.selectedReportReason.value = -1;
       showCustomBottomSheet(
         backButtonWidget: GetBuilder<BottomSheetController>(
@@ -647,7 +729,9 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
           address: _itemAddress,
           TopSectionBGColor: _shareView_TopSectionBGColor,
           BottomSectionBGColor: _shareView_BottomSectionBGColor,
-          IconBGColor: controller.isDarkMode() ? AppColors.staticwhite : _shareView_IconBGColor,
+          IconBGColor: controller.isDarkMode()
+              ? AppColors.staticwhite
+              : _shareView_IconBGColor,
           isBottomSectionRounded: _shareView_isBottomSectionRounded,
           isShowDivider: _shareView_isShowDivider,
           itemId: controller.itemInfo?.id,
@@ -660,8 +744,13 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
   }
 
   Widget reviewSectionItem(
-      {required int index, List<dynamic>? itemReviews, int? count, int? maxLines, Function? showMoreOnTap}) {
-    dynamic itemReviewsInfo = itemReviews?[index] ?? controller.itemReviewsInfo[index];
+      {required int index,
+      List<dynamic>? itemReviews,
+      int? count,
+      int? maxLines,
+      Function? showMoreOnTap}) {
+    dynamic itemReviewsInfo =
+        itemReviews?[index] ?? controller.itemReviewsInfo[index];
 
     return reviewListItem(
       itemReviewsInfo: itemReviewsInfo,
@@ -670,7 +759,10 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
       width: count != null ? (deviceWidth - 110) : deviceWidth,
       onSelectedHost: (dynamic hostItem) {
         if (hostItem?.toJson()['authorData'] != null) {
-          _showHostInfo(hostItem: hostItem, profileId: hostItem?.authorData?.profileId, isHost: false);
+          _showHostInfo(
+              hostItem: hostItem,
+              profileId: hostItem?.authorData?.profileId,
+              isHost: false);
         }
       },
     );
@@ -693,7 +785,9 @@ Widget getPriceTextView(
       [
         RichText(
           textDirection: TextDirection.ltr,
-          textAlign: intl.Bidi.isRtlLanguage(Get.locale?.languageCode) ? TextAlign.end : TextAlign.start,
+          textAlign: intl.Bidi.isRtlLanguage(Get.locale?.languageCode)
+              ? TextAlign.end
+              : TextAlign.start,
           text: TextSpan(
             style: TextStyle(
               color: appColors.customTextColor,
@@ -703,37 +797,48 @@ Widget getPriceTextView(
                 WidgetSpan(
                   child: CustomContainer(
                       padding: pad(end: 4),
-                      body: (instantBookIcon ?? Assets.drawableInstantBook).toSVG(size: 18)),
+                      body: (instantBookIcon ?? Assets.drawableInstantBook)
+                          .toSVG(size: 18)),
                 ),
               if (Platform.isAndroid) ...{
                 ...TextSpan(
                     text: double.parse(basePrice.toString()) > 0
-                        ? basePrice.toString().toNumberFormat(symbol: currencySymbol!)
+                        ? basePrice
+                            .toString()
+                            .toNumberFormat(symbol: currencySymbol!)
                         : '',
                     style: TextStyle(
                       fontWeight: AppFont.bold,
                       fontFamily: AppFont.font,
-                      fontSize: themeType == 1 ? AppDimen.textSize_20 : AppDimen.textSize_20,
+                      fontSize: themeType == 1
+                          ? AppDimen.textSize_20
+                          : AppDimen.textSize_20,
                     )).toCurrencyTextSpan(symbol: currencySymbol!)
               },
               if (Platform.isIOS)
                 TextSpan(
                     text: double.parse(basePrice.toString()) > 0
-                        ? basePrice.toString().toNumberFormat(symbol: currencySymbol!)
+                        ? basePrice
+                            .toString()
+                            .toNumberFormat(symbol: currencySymbol!)
                         : '',
                     style: TextStyle(
                       fontWeight: AppFont.bold,
                       fontFamily: AppFont.font,
-                      fontSize: themeType == 1 ? AppDimen.textSize_20 : AppDimen.textSize_20,
+                      fontSize: themeType == 1
+                          ? AppDimen.textSize_20
+                          : AppDimen.textSize_20,
                     )),
               WidgetSpan(
                 child: CustomContainer(
                   body: CustomText(
-                    text: ' / ${double.parse(basePrice.toString()) > 0 ? label_day.tr : ''}',
+                    text:
+                        ' / ${double.parse(basePrice.toString()) > 0 ? label_day.tr : ''}',
                     fontWeight: AppFont.regular,
                     textDirection: TextDirection.ltr,
-                    textAlign:
-                        intl.Bidi.isRtlLanguage(Get.locale?.languageCode) ? TextAlign.end : TextAlign.start,
+                    textAlign: intl.Bidi.isRtlLanguage(Get.locale?.languageCode)
+                        ? TextAlign.end
+                        : TextAlign.start,
                     size: AppDimen.textSize_14,
                     color: appColors.customTextColor,
                   ),
@@ -745,7 +850,8 @@ Widget getPriceTextView(
         if (themeType != null && selectedDates!.isEmpty)
           toOnTap(
             onTap: () {
-              controller.homeItemDetailNavigator?.navigateScreen(HomeItemDetailScreen.Calendar, '');
+              controller.homeItemDetailNavigator
+                  ?.navigateScreen(HomeItemDetailScreen.Calendar, '');
             },
             child: IntrinsicWidth(
                 child: [
@@ -756,9 +862,12 @@ Widget getPriceTextView(
                   size: AppDimen.textSize_14,
                 ),
                 3.toWidth(),
-                Assets.drawableDownArrow.toSVG(colour: appColors.secondaryColor).toPad(top: 3),
+                Assets.drawableDownArrow
+                    .toSVG(colour: appColors.secondaryColor)
+                    .toPad(top: 3),
               ].toRow(
-                  mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center),
               if (themeType != 3)
                 CustomUnderlineContainer(
                   borderColor: appColors.secondaryColor,

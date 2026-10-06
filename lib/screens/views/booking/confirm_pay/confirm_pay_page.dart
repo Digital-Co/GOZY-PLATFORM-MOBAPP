@@ -649,7 +649,6 @@ class ConfirmAndPayPageState
                   _extendToDiscountThreshold(nextOffer, currentDays),
             ),
           CustomBottomItemShadowContainer(
-                  height: 100,
                   color: appColors.white,
                   padding: pad(w: 20, top: 25, bottom: 20),
                   borderRadiusGeometry: BorderRadiusDirectional.vertical(
@@ -720,50 +719,28 @@ class ConfirmAndPayPageState
                             padding: pad(w: 10))
                         .toStretch(isExpanded: true)
                   ].toRow(mainAxisAlignment: MainAxisAlignment.spaceBetween))
-              .toStretch()
-        ].toRow();
+        ].toColumn(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch);
       },
     );
   }
 
   Future<void> _extendToDiscountThreshold(
       DurationDiscountOffer offer, int currentDays) async {
-    final selectedDates = widget.controller.selectedDates.toList();
-    if (selectedDates.isEmpty) return;
-    final daysToAdd = offer.daysToReach(currentDays);
-    if (daysToAdd <= 0) return;
-
-    final originalEnd = selectedDates.last;
-    final targetEnd = originalEnd.add(Duration(days: daysToAdd));
-    final blockedDates = widget.controller.getBlockedDates().keys;
-    final hasBlockedDate = blockedDates.any((date) {
-      final normalized = DateTime(date.year, date.month, date.day);
-      final firstAddedDay =
-          DateTime(originalEnd.year, originalEnd.month, originalEnd.day)
-              .add(const Duration(days: 1));
-      final normalizedTarget =
-          DateTime(targetEnd.year, targetEnd.month, targetEnd.day);
-      return !normalized.isBefore(firstAddedDay) &&
-          !normalized.isAfter(normalizedTarget);
-    });
-    if (hasBlockedDate) {
-      widget.controller.showToast(those_dates_are_not_available.tr);
-      return;
+    final wasExtended = await widget.controller.extendToDiscountThreshold(
+      offer: offer,
+      currentDays: currentDays,
+      targetDates: widget.controller.selectedDates,
+      startTimeValue: widget.controller.selectedStartTime.value,
+      endTimeValue: widget.controller.selectedEndTime.value,
+    );
+    if (wasExtended) {
+      confirmpaycontroller.change(
+        rxVariable: confirmpaycontroller.rxSelectedDates,
+        value: widget.controller.selectedDates.toList(),
+      );
     }
-
-    final projectedDates = [selectedDates.first, targetEnd];
-    final projected = await widget.controller.getBillingCalculation(
-      dates: projectedDates,
-      startTimeVal: widget.controller.selectedStartTime.value,
-      endTimeVal: widget.controller.selectedEndTime.value,
-    );
-    if (projected?.getBillingCalculation?.status != 200) return;
-
-    widget.controller.selectedDates.assignAll(projectedDates);
-    confirmpaycontroller.change(
-      rxVariable: confirmpaycontroller.rxSelectedDates,
-      value: projectedDates,
-    );
   }
 
   Future<void> confirmPayment() async {

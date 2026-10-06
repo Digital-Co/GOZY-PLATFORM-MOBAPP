@@ -5,6 +5,7 @@ const String duration_discount_offers = 'duration_discount_offers';
 const String duration_discount_you_save = 'duration_discount_you_save';
 const String duration_discount_add_days = 'duration_discount_add_days';
 const String duration_discount_unlock = 'duration_discount_unlock';
+const String label_close = 'label_close';
 
 /*
 * /Users/radicalstart-m1/Documents/flutter_3.16.1/bin/flutter pub run customization:customization lang==you_are_offline='You are offline'

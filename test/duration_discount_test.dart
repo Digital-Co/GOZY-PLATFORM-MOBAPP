@@ -53,5 +53,12 @@ void main() {
               weeklyDiscount: 20, monthlyDiscount: 10, days: 28),
           isNull);
     });
+
+    test('four days requires three more days for the weekly threshold', () {
+      final offer = DurationDiscountPresentation.nextOffer(
+          weeklyDiscount: 15, monthlyDiscount: 25, days: 4);
+      expect(offer?.thresholdDays, 7);
+      expect(offer?.daysToReach(4), 3);
+    });
   });
 }

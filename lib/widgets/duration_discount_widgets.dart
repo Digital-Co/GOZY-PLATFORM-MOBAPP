@@ -121,45 +121,115 @@ class DurationDiscountSavingsPanel extends StatelessWidget {
   }
 }
 
-class DurationDiscountExtensionPanel extends StatelessWidget {
+/// Nudge proposing to extend the booking to the next discount tier.
+///
+/// The guest can close it with the cross. Closing only hides this instance:
+/// nothing is remembered, so it can show again for another selection.
+class DurationDiscountExtensionPanel extends StatefulWidget {
   const DurationDiscountExtensionPanel({
     super.key,
     required this.offer,
     required this.currentDays,
     required this.onAddDays,
+    this.margin = const EdgeInsetsDirectional.fromSTEB(20, 10, 20, 12),
   });
 
   final DurationDiscountOffer offer;
   final int currentDays;
   final VoidCallback onAddDays;
+  final EdgeInsetsGeometry margin;
+
+  @override
+  State<DurationDiscountExtensionPanel> createState() =>
+      _DurationDiscountExtensionPanelState();
+}
+
+class _DurationDiscountExtensionPanelState
+    extends State<DurationDiscountExtensionPanel> {
+  bool _closed = false;
+
+  void _close() => setState(() => _closed = true);
 
   @override
   Widget build(BuildContext context) {
-    final daysToAdd = offer.daysToReach(currentDays);
+    if (_closed) return const SizedBox.shrink();
+    final daysToAdd = widget.offer.daysToReach(widget.currentDays);
     if (daysToAdd <= 0) return const SizedBox.shrink();
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 10),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
+    const green = Color(0xff125e40);
+    return Padding(
+      padding: widget.margin,
+      child: Material(
         color: const Color(0xffeaf7f0),
         borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(duration_discount_unlock.trParams({
-              'days': daysToAdd.toString(),
-              'percent': _percentageLabel(offer.percentage),
-            })),
-          ),
-          const SizedBox(width: 8),
-          TextButton(
-            onPressed: onAddDays,
-            child: Text(duration_discount_add_days
-                .trParams({'days': daysToAdd.toString()})),
-          ),
-        ],
+        clipBehavior: Clip.antiAlias,
+        child: Row(
+          children: [
+            Expanded(
+              child: Semantics(
+                button: true,
+                label: duration_discount_add_days
+                    .trParams({'days': daysToAdd.toString()}),
+                child: InkWell(
+                  onTap: widget.onAddDays,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 4, 10),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.local_offer_outlined,
+                            size: 16, color: green),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            duration_discount_unlock.trParams({
+                              'days': daysToAdd.toString(),
+                              'percent':
+                                  _percentageLabel(widget.offer.percentage),
+                            }),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                color: green,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xff16794f),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.add,
+                                  size: 14, color: Colors.white),
+                              Text(daysToAdd.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: _close,
+              tooltip: label_close.tr,
+              visualDensity: VisualDensity.compact,
+              constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+              padding: EdgeInsets.zero,
+              icon: const Icon(Icons.close_rounded, size: 18, color: green),
+            ),
+          ],
+        ),
       ),
     );
   }

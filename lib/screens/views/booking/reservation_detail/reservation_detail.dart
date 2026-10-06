@@ -159,9 +159,9 @@ class ReservationDetailState extends CustomStatefulWidgetState<ReservationDetail
 
 
   Widget _hostListingInfo() {
-    String photo = imgListingMedium +controller.itemInfo.listPhotoName;
-    String carType = controller.itemInfo.carType;
-    String title = controller.itemInfo.title;
+    String photo = imgListingMedium + (controller.itemInfo.listPhotoName?.toString() ?? '');
+    String carType = controller.itemInfo.carType?.toString() ?? '';
+    String title = controller.itemInfo.title?.toString() ?? '';
 
     debugPrint("photo: $photo---${controller.reservationResult?.confirmationCode}----${controller.itemInfo.city}");
     return [

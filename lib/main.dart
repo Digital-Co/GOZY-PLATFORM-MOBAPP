@@ -65,7 +65,10 @@ void main() async {
       DeviceOrientation.portraitUp,
     ]);
     listenFirebase();
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    FlutterError.onError = (FlutterErrorDetails details) {
+      if (kDebugMode) FlutterError.dumpErrorToConsole(details);
+      FirebaseCrashlytics.instance.recordFlutterError(details);
+    };
 
     runApp(App(),);
   }, (error, stackTrace) {

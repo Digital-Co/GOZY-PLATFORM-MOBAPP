@@ -18,6 +18,7 @@ import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/screens/views/home/home_controller.dart';
 import 'package:gozy/screens/views/static_page/not_found.dart';
 import 'package:gozy/utils/common_api_controller.dart';
+import 'package:gozy/utils/duration_discount.dart';
 import 'package:gozy/utils/text_editing_controller.dart';
 import 'package:gozy/widgets/common_extension_functions.dart';
 
@@ -77,7 +78,8 @@ class HomeItemDetailController extends BaseController {
   CustomFocusNode? focusNode = CustomFocusNode();
   GgetPropertyReviewsData? _propertyReviewsDataInfo;
 
-  Rxn<GgetBillingCalculationData> billingCalcuationData = Rxn<GgetBillingCalculationData>();
+  Rxn<GgetBillingCalculationData> billingCalcuationData =
+      Rxn<GgetBillingCalculationData>();
   var rxUpdatedGuestCount = ReactiveVariable('rxUpdatedGuestCount', 1);
   var rxPagerIndex = ReactiveVariable("rxPagerIndex", 0);
   GviewListingShortFragmentData? _shortFragmentData;
@@ -85,24 +87,31 @@ class HomeItemDetailController extends BaseController {
   int _currentBillingRequestId = 0;
 
   void createCarFeatureListGridInfo() {
-    String carType = itemInfo.carType;
-    String make = itemInfo.make;
-    String model = itemInfo.model;
-    String year = itemInfo.year;
-    String odometer = itemInfo.odometer;
+    String carType = itemInfo.carType?.toString() ?? '';
+    String make = itemInfo.make?.toString() ?? '';
+    String model = itemInfo.model?.toString() ?? '';
+    String year = itemInfo.year?.toString() ?? '';
+    String odometer = itemInfo.odometer?.toString() ?? '';
     hostListInfo.clear();
     hostListInfo.add(getitem(
         feature: carType,
         placeHolerImg: carfeatureIconsList?[LayoutCarIcons.cartype],
         title: label_car_type.tr));
     hostListInfo.add(getitem(
-        feature: make, placeHolerImg: carfeatureIconsList?[LayoutCarIcons.make], title: label_make.tr));
+        feature: make,
+        placeHolerImg: carfeatureIconsList?[LayoutCarIcons.make],
+        title: label_make.tr));
     hostListInfo.add(getitem(
-        feature: model, placeHolerImg: carfeatureIconsList?[LayoutCarIcons.model], title: label_model.tr));
+        feature: model,
+        placeHolerImg: carfeatureIconsList?[LayoutCarIcons.model],
+        title: label_model.tr));
     hostListInfo.add(getitem(
-        feature: year, placeHolerImg: carfeatureIconsList?[LayoutCarIcons.year], title: label_year.tr));
+        feature: year,
+        placeHolerImg: carfeatureIconsList?[LayoutCarIcons.year],
+        title: label_year.tr));
     hostListInfo.add(getitem(
-        feature: App().getTransmissionContent(transmission: itemInfo.transmission),
+        feature:
+            App().getTransmissionContent(transmission: itemInfo.transmission),
         placeHolerImg: carfeatureIconsList?[LayoutCarIcons.transmission],
         title: label_transmission.tr));
     hostListInfo.add(getitem(
@@ -118,7 +127,10 @@ class HomeItemDetailController extends BaseController {
   }
 
   Map<String, dynamic> getitem(
-      {required String feature, String? featureImg, String? placeHolerImg, String? title}) {
+      {required String feature,
+      String? featureImg,
+      String? placeHolerImg,
+      String? title}) {
     Map<String, dynamic> itemmap = {};
     itemmap['itemName'] = feature;
     itemmap['image'] = featureImg;
@@ -134,8 +146,11 @@ class HomeItemDetailController extends BaseController {
       ..vars.preview = isPreview
       ..vars.build());
 
-    FerryLoggerClient.makeRequest(params, this, gethomeItemDetail, isToGet400Message: true)?.then((res) {
-      GviewListingDetailsData viewListingInfo = res.data as GviewListingDetailsData;
+    FerryLoggerClient.makeRequest(params, this, gethomeItemDetail,
+            isToGet400Message: true)
+        ?.then((res) {
+      GviewListingDetailsData viewListingInfo =
+          res.data as GviewListingDetailsData;
 
       if (viewListingInfo.viewListing?.status == 400) {
         isShowLoader = false;
@@ -155,7 +170,8 @@ class HomeItemDetailController extends BaseController {
       isForceUpdate = !(deepEq.equals(_shortFragmentData, itemReqData.$1));
       _itemInfoMap = viewListingInfo.viewListing!.results?.toJson() ?? {};
       if (isForceUpdate) {
-        GviewListingShortFragmentData? data = GviewListingShortFragmentData.fromJson(_itemInfoMap);
+        GviewListingShortFragmentData? data =
+            GviewListingShortFragmentData.fromJson(_itemInfoMap);
         FerryLoggerClient.client?.cache.writeFragment(itemReqData.$2, data);
       }
 
@@ -171,7 +187,7 @@ class HomeItemDetailController extends BaseController {
       GvalidatePromoCodeData result = res.data as GvalidatePromoCodeData;
       if (result.validatePromoCode?.status == 200) {
         isPromoApplied.value = true;
-        getBillingCalculation(isFromPromo: true).then((value){
+        getBillingCalculation(isFromPromo: true).then((value) {
           value;
         });
       } else if (result.validatePromoCode?.status == 400) {
@@ -189,20 +205,24 @@ class HomeItemDetailController extends BaseController {
       ..vars.build());
     debugPrint("getPropertyReviews req: ${getPropertyReviewsReq.toJson()}");
     var itemreqdata = getListDetailFragmentData(id: itemInfo.id);
-    FerryLoggerClient.makeRequest(getPropertyReviewsReq, this, getPropertyReviews,
+    FerryLoggerClient.makeRequest(
+            getPropertyReviewsReq, this, getPropertyReviews,
             isViewErrorMessage: false, isToGet400Message: true)
         ?.then((res) {
       _propertyReviewsDataInfo = res.data as GgetPropertyReviewsData;
 
       if (_propertyReviewsDataInfo?.getPropertyReviews?.status == 200) {
-        List<dynamic> propertylist = _propertyReviewsDataInfo?.getPropertyReviews!.results!.toList() ?? [];
+        List<dynamic> propertylist =
+            _propertyReviewsDataInfo?.getPropertyReviews!.results!.toList() ??
+                [];
         if (propertyListpage == 1) {
           itemReviewsInfo = propertylist;
         } else {
           itemReviewsInfo = itemReviewsInfo + propertylist;
         }
         propertyListpage.value++;
-        _itemInfoMap['reviewsCount'] = _propertyReviewsDataInfo?.getPropertyReviews!.count;
+        _itemInfoMap['reviewsCount'] =
+            _propertyReviewsDataInfo?.getPropertyReviews!.count;
       }
       bool wishliststatus = itemreqdata.$1?.wishListStatus ?? false;
       if (wishliststatus) {
@@ -228,14 +248,19 @@ class HomeItemDetailController extends BaseController {
       this,
       getSimilarListing,
     )?.then((res) {
-      GgetSimilarListingData similarListingData = res.data as GgetSimilarListingData;
-      similiarlistingInfo = similarListingData.getSimilarListing!.results!.toList();
-      createCarFeatureListGridInfo();
-      if (appPreference.accessToken != null && appPreference.accessToken!.isNotEmpty) {
+      GgetSimilarListingData similarListingData =
+          res.data as GgetSimilarListingData;
+      try {
+        similiarlistingInfo =
+            similarListingData.getSimilarListing!.results!.toList();
+        createCarFeatureListGridInfo();
+        if (appPreference.accessToken != null &&
+            appPreference.accessToken!.isNotEmpty) {
           checkNetwork(getReportTypelist);
-          isLoading.value = false;
-        Get.forceAppUpdate();
-      } else {
+        }
+      } catch (e, stack) {
+        debugPrint('getSimilarListing failed: $e\n$stack');
+      } finally {
         isLoading.value = false;
         Get.forceAppUpdate();
       }
@@ -248,19 +273,24 @@ class HomeItemDetailController extends BaseController {
       ..vars.currentPage = userReviewListpage.value
       ..vars.build());
     debugPrint("userReviews getUserReviews: $getuserReviewsReq");
-    FerryLoggerClient.makeRequest(getuserReviewsReq, this, getUserReviews, isViewErrorMessage: false)
+    FerryLoggerClient.makeRequest(getuserReviewsReq, this, getUserReviews,
+            isViewErrorMessage: false)
         ?.then((res) {
       GuserReviewsData userReviewsDataInfo = res.data as GuserReviewsData;
-      debugPrint("userReviews count: ${userReviewsDataInfo.userReviews!.count}");
+      debugPrint(
+          "userReviews count: ${userReviewsDataInfo.userReviews!.count}");
 
-      List<dynamic> userReviewslist = userReviewsDataInfo.userReviews!.results!.toList();
+      List<dynamic> userReviewslist =
+          userReviewsDataInfo.userReviews!.results!.toList();
 
       if (userReviewListpage.value == 1) {
         userReviewsInfo[selectedProfileid!] = userReviewslist;
-        userReviewsCount[selectedProfileid!] = userReviewsDataInfo.userReviews!.count ?? 0;
+        userReviewsCount[selectedProfileid!] =
+            userReviewsDataInfo.userReviews!.count ?? 0;
         profileIdList.add(selectedProfileid!);
       } else {
-        userReviewsInfo[selectedProfileid!] = (userReviewsInfo[selectedProfileid!]! + userReviewslist);
+        userReviewsInfo[selectedProfileid!] =
+            (userReviewsInfo[selectedProfileid!]! + userReviewslist);
       }
       userReviewListpage.value++;
       isLoading.value = false;
@@ -275,7 +305,9 @@ class HomeItemDetailController extends BaseController {
           itemInfo.reviewsStarRating >= 1 &&
           itemInfo.reviewsCount != null &&
           itemInfo.reviewsCount >= 1) {
-        starRating = int.parse((itemInfo.reviewsStarRating! / itemInfo.reviewsCount!).toStringAsFixed(0));
+        starRating = int.parse(
+            (itemInfo.reviewsStarRating! / itemInfo.reviewsCount!)
+                .toStringAsFixed(0));
       }
       reviewCount = _propertyReviewsDataInfo?.getPropertyReviews?.count;
     } else {
@@ -286,7 +318,8 @@ class HomeItemDetailController extends BaseController {
     if (starRating == null || starRating == 0) {
       return (starRating, reviewCount);
     }
-    String titleText = '$starRating / ${label_review.trPlural(reviewPlural.tr, reviewCount)} ($reviewCount)';
+    String titleText =
+        '$starRating / ${label_review.trPlural(reviewPlural.tr, reviewCount)} ($reviewCount)';
     debugPrint("getRating: titleText $titleText}");
     return (starRating, reviewCount);
   }
@@ -301,10 +334,13 @@ class HomeItemDetailController extends BaseController {
     final getreportUserReq = GCreateReportUserReq((b) => b
       ..vars.profileId = selectedProfileid
       ..vars.reporterId = appPreference.userID
-      ..vars.reportType = reportReasonList[selectedReportReason.value].reportType
+      ..vars.reportType =
+          reportReasonList[selectedReportReason.value].reportType
       ..vars.build());
-    FerryLoggerClient.makeRequest(getreportUserReq, this, reportUser)?.then((res) {
-      GCreateReportUserData createReportUserData = res.data as GCreateReportUserData;
+    FerryLoggerClient.makeRequest(getreportUserReq, this, reportUser)
+        ?.then((res) {
+      GCreateReportUserData createReportUserData =
+          res.data as GCreateReportUserData;
       if (createReportUserData.createReportUser?.status == 200) {
         selectedReportReason.value = -1;
         showToast(success_msg_user_reported.tr, 3);
@@ -316,7 +352,8 @@ class HomeItemDetailController extends BaseController {
 
   void getReportTypelist() {
     getReportTypes().then((value) {
-      reportReasonList = createReportUserData?.getAllReportType!.results!.toList() ?? [];
+      reportReasonList =
+          createReportUserData?.getAllReportType!.results!.toList() ?? [];
       debugPrint("createReportUserData status: $reportReasonList");
       isLoading.value = false;
       Get.forceAppUpdate();
@@ -328,7 +365,8 @@ class HomeItemDetailController extends BaseController {
       List<DateTime>? dates,
       String? startTimeVal,
       String? endTimeVal,
-      bool isFromPromo=false}) async {
+      bool updateState = true,
+      bool isFromPromo = false}) async {
     List<DateTime> finalDates = dates ?? selectedDates;
     String finalStartTime = startTimeVal ?? selectedStartTime.value;
     String finalEndTime = endTimeVal ?? selectedEndTime.value;
@@ -337,7 +375,8 @@ class HomeItemDetailController extends BaseController {
       return null;
     }
 
-    String startDate = finalDates.first.convert_MDY(format: commonDateFormat).$1;
+    String startDate =
+        finalDates.first.convert_MDY(format: commonDateFormat).$1;
     String endDate = finalDates.last.convert_MDY(format: commonDateFormat).$1;
     double startTime = convertTo24Hour(finalStartTime);
     double endTime = convertTo24Hour(finalEndTime);
@@ -362,29 +401,36 @@ class HomeItemDetailController extends BaseController {
     log("_getBillingCalculationReq: ---$isNavigateToPaymentType --- ${!(isDeliveryCheck.value)}");
     final int requestId = ++_currentBillingRequestId;
 
-    var res = await FerryLoggerClient.makeRequest(getBillingCalculationReq, this, getBillingCalculation,
+    var res = await FerryLoggerClient.makeRequest(
+        getBillingCalculationReq,
+        this,
+        () => getBillingCalculation(
+              isNavigate: isNavigate,
+              dates: dates,
+              startTimeVal: startTimeVal,
+              endTimeVal: endTimeVal,
+              updateState: updateState,
+              isFromPromo: isFromPromo,
+            ),
         isToGet400Message: true);
-        
+
     // Race Condition Defense: If a newer request was fired while this one was pending, immediately discard this stale response.
     if (requestId != _currentBillingRequestId) {
-      debugPrint("Discarding outdated billing calculation response (ID: $requestId vs Latest: $_currentBillingRequestId)");
+      debugPrint(
+          "Discarding outdated billing calculation response (ID: $requestId vs Latest: $_currentBillingRequestId)");
       return null;
     }
 
     GgetBillingCalculationData? data = res?.data as GgetBillingCalculationData?;
-    if (data?.getBillingCalculation?.status == 200) {
-      billingCalcuationData.value = data;
-
-      startTime24Four = startTime;
-      endTime24Four = endTime;
-
-      print("createReservation total--> getbillingdata ${billingCalcuationData.value}");
-      totalValue.value = (billingCalcuationData.value?.getBillingCalculation?.result?.total ?? 0.0);
-      totalValue.refresh();
-      print(
-          "createReservation total--> getbilling ${billingCalcuationData.value?.getBillingCalculation?.result?.total}");
+    if (data != null && data.getBillingCalculation?.status == 200) {
+      if (updateState) {
+        _applyBillingCalculation(data, startTime, endTime);
+      }
       isLoading.value = false;
-      if (Get.currentRoute.toLowerCase().contains('/ConfirmAndPayPage'.toLowerCase())) {
+      if (updateState &&
+          Get.currentRoute
+              .toLowerCase()
+              .contains('/ConfirmAndPayPage'.toLowerCase())) {
         isDeliveryCheck.refresh();
         if (isRemoveClicked) {
           isRemoveClicked = false;
@@ -397,15 +443,107 @@ class HomeItemDetailController extends BaseController {
         homeItemDetailNavigator?.navigateScreen(HomeItemDetailScreen.PaymentType, '');
         isNavigateToPaymentType = false;
       }*/
-      if (isNavigate && Get.currentRoute.toLowerCase().contains('itemdetail')) {
-        homeItemDetailNavigator?.navigateScreen(HomeItemDetailScreen.ConfirmAndPay, '');
+      if (updateState &&
+          isNavigate &&
+          Get.currentRoute.toLowerCase().contains('itemdetail')) {
+        homeItemDetailNavigator?.navigateScreen(
+            HomeItemDetailScreen.ConfirmAndPay, '');
       }
-      return billingCalcuationData.value;
+      return data;
     }
     if (data?.getBillingCalculation?.status == 400) {
-      if(isFromPromo) isPromoApplied.value = false;
+      if (isFromPromo) isPromoApplied.value = false;
     }
     return null;
+  }
+
+  void _applyBillingCalculation(
+      GgetBillingCalculationData data, double startTime, double endTime) {
+    billingCalcuationData.value = data;
+    startTime24Four = startTime;
+    endTime24Four = endTime;
+    totalValue.value = data.getBillingCalculation?.result?.total ?? 0.0;
+    totalValue.refresh();
+  }
+
+  Future<bool> extendToDiscountThreshold({
+    required DurationDiscountOffer offer,
+    required int currentDays,
+    required RxList<DateTime> targetDates,
+    required String startTimeValue,
+    required String endTimeValue,
+  }) async {
+    if (targetDates.isEmpty) return false;
+    if (startTimeValue.isEmpty) {
+      showToast(label_please_select_start_time.tr);
+      return false;
+    }
+    if (endTimeValue.isEmpty) {
+      showToast(label_please_select_end_time.tr);
+      return false;
+    }
+
+    final daysToAdd = offer.daysToReach(currentDays);
+    if (daysToAdd <= 0) return false;
+
+    final maxDays =
+        int.tryParse(itemInfo?.listingData?.maxDay?.toString() ?? '');
+    if (maxDays != null && maxDays > 0 && offer.thresholdDays > maxDays) {
+      return false;
+    }
+
+    final originalDates = targetDates.toList(growable: false);
+    final originalEnd = originalDates.last;
+    final targetEnd = originalEnd.add(Duration(days: daysToAdd));
+    if (!_isWithinBookingHorizon(targetEnd)) return false;
+
+    final firstAddedDay =
+        DateTime(originalEnd.year, originalEnd.month, originalEnd.day)
+            .add(const Duration(days: 1));
+    final normalizedTarget =
+        DateTime(targetEnd.year, targetEnd.month, targetEnd.day);
+    final hasBlockedDate = getBlockedDates().keys.any((date) {
+      final normalized = DateTime(date.year, date.month, date.day);
+      return !normalized.isBefore(firstAddedDay) &&
+          !normalized.isAfter(normalizedTarget);
+    });
+    if (hasBlockedDate) {
+      showToast(those_dates_are_not_available.tr);
+      return false;
+    }
+
+    final projectedDates = [originalDates.first, targetEnd];
+    final projected = await getBillingCalculation(
+      dates: projectedDates,
+      startTimeVal: startTimeValue,
+      endTimeVal: endTimeValue,
+      updateState: false,
+    );
+    final result = projected?.getBillingCalculation?.result;
+    if (projected?.getBillingCalculation?.status != 200 ||
+        result?.availableStatus?.toLowerCase() != 'available') {
+      showToast(those_dates_are_not_available.tr);
+      return false;
+    }
+
+    _applyBillingCalculation(
+      projected!,
+      convertTo24Hour(startTimeValue),
+      convertTo24Hour(endTimeValue),
+    );
+    targetDates.assignAll(projectedDates);
+    return true;
+  }
+
+  bool _isWithinBookingHorizon(DateTime targetEnd) {
+    final notice = itemInfo?.listingData?.maxDaysNotice?.toString();
+    if (notice == null || notice.isEmpty || notice == 'available') return true;
+    if (notice == 'unavailable') return false;
+    final months = int.tryParse(notice.replaceAll(RegExp(r'[^0-9]'), ''));
+    if (months == null || months <= 0) return true;
+    final now = DateTime.now();
+    final horizon = DateTime(now.year, now.month + months, now.day);
+    return !targetEnd.isAfter(horizon);
   }
 
   String availabilityFormat({required List<DateTime> DateList}) {
@@ -422,8 +560,10 @@ class HomeItemDetailController extends BaseController {
   Map<DateTime, String> getBlockedDates() {
     blockedDatesMap.clear();
     itemInfo?.blockedDates?.forEach((element) {
-      DateTime blockeddateOrigin = DateTime.fromMillisecondsSinceEpoch(int.parse(element?.blockedDates));
-      DateTime blockeddate = DateTime(blockeddateOrigin.year, blockeddateOrigin.month, blockeddateOrigin.day);
+      DateTime blockeddateOrigin =
+          DateTime.fromMillisecondsSinceEpoch(int.parse(element?.blockedDates));
+      DateTime blockeddate = DateTime(blockeddateOrigin.year,
+          blockeddateOrigin.month, blockeddateOrigin.day);
       if (element?.calendarStatus == 'blocked') {
         if (blockedDatesMap.isNotEmpty) {
           blockeddate.difference(blockedDatesMap.keys.last).inDays;
@@ -452,10 +592,12 @@ class HomeItemDetailController extends BaseController {
   void setItemInfo(int id) {
     GviewListingDetailsFragmentReq viewlistFragmentReq =
         GviewListingDetailsFragmentReq((b) => b..idFields = {'id': id});
-    itemInfo = FerryLoggerClient.client?.cache.readFragment(viewlistFragmentReq);
+    itemInfo =
+        FerryLoggerClient.client?.cache.readFragment(viewlistFragmentReq);
     if (itemInfo == null) {
       GviewListingDetailsFragmentData? data =
-          GviewListingDetailsFragmentData.fromJson(_shortFragmentData?.toJson() ?? {});
+          GviewListingDetailsFragmentData.fromJson(
+              _shortFragmentData?.toJson() ?? {});
       FerryLoggerClient.client?.cache.writeFragment(viewlistFragmentReq, data);
       setItemInfo(id);
     }

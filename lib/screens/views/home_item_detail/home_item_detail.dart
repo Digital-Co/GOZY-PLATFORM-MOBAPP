@@ -110,7 +110,7 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
   Widget _showDurationDiscounts() => DurationDiscountOffersPanel(
         weeklyDiscount: controller.itemInfo?.listingData?.weeklyDiscount,
         monthlyDiscount: controller.itemInfo?.listingData?.monthlyDiscount,
-      ).toPad(bottom: 16);
+      ).toPad(top: 12, bottom: 16);
 
   Color? _shareView_IconBGColor;
   double? _insideImageBorderRadius;
