@@ -31,21 +31,23 @@ enum PayoutButtonType {
 }
 
 class PaypalPaymentSelectionCard extends StatelessWidget {
-  String paymentIcon;
-  String paymentName;
-  double? borderRadius;
-  Color? fillColor;
-  bool? isPayYouPage;
-  bool? isThemeFour;
-  int? themeType;
-  List<Map> paymentSubHeader = [];
-  Map<PayoutButtonType, Map> paymentButton = {};
-  PaymentSelectionFrom paymentSelectionFrom;
+  final String paymentIcon;
+  final String paymentName;
+  final String? paymentSubtitle;
+  final double? borderRadius;
+  final Color? fillColor;
+  final bool? isPayYouPage;
+  final bool? isThemeFour;
+  final int? themeType;
+  final List<Map> paymentSubHeader;
+  final Map<PayoutButtonType, Map> paymentButton;
+  final PaymentSelectionFrom paymentSelectionFrom;
 
-  PaypalPaymentSelectionCard(
+  const PaypalPaymentSelectionCard(
       {super.key,
       required this.paymentIcon,
       required this.paymentName,
+      this.paymentSubtitle,
       required this.paymentSubHeader,
       required this.paymentSelectionFrom,
       required this.paymentButton,
@@ -67,28 +69,34 @@ class PaypalPaymentSelectionCard extends StatelessWidget {
             10.toHeight(),
             [
               [
-                paymentName.trim().toLowerCase() == "paypal" ? ClipRRect(
-                  borderRadius: BorderRadiusGeometry.circular(themeType == 3 ? 30 : 0),
-                  child: SvgPicture.asset(
-                    Assets.drawablePaypal,
-                    width: 25,
-                    height: 25,
-                  ).toResizeWidget(all: 27),
-                ) :
                 ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(themeType == 3 ? 30 : 0),
                   child: SvgPicture.asset(
-                    Assets.drawableStripe,
+                    paymentIcon,
                     width: 25,
                     height: 25,
                   ).toResizeWidget(all: 27),
                 ),
                 12.toWidth(),
-                CustomText(
-                    text: paymentName,
-                    fontWeight: AppFont.semiBold,
-                    size: AppDimen.textSize_14,
-                    color: appColors.customTextColor),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CustomText(
+                        text: paymentName,
+                        fontWeight: AppFont.semiBold,
+                        size: AppDimen.textSize_14,
+                        color: appColors.customTextColor),
+                    if (paymentSubtitle?.trim().isNotEmpty == true)
+                      CustomText(
+                        text: paymentSubtitle!,
+                        size: AppDimen.textSize_12,
+                        color: appColors.customTextColor.withValues(alpha: 0.72),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
               ].toRow().toPad(horizontal: (isPayYouPage ?? false) ? 13 : 0),
               if (paymentSelectionFrom ==
                   PaymentSelectionFrom.payoutPaymentChoose)
@@ -133,28 +141,34 @@ class PaypalPaymentSelectionCard extends StatelessWidget {
               10.toHeight(),
               [
                 [
-                  paymentName.trim().toLowerCase() == "paypal" ? ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(themeType == 3 ? 30 : 0),
-                    child: SvgPicture.asset(
-                      Assets.drawablePaypal,
-                      width: 25,
-                      height: 25,
-                    ).toResizeWidget(all: 27),
-                  ) :
                   ClipRRect(
                     borderRadius: BorderRadiusGeometry.circular(themeType == 3 ? 30 : 0),
                     child: SvgPicture.asset(
-                      Assets.drawableStripe,
+                      paymentIcon,
                       width: 25,
                       height: 25,
                     ).toResizeWidget(all: 27),
                   ),
                   10.toWidth(),
-                  CustomText(
-                      text: paymentName,
-                      fontWeight: AppFont.semiBold,
-                      size: AppDimen.textSize_14,
-                      color: appColors.customTextColor),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomText(
+                          text: paymentName,
+                          fontWeight: AppFont.semiBold,
+                          size: AppDimen.textSize_14,
+                          color: appColors.customTextColor),
+                      if (paymentSubtitle?.trim().isNotEmpty == true)
+                        CustomText(
+                          text: paymentSubtitle!,
+                          size: AppDimen.textSize_12,
+                          color: appColors.customTextColor.withValues(alpha: 0.72),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
+                  ),
                 ].toRow().toPad(horizontal: (isPayYouPage ?? false) ? 13 : 0),
                 if (paymentSelectionFrom ==
                     PaymentSelectionFrom.payoutPaymentChoose)

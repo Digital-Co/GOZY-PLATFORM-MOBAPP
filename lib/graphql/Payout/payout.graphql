@@ -3,9 +3,11 @@ query getPayouts{
     results {
      id
     methodId
-    paymentMethod{
+     paymentMethod{
          id
          name
+         paymentName
+         paymentSubtitle
 
     }
     userId
@@ -49,6 +51,8 @@ query getPaymentMethods($operation: String, $supportedPaymentTypes: [Int!]){
     results {
       id
       name
+      paymentName
+      paymentSubtitle
       processedIn
       fees
       currency

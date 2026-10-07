@@ -165,13 +165,17 @@ class PayoutPreferenceState extends CustomStatefulWidgetState<PayoutPreference>
                       GgetPayoutsData_getPayouts_results? payoutResult =
                           controller.payoutResultMap.value["results"][index];
                       int paymentId = payoutResult?.paymentMethod?.id ?? 0;
-                      String paymentTypeImg = '';
                       return PaypalPaymentSelectionCard(
                         paymentSelectionFrom: PaymentSelectionFrom.payoutPreference,
                         isThemeFour: isThemeFour,
                         themeType: profile?.themeType,
-                        paymentIcon: controller.getPaymentImageIcon(paymentTypeImg),
-                        paymentName: payoutResult?.paymentMethod?.name ?? '',
+                        paymentIcon: paymentId == 1
+                            ? Assets.drawablePaypal
+                            : paymentId == 3
+                                ? 'res/drawable/pawapay.svg'
+                                : Assets.drawableStripe,
+                        paymentName: payoutResult?.paymentMethod?.paymentName ?? payoutResult?.paymentMethod?.name ?? '',
+                        paymentSubtitle: payoutResult?.paymentMethod?.paymentSubtitle,
                         borderRadius: containerBorderRadius,
                         isPayYouPage: true,
                         fillColor: containerColor,

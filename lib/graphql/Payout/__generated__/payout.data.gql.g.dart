@@ -485,6 +485,20 @@ class _$GgetPayoutsData_getPayouts_results_paymentMethodSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.paymentName;
+    if (value != null) {
+      result
+        ..add('paymentName')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.paymentSubtitle;
+    if (value != null) {
+      result
+        ..add('paymentSubtitle')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -511,6 +525,14 @@ class _$GgetPayoutsData_getPayouts_results_paymentMethodSerializer
           break;
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'paymentName':
+          result.paymentName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'paymentSubtitle':
+          result.paymentSubtitle = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
       }
@@ -948,6 +970,20 @@ class _$GgetPaymentMethodsData_getPaymentMethods_resultsSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.paymentName;
+    if (value != null) {
+      result
+        ..add('paymentName')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.paymentSubtitle;
+    if (value != null) {
+      result
+        ..add('paymentSubtitle')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.processedIn;
     if (value != null) {
       result
@@ -1022,6 +1058,14 @@ class _$GgetPaymentMethodsData_getPaymentMethods_resultsSerializer
           break;
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'paymentName':
+          result.paymentName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'paymentSubtitle':
+          result.paymentSubtitle = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'processedIn':
@@ -3063,6 +3107,10 @@ class _$GgetPayoutsData_getPayouts_results_paymentMethod
   final int? id;
   @override
   final String? name;
+  @override
+  final String? paymentName;
+  @override
+  final String? paymentSubtitle;
 
   factory _$GgetPayoutsData_getPayouts_results_paymentMethod(
           [void Function(
@@ -3073,7 +3121,11 @@ class _$GgetPayoutsData_getPayouts_results_paymentMethod
           ._build();
 
   _$GgetPayoutsData_getPayouts_results_paymentMethod._(
-      {required this.G__typename, this.id, this.name})
+      {required this.G__typename,
+      this.id,
+      this.name,
+      this.paymentName,
+      this.paymentSubtitle})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
         r'GgetPayoutsData_getPayouts_results_paymentMethod', 'G__typename');
@@ -3096,7 +3148,9 @@ class _$GgetPayoutsData_getPayouts_results_paymentMethod
     return other is GgetPayoutsData_getPayouts_results_paymentMethod &&
         G__typename == other.G__typename &&
         id == other.id &&
-        name == other.name;
+        name == other.name &&
+        paymentName == other.paymentName &&
+        paymentSubtitle == other.paymentSubtitle;
   }
 
   @override
@@ -3105,6 +3159,8 @@ class _$GgetPayoutsData_getPayouts_results_paymentMethod
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, paymentName.hashCode);
+    _$hash = $jc(_$hash, paymentSubtitle.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -3115,7 +3171,9 @@ class _$GgetPayoutsData_getPayouts_results_paymentMethod
             r'GgetPayoutsData_getPayouts_results_paymentMethod')
           ..add('G__typename', G__typename)
           ..add('id', id)
-          ..add('name', name))
+          ..add('name', name)
+          ..add('paymentName', paymentName)
+          ..add('paymentSubtitle', paymentSubtitle))
         .toString();
   }
 }
@@ -3138,6 +3196,15 @@ class GgetPayoutsData_getPayouts_results_paymentMethodBuilder
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
+  String? _paymentName;
+  String? get paymentName => _$this._paymentName;
+  set paymentName(String? paymentName) => _$this._paymentName = paymentName;
+
+  String? _paymentSubtitle;
+  String? get paymentSubtitle => _$this._paymentSubtitle;
+  set paymentSubtitle(String? paymentSubtitle) =>
+      _$this._paymentSubtitle = paymentSubtitle;
+
   GgetPayoutsData_getPayouts_results_paymentMethodBuilder() {
     GgetPayoutsData_getPayouts_results_paymentMethod._initializeBuilder(this);
   }
@@ -3148,6 +3215,8 @@ class GgetPayoutsData_getPayouts_results_paymentMethodBuilder
       _G__typename = $v.G__typename;
       _id = $v.id;
       _name = $v.name;
+      _paymentName = $v.paymentName;
+      _paymentSubtitle = $v.paymentSubtitle;
       _$v = null;
     }
     return this;
@@ -3177,7 +3246,9 @@ class GgetPayoutsData_getPayouts_results_paymentMethodBuilder
                 r'GgetPayoutsData_getPayouts_results_paymentMethod',
                 'G__typename'),
             id: id,
-            name: name);
+            name: name,
+            paymentName: paymentName,
+            paymentSubtitle: paymentSubtitle);
     replace(_$result);
     return _$result;
   }
@@ -3940,6 +4011,10 @@ class _$GgetPaymentMethodsData_getPaymentMethods_results
   @override
   final String? name;
   @override
+  final String? paymentName;
+  @override
+  final String? paymentSubtitle;
+  @override
   final String? processedIn;
   @override
   final String? fees;
@@ -3966,6 +4041,8 @@ class _$GgetPaymentMethodsData_getPaymentMethods_results
       {required this.G__typename,
       this.id,
       this.name,
+      this.paymentName,
+      this.paymentSubtitle,
       this.processedIn,
       this.fees,
       this.currency,
@@ -3996,6 +4073,8 @@ class _$GgetPaymentMethodsData_getPaymentMethods_results
         G__typename == other.G__typename &&
         id == other.id &&
         name == other.name &&
+        paymentName == other.paymentName &&
+        paymentSubtitle == other.paymentSubtitle &&
         processedIn == other.processedIn &&
         fees == other.fees &&
         currency == other.currency &&
@@ -4011,6 +4090,8 @@ class _$GgetPaymentMethodsData_getPaymentMethods_results
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, paymentName.hashCode);
+    _$hash = $jc(_$hash, paymentSubtitle.hashCode);
     _$hash = $jc(_$hash, processedIn.hashCode);
     _$hash = $jc(_$hash, fees.hashCode);
     _$hash = $jc(_$hash, currency.hashCode);
@@ -4029,6 +4110,8 @@ class _$GgetPaymentMethodsData_getPaymentMethods_results
           ..add('G__typename', G__typename)
           ..add('id', id)
           ..add('name', name)
+          ..add('paymentName', paymentName)
+          ..add('paymentSubtitle', paymentSubtitle)
           ..add('processedIn', processedIn)
           ..add('fees', fees)
           ..add('currency', currency)
@@ -4057,6 +4140,15 @@ class GgetPaymentMethodsData_getPaymentMethods_resultsBuilder
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
+
+  String? _paymentName;
+  String? get paymentName => _$this._paymentName;
+  set paymentName(String? paymentName) => _$this._paymentName = paymentName;
+
+  String? _paymentSubtitle;
+  String? get paymentSubtitle => _$this._paymentSubtitle;
+  set paymentSubtitle(String? paymentSubtitle) =>
+      _$this._paymentSubtitle = paymentSubtitle;
 
   String? _processedIn;
   String? get processedIn => _$this._processedIn;
@@ -4096,6 +4188,8 @@ class GgetPaymentMethodsData_getPaymentMethods_resultsBuilder
       _G__typename = $v.G__typename;
       _id = $v.id;
       _name = $v.name;
+      _paymentName = $v.paymentName;
+      _paymentSubtitle = $v.paymentSubtitle;
       _processedIn = $v.processedIn;
       _fees = $v.fees;
       _currency = $v.currency;
@@ -4133,6 +4227,8 @@ class GgetPaymentMethodsData_getPaymentMethods_resultsBuilder
                 'G__typename'),
             id: id,
             name: name,
+            paymentName: paymentName,
+            paymentSubtitle: paymentSubtitle,
             processedIn: processedIn,
             fees: fees,
             currency: currency,

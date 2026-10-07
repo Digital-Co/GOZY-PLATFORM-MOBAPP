@@ -11,6 +11,7 @@ class PaymentMethodCard extends StatelessWidget {
   const PaymentMethodCard({
     super.key,
     required this.title,
+    this.subtitle,
     required this.fallbackIcon,
     required this.isSelected,
     required this.onTap,
@@ -19,6 +20,7 @@ class PaymentMethodCard extends StatelessWidget {
   });
 
   final String title;
+  final String? subtitle;
   final String fallbackIcon;
   final String? imageUrl;
   final bool isSelected;
@@ -32,7 +34,7 @@ class PaymentMethodCard extends StatelessWidget {
     return Semantics(
       button: true,
       selected: isSelected,
-      label: title,
+      label: [title, if (subtitle?.trim().isNotEmpty == true) subtitle].join(', '),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
@@ -77,6 +79,17 @@ class PaymentMethodCard extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
+              if (subtitle?.trim().isNotEmpty == true) ...[
+                const SizedBox(height: 4),
+                CustomText(
+                  text: subtitle!,
+                  size: AppDimen.textSize_12,
+                  fontWeight: AppFont.regular,
+                  color: appColors.customTextColor.withValues(alpha: 0.72),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ],
           ),
         ),

@@ -233,8 +233,9 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
                 width: cardWidth,
                 child: PaymentMethodCard(
                   title: method.paymentType == 2
-                      ? label_card_card_by_stripe.tr
-                      : (method.name ?? ''),
+                      ? (method.paymentName ?? label_card_card_by_stripe.tr)
+                      : (method.paymentName ?? method.name ?? ''),
+                  subtitle: method.paymentSubtitle,
                   fallbackIcon: _paymentIcon(method.paymentType),
                   imageUrl: method.imageUrl,
                   borderRadius: _fieldRadius,

@@ -109,7 +109,8 @@ class PayoutPaymentChooseState
                   : controller.paymentlist[index]?.paymentType == 2
                       ? Assets.drawableStripe
                       : 'res/drawable/pawapay.svg',
-              paymentName: controller.paymentlist[index]?.name ?? '',
+              paymentName: controller.paymentlist[index]?.paymentName ?? controller.paymentlist[index]?.name ?? '',
+              paymentSubtitle: controller.paymentlist[index]?.paymentSubtitle,
               borderRadius: containerBorderRadius,
               fillColor: fileColor,
               isPayYouPage: true,

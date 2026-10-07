@@ -846,6 +846,8 @@ type NewThreadsType {
 type PaymentMethods {
   id: Int
   name: String
+  paymentName: String
+  paymentSubtitle: String
   processedIn: String
   fees: String
   currency: String

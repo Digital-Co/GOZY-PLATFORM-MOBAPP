@@ -39,7 +39,8 @@ class PayoutPaypalDetailsState extends CustomStatefulWidgetState<PayoutPaypalDet
   @override
   void initState() {
     controller.getAllPaypalData();
-    paymentName = controller.paymentlist.firstWhere((element) => element?.id == 1)?.name ?? '';
+    final method = controller.paymentlist.firstWhere((element) => element?.id == 1);
+    paymentName = method?.paymentName ?? method?.name ?? '';
     super.initState();
   }
 

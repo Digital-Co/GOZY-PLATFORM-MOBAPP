@@ -136,6 +136,8 @@ abstract class GgetPayoutsData_getPayouts_results_paymentMethod
   String get G__typename;
   int? get id;
   String? get name;
+  String? get paymentName;
+  String? get paymentSubtitle;
   static Serializer<GgetPayoutsData_getPayouts_results_paymentMethod>
       get serializer =>
           _$ggetPayoutsDataGetPayoutsResultsPaymentMethodSerializer;
@@ -360,6 +362,8 @@ abstract class GgetPaymentMethodsData_getPaymentMethods_results
   String get G__typename;
   int? get id;
   String? get name;
+  String? get paymentName;
+  String? get paymentSubtitle;
   String? get processedIn;
   String? get fees;
   String? get currency;
