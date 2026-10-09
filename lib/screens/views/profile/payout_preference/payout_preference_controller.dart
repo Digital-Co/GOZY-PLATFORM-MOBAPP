@@ -39,6 +39,7 @@ class PayoutPreferenceController extends ProfileController
   RxBool isPayoutLoading = false.obs;
   RxBool isNextButtonLoading = false.obs;
   RxBool isVerifyButtonLoading = false.obs;
+  RxBool isPawaPayPayoutSubmitting = false.obs;
   final TextEditingController pawaPayPhoneController = TextEditingController();
   List<GgetPawaPayOptionsData_getPawaPayOptions_countries?> pawaPayPayoutCountries = [];
   String? pawaPayPayoutCountry;
@@ -82,24 +83,48 @@ class PayoutPreferenceController extends ProfileController
   }
 
   Future<void> addPawaPayPayoutAccount() async {
+    if (isPawaPayPayoutSubmitting.value) return;
     if (pawaPayPhoneController.text.trim().isEmpty || pawaPayPayoutCountry == null || pawaPayPayoutCurrency == null || pawaPayPayoutProvider == null) {
       showSnackBar(pawapay_required_fields.tr);
       return;
     }
+    isPawaPayPayoutSubmitting.value = true;
+    update();
     final params = GaddPawaPayPayoutAccountReq((b) => b.vars
       ..phoneNumber = pawaPayPhoneController.text.trim()
       ..country = pawaPayPayoutCountry
       ..currency = pawaPayPayoutCurrency
       ..provider = pawaPayPayoutProvider);
-    FerryLoggerClient.makeRequest(params, this, addPawaPayPayoutAccount, isToGet400Message: true)?.then((response) async {
-      final data = response.data as GaddPawaPayPayoutAccountData;
+    try {
+      final responseFuture = FerryLoggerClient.makeRequest(
+        params,
+        this,
+        addPawaPayPayoutAccount,
+        isViewLoader: false,
+        isStartLoader: false,
+        isToGet400Message: true,
+      );
+      final response = await responseFuture?.timeout(const Duration(seconds: 61));
+      final responseData = response?.data;
+      if (responseData == null) {
+        showSnackBar(pawapay_payment_failed.tr);
+        return;
+      }
+      final data = responseData as GaddPawaPayPayoutAccountData;
       if (data.addPawaPayPayoutAccount?.status == 200) {
+        pawaPayPhoneController.clear();
         Get.back();
+        payoutPreferenceNavigator?.navigateScreen(PayoutPreferenceScreen.payoutPreference);
         getPayouts();
       } else {
         showSnackBar(data.addPawaPayPayoutAccount?.errorMessage ?? pawapay_payment_failed.tr);
       }
-    });
+    } catch (_) {
+      showSnackBar(pawapay_payment_failed.tr);
+    } finally {
+      isPawaPayPayoutSubmitting.value = false;
+      update();
+    }
   }
 
   @override

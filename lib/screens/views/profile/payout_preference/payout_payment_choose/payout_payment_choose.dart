@@ -213,8 +213,22 @@ class PayoutPaymentChooseState
           ),
         ])),
         actions: [
-          TextButton(onPressed: Get.back, child: Text(label_cancel.tr)),
-          TextButton(onPressed: controller.addPawaPayPayoutAccount, child: Text(btn_label_submit.tr)),
+          TextButton(
+            onPressed: controller.isPawaPayPayoutSubmitting.value ? null : Get.back,
+            child: Text(label_cancel.tr),
+          ),
+          TextButton(
+            onPressed: controller.isPawaPayPayoutSubmitting.value
+                ? null
+                : controller.addPawaPayPayoutAccount,
+            child: controller.isPawaPayPayoutSubmitting.value
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : Text(btn_label_submit.tr),
+          ),
         ],
       );
     }));
