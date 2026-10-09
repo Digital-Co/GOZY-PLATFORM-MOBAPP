@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gozy/config/client.dart';
 import 'package:gozy/constant.dart';
@@ -109,14 +110,9 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
         isShowBGOnLoader: false,
         loader: LottieLoaders.three_dots_loader,
         resizeToAvoidBottomInset: true,
-        customAppBarFunction: () {
-          if (!controller.isPaymentPending) Get.back();
-        },
+        customAppBarFunction: controller.handleBack,
         backIconWidget: getBackIconWidget(
-            themeType: overALLThemeType,
-            onTap: () {
-              if (!controller.isPaymentPending) Get.back();
-            }),
+            themeType: overALLThemeType, onTap: controller.handleBack),
         body: ShowContentWidget(),
       );
     });
@@ -124,65 +120,83 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
 
   Widget ShowContentWidget() {
     return [
-      _showTitleWidget(),
+      GetBuilder(
+          id: controller.rxSelectedPaymentType.id,
+          init: controller,
+          builder: (context) => _showTitleWidget()),
       18.toHeight(),
       GetBuilder(
           id: controller.rxSelectedPaymentType.id,
           init: controller,
           builder: (context) {
-            return controller.rxSelectedPaymentType.value != 0
-                ? [
-                    _paymentMethodsSection()
-                        .toPad(horizontal: AppDimen.startMargin),
-                    20.toHeight(),
-                    if (isPaymentFrom == "servicePlan") ...[
-                      filterDivider.toPad(
-                          horizontal:
-                              !isBorderNeeded ? 0 : AppDimen.startMargin),
-                      [
-                        CustomText(
-                          text: label_doesnt_auto_renew_content.tr,
-                          size: AppDimen.textSize_18,
-                          fontWeight: AppFont.semiBold,
-                        ),
-                        5.toHeight(),
-                        CustomText(
-                          text: label_service_plan_description.tr,
-                          size: AppDimen.textSize_14,
-                          fontWeight: AppFont.regular,
-                        ),
-                      ]
-                          .toColumn()
-                          .toPad(horizontal: AppDimen.startMargin, top: 10),
-                    ] else ...[
-                      !isBorderNeeded
-                          ? filterDivider.toPad(
-                              horizontal:
-                                  !isBorderNeeded ? 0 : AppDimen.startMargin)
-                          : 0.toHeight(),
-                      if (overALLThemeType == 1 ||
-                          overALLThemeType == 2 ||
-                          overALLThemeType == 3) ...[
-                        filterDivider.toPad(horizontal: AppDimen.startMargin),
-                      ],
-                      18.toHeight(),
-                      _showReservationCharges()
-                          .toPad(horizontal: AppDimen.startMargin),
-                      5.toHeight(),
-                      filterDivider.toPad(
-                          horizontal:
-                              !isBorderNeeded ? 0 : AppDimen.startMargin),
-                      20.toHeight(),
-                      _buildCancellationPolicyInfo()
-                          .toPad(horizontal: AppDimen.startMargin),
-                      20.toHeight(),
-                    ]
-                  ].toColumn().toScroll()
-                : controller.paymentlist != null
-                    ? CustomTitleText(text: paymentUnavailableMessage)
-                    : const SizedBox.shrink();
+            final methods = _enabledMethods();
+            if (controller.paymentlist == null) return const SizedBox.shrink();
+            if (methods.isEmpty) {
+              return CustomTitleText(text: paymentUnavailableMessage);
+            }
+            if (controller.paymentStep == 0) {
+              return _paymentMethodsList(methods)
+                  .toPad(horizontal: AppDimen.startMargin, bottom: 20)
+                  .toScroll();
+            }
+            if (controller.hasPawaPayPending) {
+              return _pawaPayPendingView()
+                  .toPad(horizontal: AppDimen.startMargin, bottom: 20)
+                  .toScroll();
+            }
+            return [
+              _selectedMethodSection(methods)
+                  .toPad(horizontal: AppDimen.startMargin),
+              20.toHeight(),
+              if (isPaymentFrom == "servicePlan") ...[
+                filterDivider.toPad(
+                    horizontal: !isBorderNeeded ? 0 : AppDimen.startMargin),
+                [
+                  CustomText(
+                    text: label_doesnt_auto_renew_content.tr,
+                    size: AppDimen.textSize_18,
+                    fontWeight: AppFont.semiBold,
+                  ),
+                  5.toHeight(),
+                  CustomText(
+                    text: label_service_plan_description.tr,
+                    size: AppDimen.textSize_14,
+                    fontWeight: AppFont.regular,
+                  ),
+                ]
+                    .toColumn()
+                    .toPad(horizontal: AppDimen.startMargin, top: 10),
+              ] else ...[
+                !isBorderNeeded
+                    ? filterDivider.toPad(
+                        horizontal: !isBorderNeeded ? 0 : AppDimen.startMargin)
+                    : 0.toHeight(),
+                if (overALLThemeType == 1 ||
+                    overALLThemeType == 2 ||
+                    overALLThemeType == 3) ...[
+                  filterDivider.toPad(horizontal: AppDimen.startMargin),
+                ],
+                18.toHeight(),
+                _showReservationCharges()
+                    .toPad(horizontal: AppDimen.startMargin),
+                5.toHeight(),
+                filterDivider.toPad(
+                    horizontal: !isBorderNeeded ? 0 : AppDimen.startMargin),
+                20.toHeight(),
+                _buildCancellationPolicyInfo()
+                    .toPad(horizontal: AppDimen.startMargin),
+                20.toHeight(),
+              ]
+            ].toColumn().toScroll();
           }).toStretch(),
-      _showBottomAddPaymentWidget()
+      GetBuilder<PaymentTypeController>(
+        init: controller,
+        builder: (_) => controller.paymentStep == 0 ||
+                controller.paymentlist == null ||
+                controller.hasPawaPayPending
+            ? const SizedBox.shrink()
+            : _showBottomAddPaymentWidget(),
+      )
     ].toColumn(mainAxisSize: MainAxisSize.min);
   }
 
@@ -207,46 +221,65 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
     ].toColumn();
   }
 
-  void _selectPaymentType(int type) => controller.selectPaymentType(type);
-
   double get _fieldRadius =>
       (overALLAppLayoutModel?.borderRadius ?? 12).toDouble();
 
-  Widget _paymentMethodsSection() {
-    final methods = (controller.paymentlist ?? [])
-        .where((item) => item != null && (item.isEnable ?? true))
-        .cast<GgetPaymentMethodsData_getPaymentMethods_results>()
-        .toList();
+  List<GgetPaymentMethodsData_getPaymentMethods_results> _enabledMethods() =>
+      (controller.paymentlist ?? [])
+          .where((item) => item != null && (item.isEnable ?? true))
+          .cast<GgetPaymentMethodsData_getPaymentMethods_results>()
+          .toList();
+
+  Widget _methodCard(GgetPaymentMethodsData_getPaymentMethods_results method,
+      {required bool isSelected, required VoidCallback onTap}) {
+    return PaymentMethodCard(
+      title: method.paymentType == 2
+          ? (method.paymentName ?? label_card_card_by_stripe.tr)
+          : (method.paymentName ?? method.name ?? ''),
+      subtitle: method.paymentSubtitle,
+      fallbackIcon: _paymentIcon(method.paymentType),
+      imageUrl: method.imageUrl,
+      borderRadius: _fieldRadius,
+      isSelected: isSelected,
+      onTap: onTap,
+    );
+  }
+
+  /// Step 0: one payment method per row; tapping one opens its details step.
+  Widget _paymentMethodsList(
+      List<GgetPaymentMethodsData_getPaymentMethods_results> methods) {
+    return [
+      for (final method in methods) ...[
+        _methodCard(method,
+            isSelected:
+                method.paymentType == controller.rxSelectedPaymentType.value,
+            onTap: () => controller.openPaymentDetails(method.paymentType ?? 1)),
+        12.toHeight(),
+      ],
+    ].toColumn(crossAxisAlignment: CrossAxisAlignment.stretch);
+  }
+
+  /// Step 1: the chosen method (with a way back) and its form.
+  Widget _selectedMethodSection(
+      List<GgetPaymentMethodsData_getPaymentMethods_results> methods) {
     final selected = methods.firstWhereOrNull(
         (item) => item.paymentType == controller.rxSelectedPaymentType.value);
-    final panel = selected == null ? null : _selectedMethodPanel(selected);
+    if (selected == null) return const SizedBox.shrink();
+    final panel = _selectedMethodPanel(selected);
     return [
-      LayoutBuilder(builder: (context, constraints) {
-        const gap = 12.0;
-        final cardWidth = (constraints.maxWidth - gap) / 2;
-        return Wrap(
-          spacing: gap,
-          runSpacing: gap,
-          children: [
-            for (final method in methods)
-              SizedBox(
-                width: cardWidth,
-                child: PaymentMethodCard(
-                  title: method.paymentType == 2
-                      ? (method.paymentName ?? label_card_card_by_stripe.tr)
-                      : (method.paymentName ?? method.name ?? ''),
-                  subtitle: method.paymentSubtitle,
-                  fallbackIcon: _paymentIcon(method.paymentType),
-                  imageUrl: method.imageUrl,
-                  borderRadius: _fieldRadius,
-                  isSelected: method.paymentType ==
-                      controller.rxSelectedPaymentType.value,
-                  onTap: () => _selectPaymentType(method.paymentType ?? 1),
-                ),
-              ),
-          ],
-        );
-      }),
+      _methodCard(selected,
+          isSelected: true, onTap: controller.backToPaymentMethods),
+      Align(
+        alignment: AlignmentDirectional.centerEnd,
+        child: TextButton(
+          onPressed: controller.backToPaymentMethods,
+          child: Text(label_change_payment_method.tr,
+              style: TextStyle(
+                  color: appColors.secondaryColor,
+                  fontFamily: AppFont.font,
+                  fontWeight: AppFont.semiBold)),
+        ),
+      ),
       if (panel != null) panel,
     ].toColumn(crossAxisAlignment: CrossAxisAlignment.stretch);
   }
@@ -356,6 +389,82 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
     }
   }
 
+  /// Full-width step shown once PawaPay accepted the deposit: the guest must
+  /// approve the USSD prompt on their phone while the status is polled.
+  Widget _pawaPayPendingView() {
+    final provider = controller.pawaPayProviderName;
+    final phone = controller.pawaPayFullPhone;
+    return [
+      30.toHeight(),
+      Icon(
+          controller.isPawaPayPolling
+              ? Icons.phonelink_ring_rounded
+              : Icons.hourglass_top_rounded,
+          size: 64,
+          color: appColors.secondaryColor),
+      20.toHeight(),
+      CustomText(
+        text: controller.isPawaPayPolling
+            ? pawapay_ussd_confirmation_title.tr
+            : pawapay_payment_pending_title.tr,
+        size: AppDimen.textSize_18,
+        fontWeight: AppFont.semiBold,
+        textAlign: TextAlign.center,
+      ),
+      12.toHeight(),
+      CustomText(
+        text: controller.isPawaPayPolling
+            ? pawapay_ussd_confirmation_message.tr
+            : pawapay_payment_pending.tr,
+        size: AppDimen.textSize_14,
+        textAlign: TextAlign.center,
+      ),
+      if (phone.isNotEmpty) ...[
+        12.toHeight(),
+        CustomText(
+          text: [if (provider.isNotEmpty) provider, '+$phone'].join(' · '),
+          size: AppDimen.textSize_16,
+          fontWeight: AppFont.semiBold,
+          textAlign: TextAlign.center,
+        ),
+      ],
+      if (controller.isPawaPayPolling) ...[
+        24.toHeight(),
+        SizedBox(
+          width: 28,
+          height: 28,
+          child: CircularProgressIndicator(
+              strokeWidth: 3, color: appColors.secondaryColor),
+        ),
+        12.toHeight(),
+        CustomText(
+          text: pawapay_checking_payment.tr,
+          size: AppDimen.textSize_14,
+          textAlign: TextAlign.center,
+        ),
+      ],
+      if (controller.canManuallyCheckPawaPay) ...[
+        20.toHeight(),
+        TextButton.icon(
+          onPressed: controller.isPawaPayManualCheckLoading
+              ? null
+              : controller.resumePawaPayPayment,
+          icon: controller.isPawaPayManualCheckLoading
+              ? SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: appColors.secondaryColor,
+                  ),
+                )
+              : const Icon(Icons.refresh),
+          label: Text(pawapay_check_status.tr),
+        ),
+      ],
+    ].toColumn(crossAxisAlignment: CrossAxisAlignment.center);
+  }
+
   Widget _pawaPayFields() {
     final countries = controller.pawaPayCountries
         .whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
@@ -378,23 +487,35 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
         color: appColors.textColor,
         fontFamily: AppFont.font,
         fontSize: AppDimen.textSize_16);
+    final isUpdating = controller.isPawaPayFieldsLoading;
+    final loaderIcon = SizedBox(
+      width: 18,
+      height: 18,
+      child: CircularProgressIndicator(
+          strokeWidth: 2, color: appColors.secondaryColor),
+    );
     Widget dropdown({
       required String label,
       required String? value,
       required List<DropdownMenuItem<String>> items,
       required ValueChanged<String?> onChanged,
+      bool showLoader = false,
     }) =>
         DropdownButtonFormField<String>(
+          key: ValueKey('$label-$value-${items.length}'),
           value: items.any((item) => item.value == value) ? value : null,
           isExpanded: true,
           style: fieldStyle,
           borderRadius: BorderRadius.circular(_fieldRadius),
-          icon: Icon(Icons.keyboard_arrow_down_rounded,
-              color: appColors.placeholderColor),
+          icon: showLoader
+              ? loaderIcon
+              : Icon(Icons.keyboard_arrow_down_rounded,
+                  color: appColors.placeholderColor),
           decoration: _fieldDecoration(label),
           items: items,
-          onChanged: onChanged,
+          onChanged: isUpdating ? null : onChanged,
         );
+    final prefix = controller.pawaPayPrefix;
     return [
       dropdown(
         label: pawapay_country.tr,
@@ -405,6 +526,7 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
                 child: Text(item.displayName ?? item.country ?? '')))
             .toList(),
         onChanged: controller.selectPawaPayCountry,
+        showLoader: isUpdating,
       ),
       14.toHeight(),
       dropdown(
@@ -415,6 +537,7 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
                 value: item.currency, child: Text(item.currency ?? '')))
             .toList(),
         onChanged: controller.selectPawaPayCurrency,
+        showLoader: isUpdating,
       ),
       14.toHeight(),
       dropdown(
@@ -429,19 +552,30 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
           controller.pawaPayProvider = value;
           controller.update();
         },
+        showLoader: isUpdating,
       ),
       14.toHeight(),
       TextField(
         controller: controller.pawaPayPhoneController,
         keyboardType: TextInputType.phone,
+        enabled: !isUpdating,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         style: fieldStyle,
         cursorColor: appColors.secondaryColor,
-        decoration: _fieldDecoration(pawapay_phone_number.tr),
+        decoration: _fieldDecoration(pawapay_phone_number.tr).copyWith(
+          prefixIconConstraints:
+              const BoxConstraints(minWidth: 0, minHeight: 0),
+          prefixIcon: prefix.isEmpty
+              ? null
+              : Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 16, end: 8),
+                  child: Text('+$prefix',
+                      style: fieldStyle.copyWith(
+                          fontWeight: AppFont.semiBold,
+                          color: appColors.placeholderColor)),
+                ),
+        ),
       ),
-      if (controller.pawaPayPendingMessage != null)
-        TextButton(
-            onPressed: controller.resumePawaPayPayment,
-            child: Text(pawapay_check_status.tr)),
     ].toColumn(crossAxisAlignment: CrossAxisAlignment.stretch);
   }
 
@@ -707,6 +841,7 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
   }
 
   Widget _showTitleWidget() {
+    final isChoosing = controller.paymentStep == 0;
     return [
       CustomTitleText(
         text: isPaymentFrom == "servicePlan"
@@ -715,12 +850,14 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
         size: AppDimen.textSize_22,
         fontWeight: AppFont.semiBold,
       ),
-      12.toHeight(),
-      CustomText(
-        text: label_choose_your_preferable_payment_method.tr,
-        size: AppDimen.textSize_16,
-        fontWeight: AppFont.regular,
-      ),
+      if (isChoosing) ...[
+        12.toHeight(),
+        CustomText(
+          text: label_choose_your_preferable_payment_method.tr,
+          size: AppDimen.textSize_16,
+          fontWeight: AppFont.regular,
+        ),
+      ],
     ].toColumn().toPad(horizontal: AppDimen.startMargin);
   }
 

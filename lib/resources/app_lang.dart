@@ -845,6 +845,11 @@ const String pawapay_required_fields = "pawapay_required_fields";
 const String pawapay_payment_pending = "pawapay_payment_pending";
 const String pawapay_payment_failed = "pawapay_payment_failed";
 const String pawapay_check_status = "pawapay_check_status";
+const String pawapay_ussd_confirmation_title = "pawapay_ussd_confirmation_title";
+const String pawapay_ussd_confirmation_message = "pawapay_ussd_confirmation_message";
+const String pawapay_payment_pending_title = "pawapay_payment_pending_title";
+const String pawapay_checking_payment = "pawapay_checking_payment";
+const String label_change_payment_method = "label_change_payment_method";
 
 String get paymentUnavailableMessage => payment_unavailable.tr;
 String get payoutUnavailableMessage => payout_unavailable.tr;

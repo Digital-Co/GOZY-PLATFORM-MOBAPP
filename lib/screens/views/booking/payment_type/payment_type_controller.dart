@@ -23,6 +23,7 @@ import 'package:gozy/screens/views/profile/profile_navigator.dart';
 import 'package:gozy/resources/app_lang.dart';
 import 'package:gozy/utils/common_api_controller.dart';
 import 'package:gozy/utils/mobile_payment_gateway.dart';
+import 'package:gozy/utils/pawapay_selection.dart';
 
 import '../../../../constant.dart';
 import '../../../../widgets/common_extension_functions.dart';
@@ -60,6 +61,15 @@ class PaymentTypeController extends BaseController {
   String? pawaPayCurrency;
   String? pawaPayProvider;
   String? pawaPayPendingMessage;
+  bool isPawaPayPolling = false;
+  bool canManuallyCheckPawaPay = false;
+  bool isPawaPayManualCheckLoading = false;
+  bool isPawaPayFieldsLoading = false;
+
+  /// 0 = choose a payment method, 1 = details of the chosen method.
+  int paymentStep = 0;
+
+  bool get hasPawaPayPending => pawaPayPendingMessage != null;
 
   List<GgetPaymentMethodsData_getPaymentMethods_results?>? paymentlist;
   String? paymentMethodId, redirectUrl;
@@ -92,8 +102,34 @@ class PaymentTypeController extends BaseController {
       if (preferred.isEmpty) preferred = defaultCurrency;
       selectedpaymentCurrency =
           "${getCurrencySymbol(currency: preferred)} $preferred";
-      _selectDefaultPaymentType();
+      if (hasPawaPayPending &&
+          paymentlist?.any((item) => item?.paymentType == 3) == true) {
+        selectPaymentType(3);
+        paymentStep = 1;
+      }
+      _refreshPaymentUi();
     });
+  }
+
+  /// Opens the details step for the tapped payment method.
+  void openPaymentDetails(int type) {
+    paymentStep = 1;
+    selectPaymentType(type);
+  }
+
+  void backToPaymentMethods() {
+    paymentStep = 0;
+    _refreshPaymentUi();
+  }
+
+  /// Back button: step 1 returns to the method list, otherwise leaves the page.
+  void handleBack() {
+    if (isPaymentPending) return;
+    if (paymentStep == 1 && !hasPawaPayPending) {
+      backToPaymentMethods();
+      return;
+    }
+    Get.back();
   }
 
   bool isCurrenciesLoading = false;
@@ -109,8 +145,13 @@ class PaymentTypeController extends BaseController {
     return selectedpaymentCurrency?.split(' ').last;
   }
 
-  void _refreshPaymentUi() => change(
-      rxVariable: rxSelectedPaymentType, value: rxSelectedPaymentType.value);
+  /// Refreshes both the id-scoped payment builder and the unscoped ones
+  /// (bottom button), since `change` only notifies the former.
+  void _refreshPaymentUi() {
+    change(
+        rxVariable: rxSelectedPaymentType, value: rxSelectedPaymentType.value);
+    update();
+  }
 
   /// Selects a payment method and loads what it needs (PayPal: currencies).
   void selectPaymentType(int type) {
@@ -146,17 +187,6 @@ class PaymentTypeController extends BaseController {
     }
   }
 
-  void _selectDefaultPaymentType() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final type = rxSelectedPaymentType.value != 0
-          ? rxSelectedPaymentType.value
-          : (paymentlist?.isNotEmpty == true
-              ? (paymentlist!.first?.paymentType ?? 0)
-              : 0);
-      selectPaymentType(type);
-    });
-  }
-
   Future<void> loadPawaPayOptions() async {
     final completer = Completer<void>();
     final params = GgetPawaPayOptionsReq((b) => b
@@ -175,38 +205,90 @@ class PaymentTypeController extends BaseController {
           pawaPayCountries
               .whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
               .firstOrNull;
-      selectPawaPayCountry(country?.country);
-      update();
+      selectPawaPayCountry(country?.country, showLoader: false);
       completer.complete();
     });
     return completer.future;
   }
 
-  void selectPawaPayCountry(String? value) {
-    pawaPayCountry = value;
-    final country = pawaPayCountries
-        .whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
-        .where((item) => item.country == value)
-        .firstOrNull;
-    pawaPayCurrency = country?.currencies?.firstOrNull?.currency;
-    pawaPayProvider =
-        country?.currencies?.firstOrNull?.providers?.firstOrNull?.provider;
-    update();
-  }
-
-  void selectPawaPayCurrency(String? value) {
-    pawaPayCurrency = value;
-    final country = pawaPayCountries
+  /// Display name of the selected PawaPay provider.
+  String get pawaPayProviderName {
+    final currency = pawaPayCountries
         .whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
         .where((item) => item.country == pawaPayCountry)
+        .firstOrNull
+        ?.currencies
+        ?.where((item) => item?.currency == pawaPayCurrency)
         .firstOrNull;
-    final currency = country?.currencies
-        ?.whereType<
-            GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies>()
-        .where((item) => item.currency == value)
+    final provider = currency?.providers
+        ?.where((item) => item?.provider == pawaPayProvider)
         .firstOrNull;
-    pawaPayProvider = currency?.providers?.firstOrNull?.provider;
-    update();
+    return provider?.displayName ?? pawaPayProvider ?? '';
+  }
+
+  /// Full MSISDN (digits) the guest entered, for display.
+  String get pawaPayFullPhone =>
+      buildPawaPayMsisdn(pawaPayPrefix, pawaPayPhoneController.text);
+
+  /// Dial prefix of the selected PawaPay country, digits only.
+  String get pawaPayPrefix => normalizePawaPayPrefix(pawaPayCountries
+      .whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
+      .where((item) => item.country == pawaPayCountry)
+      .firstOrNull
+      ?.prefix);
+
+  void _notifyPawaPayUi() => _refreshPaymentUi();
+
+  /// Runs a dependent-field update behind a short loader so the guest sees
+  /// the currency / provider lists being refreshed.
+  Future<void> _withPawaPayFieldsLoader(void Function() apply) async {
+    isPawaPayFieldsLoading = true;
+    _notifyPawaPayUi();
+    await Future.delayed(const Duration(milliseconds: 250));
+    apply();
+    isPawaPayFieldsLoading = false;
+    _notifyPawaPayUi();
+  }
+
+  /// Country drives currency and provider: both reset to the first valid
+  /// values of the new country.
+  Future<void> selectPawaPayCountry(String? value,
+      {bool showLoader = true}) async {
+    void apply() {
+      pawaPayCountry = value;
+      final country = pawaPayCountries
+          .whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
+          .where((item) => item.country == value)
+          .firstOrNull;
+      pawaPayCurrency = country?.currencies?.firstOrNull?.currency;
+      pawaPayProvider =
+          country?.currencies?.firstOrNull?.providers?.firstOrNull?.provider;
+      pawaPayPhoneController.clear();
+    }
+
+    if (!showLoader) {
+      apply();
+      _notifyPawaPayUi();
+      return;
+    }
+    await _withPawaPayFieldsLoader(apply);
+  }
+
+  /// Currency drives the provider list of the selected country.
+  Future<void> selectPawaPayCurrency(String? value) async {
+    await _withPawaPayFieldsLoader(() {
+      pawaPayCurrency = value;
+      final country = pawaPayCountries
+          .whereType<GgetPawaPayOptionsData_getPawaPayOptions_countries>()
+          .where((item) => item.country == pawaPayCountry)
+          .firstOrNull;
+      final currency = country?.currencies
+          ?.whereType<
+              GgetPawaPayOptionsData_getPawaPayOptions_countries_currencies>()
+          .where((item) => item.currency == value)
+          .firstOrNull;
+      pawaPayProvider = currency?.providers?.firstOrNull?.provider;
+    });
   }
 
   Future<GinitiatePawaPayDepositData> _initiatePawaPay(int id) {
@@ -215,14 +297,15 @@ class PaymentTypeController extends BaseController {
       ..reservationId = id
       ..country = pawaPayCountry
       ..currency = pawaPayCurrency
-      ..phoneNumber = pawaPayPhoneController.text.trim()
+      ..phoneNumber =
+          buildPawaPayMsisdn(pawaPayPrefix, pawaPayPhoneController.text)
       ..provider = pawaPayProvider);
     FerryLoggerClient.makeRequest(params, this, () => _initiatePawaPay(id),
             isToGet400Message: true)
         ?.then((response) {
       completer.complete(response.data as GinitiatePawaPayDepositData);
     });
-    return completer.future;
+    return completer.future.timeout(const Duration(seconds: 65));
   }
 
   Future<GgetPawaPayDepositStatusData> _getPawaPayStatus(int id) {
@@ -230,23 +313,31 @@ class PaymentTypeController extends BaseController {
     final params =
         GgetPawaPayDepositStatusReq((b) => b.vars..reservationId = id);
     FerryLoggerClient.makeRequest(params, this, () => _getPawaPayStatus(id),
-            isToGet400Message: true, isStartLoader: false)
+            isToGet400Message: true,
+            isViewLoader: false,
+            isStartLoader: false)
         ?.then((response) {
       completer.complete(response.data as GgetPawaPayDepositStatusData);
     });
-    return completer.future;
+    return completer.future.timeout(const Duration(seconds: 35));
   }
 
   Future<void> payWithPawaPay() async {
+    if (isPaymentPending || isLoading.value) return;
+    if (reservationId != null && pawaPayPendingMessage != null) {
+      return resumePawaPayPayment();
+    }
     if (pawaPayCountry == null ||
         pawaPayCurrency == null ||
         pawaPayProvider == null ||
-        pawaPayPhoneController.text.trim().isEmpty) {
+        localPawaPayNumber(pawaPayPrefix, pawaPayPhoneController.text)
+            .isEmpty) {
       showSnackBar(pawapay_required_fields.tr);
       return;
     }
     isPaymentPending = true;
     isLoading.value = true;
+    var depositAccepted = false;
     try {
       var id = reservationId;
       if (id == null) {
@@ -270,6 +361,11 @@ class PaymentTypeController extends BaseController {
         throw Exception(initiation.initiatePawaPayDeposit?.errorMessage ??
             pawapay_payment_failed.tr);
       }
+      depositAccepted = true;
+      pawaPayPendingMessage = pawapay_ussd_confirmation_message.tr;
+      isPawaPayPolling = true;
+      isLoading.value = false;
+      _notifyPawaPayUi();
       for (var attempt = 0; attempt < 12; attempt++) {
         if (attempt > 0) await Future.delayed(const Duration(seconds: 5));
         final status = await _getPawaPayStatus(id);
@@ -280,35 +376,55 @@ class PaymentTypeController extends BaseController {
           navigateReservationDetail(purchaseId: id);
           return;
         }
-        if (paymentStatus == 'FAILED') {
+        if (paymentStatus == 'FAILED' || paymentStatus == 'REJECTED') {
           _clearPendingPawaPay();
           throw Exception(pawapay_payment_failed.tr);
         }
       }
+      isPawaPayPolling = false;
+      isPaymentPending = false;
+      canManuallyCheckPawaPay = true;
       pawaPayPendingMessage = pawapay_payment_pending.tr;
-      showSnackBar(pawaPayPendingMessage);
+      _notifyPawaPayUi();
     } catch (error) {
       isPaymentPending = false;
+      isPawaPayPolling = false;
+      if (depositAccepted && appPreference.pendingPawaPayReservationId != null) {
+        canManuallyCheckPawaPay = true;
+        pawaPayPendingMessage = pawapay_payment_pending.tr;
+      }
       showSnackBar(error.toString().replaceFirst('Exception: ', ''));
     } finally {
       isLoading.value = false;
-      update();
+      _notifyPawaPayUi();
     }
   }
 
   Future<void> resumePawaPayPayment() async {
+    if (isPawaPayManualCheckLoading) return;
     final id = reservationId ?? appPreference.pendingPawaPayReservationId;
     if (id == null) return;
-    final status = await _getPawaPayStatus(id);
-    if (status.getPawaPayDepositStatus?.paymentStatus == 'COMPLETED') {
-      pawaPayPendingMessage = null;
-      _clearPendingPawaPay();
-      navigateReservationDetail(purchaseId: id);
-    } else if (status.getPawaPayDepositStatus?.paymentStatus == 'FAILED') {
-      _clearPendingPawaPay();
-      showSnackBar(pawapay_payment_failed.tr);
-    } else {
+    isPawaPayManualCheckLoading = true;
+    _notifyPawaPayUi();
+    try {
+      final status = await _getPawaPayStatus(id);
+      final paymentStatus = status.getPawaPayDepositStatus?.paymentStatus;
+      if (paymentStatus == 'COMPLETED') {
+        pawaPayPendingMessage = null;
+        _clearPendingPawaPay();
+        navigateReservationDetail(purchaseId: id);
+      } else if (paymentStatus == 'FAILED' || paymentStatus == 'REJECTED') {
+        _clearPendingPawaPay();
+        showSnackBar(pawapay_payment_failed.tr);
+      } else {
+        pawaPayPendingMessage = pawapay_payment_pending.tr;
+        showSnackBar(pawapay_payment_pending.tr);
+      }
+    } catch (_) {
       showSnackBar(pawapay_payment_pending.tr);
+    } finally {
+      isPawaPayManualCheckLoading = false;
+      _notifyPawaPayUi();
     }
   }
 
@@ -316,12 +432,17 @@ class PaymentTypeController extends BaseController {
     if (appPreference.pendingPawaPayListingId == itemInfo?.id &&
         appPreference.pendingPawaPayReservationId != null) {
       reservationId = appPreference.pendingPawaPayReservationId;
-      pawaPayPendingMessage = pawapay_payment_pending.tr;
+      pawaPayPendingMessage = pawapay_ussd_confirmation_message.tr;
+      canManuallyCheckPawaPay = true;
     }
   }
 
   void _clearPendingPawaPay() {
     reservationId = null;
+    isPaymentPending = false;
+    isPawaPayPolling = false;
+    canManuallyCheckPawaPay = false;
+    pawaPayPendingMessage = null;
     appPreference.pendingPawaPayReservationId = null;
     appPreference.pendingPawaPayListingId = null;
   }

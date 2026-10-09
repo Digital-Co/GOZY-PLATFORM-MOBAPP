@@ -5,8 +5,7 @@ import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/widgets/custom_text.dart';
 import 'package:gozy/widgets/payment_type_selection_view.dart';
 
-/// Selectable card for one payment method. Meant to be laid out in a [Wrap]
-/// so that two cards share a row on phones.
+/// Selectable card for one payment method, laid out full width, one per row.
 class PaymentMethodCard extends StatelessWidget {
   const PaymentMethodCard({
     super.key,
