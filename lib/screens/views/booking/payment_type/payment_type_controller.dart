@@ -100,8 +100,12 @@ class PaymentTypeController extends BaseController {
       // when PayPal is selected (see ensureCurrenciesLoaded), not up front.
       String preferred = appPreference.preferredCurrency ?? "";
       if (preferred.isEmpty) preferred = defaultCurrency;
+      final paypalCurrency =
+          const ['EUR', 'USD'].contains(preferred.toUpperCase())
+              ? preferred.toUpperCase()
+              : 'EUR';
       selectedpaymentCurrency =
-          "${getCurrencySymbol(currency: preferred)} $preferred";
+          "${getCurrencySymbol(currency: paypalCurrency)} $paypalCurrency";
       if (hasPawaPayPending &&
           paymentlist?.any((item) => item?.paymentType == 3) == true) {
         selectPaymentType(3);
@@ -115,6 +119,9 @@ class PaymentTypeController extends BaseController {
   void openPaymentDetails(int type) {
     paymentStep = 1;
     selectPaymentType(type);
+    // The bottom "proceed" button is an unscoped builder: `change` alone does
+    // not rebuild it, so it would only appear after the next form change.
+    _refreshPaymentUi();
   }
 
   void backToPaymentMethods() {
@@ -169,16 +176,10 @@ class PaymentTypeController extends BaseController {
     isCurrenciesLoading = true;
     _refreshPaymentUi();
     try {
-      final data = await getCurrencyList(
-              isAutoCloseLoader: false, isStartLoader: false)
-          .timeout(const Duration(seconds: 20));
       listOfCurrencies?.clear();
-      data.getCurrencies?.results?.forEach((p0) {
-        if ((p0?.isEnable ?? false) && (p0?.isPayment ?? false)) {
-          listOfCurrencies
-              ?.add("${getCurrencySymbol(currency: p0?.symbol)} ${p0?.symbol}");
-        }
-      });
+      for (final currency in const ['EUR', 'USD']) {
+        listOfCurrencies?.add("${getCurrencySymbol(currency: currency)} $currency");
+      }
     } catch (e) {
       debugPrint('ensureCurrenciesLoaded failed: $e');
     } finally {
@@ -634,7 +635,11 @@ class PaymentTypeController extends BaseController {
         ..vars.isDeliveryIncluded = isDeliveryCheck
         ..vars.averagePrice = billingdata?.averagePrice
         ..vars.days = billingdata?.days
-        ..vars.paymentCurrency = selectedPaymentCurrencyCode;
+        ..vars.paymentCurrency =
+            mobilePaymentGatewayForType(rxSelectedPaymentType.value) ==
+                    MobilePaymentGateway.paypal
+                ? selectedPaymentCurrencyCode
+                : null;
       if (isPromoApplied) {
         b.vars.promoCode = couponCode;
       }
@@ -680,7 +685,11 @@ class PaymentTypeController extends BaseController {
             .toString()
         ..vars.cardToken = paymentMethodId ?? ''
         ..vars.paymentType = rxSelectedPaymentType.value
-        ..vars.paymentCurrency = selectedpaymentCurrency?.split(' ')[1];
+        ..vars.paymentCurrency =
+            mobilePaymentGatewayForType(rxSelectedPaymentType.value) ==
+                    MobilePaymentGateway.paypal
+                ? selectedPaymentCurrencyCode
+                : null;
       b.vars.build();
     });
 

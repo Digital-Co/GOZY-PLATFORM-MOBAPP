@@ -788,8 +788,10 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
             final gateway = mobilePaymentGatewayForType(payment?.paymentType);
             if (gateway == MobilePaymentGateway.paypal) {
               if (controller.rxSelectedPaymentType.value ==
-                      payment?.paymentType &&
-                  controller.selectedpaymentCurrency == null) {
+                  payment?.paymentType &&
+                  (controller.selectedpaymentCurrency == null ||
+                      !const ['EUR', 'USD']
+                          .contains(controller.selectedPaymentCurrencyCode))) {
                 controller.showSnackBar(
                   error_msg_currency_selection.tr,
                 );
