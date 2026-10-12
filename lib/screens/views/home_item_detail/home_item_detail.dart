@@ -110,7 +110,7 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
   Widget _showDurationDiscounts() => DurationDiscountOffersPanel(
         weeklyDiscount: controller.itemInfo?.listingData?.weeklyDiscount,
         monthlyDiscount: controller.itemInfo?.listingData?.monthlyDiscount,
-      ).toPad(top: 12, bottom: 16);
+      ).toPad(top: 12, bottom: 16, horizontal: 16);
 
   Color? _shareView_IconBGColor;
   double? _insideImageBorderRadius;
@@ -316,9 +316,10 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         !(controller.itemInfo?.userId != controller.appPreference.userID) ? 12 : -1
       },
     );
-    return [_showDurationDiscounts(), ListItemWidgetsWithDivider.toColumn()]
-        .toColumn()
-        .toPad(horizontal: AppDimen.startMargin);
+    return [
+      _showDurationDiscounts(),
+      ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin),
+    ].toColumn();
   }
 
   Widget _showTheme2BodyContent() {
@@ -366,9 +367,10 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         !(controller.itemInfo?.userId != controller.appPreference.userID) ? 12 : -1
       },
     );
-    return [_showDurationDiscounts(), listItemWidgetsWithDivider.toColumn()]
-        .toColumn()
-        .toPad(horizontal: AppDimen.startMargin);
+    return [
+      _showDurationDiscounts(),
+      listItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin),
+    ].toColumn();
   }
 
   Widget _showTheme3BodyContent() {
@@ -456,9 +458,10 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         !(rateandreview.$1 != null && rateandreview.$2 != 0) ? 7 : -1,
       },
     );
-    return [_showDurationDiscounts(), ListItemWidgetsWithDivider.toColumn()]
-        .toColumn()
-        .toPad(horizontal: AppDimen.startMargin);
+    return [
+      _showDurationDiscounts(),
+      ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin),
+    ].toColumn();
   }
 
   Widget _showTheme4BodyContent() {
@@ -513,9 +516,10 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         !(controller.itemInfo?.userId != controller.appPreference.userID) ? 12 : -1
       },
     );
-    return [_showDurationDiscounts(), ListItemWidgetsWithDivider.toColumn()]
-        .toColumn()
-        .toPad(horizontal: AppDimen.startMargin);
+    return [
+      _showDurationDiscounts(),
+      ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin),
+    ].toColumn();
   }
 
   Widget _showCarFeatureList({Color? fillColor, Color? iconFillColor, Color? iconColor, Axis? direction}) {

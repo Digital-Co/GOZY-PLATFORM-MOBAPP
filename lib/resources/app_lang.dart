@@ -5,6 +5,12 @@ const String duration_discount_offers = 'duration_discount_offers';
 const String duration_discount_you_save = 'duration_discount_you_save';
 const String duration_discount_add_days = 'duration_discount_add_days';
 const String duration_discount_unlock = 'duration_discount_unlock';
+const String duration_discount_up_to = 'duration_discount_up_to';
+const String duration_discount_title = 'duration_discount_title';
+const String duration_discount_subtitle = 'duration_discount_subtitle';
+const String duration_discount_week = 'duration_discount_week';
+const String duration_discount_month = 'duration_discount_month';
+const String duration_discount_from_days_short = 'duration_discount_from_days_short';
 const String label_close = 'label_close';
 
 /*
