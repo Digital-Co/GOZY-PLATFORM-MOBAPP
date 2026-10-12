@@ -136,12 +136,25 @@ extension dynamicExtension on dynamic{
   String toNumberFormat({required String symbol, bool canConvertDouble = true, int? maximumFractionDigits, String? overrideLocale}){
     dynamic price = double.parse(toString()).roundOfDigit();
 
-    // 1. Format numeric part with fixed en_US locale for consistent separators (comma for thousands, dot for decimal)
-    var numberFormat = intl.NumberFormat.decimalPattern('en_US');
+    // 1. Format numeric part with the app locale (same separators as the website); RTL languages use en_US like the website
+    String localeString = overrideLocale ?? (Get.locale != null ? Get.locale.toString() : 'en');
+    final String languageCode = localeString.split(RegExp('[_-]')).first;
+    final bool isRtl = ['ar', 'he', 'fa', 'ur'].contains(languageCode);
+    intl.NumberFormat numberFormat;
+    try {
+      numberFormat = intl.NumberFormat.decimalPattern(isRtl ? 'en_US' : localeString);
+    } catch (_) {
+      numberFormat = intl.NumberFormat.decimalPattern('en_US');
+    }
     if (canConvertDouble) {
-      numberFormat.minimumFractionDigits = (maximumFractionDigits != null) ? 0 : 2;
       if (maximumFractionDigits != null) {
+        numberFormat.minimumFractionDigits = 0;
         numberFormat.maximumFractionDigits = maximumFractionDigits;
+      } else {
+        // Same rule as the website: whole amounts without decimals, otherwise 2 decimals
+        final int digits = (price % 1 == 0) ? 0 : 2;
+        numberFormat.minimumFractionDigits = digits;
+        numberFormat.maximumFractionDigits = digits;
       }
     } else {
       numberFormat.minimumFractionDigits = 0;
@@ -150,7 +163,6 @@ extension dynamicExtension on dynamic{
     String formattedNumber = numberFormat.format(price);
 
     // 2. Determine symbol position based on current locale
-    String localeString = overrideLocale ?? (Get.locale != null ? Get.locale.toString() : 'en');
     var currencyFormat = intl.NumberFormat.currency(locale: localeString, symbol: symbol);
     String example = currencyFormat.format(100);
     bool isSymbolAtEnd = example.trim().endsWith(symbol);
