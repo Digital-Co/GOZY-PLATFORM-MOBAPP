@@ -11,6 +11,7 @@ const String duration_discount_subtitle = 'duration_discount_subtitle';
 const String duration_discount_week = 'duration_discount_week';
 const String duration_discount_month = 'duration_discount_month';
 const String duration_discount_from_days_short = 'duration_discount_from_days_short';
+const String duration_discount_not_cumulative = 'duration_discount_not_cumulative';
 const String label_close = 'label_close';
 
 /*

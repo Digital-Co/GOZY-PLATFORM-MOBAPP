@@ -120,48 +120,69 @@ class DurationDiscountOffersPanel extends StatelessWidget {
         color: const Color(0xffeaf7f0),
         borderRadius: BorderRadius.circular(18),
       ),
-      child: LayoutBuilder(builder: (context, constraints) {
-        // Sizes are designed for a ~304 dp content width (a 360 dp phone) and
-        // scale with the available width. Header | divider | tiles stay on one
-        // row; on very small widths the seal moves above the title and
-        // everything shrinks further. System text scale is capped.
-        final width = constraints.maxWidth;
-        final compact = width < 262;
-        final k = (width / 304).clamp(compact ? 0.72 : 0.85, 1.15).toDouble();
-        return DefaultTextStyle.merge(
-          style: const TextStyle(fontFamily: AppFont.font),
-          child: MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-                textScaler: MediaQuery.textScalerOf(context)
-                    .clamp(maxScaleFactor: 1.15)),
-            child: IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                      flex: compact ? 40 : 45,
-                      child: _OffersHeader(k: k, compact: compact)),
-                  SizedBox(width: 8 * k),
-                  const VerticalDivider(
-                      width: 1, thickness: 1, color: Color(0xffcce5d8)),
-                  SizedBox(width: 8 * k),
-                  Expanded(
-                    flex: compact ? 60 : 55,
-                    child: Row(
-                      children: [
-                        for (var i = 0; i < offers.length; i++) ...[
-                          if (i > 0) SizedBox(width: 6 * k),
-                          Expanded(child: _OfferTile(offer: offers[i], k: k)),
-                        ],
-                      ],
-                    ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LayoutBuilder(builder: (context, constraints) {
+            // Sizes are designed for a ~304 dp content width (a 360 dp phone) and
+            // scale with the available width. Header | divider | tiles stay on one
+            // row; on very small widths the seal moves above the title and
+            // everything shrinks further. System text scale is capped.
+            final width = constraints.maxWidth;
+            final compact = width < 262;
+            final k = (width / 304).clamp(compact ? 0.72 : 0.85, 1.15).toDouble();
+            return DefaultTextStyle.merge(
+              style: const TextStyle(fontFamily: AppFont.font),
+              child: MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                    textScaler: MediaQuery.textScalerOf(context)
+                        .clamp(maxScaleFactor: 1.15)),
+                child: IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                          flex: compact ? 40 : 45,
+                          child: _OffersHeader(k: k, compact: compact)),
+                      SizedBox(width: 8 * k),
+                      const VerticalDivider(
+                          width: 1, thickness: 1, color: Color(0xffcce5d8)),
+                      SizedBox(width: 8 * k),
+                      Expanded(
+                        flex: compact ? 60 : 55,
+                        child: Row(
+                          children: [
+                            for (var i = 0; i < offers.length; i++) ...[
+                              if (i > 0) SizedBox(width: 6 * k),
+                              Expanded(child: _OfferTile(offer: offers[i], k: k)),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
+              ),
+            );
+          }),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: Tooltip(
+              message: duration_discount_not_cumulative.tr,
+              triggerMode: TooltipTriggerMode.tap,
+              showDuration: const Duration(seconds: 4),
+              child: const SizedBox(
+                width: 40,
+                height: 32,
+                child: Center(
+                  child: Icon(Icons.info_outline,
+                      size: 18, color: Color(0xff365b48)),
+                ),
               ),
             ),
           ),
-        );
-      }),
+        ],
+      ),
     );
   }
 }
