@@ -343,8 +343,10 @@ class _AboutTripState extends HomeItemDetailState {
                       size: AppDimen.textSize_14)
                 ].toColumn(),
                 Spacer(),
-                IntrinsicWidth(
-                  child: PrimaryButton(
+                Flexible(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: SizedBox(height: 50, child: PrimaryButton(
                           buttonText: btn_label_next.tr,
                           isWrapContent: true,
                           onTap: () {
@@ -384,10 +386,9 @@ class _AboutTripState extends HomeItemDetailState {
                               }
                             },
                             padding: pad(w: 18, h: 3),
+                  )),
                   ),
                 )
-                    .toResizeWidget(height: 50)
-                    .toStretch()
               ].toRow())
           .toStretch()
     ].toRow();

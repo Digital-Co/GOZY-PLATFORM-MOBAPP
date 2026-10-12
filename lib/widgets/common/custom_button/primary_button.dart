@@ -59,24 +59,32 @@ class PrimaryButton extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: [
-            (isResizeText ?? false)
-                ? CustomText(
+            // A single word (e.g. "Suivant") must never break in the middle:
+            // it shrinks to fit instead. Sentences keep wrapping on 2 lines.
+            if ((isResizeText ?? false) || !buttonText.trim().contains(RegExp(r'\s')))
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: CustomText(
                     text: buttonText,
                     color: appColors.buttonTextColor,
-                    textAlign: customTextAlign ?? TextAlign.start,
+                    textAlign: customTextAlign ?? TextAlign.center,
                     size: buttonTextFontSize,
-                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     fontWeight: FontWeight.w500,
-                  ).toStretch(isExpanded: false)
-                : CustomText(
-                    text: buttonText,
-                    color: appColors.buttonTextColor,
-                    textAlign: customTextAlign ?? TextAlign.start,
-                    size: buttonTextFontSize,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    fontWeight: FontWeight.w500,
-                  ).toStretch(isExpanded: false),
+                  ),
+                ),
+              )
+            else
+              CustomText(
+                text: buttonText,
+                color: appColors.buttonTextColor,
+                textAlign: customTextAlign ?? TextAlign.start,
+                size: buttonTextFontSize,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                fontWeight: FontWeight.w500,
+              ).toStretch(isExpanded: false),
             if ((appLayoutMap[AppLayout.buttonType]?.isButtonArrowShow ?? false))
               Assets.drawableRightArrow
                   .toSVG(colour: appColors.buttonTextColor, size: 10)

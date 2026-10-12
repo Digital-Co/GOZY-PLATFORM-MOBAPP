@@ -247,7 +247,11 @@ class AboutLicenseState extends HomeItemDetailState {
                       size: AppDimen.textSize_14)
                 ].toColumn(),
                 Spacer(),
-                PrimaryButton(
+                Flexible(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: SizedBox(height: 50, child: PrimaryButton(
+                  isWrapContent: true,
                   buttonText: btn_label_next.tr,
                   onTap: () {
                     if (_validate()) {
@@ -266,8 +270,10 @@ class AboutLicenseState extends HomeItemDetailState {
                           ?.navigateScreen(HomeItemDetailScreen.aboutTrip, "");
                     }
                   },
-                  padding: pad(w: AppDimen.startMargin),
-                ).toResizeWidget(height: 50).toStretch()
+                  padding: pad(w: 18),
+                )),
+                  ),
+                )
               ].toRow())
           .toStretch()
     ].toRow();
