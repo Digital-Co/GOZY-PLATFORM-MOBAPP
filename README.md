@@ -51,6 +51,16 @@ To run the Android app against QA instead of production:
 flutter run --dart-define=GOZY_ENV=qa
 ```
 
+Environment files live in `env/` (`qa.json`, `production.json`). Use them for runs and release builds so the target is explicit:
+
+```bash
+flutter run --dart-define-from-file=env/qa.json
+flutter build appbundle --release --dart-define-from-file=env/qa.json   # QA build
+flutter build appbundle --release --dart-define-from-file=env/production.json   # production build
+```
+
+The Android Gradle build also reads `GRAPHQL_DOMAIN` from these files to fetch the Maps key from the matching environment.
+
 The QA endpoint defaults to `https://qa.gozyapp.com/api/graphql`; production remains the default when `GOZY_ENV` is omitted. You can override `GRAPHQL_DOMAIN` or `UPLOAD_URL` with additional `--dart-define` values if the QA services use different hosts.
 
 For iOS, install CocoaPods dependencies when needed:

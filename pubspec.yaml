@@ -2,7 +2,7 @@ name: gozy
 description: A Gozy Flutter project
 publish_to: 'none'
 
-version: 1.0.1
+version: 2.0.3+12
 flutter_sdk: 3.41.2
 
 environment:
