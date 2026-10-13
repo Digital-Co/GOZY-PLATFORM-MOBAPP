@@ -97,7 +97,7 @@ class StatefulWrapperState extends State<Splash> with TickerProviderStateMixin i
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 200)).then((value) {
-        debugPrint("getFCMToken:  splash ${appPreference.deviceID} --- ${appPreference.accessToken}");
+        debugPrint("getFCMToken:  splash ${appPreference.deviceID}");
         controller.getFCMToken();
       });
     });

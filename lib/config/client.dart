@@ -136,7 +136,6 @@ class FerryLoggerClient extends Client {
       debugPrint('pendingRequestIds: $pendingRequestIds');
       pendingRequestIds.add(operationName);
 
-      debugPrint("AuthToken: ${appPreference.accessToken ?? ""}");
       debugPrint("request: ${encoder.convert(request)}");
       var ferryResponse = FerryLoggerClient.client!
           .request(request)
@@ -161,8 +160,6 @@ class FerryLoggerClient extends Client {
                     if (queryvaluemap.key != '__typename' &&
                         queryvaluemap.key == 'status') {
                       if (queryvaluemap.value == 500) {
-                        debugPrint(
-                            "AuthToken--> ${appPreference.accessToken} <-> $authToken");
                         debugPrint(
                             "Getting data:${request.operation.operationName!}---- ${map.entries}---");
                         showAlertDialog(

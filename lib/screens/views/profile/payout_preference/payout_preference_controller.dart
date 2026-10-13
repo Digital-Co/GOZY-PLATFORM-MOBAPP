@@ -232,7 +232,6 @@ class PayoutPreferenceController extends ProfileController
   }
 
   void getPayouts() {
-    print('Auth--> ${appPreference.accessToken}');
     final params = GgetPayoutsReq((b) => b..vars.build());
     FerryLoggerClient.makeRequest(params, this, getPayouts, isBottomSheetOpen: false)?.then((res) async {
       GgetPayoutsData? getPayoutsResponse = res.data as GgetPayoutsData;

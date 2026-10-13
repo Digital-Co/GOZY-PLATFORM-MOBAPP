@@ -113,7 +113,6 @@ class HomePageState extends CustomStatefulWidgetState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("auth: ${appPreference.accessToken}");
     print("appP1: ${appPreference.showBrand} -- ${Get.currentRoute}");
     bottomNavigationItems.clear();
     getBottomNavigationitems();
