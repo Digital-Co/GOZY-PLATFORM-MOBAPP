@@ -86,6 +86,7 @@ class PayFromWebState extends PaymentTypePageState {
             !uri.host.contains('paypal.com') &&
             uri.path.contains('success') &&
             (uri.queryParameters['token'] ?? '').isNotEmpty;
+        debugPrint('[PayPal] navigation url=$url returnFromPayPal=$isReturnFromPayPal');
         if (isReturnFromPayPal) {
           Map<String, String> parameters = uri.queryParameters;
           webpagecontroller.paypalPaymentId = parameters['token'];
@@ -95,6 +96,7 @@ class PayFromWebState extends PaymentTypePageState {
 
           // Ignore repeated navigation events for an order that is already being confirmed.
           if (webpagecontroller.paypalPaymentId == webpagecontroller.lastRequestedPaymentId) {
+            debugPrint('[PayPal] duplicate return ignored token=${webpagecontroller.paypalPaymentId}');
             return NavigationDecision.navigate;
           }
           webpagecontroller.lastRequestedPaymentId = webpagecontroller.paypalPaymentId;
@@ -106,6 +108,7 @@ class PayFromWebState extends PaymentTypePageState {
             webpagecontroller.checkNetwork(webpagecontroller.confirmPaypalPayment);
           });
         } else if (uri != null && !uri.host.contains('paypal.com') && uri.path.contains('cancel')) {
+          debugPrint('[PayPal] payment cancelled by user url=$url');
           Get.back();
           webviewController.clearCache();
         }
