@@ -81,13 +81,23 @@ class PayFromWebState extends PaymentTypePageState {
         debugPrint('navigationdelie: ${navigation.content.source}');
 
         String url = navigation.content.source;
-        if (url.contains('success')) {
-          Uri uri = Uri.parse(url);
-          Map<String, String> parameters = uri.queryParameters ?? {};
+        final uri = Uri.tryParse(url);
+        final isReturnFromPayPal = uri != null &&
+            !uri.host.contains('paypal.com') &&
+            uri.path.contains('success') &&
+            (uri.queryParameters['token'] ?? '').isNotEmpty;
+        if (isReturnFromPayPal) {
+          Map<String, String> parameters = uri.queryParameters;
           webpagecontroller.paypalPaymentId = parameters['token'];
           webpagecontroller.payerid = parameters['PayerID'];
           final savedController = super.controller;
           webpagecontroller.paymentTypeController = savedController;
+
+          // Ignore repeated navigation events for an order that is already being confirmed.
+          if (webpagecontroller.paypalPaymentId == webpagecontroller.lastRequestedPaymentId) {
+            return NavigationDecision.navigate;
+          }
+          webpagecontroller.lastRequestedPaymentId = webpagecontroller.paypalPaymentId;
 
           Get.back();
 
@@ -95,7 +105,7 @@ class PayFromWebState extends PaymentTypePageState {
             webpagecontroller.paymentTypeController?.isLoading.value = true;
             webpagecontroller.checkNetwork(webpagecontroller.confirmPaypalPayment);
           });
-        } else if (url.toString().contains('cancel')) {
+        } else if (uri != null && !uri.host.contains('paypal.com') && uri.path.contains('cancel')) {
           Get.back();
           webviewController.clearCache();
         }
