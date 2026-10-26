@@ -226,8 +226,9 @@ class _OptionRow extends StatelessWidget {
                   color: appColors.black.withValues(alpha: 0.92),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                textStyle: const TextStyle(
-                    color: Colors.white, fontSize: 12.5, height: 1.3),
+                // appColors.black / white swap in dark mode: keep them paired.
+                textStyle: TextStyle(
+                    color: appColors.white, fontSize: 12.5, height: 1.3),
                 child: SizedBox(
                   width: 32,
                   height: 36,
