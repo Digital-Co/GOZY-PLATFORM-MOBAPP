@@ -1,6 +1,7 @@
 # import 'package:gozy/graphql/base_listing_info_fragment.graphql'
 # import 'package:gozy/graphql/listing_data_fragment.graphql'
 # import 'package:gozy/graphql/listing_user_fragment.graphql'
+# import 'package:gozy/graphql/listingOptions/listing_option_fragment.graphql'
 
 fragment viewListingDetailsFragment on ShowListing {
          id
@@ -22,6 +23,9 @@ fragment viewListingDetailsFragment on ShowListing {
          odometer
          listingData {
          ...listingDataFragment
+         }
+         listingOptions {
+         ...listingOptionFragment
          }
          blockedDates {
              id

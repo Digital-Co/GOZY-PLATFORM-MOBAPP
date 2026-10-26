@@ -13,13 +13,15 @@ import 'package:gozy/graphql/__generated__/listing_user_fragment.data.gql.dart'
     as _i4;
 import 'package:gozy/graphql/__generated__/reservation_fragment.data.gql.dart'
     as _i1;
-import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i8;
+import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i9;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
-    as _i7;
+    as _i8;
 import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
     as _i6;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i5;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+    as _i7;
 
 part 'reservation_payment_fragment.data.gql.g.dart';
 
@@ -70,6 +72,11 @@ abstract class GreservationPaymentFragment_results
   double? get basePrice;
   @override
   double? get delivery;
+  @override
+  double? get optionsTotal;
+  @override
+  BuiltList<GreservationPaymentFragment_results_reservationOptions?>?
+      get reservationOptions;
   @override
   String? get currency;
   @override
@@ -937,8 +944,42 @@ abstract class GreservationPaymentFragment_results_guestData_userVerification
   Map<String, dynamic> toJson();
 }
 
+abstract class GreservationPaymentFragment_results_reservationOptions
+    implements
+        _i1.GreservationFragment_reservationOptions,
+        _i7.GreservationOptionSnapshotFragment {
+  @override
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get labelKey;
+  @override
+  String? get description;
+  @override
+  String? get billingMode;
+  @override
+  double? get unitPrice;
+  @override
+  int? get quantity;
+  @override
+  double? get amount;
+  @override
+  String? get currency;
+  @override
+  String? get userInput;
+  @override
+  Map<String, dynamic> toJson();
+}
+
 abstract class GreservationPaymentFragment_results_threadData
-    implements _i1.GreservationFragment_threadData, _i7.GthreadItemsFragment {
+    implements _i1.GreservationFragment_threadData, _i8.GthreadItemsFragment {
   @override
   String get G__typename;
   @override
@@ -1050,13 +1091,13 @@ abstract class GreservationPaymentFragmentData
       _$greservationPaymentFragmentDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData? fromJson(Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData.serializer,
         json,
       );
@@ -1111,6 +1152,11 @@ abstract class GreservationPaymentFragmentData_results
   double? get basePrice;
   @override
   double? get delivery;
+  @override
+  double? get optionsTotal;
+  @override
+  BuiltList<GreservationPaymentFragmentData_results_reservationOptions?>?
+      get reservationOptions;
   @override
   String? get currency;
   @override
@@ -1221,14 +1267,14 @@ abstract class GreservationPaymentFragmentData_results
       _$greservationPaymentFragmentDataResultsSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results.serializer,
         json,
       );
@@ -1300,14 +1346,14 @@ abstract class GreservationPaymentFragmentData_results_cancellation
           _$greservationPaymentFragmentDataResultsCancellationSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_cancellation.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_cancellation? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_cancellation.serializer,
         json,
       );
@@ -1416,14 +1462,14 @@ abstract class GreservationPaymentFragmentData_results_listData
           _$greservationPaymentFragmentDataResultsListDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_listData.serializer,
         json,
       );
@@ -1464,14 +1510,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicListingTi
           _$greservationPaymentFragmentDataResultsListDataDynamicListingTitleSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicListingTitle
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicListingTitle?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_dynamicListingTitle
                 .serializer,
             json,
@@ -1513,14 +1559,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicListingDe
           _$greservationPaymentFragmentDataResultsListDataDynamicListingDescriptionSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicListingDescription
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicListingDescription?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_dynamicListingDescription
                 .serializer,
             json,
@@ -1569,14 +1615,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicListTitle
           _$greservationPaymentFragmentDataResultsListDataDynamicListTitleSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicListTitle
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicListTitle?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_dynamicListTitle
                 .serializer,
             json,
@@ -1626,14 +1672,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicListDescr
           _$greservationPaymentFragmentDataResultsListDataDynamicListDescriptionSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicListDescription
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicListDescription?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_dynamicListDescription
                 .serializer,
             json,
@@ -1682,14 +1728,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicCarType
           _$greservationPaymentFragmentDataResultsListDataDynamicCarTypeSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicCarType
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicCarType?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_dynamicCarType
                 .serializer,
             json,
@@ -1738,14 +1784,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicmake
           _$greservationPaymentFragmentDataResultsListDataDynamicmakeSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicmake.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicmake? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicmake.serializer,
         json,
       );
@@ -1793,14 +1839,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicModel
           _$greservationPaymentFragmentDataResultsListDataDynamicModelSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicModel
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicModel?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_dynamicModel
                 .serializer,
             json,
@@ -1849,14 +1895,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicYear
           _$greservationPaymentFragmentDataResultsListDataDynamicYearSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicYear.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicYear? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicYear.serializer,
         json,
       );
@@ -1904,14 +1950,14 @@ abstract class GreservationPaymentFragmentData_results_listData_dynamicOdometer
           _$greservationPaymentFragmentDataResultsListDataDynamicOdometerSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_dynamicOdometer
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_dynamicOdometer?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_dynamicOdometer
                 .serializer,
             json,
@@ -1952,14 +1998,14 @@ abstract class GreservationPaymentFragmentData_results_listData_carRules
           _$greservationPaymentFragmentDataResultsListDataCarRulesSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_carRules.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_carRules? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_listData_carRules.serializer,
         json,
       );
@@ -2008,14 +2054,14 @@ abstract class GreservationPaymentFragmentData_results_listData_carRules_dynamic
           _$greservationPaymentFragmentDataResultsListDataCarRulesDynamicItemNameSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_carRules_dynamicItemName
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_carRules_dynamicItemName?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_carRules_dynamicItemName
                 .serializer,
             json,
@@ -2059,14 +2105,14 @@ abstract class GreservationPaymentFragmentData_results_listData_carFeatures
           _$greservationPaymentFragmentDataResultsListDataCarFeaturesSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_carFeatures.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_carFeatures? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_listData_carFeatures.serializer,
         json,
       );
@@ -2115,14 +2161,14 @@ abstract class GreservationPaymentFragmentData_results_listData_carFeatures_dyna
           _$greservationPaymentFragmentDataResultsListDataCarFeaturesDynamicItemNameSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_carFeatures_dynamicItemName
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_carFeatures_dynamicItemName?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_carFeatures_dynamicItemName
                 .serializer,
             json,
@@ -2161,14 +2207,14 @@ abstract class GreservationPaymentFragmentData_results_listData_listPhotos
           _$greservationPaymentFragmentDataResultsListDataListPhotosSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_listPhotos.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_listPhotos? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_listData_listPhotos.serializer,
         json,
       );
@@ -2242,14 +2288,14 @@ abstract class GreservationPaymentFragmentData_results_listData_listingData
           _$greservationPaymentFragmentDataResultsListDataListingDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_listingData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_listingData? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_listData_listingData.serializer,
         json,
       );
@@ -2327,14 +2373,14 @@ abstract class GreservationPaymentFragmentData_results_listData_listingData_canc
           _$greservationPaymentFragmentDataResultsListDataListingDataCancellationSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_listingData_cancellation
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_listingData_cancellation?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_listingData_cancellation
                 .serializer,
             json,
@@ -2376,14 +2422,14 @@ abstract class GreservationPaymentFragmentData_results_listData_user
           _$greservationPaymentFragmentDataResultsListDataUserSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_user.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_user? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_listData_user.serializer,
         json,
       );
@@ -2435,14 +2481,14 @@ abstract class GreservationPaymentFragmentData_results_listData_user_profile
           _$greservationPaymentFragmentDataResultsListDataUserProfileSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_user_profile
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_user_profile?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_user_profile
                 .serializer,
             json,
@@ -2493,14 +2539,14 @@ abstract class GreservationPaymentFragmentData_results_listData_user_verificatio
           _$greservationPaymentFragmentDataResultsListDataUserVerificationSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_listData_user_verification
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_listData_user_verification?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_listData_user_verification
                 .serializer,
             json,
@@ -2544,14 +2590,14 @@ abstract class GreservationPaymentFragmentData_results_hostTransaction
           _$greservationPaymentFragmentDataResultsHostTransactionSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_hostTransaction.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_hostTransaction? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_hostTransaction.serializer,
         json,
       );
@@ -2613,14 +2659,14 @@ abstract class GreservationPaymentFragmentData_results_hostData
           _$greservationPaymentFragmentDataResultsHostDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_hostData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_hostData? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_hostData.serializer,
         json,
       );
@@ -2661,14 +2707,14 @@ abstract class GreservationPaymentFragmentData_results_hostData_userData
           _$greservationPaymentFragmentDataResultsHostDataUserDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_hostData_userData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_hostData_userData? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_hostData_userData.serializer,
         json,
       );
@@ -2717,14 +2763,14 @@ abstract class GreservationPaymentFragmentData_results_hostData_userVerification
           _$greservationPaymentFragmentDataResultsHostDataUserVerificationSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_hostData_userVerification
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_hostData_userVerification?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_hostData_userVerification
                 .serializer,
             json,
@@ -2787,14 +2833,14 @@ abstract class GreservationPaymentFragmentData_results_guestData
           _$greservationPaymentFragmentDataResultsGuestDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_guestData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_guestData? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_guestData.serializer,
         json,
       );
@@ -2836,14 +2882,14 @@ abstract class GreservationPaymentFragmentData_results_guestData_userData
           _$greservationPaymentFragmentDataResultsGuestDataUserDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_guestData_userData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_guestData_userData? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_guestData_userData.serializer,
         json,
       );
@@ -2893,18 +2939,83 @@ abstract class GreservationPaymentFragmentData_results_guestData_userVerificatio
           _$greservationPaymentFragmentDataResultsGuestDataUserVerificationSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_guestData_userVerification
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_guestData_userVerification?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_guestData_userVerification
                 .serializer,
             json,
           );
+}
+
+abstract class GreservationPaymentFragmentData_results_reservationOptions
+    implements
+        Built<GreservationPaymentFragmentData_results_reservationOptions,
+            GreservationPaymentFragmentData_results_reservationOptionsBuilder>,
+        GreservationPaymentFragment_results_reservationOptions,
+        _i1.GreservationFragment_reservationOptions,
+        _i7.GreservationOptionSnapshotFragment {
+  GreservationPaymentFragmentData_results_reservationOptions._();
+
+  factory GreservationPaymentFragmentData_results_reservationOptions(
+      [void Function(
+              GreservationPaymentFragmentData_results_reservationOptionsBuilder
+                  b)
+          updates]) = _$GreservationPaymentFragmentData_results_reservationOptions;
+
+  static void _initializeBuilder(
+          GreservationPaymentFragmentData_results_reservationOptionsBuilder
+              b) =>
+      b..G__typename = 'ReservationOptionSnapshot';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get labelKey;
+  @override
+  String? get description;
+  @override
+  String? get billingMode;
+  @override
+  double? get unitPrice;
+  @override
+  int? get quantity;
+  @override
+  double? get amount;
+  @override
+  String? get currency;
+  @override
+  String? get userInput;
+  static Serializer<GreservationPaymentFragmentData_results_reservationOptions>
+      get serializer =>
+          _$greservationPaymentFragmentDataResultsReservationOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
+        GreservationPaymentFragmentData_results_reservationOptions.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GreservationPaymentFragmentData_results_reservationOptions? fromJson(
+          Map<String, dynamic> json) =>
+      _i9.serializers.deserializeWith(
+        GreservationPaymentFragmentData_results_reservationOptions.serializer,
+        json,
+      );
 }
 
 abstract class GreservationPaymentFragmentData_results_threadData
@@ -2913,7 +3024,7 @@ abstract class GreservationPaymentFragmentData_results_threadData
             GreservationPaymentFragmentData_results_threadDataBuilder>,
         GreservationPaymentFragment_results_threadData,
         _i1.GreservationFragment_threadData,
-        _i7.GthreadItemsFragment {
+        _i8.GthreadItemsFragment {
   GreservationPaymentFragmentData_results_threadData._();
 
   factory GreservationPaymentFragmentData_results_threadData(
@@ -2963,14 +3074,14 @@ abstract class GreservationPaymentFragmentData_results_threadData
           _$greservationPaymentFragmentDataResultsThreadDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_threadData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_threadData? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_threadData.serializer,
         json,
       );
@@ -3009,14 +3120,14 @@ abstract class GreservationPaymentFragmentData_results_cancellationDetails
           _$greservationPaymentFragmentDataResultsCancellationDetailsSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_cancellationDetails.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_cancellationDetails? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_cancellationDetails.serializer,
         json,
       );
@@ -3051,14 +3162,14 @@ abstract class GreservationPaymentFragmentData_results_completedTotal
           _$greservationPaymentFragmentDataResultsCompletedTotalSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_completedTotal.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_completedTotal? fromJson(
           Map<String, dynamic> json) =>
-      _i8.serializers.deserializeWith(
+      _i9.serializers.deserializeWith(
         GreservationPaymentFragmentData_results_completedTotal.serializer,
         json,
       );
@@ -3097,14 +3208,14 @@ abstract class GreservationPaymentFragmentData_results_futureTransactionTotal
           _$greservationPaymentFragmentDataResultsFutureTransactionTotalSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i8.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i9.serializers.serializeWith(
         GreservationPaymentFragmentData_results_futureTransactionTotal
             .serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GreservationPaymentFragmentData_results_futureTransactionTotal?
-      fromJson(Map<String, dynamic> json) => _i8.serializers.deserializeWith(
+      fromJson(Map<String, dynamic> json) => _i9.serializers.deserializeWith(
             GreservationPaymentFragmentData_results_futureTransactionTotal
                 .serializer,
             json,

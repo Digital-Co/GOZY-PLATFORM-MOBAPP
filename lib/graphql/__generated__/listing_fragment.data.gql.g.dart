@@ -66,6 +66,9 @@ Serializer<GviewListingDetailsFragmentData_user_profile>
 Serializer<GviewListingDetailsFragmentData_user_verification>
     _$gviewListingDetailsFragmentDataUserVerificationSerializer =
     new _$GviewListingDetailsFragmentData_user_verificationSerializer();
+Serializer<GviewListingDetailsFragmentData_listingOptions>
+    _$gviewListingDetailsFragmentDataListingOptionsSerializer =
+    new _$GviewListingDetailsFragmentData_listingOptionsSerializer();
 Serializer<GviewListingDetailsFragmentData_blockedDates>
     _$gviewListingDetailsFragmentDataBlockedDatesSerializer =
     new _$GviewListingDetailsFragmentData_blockedDatesSerializer();
@@ -392,6 +395,16 @@ class _$GviewListingDetailsFragmentDataSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.listingOptions;
+    if (value != null) {
+      result
+        ..add('listingOptions')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType.nullable(
+                  GviewListingDetailsFragmentData_listingOptions)
+            ])));
+    }
     value = object.blockedDates;
     if (value != null) {
       result
@@ -650,6 +663,13 @@ class _$GviewListingDetailsFragmentDataSerializer
         case 'odometer':
           result.odometer = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'listingOptions':
+          result.listingOptions.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType.nullable(
+                    GviewListingDetailsFragmentData_listingOptions)
+              ]))! as BuiltList<Object?>);
           break;
         case 'blockedDates':
           result.blockedDates.replace(serializers.deserialize(value,
@@ -2941,6 +2961,193 @@ class _$GviewListingDetailsFragmentData_user_verificationSerializer
   }
 }
 
+class _$GviewListingDetailsFragmentData_listingOptionsSerializer
+    implements
+        StructuredSerializer<GviewListingDetailsFragmentData_listingOptions> {
+  @override
+  final Iterable<Type> types = const [
+    GviewListingDetailsFragmentData_listingOptions,
+    _$GviewListingDetailsFragmentData_listingOptions
+  ];
+  @override
+  final String wireName = 'GviewListingDetailsFragmentData_listingOptions';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GviewListingDetailsFragmentData_listingOptions object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.listId;
+    if (value != null) {
+      result
+        ..add('listId')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.slot;
+    if (value != null) {
+      result
+        ..add('slot')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.code;
+    if (value != null) {
+      result
+        ..add('code')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.isFixed;
+    if (value != null) {
+      result
+        ..add('isFixed')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.label;
+    if (value != null) {
+      result
+        ..add('label')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.description;
+    if (value != null) {
+      result
+        ..add('description')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.price;
+    if (value != null) {
+      result
+        ..add('price')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.billingMode;
+    if (value != null) {
+      result
+        ..add('billingMode')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.isActive;
+    if (value != null) {
+      result
+        ..add('isActive')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.adminDisabled;
+    if (value != null) {
+      result
+        ..add('adminDisabled')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.icon;
+    if (value != null) {
+      result
+        ..add('icon')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sortOrder;
+    if (value != null) {
+      result
+        ..add('sortOrder')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    return result;
+  }
+
+  @override
+  GviewListingDetailsFragmentData_listingOptions deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GviewListingDetailsFragmentData_listingOptionsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'listId':
+          result.listId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'slot':
+          result.slot = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'code':
+          result.code = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'isFixed':
+          result.isFixed = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'label':
+          result.label = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'price':
+          result.price = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'billingMode':
+          result.billingMode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'isActive':
+          result.isActive = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'adminDisabled':
+          result.adminDisabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'icon':
+          result.icon = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'sortOrder':
+          result.sortOrder = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$GviewListingDetailsFragmentData_blockedDatesSerializer
     implements
         StructuredSerializer<GviewListingDetailsFragmentData_blockedDates> {
@@ -3219,6 +3426,9 @@ class _$GviewListingDetailsFragmentData
   @override
   final String? odometer;
   @override
+  final BuiltList<GviewListingDetailsFragmentData_listingOptions?>?
+      listingOptions;
+  @override
   final BuiltList<GviewListingDetailsFragmentData_blockedDates?>? blockedDates;
   @override
   final bool? isPublished;
@@ -3277,6 +3487,7 @@ class _$GviewListingDetailsFragmentData
       this.buildingName,
       this.year,
       this.odometer,
+      this.listingOptions,
       this.blockedDates,
       this.isPublished,
       this.isReady,
@@ -3342,6 +3553,7 @@ class _$GviewListingDetailsFragmentData
         buildingName == other.buildingName &&
         year == other.year &&
         odometer == other.odometer &&
+        listingOptions == other.listingOptions &&
         blockedDates == other.blockedDates &&
         isPublished == other.isPublished &&
         isReady == other.isReady &&
@@ -3394,6 +3606,7 @@ class _$GviewListingDetailsFragmentData
     _$hash = $jc(_$hash, buildingName.hashCode);
     _$hash = $jc(_$hash, year.hashCode);
     _$hash = $jc(_$hash, odometer.hashCode);
+    _$hash = $jc(_$hash, listingOptions.hashCode);
     _$hash = $jc(_$hash, blockedDates.hashCode);
     _$hash = $jc(_$hash, isPublished.hashCode);
     _$hash = $jc(_$hash, isReady.hashCode);
@@ -3448,6 +3661,7 @@ class _$GviewListingDetailsFragmentData
           ..add('buildingName', buildingName)
           ..add('year', year)
           ..add('odometer', odometer)
+          ..add('listingOptions', listingOptions)
           ..add('blockedDates', blockedDates)
           ..add('isPublished', isPublished)
           ..add('isReady', isReady)
@@ -3699,6 +3913,15 @@ class GviewListingDetailsFragmentDataBuilder
   String? get odometer => _$this._odometer;
   set odometer(String? odometer) => _$this._odometer = odometer;
 
+  ListBuilder<GviewListingDetailsFragmentData_listingOptions?>? _listingOptions;
+  ListBuilder<GviewListingDetailsFragmentData_listingOptions?>
+      get listingOptions => _$this._listingOptions ??=
+          new ListBuilder<GviewListingDetailsFragmentData_listingOptions?>();
+  set listingOptions(
+          ListBuilder<GviewListingDetailsFragmentData_listingOptions?>?
+              listingOptions) =>
+      _$this._listingOptions = listingOptions;
+
   ListBuilder<GviewListingDetailsFragmentData_blockedDates?>? _blockedDates;
   ListBuilder<GviewListingDetailsFragmentData_blockedDates?> get blockedDates =>
       _$this._blockedDates ??=
@@ -3781,6 +4004,7 @@ class GviewListingDetailsFragmentDataBuilder
       _buildingName = $v.buildingName;
       _year = $v.year;
       _odometer = $v.odometer;
+      _listingOptions = $v.listingOptions?.toBuilder();
       _blockedDates = $v.blockedDates?.toBuilder();
       _isPublished = $v.isPublished;
       _isReady = $v.isReady;
@@ -3853,6 +4077,7 @@ class GviewListingDetailsFragmentDataBuilder
               buildingName: buildingName,
               year: year,
               odometer: odometer,
+              listingOptions: _listingOptions?.build(),
               blockedDates: _blockedDates?.build(),
               isPublished: isPublished,
               isReady: isReady,
@@ -3893,6 +4118,8 @@ class GviewListingDetailsFragmentDataBuilder
         _$failedField = 'user';
         _user?.build();
 
+        _$failedField = 'listingOptions';
+        _listingOptions?.build();
         _$failedField = 'blockedDates';
         _blockedDates?.build();
 
@@ -7486,6 +7713,268 @@ class GviewListingDetailsFragmentData_user_verificationBuilder
             isGoogleConnected: isGoogleConnected,
             isIdVerification: isIdVerification,
             isPhoneVerified: isPhoneVerified);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GviewListingDetailsFragmentData_listingOptions
+    extends GviewListingDetailsFragmentData_listingOptions {
+  @override
+  final String G__typename;
+  @override
+  final int? id;
+  @override
+  final int? listId;
+  @override
+  final String? slot;
+  @override
+  final String? code;
+  @override
+  final bool? isFixed;
+  @override
+  final String? label;
+  @override
+  final String? description;
+  @override
+  final double? price;
+  @override
+  final String? billingMode;
+  @override
+  final bool? isActive;
+  @override
+  final bool? adminDisabled;
+  @override
+  final String? icon;
+  @override
+  final int? sortOrder;
+
+  factory _$GviewListingDetailsFragmentData_listingOptions(
+          [void Function(GviewListingDetailsFragmentData_listingOptionsBuilder)?
+              updates]) =>
+      (new GviewListingDetailsFragmentData_listingOptionsBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GviewListingDetailsFragmentData_listingOptions._(
+      {required this.G__typename,
+      this.id,
+      this.listId,
+      this.slot,
+      this.code,
+      this.isFixed,
+      this.label,
+      this.description,
+      this.price,
+      this.billingMode,
+      this.isActive,
+      this.adminDisabled,
+      this.icon,
+      this.sortOrder})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GviewListingDetailsFragmentData_listingOptions', 'G__typename');
+  }
+
+  @override
+  GviewListingDetailsFragmentData_listingOptions rebuild(
+          void Function(GviewListingDetailsFragmentData_listingOptionsBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GviewListingDetailsFragmentData_listingOptionsBuilder toBuilder() =>
+      new GviewListingDetailsFragmentData_listingOptionsBuilder()
+        ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GviewListingDetailsFragmentData_listingOptions &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        listId == other.listId &&
+        slot == other.slot &&
+        code == other.code &&
+        isFixed == other.isFixed &&
+        label == other.label &&
+        description == other.description &&
+        price == other.price &&
+        billingMode == other.billingMode &&
+        isActive == other.isActive &&
+        adminDisabled == other.adminDisabled &&
+        icon == other.icon &&
+        sortOrder == other.sortOrder;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, listId.hashCode);
+    _$hash = $jc(_$hash, slot.hashCode);
+    _$hash = $jc(_$hash, code.hashCode);
+    _$hash = $jc(_$hash, isFixed.hashCode);
+    _$hash = $jc(_$hash, label.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, billingMode.hashCode);
+    _$hash = $jc(_$hash, isActive.hashCode);
+    _$hash = $jc(_$hash, adminDisabled.hashCode);
+    _$hash = $jc(_$hash, icon.hashCode);
+    _$hash = $jc(_$hash, sortOrder.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GviewListingDetailsFragmentData_listingOptions')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('listId', listId)
+          ..add('slot', slot)
+          ..add('code', code)
+          ..add('isFixed', isFixed)
+          ..add('label', label)
+          ..add('description', description)
+          ..add('price', price)
+          ..add('billingMode', billingMode)
+          ..add('isActive', isActive)
+          ..add('adminDisabled', adminDisabled)
+          ..add('icon', icon)
+          ..add('sortOrder', sortOrder))
+        .toString();
+  }
+}
+
+class GviewListingDetailsFragmentData_listingOptionsBuilder
+    implements
+        Builder<GviewListingDetailsFragmentData_listingOptions,
+            GviewListingDetailsFragmentData_listingOptionsBuilder> {
+  _$GviewListingDetailsFragmentData_listingOptions? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  int? _listId;
+  int? get listId => _$this._listId;
+  set listId(int? listId) => _$this._listId = listId;
+
+  String? _slot;
+  String? get slot => _$this._slot;
+  set slot(String? slot) => _$this._slot = slot;
+
+  String? _code;
+  String? get code => _$this._code;
+  set code(String? code) => _$this._code = code;
+
+  bool? _isFixed;
+  bool? get isFixed => _$this._isFixed;
+  set isFixed(bool? isFixed) => _$this._isFixed = isFixed;
+
+  String? _label;
+  String? get label => _$this._label;
+  set label(String? label) => _$this._label = label;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  double? _price;
+  double? get price => _$this._price;
+  set price(double? price) => _$this._price = price;
+
+  String? _billingMode;
+  String? get billingMode => _$this._billingMode;
+  set billingMode(String? billingMode) => _$this._billingMode = billingMode;
+
+  bool? _isActive;
+  bool? get isActive => _$this._isActive;
+  set isActive(bool? isActive) => _$this._isActive = isActive;
+
+  bool? _adminDisabled;
+  bool? get adminDisabled => _$this._adminDisabled;
+  set adminDisabled(bool? adminDisabled) =>
+      _$this._adminDisabled = adminDisabled;
+
+  String? _icon;
+  String? get icon => _$this._icon;
+  set icon(String? icon) => _$this._icon = icon;
+
+  int? _sortOrder;
+  int? get sortOrder => _$this._sortOrder;
+  set sortOrder(int? sortOrder) => _$this._sortOrder = sortOrder;
+
+  GviewListingDetailsFragmentData_listingOptionsBuilder() {
+    GviewListingDetailsFragmentData_listingOptions._initializeBuilder(this);
+  }
+
+  GviewListingDetailsFragmentData_listingOptionsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id;
+      _listId = $v.listId;
+      _slot = $v.slot;
+      _code = $v.code;
+      _isFixed = $v.isFixed;
+      _label = $v.label;
+      _description = $v.description;
+      _price = $v.price;
+      _billingMode = $v.billingMode;
+      _isActive = $v.isActive;
+      _adminDisabled = $v.adminDisabled;
+      _icon = $v.icon;
+      _sortOrder = $v.sortOrder;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GviewListingDetailsFragmentData_listingOptions other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GviewListingDetailsFragmentData_listingOptions;
+  }
+
+  @override
+  void update(
+      void Function(GviewListingDetailsFragmentData_listingOptionsBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GviewListingDetailsFragmentData_listingOptions build() => _build();
+
+  _$GviewListingDetailsFragmentData_listingOptions _build() {
+    final _$result = _$v ??
+        new _$GviewListingDetailsFragmentData_listingOptions._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename,
+                r'GviewListingDetailsFragmentData_listingOptions',
+                'G__typename'),
+            id: id,
+            listId: listId,
+            slot: slot,
+            code: code,
+            isFixed: isFixed,
+            label: label,
+            description: description,
+            price: price,
+            billingMode: billingMode,
+            isActive: isActive,
+            adminDisabled: adminDisabled,
+            icon: icon,
+            sortOrder: sortOrder);
     replace(_$result);
     return _$result;
   }

@@ -15,11 +15,13 @@ import 'package:gozy/graphql/__generated__/reservation_fragment.data.gql.dart'
     as _i2;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
-    as _i8;
+    as _i9;
 import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
     as _i7;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i6;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+    as _i8;
 
 part 'transaction_history.data.gql.g.dart';
 
@@ -153,6 +155,12 @@ abstract class GgetTransactionHistoryData_getTransactionHistory_reservationData
   double? get basePrice;
   @override
   double? get delivery;
+  @override
+  double? get optionsTotal;
+  @override
+  BuiltList<
+          GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions?>?
+      get reservationOptions;
   @override
   String? get currency;
   @override
@@ -2007,13 +2015,81 @@ abstract class GgetTransactionHistoryData_getTransactionHistory_reservationData_
           );
 }
 
+abstract class GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions
+    implements
+        Built<
+            GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions,
+            GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptionsBuilder>,
+        _i2.GreservationFragment_reservationOptions,
+        _i8.GreservationOptionSnapshotFragment {
+  GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions._();
+
+  factory GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions(
+          [void Function(
+                  GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptionsBuilder
+                      b)
+              updates]) =
+      _$GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions;
+
+  static void _initializeBuilder(
+          GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptionsBuilder
+              b) =>
+      b..G__typename = 'ReservationOptionSnapshot';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get labelKey;
+  @override
+  String? get description;
+  @override
+  String? get billingMode;
+  @override
+  double? get unitPrice;
+  @override
+  int? get quantity;
+  @override
+  double? get amount;
+  @override
+  String? get currency;
+  @override
+  String? get userInput;
+  static Serializer<
+          GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions>
+      get serializer =>
+          _$ggetTransactionHistoryDataGetTransactionHistoryReservationDataReservationOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions
+                .serializer,
+            json,
+          );
+}
+
 abstract class GgetTransactionHistoryData_getTransactionHistory_reservationData_threadData
     implements
         Built<
             GgetTransactionHistoryData_getTransactionHistory_reservationData_threadData,
             GgetTransactionHistoryData_getTransactionHistory_reservationData_threadDataBuilder>,
         _i2.GreservationFragment_threadData,
-        _i8.GthreadItemsFragment {
+        _i9.GthreadItemsFragment {
   GgetTransactionHistoryData_getTransactionHistory_reservationData_threadData._();
 
   factory GgetTransactionHistoryData_getTransactionHistory_reservationData_threadData(

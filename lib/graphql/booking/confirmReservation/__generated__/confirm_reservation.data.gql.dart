@@ -17,11 +17,13 @@ import 'package:gozy/graphql/__generated__/reservation_payment_fragment.data.gql
     as _i2;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
-    as _i9;
+    as _i10;
 import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
     as _i8;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i7;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+    as _i9;
 
 part 'confirm_reservation.data.gql.g.dart';
 
@@ -157,6 +159,12 @@ abstract class GconfirmReservationData_confirmReservation_results
   double? get basePrice;
   @override
   double? get delivery;
+  @override
+  double? get optionsTotal;
+  @override
+  BuiltList<
+          GconfirmReservationData_confirmReservation_results_reservationOptions?>?
+      get reservationOptions;
   @override
   String? get currency;
   @override
@@ -2027,13 +2035,82 @@ abstract class GconfirmReservationData_confirmReservation_results_guestData_user
           );
 }
 
+abstract class GconfirmReservationData_confirmReservation_results_reservationOptions
+    implements
+        Built<
+            GconfirmReservationData_confirmReservation_results_reservationOptions,
+            GconfirmReservationData_confirmReservation_results_reservationOptionsBuilder>,
+        _i2.GreservationPaymentFragment_results_reservationOptions,
+        _i3.GreservationFragment_reservationOptions,
+        _i9.GreservationOptionSnapshotFragment {
+  GconfirmReservationData_confirmReservation_results_reservationOptions._();
+
+  factory GconfirmReservationData_confirmReservation_results_reservationOptions(
+          [void Function(
+                  GconfirmReservationData_confirmReservation_results_reservationOptionsBuilder
+                      b)
+              updates]) =
+      _$GconfirmReservationData_confirmReservation_results_reservationOptions;
+
+  static void _initializeBuilder(
+          GconfirmReservationData_confirmReservation_results_reservationOptionsBuilder
+              b) =>
+      b..G__typename = 'ReservationOptionSnapshot';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get labelKey;
+  @override
+  String? get description;
+  @override
+  String? get billingMode;
+  @override
+  double? get unitPrice;
+  @override
+  int? get quantity;
+  @override
+  double? get amount;
+  @override
+  String? get currency;
+  @override
+  String? get userInput;
+  static Serializer<
+          GconfirmReservationData_confirmReservation_results_reservationOptions>
+      get serializer =>
+          _$gconfirmReservationDataConfirmReservationResultsReservationOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GconfirmReservationData_confirmReservation_results_reservationOptions
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GconfirmReservationData_confirmReservation_results_reservationOptions?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GconfirmReservationData_confirmReservation_results_reservationOptions
+                .serializer,
+            json,
+          );
+}
+
 abstract class GconfirmReservationData_confirmReservation_results_threadData
     implements
         Built<GconfirmReservationData_confirmReservation_results_threadData,
             GconfirmReservationData_confirmReservation_results_threadDataBuilder>,
         _i2.GreservationPaymentFragment_results_threadData,
         _i3.GreservationFragment_threadData,
-        _i9.GthreadItemsFragment {
+        _i10.GthreadItemsFragment {
   GconfirmReservationData_confirmReservation_results_threadData._();
 
   factory GconfirmReservationData_confirmReservation_results_threadData(

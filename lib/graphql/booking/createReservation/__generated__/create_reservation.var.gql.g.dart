@@ -40,9 +40,6 @@ class _$GcreateReservationVarsSerializer
       'basePrice',
       serializers.serialize(object.basePrice,
           specifiedType: const FullType(double)),
-      'delivery',
-      serializers.serialize(object.delivery,
-          specifiedType: const FullType(double)),
       'currency',
       serializers.serialize(object.currency,
           specifiedType: const FullType(String)),
@@ -63,6 +60,13 @@ class _$GcreateReservationVarsSerializer
           specifiedType: const FullType(String)),
     ];
     Object? value;
+    value = object.delivery;
+    if (value != null) {
+      result
+        ..add('delivery')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     value = object.discount;
     if (value != null) {
       result
@@ -173,6 +177,14 @@ class _$GcreateReservationVarsSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.options;
+    if (value != null) {
+      result
+        ..add('options')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList,
+                const [const FullType.nullable(_i1.GReservationOptionInput)])));
+    }
     return result;
   }
 
@@ -214,7 +226,7 @@ class _$GcreateReservationVarsSerializer
           break;
         case 'delivery':
           result.delivery = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+              specifiedType: const FullType(double)) as double?;
           break;
         case 'currency':
           result.currency = serializers.deserialize(value,
@@ -304,6 +316,12 @@ class _$GcreateReservationVarsSerializer
           result.promoCode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'options':
+          result.options.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType.nullable(_i1.GReservationOptionInput)
+              ]))! as BuiltList<Object?>);
+          break;
       }
     }
 
@@ -325,7 +343,7 @@ class _$GcreateReservationVars extends GcreateReservationVars {
   @override
   final double basePrice;
   @override
-  final double delivery;
+  final double? delivery;
   @override
   final String currency;
   @override
@@ -370,6 +388,8 @@ class _$GcreateReservationVars extends GcreateReservationVars {
   final String? paymentCurrency;
   @override
   final String? promoCode;
+  @override
+  final BuiltList<_i1.GReservationOptionInput?>? options;
 
   factory _$GcreateReservationVars(
           [void Function(GcreateReservationVarsBuilder)? updates]) =>
@@ -382,7 +402,7 @@ class _$GcreateReservationVars extends GcreateReservationVars {
       required this.guests,
       required this.message,
       required this.basePrice,
-      required this.delivery,
+      this.delivery,
       required this.currency,
       this.discount,
       this.discountType,
@@ -404,7 +424,8 @@ class _$GcreateReservationVars extends GcreateReservationVars {
       this.countryCode,
       this.isDeliveryIncluded,
       this.paymentCurrency,
-      this.promoCode})
+      this.promoCode,
+      this.options})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         listId, r'GcreateReservationVars', 'listId');
@@ -418,8 +439,6 @@ class _$GcreateReservationVars extends GcreateReservationVars {
         message, r'GcreateReservationVars', 'message');
     BuiltValueNullFieldError.checkNotNull(
         basePrice, r'GcreateReservationVars', 'basePrice');
-    BuiltValueNullFieldError.checkNotNull(
-        delivery, r'GcreateReservationVars', 'delivery');
     BuiltValueNullFieldError.checkNotNull(
         currency, r'GcreateReservationVars', 'currency');
     BuiltValueNullFieldError.checkNotNull(
@@ -475,7 +494,8 @@ class _$GcreateReservationVars extends GcreateReservationVars {
         countryCode == other.countryCode &&
         isDeliveryIncluded == other.isDeliveryIncluded &&
         paymentCurrency == other.paymentCurrency &&
-        promoCode == other.promoCode;
+        promoCode == other.promoCode &&
+        options == other.options;
   }
 
   @override
@@ -510,6 +530,7 @@ class _$GcreateReservationVars extends GcreateReservationVars {
     _$hash = $jc(_$hash, isDeliveryIncluded.hashCode);
     _$hash = $jc(_$hash, paymentCurrency.hashCode);
     _$hash = $jc(_$hash, promoCode.hashCode);
+    _$hash = $jc(_$hash, options.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -545,7 +566,8 @@ class _$GcreateReservationVars extends GcreateReservationVars {
           ..add('countryCode', countryCode)
           ..add('isDeliveryIncluded', isDeliveryIncluded)
           ..add('paymentCurrency', paymentCurrency)
-          ..add('promoCode', promoCode))
+          ..add('promoCode', promoCode)
+          ..add('options', options))
         .toString();
   }
 }
@@ -675,6 +697,12 @@ class GcreateReservationVarsBuilder
   String? get promoCode => _$this._promoCode;
   set promoCode(String? promoCode) => _$this._promoCode = promoCode;
 
+  ListBuilder<_i1.GReservationOptionInput?>? _options;
+  ListBuilder<_i1.GReservationOptionInput?> get options =>
+      _$this._options ??= new ListBuilder<_i1.GReservationOptionInput?>();
+  set options(ListBuilder<_i1.GReservationOptionInput?>? options) =>
+      _$this._options = options;
+
   GcreateReservationVarsBuilder();
 
   GcreateReservationVarsBuilder get _$this {
@@ -709,6 +737,7 @@ class GcreateReservationVarsBuilder
       _isDeliveryIncluded = $v.isDeliveryIncluded;
       _paymentCurrency = $v.paymentCurrency;
       _promoCode = $v.promoCode;
+      _options = $v.options?.toBuilder();
       _$v = null;
     }
     return this;
@@ -729,46 +758,60 @@ class GcreateReservationVarsBuilder
   GcreateReservationVars build() => _build();
 
   _$GcreateReservationVars _build() {
-    final _$result = _$v ??
-        new _$GcreateReservationVars._(
-            listId: BuiltValueNullFieldError.checkNotNull(
-                listId, r'GcreateReservationVars', 'listId'),
-            checkIn: BuiltValueNullFieldError.checkNotNull(
-                checkIn, r'GcreateReservationVars', 'checkIn'),
-            checkOut: BuiltValueNullFieldError.checkNotNull(
-                checkOut, r'GcreateReservationVars', 'checkOut'),
-            guests: BuiltValueNullFieldError.checkNotNull(
-                guests, r'GcreateReservationVars', 'guests'),
-            message: BuiltValueNullFieldError.checkNotNull(
-                message, r'GcreateReservationVars', 'message'),
-            basePrice: BuiltValueNullFieldError.checkNotNull(
-                basePrice, r'GcreateReservationVars', 'basePrice'),
-            delivery: BuiltValueNullFieldError.checkNotNull(
-                delivery, r'GcreateReservationVars', 'delivery'),
-            currency: BuiltValueNullFieldError.checkNotNull(
-                currency, r'GcreateReservationVars', 'currency'),
-            discount: discount,
-            discountType: discountType,
-            guestServiceFee: guestServiceFee,
-            hostServiceFee: hostServiceFee,
-            total:
-                BuiltValueNullFieldError.checkNotNull(total, r'GcreateReservationVars', 'total'),
-            bookingType: bookingType,
-            cardToken: cardToken,
-            paymentType: paymentType,
-            averagePrice: averagePrice,
-            days: days,
-            startTime: startTime,
-            endTime: endTime,
-            licenseNumber: BuiltValueNullFieldError.checkNotNull(licenseNumber, r'GcreateReservationVars', 'licenseNumber'),
-            firstName: BuiltValueNullFieldError.checkNotNull(firstName, r'GcreateReservationVars', 'firstName'),
-            middleName: middleName,
-            lastName: BuiltValueNullFieldError.checkNotNull(lastName, r'GcreateReservationVars', 'lastName'),
-            dateOfBirth: BuiltValueNullFieldError.checkNotNull(dateOfBirth, r'GcreateReservationVars', 'dateOfBirth'),
-            countryCode: countryCode,
-            isDeliveryIncluded: isDeliveryIncluded,
-            paymentCurrency: paymentCurrency,
-            promoCode: promoCode);
+    _$GcreateReservationVars _$result;
+    try {
+      _$result = _$v ??
+          new _$GcreateReservationVars._(
+              listId: BuiltValueNullFieldError.checkNotNull(
+                  listId, r'GcreateReservationVars', 'listId'),
+              checkIn: BuiltValueNullFieldError.checkNotNull(
+                  checkIn, r'GcreateReservationVars', 'checkIn'),
+              checkOut: BuiltValueNullFieldError.checkNotNull(
+                  checkOut, r'GcreateReservationVars', 'checkOut'),
+              guests: BuiltValueNullFieldError.checkNotNull(
+                  guests, r'GcreateReservationVars', 'guests'),
+              message: BuiltValueNullFieldError.checkNotNull(
+                  message, r'GcreateReservationVars', 'message'),
+              basePrice: BuiltValueNullFieldError.checkNotNull(
+                  basePrice, r'GcreateReservationVars', 'basePrice'),
+              delivery: delivery,
+              currency: BuiltValueNullFieldError.checkNotNull(
+                  currency, r'GcreateReservationVars', 'currency'),
+              discount: discount,
+              discountType: discountType,
+              guestServiceFee: guestServiceFee,
+              hostServiceFee: hostServiceFee,
+              total: BuiltValueNullFieldError.checkNotNull(
+                  total, r'GcreateReservationVars', 'total'),
+              bookingType: bookingType,
+              cardToken: cardToken,
+              paymentType: paymentType,
+              averagePrice: averagePrice,
+              days: days,
+              startTime: startTime,
+              endTime: endTime,
+              licenseNumber:
+                  BuiltValueNullFieldError.checkNotNull(licenseNumber, r'GcreateReservationVars', 'licenseNumber'),
+              firstName: BuiltValueNullFieldError.checkNotNull(firstName, r'GcreateReservationVars', 'firstName'),
+              middleName: middleName,
+              lastName: BuiltValueNullFieldError.checkNotNull(lastName, r'GcreateReservationVars', 'lastName'),
+              dateOfBirth: BuiltValueNullFieldError.checkNotNull(dateOfBirth, r'GcreateReservationVars', 'dateOfBirth'),
+              countryCode: countryCode,
+              isDeliveryIncluded: isDeliveryIncluded,
+              paymentCurrency: paymentCurrency,
+              promoCode: promoCode,
+              options: _options?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'options';
+        _options?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GcreateReservationVars', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

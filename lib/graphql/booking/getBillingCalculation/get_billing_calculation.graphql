@@ -1,7 +1,9 @@
+# import 'package:gozy/graphql/listingOptions/listing_option_fragment.graphql'
+
 #Billing Summary
-query getBillingCalculation($listId: Int!, $startDate: String!, $endDate: String!, $guests: Int!, $convertCurrency: String!, $startTime: Float, $endTime: Float,$isDeliveryIncluded: Boolean, $userId:String, $promoCode: String) {
+query getBillingCalculation($listId: Int!, $startDate: String!, $endDate: String!, $guests: Int!, $convertCurrency: String!, $startTime: Float, $endTime: Float,$isDeliveryIncluded: Boolean, $userId:String, $promoCode: String, $options: [ReservationOptionInput]) {
      getBillingCalculation(listId: $listId, startDate: $startDate, endDate: $endDate, guests: $guests, convertCurrency: $convertCurrency, startTime: $startTime, endTime: $endTime,
-        isDeliveryIncluded: $isDeliveryIncluded, userId:$userId, promoCode:$promoCode) {
+        isDeliveryIncluded: $isDeliveryIncluded, userId:$userId, promoCode:$promoCode, options: $options) {
        status
        errorMessage
        result {
@@ -12,6 +14,10 @@ query getBillingCalculation($listId: Int!, $startDate: String!, $endDate: String
            days
            basePrice
            delivery
+           options {
+               ...bookingOptionLineFragment
+           }
+           optionsTotal
            guests
            specialPricing{
                blockedDates

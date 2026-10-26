@@ -1,0 +1,55 @@
+fragment listingOptionFragment on ListingOption {
+  id
+  listId
+  slot
+  code
+  isFixed
+  label
+  description
+  price
+  billingMode
+  isActive
+  adminDisabled
+  icon
+  sortOrder
+}
+
+fragment bookingOptionLineFragment on BookingOptionLineType {
+  listingOptionId
+  code
+  isFixed
+  label
+  labelKey
+  description
+  billingMode
+  unitPrice
+  quantity
+  amount
+  currency
+  userInput
+}
+
+fragment reservationOptionSnapshotFragment on ReservationOptionSnapshot {
+  id
+  code
+  isFixed
+  label
+  labelKey
+  description
+  billingMode
+  unitPrice
+  quantity
+  amount
+  currency
+  userInput
+}
+
+fragment listingOptionsResultFragment on ListingOptionsResult {
+  status
+  errorMessage
+  maxCustom
+  customCount
+  results {
+    ...listingOptionFragment
+  }
+}

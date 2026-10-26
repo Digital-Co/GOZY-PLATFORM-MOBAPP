@@ -16,6 +16,8 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.ast.gql.dart'
     as _i4;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i5;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.ast.gql.dart'
+    as _i9;
 import 'package:gql/ast.dart' as _i1;
 
 const getReservation = _i1.OperationDefinitionNode(
@@ -183,6 +185,25 @@ const getReservation = _i1.OperationDefinitionNode(
           selectionSet: null,
         ),
         _i1.FieldNode(
+          name: _i1.NameNode(value: 'convertedOptionsTotal'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        _i1.FieldNode(
+          name: _i1.NameNode(value: 'convertedOptions'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: _i1.SelectionSetNode(selections: [
+            _i1.FragmentSpreadNode(
+              name: _i1.NameNode(value: 'bookingOptionLineFragment'),
+              directives: [],
+            )
+          ]),
+        ),
+        _i1.FieldNode(
           name: _i1.NameNode(value: 'convertedTotalWithHostServiceFee'),
           alias: null,
           arguments: [],
@@ -210,4 +231,8 @@ const document = _i1.DocumentNode(definitions: [
   _i7.listingDataFragment,
   _i7.cancellationDataFragment,
   _i8.listingUserFragment,
+  _i9.listingOptionFragment,
+  _i9.bookingOptionLineFragment,
+  _i9.reservationOptionSnapshotFragment,
+  _i9.listingOptionsResultFragment,
 ]);

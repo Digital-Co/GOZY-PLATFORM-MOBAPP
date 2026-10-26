@@ -121,6 +121,10 @@ Serializer<
         GconfirmPayPalExecuteData_confirmPayPalExecute_results_guestData_userVerification>
     _$gconfirmPayPalExecuteDataConfirmPayPalExecuteResultsGuestDataUserVerificationSerializer =
     new _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_guestData_userVerificationSerializer();
+Serializer<
+        GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions>
+    _$gconfirmPayPalExecuteDataConfirmPayPalExecuteResultsReservationOptionsSerializer =
+    new _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsSerializer();
 Serializer<GconfirmPayPalExecuteData_confirmPayPalExecute_results_threadData>
     _$gconfirmPayPalExecuteDataConfirmPayPalExecuteResultsThreadDataSerializer =
     new _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_threadDataSerializer();
@@ -460,6 +464,23 @@ class _$GconfirmPayPalExecuteData_confirmPayPalExecute_resultsSerializer
         ..add('delivery')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
+    }
+    value = object.optionsTotal;
+    if (value != null) {
+      result
+        ..add('optionsTotal')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.reservationOptions;
+    if (value != null) {
+      result
+        ..add('reservationOptions')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType.nullable(
+                  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions)
+            ])));
     }
     value = object.currency;
     if (value != null) {
@@ -914,6 +935,17 @@ class _$GconfirmPayPalExecuteData_confirmPayPalExecute_resultsSerializer
         case 'delivery':
           result.delivery = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
+          break;
+        case 'optionsTotal':
+          result.optionsTotal = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'reservationOptions':
+          result.reservationOptions.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType.nullable(
+                    GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions)
+              ]))! as BuiltList<Object?>);
           break;
         case 'currency':
           result.currency = serializers.deserialize(value,
@@ -5170,6 +5202,188 @@ class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_guestData_userVer
   }
 }
 
+class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsSerializer
+    implements
+        StructuredSerializer<
+            GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions> {
+  @override
+  final Iterable<Type> types = const [
+    GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions,
+    _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+  ];
+  @override
+  final String wireName =
+      'GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers,
+      GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+          object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.code;
+    if (value != null) {
+      result
+        ..add('code')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.isFixed;
+    if (value != null) {
+      result
+        ..add('isFixed')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.label;
+    if (value != null) {
+      result
+        ..add('label')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.labelKey;
+    if (value != null) {
+      result
+        ..add('labelKey')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.description;
+    if (value != null) {
+      result
+        ..add('description')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.billingMode;
+    if (value != null) {
+      result
+        ..add('billingMode')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.unitPrice;
+    if (value != null) {
+      result
+        ..add('unitPrice')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.quantity;
+    if (value != null) {
+      result
+        ..add('quantity')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.amount;
+    if (value != null) {
+      result
+        ..add('amount')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.currency;
+    if (value != null) {
+      result
+        ..add('currency')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.userInput;
+    if (value != null) {
+      result
+        ..add('userInput')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+      deserialize(Serializers serializers, Iterable<Object?> serialized,
+          {FullType specifiedType = FullType.unspecified}) {
+    final result =
+        new GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'code':
+          result.code = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'isFixed':
+          result.isFixed = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'label':
+          result.label = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'labelKey':
+          result.labelKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'billingMode':
+          result.billingMode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'unitPrice':
+          result.unitPrice = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'quantity':
+          result.quantity = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'amount':
+          result.amount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'currency':
+          result.currency = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'userInput':
+          result.userInput = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_threadDataSerializer
     implements
         StructuredSerializer<
@@ -5999,6 +6213,12 @@ class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results
   @override
   final double? delivery;
   @override
+  final double? optionsTotal;
+  @override
+  final BuiltList<
+          GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions?>?
+      reservationOptions;
+  @override
   final String? currency;
   @override
   final double? discount;
@@ -6132,6 +6352,8 @@ class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results
       this.message,
       this.basePrice,
       this.delivery,
+      this.optionsTotal,
+      this.reservationOptions,
       this.currency,
       this.discount,
       this.discountType,
@@ -6223,6 +6445,8 @@ class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results
         message == other.message &&
         basePrice == other.basePrice &&
         delivery == other.delivery &&
+        optionsTotal == other.optionsTotal &&
+        reservationOptions == other.reservationOptions &&
         currency == other.currency &&
         discount == other.discount &&
         discountType == other.discountType &&
@@ -6296,6 +6520,8 @@ class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results
     _$hash = $jc(_$hash, message.hashCode);
     _$hash = $jc(_$hash, basePrice.hashCode);
     _$hash = $jc(_$hash, delivery.hashCode);
+    _$hash = $jc(_$hash, optionsTotal.hashCode);
+    _$hash = $jc(_$hash, reservationOptions.hashCode);
     _$hash = $jc(_$hash, currency.hashCode);
     _$hash = $jc(_$hash, discount.hashCode);
     _$hash = $jc(_$hash, discountType.hashCode);
@@ -6372,6 +6598,8 @@ class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results
           ..add('message', message)
           ..add('basePrice', basePrice)
           ..add('delivery', delivery)
+          ..add('optionsTotal', optionsTotal)
+          ..add('reservationOptions', reservationOptions)
           ..add('currency', currency)
           ..add('discount', discount)
           ..add('discountType', discountType)
@@ -6527,6 +6755,23 @@ class GconfirmPayPalExecuteData_confirmPayPalExecute_resultsBuilder
   double? _delivery;
   double? get delivery => _$this._delivery;
   set delivery(double? delivery) => _$this._delivery = delivery;
+
+  double? _optionsTotal;
+  double? get optionsTotal => _$this._optionsTotal;
+  set optionsTotal(double? optionsTotal) => _$this._optionsTotal = optionsTotal;
+
+  ListBuilder<
+          GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions?>?
+      _reservationOptions;
+  ListBuilder<
+          GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions?>
+      get reservationOptions => _$this._reservationOptions ??= new ListBuilder<
+          GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions?>();
+  set reservationOptions(
+          ListBuilder<
+                  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions?>?
+              reservationOptions) =>
+      _$this._reservationOptions = reservationOptions;
 
   String? _currency;
   String? get currency => _$this._currency;
@@ -6808,6 +7053,8 @@ class GconfirmPayPalExecuteData_confirmPayPalExecute_resultsBuilder
       _message = $v.message;
       _basePrice = $v.basePrice;
       _delivery = $v.delivery;
+      _optionsTotal = $v.optionsTotal;
+      _reservationOptions = $v.reservationOptions?.toBuilder();
       _currency = $v.currency;
       _discount = $v.discount;
       _discountType = $v.discountType;
@@ -6906,6 +7153,8 @@ class GconfirmPayPalExecuteData_confirmPayPalExecute_resultsBuilder
               message: message,
               basePrice: basePrice,
               delivery: delivery,
+              optionsTotal: optionsTotal,
+              reservationOptions: _reservationOptions?.build(),
               currency: currency,
               discount: discount,
               discountType: discountType,
@@ -6971,6 +7220,9 @@ class GconfirmPayPalExecuteData_confirmPayPalExecute_resultsBuilder
         _hostData?.build();
         _$failedField = 'guestData';
         _guestData?.build();
+
+        _$failedField = 'reservationOptions';
+        _reservationOptions?.build();
 
         _$failedField = 'threadData';
         _threadData?.build();
@@ -13586,6 +13838,272 @@ class GconfirmPayPalExecuteData_confirmPayPalExecute_results_guestData_userVerif
             isGoogleConnected: isGoogleConnected,
             isIdVerification: isIdVerification,
             isPhoneVerified: isPhoneVerified);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+    extends GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions {
+  @override
+  final String G__typename;
+  @override
+  final int? id;
+  @override
+  final String? code;
+  @override
+  final bool? isFixed;
+  @override
+  final String? label;
+  @override
+  final String? labelKey;
+  @override
+  final String? description;
+  @override
+  final String? billingMode;
+  @override
+  final double? unitPrice;
+  @override
+  final int? quantity;
+  @override
+  final double? amount;
+  @override
+  final String? currency;
+  @override
+  final String? userInput;
+
+  factory _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions(
+          [void Function(
+                  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder)?
+              updates]) =>
+      (new GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions._(
+      {required this.G__typename,
+      this.id,
+      this.code,
+      this.isFixed,
+      this.label,
+      this.labelKey,
+      this.description,
+      this.billingMode,
+      this.unitPrice,
+      this.quantity,
+      this.amount,
+      this.currency,
+      this.userInput})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename,
+        r'GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions',
+        'G__typename');
+  }
+
+  @override
+  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions rebuild(
+          void Function(
+                  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder
+      toBuilder() =>
+          new GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder()
+            ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other
+            is GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        code == other.code &&
+        isFixed == other.isFixed &&
+        label == other.label &&
+        labelKey == other.labelKey &&
+        description == other.description &&
+        billingMode == other.billingMode &&
+        unitPrice == other.unitPrice &&
+        quantity == other.quantity &&
+        amount == other.amount &&
+        currency == other.currency &&
+        userInput == other.userInput;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, code.hashCode);
+    _$hash = $jc(_$hash, isFixed.hashCode);
+    _$hash = $jc(_$hash, label.hashCode);
+    _$hash = $jc(_$hash, labelKey.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, billingMode.hashCode);
+    _$hash = $jc(_$hash, unitPrice.hashCode);
+    _$hash = $jc(_$hash, quantity.hashCode);
+    _$hash = $jc(_$hash, amount.hashCode);
+    _$hash = $jc(_$hash, currency.hashCode);
+    _$hash = $jc(_$hash, userInput.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('code', code)
+          ..add('isFixed', isFixed)
+          ..add('label', label)
+          ..add('labelKey', labelKey)
+          ..add('description', description)
+          ..add('billingMode', billingMode)
+          ..add('unitPrice', unitPrice)
+          ..add('quantity', quantity)
+          ..add('amount', amount)
+          ..add('currency', currency)
+          ..add('userInput', userInput))
+        .toString();
+  }
+}
+
+class GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder
+    implements
+        Builder<
+            GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions,
+            GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder> {
+  _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions?
+      _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  String? _code;
+  String? get code => _$this._code;
+  set code(String? code) => _$this._code = code;
+
+  bool? _isFixed;
+  bool? get isFixed => _$this._isFixed;
+  set isFixed(bool? isFixed) => _$this._isFixed = isFixed;
+
+  String? _label;
+  String? get label => _$this._label;
+  set label(String? label) => _$this._label = label;
+
+  String? _labelKey;
+  String? get labelKey => _$this._labelKey;
+  set labelKey(String? labelKey) => _$this._labelKey = labelKey;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  String? _billingMode;
+  String? get billingMode => _$this._billingMode;
+  set billingMode(String? billingMode) => _$this._billingMode = billingMode;
+
+  double? _unitPrice;
+  double? get unitPrice => _$this._unitPrice;
+  set unitPrice(double? unitPrice) => _$this._unitPrice = unitPrice;
+
+  int? _quantity;
+  int? get quantity => _$this._quantity;
+  set quantity(int? quantity) => _$this._quantity = quantity;
+
+  double? _amount;
+  double? get amount => _$this._amount;
+  set amount(double? amount) => _$this._amount = amount;
+
+  String? _currency;
+  String? get currency => _$this._currency;
+  set currency(String? currency) => _$this._currency = currency;
+
+  String? _userInput;
+  String? get userInput => _$this._userInput;
+  set userInput(String? userInput) => _$this._userInput = userInput;
+
+  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder() {
+    GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+        ._initializeBuilder(this);
+  }
+
+  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder
+      get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id;
+      _code = $v.code;
+      _isFixed = $v.isFixed;
+      _label = $v.label;
+      _labelKey = $v.labelKey;
+      _description = $v.description;
+      _billingMode = $v.billingMode;
+      _unitPrice = $v.unitPrice;
+      _quantity = $v.quantity;
+      _amount = $v.amount;
+      _currency = $v.currency;
+      _userInput = $v.userInput;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(
+      GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+          other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other
+        as _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions;
+  }
+
+  @override
+  void update(
+      void Function(
+              GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptionsBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+      build() => _build();
+
+  _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+      _build() {
+    final _$result = _$v ??
+        new _$GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+            ._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename,
+                r'GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions',
+                'G__typename'),
+            id: id,
+            code: code,
+            isFixed: isFixed,
+            label: label,
+            labelKey: labelKey,
+            description: description,
+            billingMode: billingMode,
+            unitPrice: unitPrice,
+            quantity: quantity,
+            amount: amount,
+            currency: currency,
+            userInput: userInput);
     replace(_$result);
     return _$result;
   }

@@ -14,6 +14,8 @@ import 'package:gozy/graphql/__generated__/listing_user_fragment.data.gql.dart'
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i4;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+    as _i6;
 
 part 'manageListings.data.gql.g.dart';
 
@@ -128,6 +130,9 @@ abstract class GManageListingsData_ManageListings_results
   @override
   String? get odometer;
   GManageListingsData_ManageListings_results_listingData? get listingData;
+  @override
+  BuiltList<GManageListingsData_ManageListings_results_listingOptions?>?
+      get listingOptions;
   @override
   BuiltList<GManageListingsData_ManageListings_results_blockedDates?>?
       get blockedDates;
@@ -529,6 +534,71 @@ abstract class GManageListingsData_ManageListings_results_listingData_cancellati
                 .serializer,
             json,
           );
+}
+
+abstract class GManageListingsData_ManageListings_results_listingOptions
+    implements
+        Built<GManageListingsData_ManageListings_results_listingOptions,
+            GManageListingsData_ManageListings_results_listingOptionsBuilder>,
+        _i2.GviewListingDetailsFragment_listingOptions,
+        _i6.GlistingOptionFragment {
+  GManageListingsData_ManageListings_results_listingOptions._();
+
+  factory GManageListingsData_ManageListings_results_listingOptions(
+      [void Function(
+              GManageListingsData_ManageListings_results_listingOptionsBuilder
+                  b)
+          updates]) = _$GManageListingsData_ManageListings_results_listingOptions;
+
+  static void _initializeBuilder(
+          GManageListingsData_ManageListings_results_listingOptionsBuilder b) =>
+      b..G__typename = 'ListingOption';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  int? get listId;
+  @override
+  String? get slot;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get description;
+  @override
+  double? get price;
+  @override
+  String? get billingMode;
+  @override
+  bool? get isActive;
+  @override
+  bool? get adminDisabled;
+  @override
+  String? get icon;
+  @override
+  int? get sortOrder;
+  static Serializer<GManageListingsData_ManageListings_results_listingOptions>
+      get serializer =>
+          _$gManageListingsDataManageListingsResultsListingOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GManageListingsData_ManageListings_results_listingOptions.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GManageListingsData_ManageListings_results_listingOptions? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GManageListingsData_ManageListings_results_listingOptions.serializer,
+        json,
+      );
 }
 
 abstract class GManageListingsData_ManageListings_results_blockedDates

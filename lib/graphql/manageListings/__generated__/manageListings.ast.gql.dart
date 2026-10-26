@@ -12,6 +12,8 @@ import 'package:gozy/graphql/__generated__/listing_user_fragment.ast.gql.dart'
     as _i5;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i6;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.ast.gql.dart'
+    as _i7;
 import 'package:gql/ast.dart' as _i1;
 
 const ManageListings = _i1.OperationDefinitionNode(
@@ -549,4 +551,8 @@ const document = _i1.DocumentNode(definitions: [
   _i4.cancellationDataFragment,
   _i5.listingUserFragment,
   _i6.userVerifiedInfoFragment,
+  _i7.listingOptionFragment,
+  _i7.bookingOptionLineFragment,
+  _i7.reservationOptionSnapshotFragment,
+  _i7.listingOptionsResultFragment,
 ]);

@@ -3,6 +3,7 @@
 # import 'package:gozy/graphql/thread_item_fragment.graphql'
 # import 'package:gozy/graphql/listing_data_fragment.graphql'
 # import 'package:gozy/graphql/listing_user_fragment.graphql'
+# import 'package:gozy/graphql/listingOptions/listing_option_fragment.graphql'
 
 fragment reservationFragment on Reservation {
         id
@@ -49,6 +50,10 @@ fragment reservationFragment on Reservation {
         message
         basePrice
         delivery
+        optionsTotal
+        reservationOptions {
+            ...reservationOptionSnapshotFragment
+        }
         currency
         discount
         discountType
