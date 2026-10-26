@@ -858,6 +858,7 @@ const String pawapay_payment_pending_title = "pawapay_payment_pending_title";
 const String pawapay_checking_payment = "pawapay_checking_payment";
 const String label_change_payment_method = "label_change_payment_method";
 
+
 // Booking options and services (texts: lib/utils/booking_options_texts.dart)
 const String bo_title = 'bo_title'; // ignore: constant_identifier_names
 const String bo_available_title = 'bo_available_title'; // ignore: constant_identifier_names
@@ -866,6 +867,8 @@ const String bo_provided_by_owner = 'bo_provided_by_owner'; // ignore: constant_
 const String bo_owner_subtitle = 'bo_owner_subtitle'; // ignore: constant_identifier_names
 const String bo_fixed_services = 'bo_fixed_services'; // ignore: constant_identifier_names
 const String bo_custom_options = 'bo_custom_options'; // ignore: constant_identifier_names
+const String bo_custom_options_title = 'bo_custom_options_title'; // ignore: constant_identifier_names
+const String bo_retry = 'bo_retry'; // ignore: constant_identifier_names
 const String bo_count_added = 'bo_count_added'; // ignore: constant_identifier_names
 const String bo_remaining = 'bo_remaining'; // ignore: constant_identifier_names
 const String bo_empty_custom = 'bo_empty_custom'; // ignore: constant_identifier_names

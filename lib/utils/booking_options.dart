@@ -366,3 +366,41 @@ double? parseOptionPrice(String? value) {
   if (text.isEmpty) return null;
   return double.tryParse(text);
 }
+
+/// Answer of getListingOptions / saveListingOption / setListingOptionActive /
+/// deleteListingOption.
+class ListingOptionsOutcome {
+  const ListingOptionsOutcome({this.status, this.errorMessage, this.state});
+
+  final int? status;
+  final String? errorMessage;
+
+  /// The list returned by the server (set when the call succeeded).
+  final OwnerOptionsState? state;
+
+  bool get isOk => status == 200 && state != null;
+
+  factory ListingOptionsOutcome.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return const ListingOptionsOutcome();
+    final status = _toInt(json['status']);
+    final raw = json['results'];
+    final options = raw is Iterable
+        ? raw
+            .whereType<Map>()
+            .map((item) =>
+                BookingOption.fromJson(Map<String, dynamic>.from(item)))
+            .toList()
+        : <BookingOption>[];
+    return ListingOptionsOutcome(
+      status: status,
+      errorMessage: json['errorMessage']?.toString(),
+      state: status == 200
+          ? OwnerOptionsState(
+              options: options,
+              maxCustom: _toInt(json['maxCustom']),
+              customCount: _toInt(json['customCount']),
+            )
+          : null,
+    );
+  }
+}

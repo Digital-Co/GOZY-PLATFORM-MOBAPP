@@ -842,15 +842,6 @@ const updateListingStep3 = _i1.OperationDefinitionNode(
       directives: [],
     ),
     _i1.VariableDefinitionNode(
-      variable: _i1.VariableNode(name: _i1.NameNode(value: 'delivery')),
-      type: _i1.NamedTypeNode(
-        name: _i1.NameNode(value: 'Float'),
-        isNonNull: false,
-      ),
-      defaultValue: _i1.DefaultValueNode(value: null),
-      directives: [],
-    ),
-    _i1.VariableDefinitionNode(
       variable: _i1.VariableNode(name: _i1.NameNode(value: 'currency')),
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'String'),
@@ -960,10 +951,6 @@ const updateListingStep3 = _i1.OperationDefinitionNode(
         _i1.ArgumentNode(
           name: _i1.NameNode(value: 'basePrice'),
           value: _i1.VariableNode(name: _i1.NameNode(value: 'basePrice')),
-        ),
-        _i1.ArgumentNode(
-          name: _i1.NameNode(value: 'delivery'),
-          value: _i1.VariableNode(name: _i1.NameNode(value: 'delivery')),
         ),
         _i1.ArgumentNode(
           name: _i1.NameNode(value: 'currency'),
