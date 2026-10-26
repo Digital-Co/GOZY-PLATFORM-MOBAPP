@@ -1,0 +1,14 @@
+fragment bookingOptionLineFragment on BookingOptionLineType {
+  listingOptionId
+  code
+  isFixed
+  label
+  labelKey
+  description
+  billingMode
+  unitPrice
+  quantity
+  amount
+  currency
+  userInput
+}

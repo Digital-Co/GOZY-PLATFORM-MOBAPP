@@ -1,4 +1,4 @@
-# import 'package:gozy/graphql/listingOptions/listing_option_fragment.graphql'
+# import 'package:gozy/graphql/listingOptions/listing_options_result_fragment.graphql'
 
 # Custom options only; reservations keep their own snapshot.
 mutation deleteListingOption($listId: Int!, $slot: String!) {

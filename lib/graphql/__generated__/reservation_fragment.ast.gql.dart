@@ -14,7 +14,7 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.ast.gql.dart'
     as _i3;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i4;
-import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.ast.gql.dart'
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.ast.gql.dart'
     as _i8;
 import 'package:gql/ast.dart' as _i1;
 
@@ -719,8 +719,5 @@ const document = _i1.DocumentNode(definitions: [
   _i6.listingDataFragment,
   _i6.cancellationDataFragment,
   _i7.listingUserFragment,
-  _i8.listingOptionFragment,
-  _i8.bookingOptionLineFragment,
   _i8.reservationOptionSnapshotFragment,
-  _i8.listingOptionsResultFragment,
 ]);

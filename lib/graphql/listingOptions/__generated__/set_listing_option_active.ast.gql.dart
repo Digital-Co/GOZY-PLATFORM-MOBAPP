@@ -3,6 +3,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.ast.gql.dart'
+    as _i3;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_options_result_fragment.ast.gql.dart'
     as _i2;
 import 'package:gql/ast.dart' as _i1;
 
@@ -69,8 +71,6 @@ const setListingOptionActive = _i1.OperationDefinitionNode(
 );
 const document = _i1.DocumentNode(definitions: [
   setListingOptionActive,
-  _i2.listingOptionFragment,
-  _i2.bookingOptionLineFragment,
-  _i2.reservationOptionSnapshotFragment,
   _i2.listingOptionsResultFragment,
+  _i3.listingOptionFragment,
 ]);

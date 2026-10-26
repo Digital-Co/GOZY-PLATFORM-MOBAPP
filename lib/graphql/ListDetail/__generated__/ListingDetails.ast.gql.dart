@@ -908,7 +908,4 @@ const document = _i1.DocumentNode(definitions: [
   _i5.listingUserFragment,
   _i6.userVerifiedInfoFragment,
   _i7.listingOptionFragment,
-  _i7.bookingOptionLineFragment,
-  _i7.reservationOptionSnapshotFragment,
-  _i7.listingOptionsResultFragment,
 ]);

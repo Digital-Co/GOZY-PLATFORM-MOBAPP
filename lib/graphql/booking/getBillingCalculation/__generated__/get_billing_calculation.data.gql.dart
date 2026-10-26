@@ -6,7 +6,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
-import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.data.gql.dart'
     as _i2;
 
 part 'get_billing_calculation.data.gql.g.dart';

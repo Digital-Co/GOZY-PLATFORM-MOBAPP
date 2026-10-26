@@ -1,5 +1,5 @@
 # import 'package:gozy/graphql/reservation_fragment.graphql'
-# import 'package:gozy/graphql/listingOptions/listing_option_fragment.graphql'
+# import 'package:gozy/graphql/listingOptions/booking_option_line_fragment.graphql'
 
 # Reservation Details
 query getReservation($reservationId: Int!,$convertCurrency: String) {

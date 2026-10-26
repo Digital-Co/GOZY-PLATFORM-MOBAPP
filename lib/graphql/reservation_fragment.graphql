@@ -3,7 +3,7 @@
 # import 'package:gozy/graphql/thread_item_fragment.graphql'
 # import 'package:gozy/graphql/listing_data_fragment.graphql'
 # import 'package:gozy/graphql/listing_user_fragment.graphql'
-# import 'package:gozy/graphql/listingOptions/listing_option_fragment.graphql'
+# import 'package:gozy/graphql/listingOptions/reservation_option_snapshot_fragment.graphql'
 
 fragment reservationFragment on Reservation {
         id

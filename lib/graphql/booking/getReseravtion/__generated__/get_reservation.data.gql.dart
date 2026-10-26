@@ -20,7 +20,9 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
     as _i7;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i6;
-import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.data.gql.dart'
+    as _i10;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.data.gql.dart'
     as _i8;
 
 part 'get_reservation.data.gql.g.dart';
@@ -2231,7 +2233,7 @@ abstract class GgetReservationData_getReservation_convertedOptions
     implements
         Built<GgetReservationData_getReservation_convertedOptions,
             GgetReservationData_getReservation_convertedOptionsBuilder>,
-        _i8.GbookingOptionLineFragment {
+        _i10.GbookingOptionLineFragment {
   GgetReservationData_getReservation_convertedOptions._();
 
   factory GgetReservationData_getReservation_convertedOptions(

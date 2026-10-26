@@ -1,4 +1,4 @@
-# import 'package:gozy/graphql/listingOptions/listing_option_fragment.graphql'
+# import 'package:gozy/graphql/listingOptions/booking_option_line_fragment.graphql'
 
 #Billing Summary
 query getBillingCalculation($listId: Int!, $startDate: String!, $endDate: String!, $guests: Int!, $convertCurrency: String!, $startTime: Float, $endTime: Float,$isDeliveryIncluded: Boolean, $userId:String, $promoCode: String, $options: [ReservationOptionInput]) {

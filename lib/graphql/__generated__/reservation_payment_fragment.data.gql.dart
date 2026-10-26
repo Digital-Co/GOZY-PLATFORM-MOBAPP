@@ -20,7 +20,7 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
     as _i6;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i5;
-import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.data.gql.dart'
     as _i7;
 
 part 'reservation_payment_fragment.data.gql.g.dart';

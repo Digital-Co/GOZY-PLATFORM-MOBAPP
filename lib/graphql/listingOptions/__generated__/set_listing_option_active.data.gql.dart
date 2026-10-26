@@ -7,6 +7,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
 import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+    as _i3;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_options_result_fragment.data.gql.dart'
     as _i2;
 
 part 'set_listing_option_active.data.gql.g.dart';
@@ -95,7 +97,7 @@ abstract class GsetListingOptionActiveData_setListingOptionActive_results
         Built<GsetListingOptionActiveData_setListingOptionActive_results,
             GsetListingOptionActiveData_setListingOptionActive_resultsBuilder>,
         _i2.GlistingOptionsResultFragment_results,
-        _i2.GlistingOptionFragment {
+        _i3.GlistingOptionFragment {
   GsetListingOptionActiveData_setListingOptionActive_results._();
 
   factory GsetListingOptionActiveData_setListingOptionActive_results(

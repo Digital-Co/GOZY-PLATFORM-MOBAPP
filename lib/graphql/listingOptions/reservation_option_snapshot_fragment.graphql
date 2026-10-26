@@ -1,0 +1,14 @@
+fragment reservationOptionSnapshotFragment on ReservationOptionSnapshot {
+  id
+  code
+  isFixed
+  label
+  labelKey
+  description
+  billingMode
+  unitPrice
+  quantity
+  amount
+  currency
+  userInput
+}
