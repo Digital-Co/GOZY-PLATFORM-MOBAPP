@@ -597,7 +597,13 @@ class _OptionFormSheetState extends State<_OptionFormSheet> {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.fromLTRB(16, 16, 16, 12 + bottom),
-        child: SingleChildScrollView(
+        // The numeric keypad has no "done" key: a tap outside a field or a
+        // drag of the form closes it, so the Save button is never hidden.
+        child: GestureDetector(
+         behavior: HitTestBehavior.translucent,
+         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+         child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -722,6 +728,7 @@ class _OptionFormSheetState extends State<_OptionFormSheet> {
               ),
             ],
           ),
+         ),
         ),
       ),
     );
