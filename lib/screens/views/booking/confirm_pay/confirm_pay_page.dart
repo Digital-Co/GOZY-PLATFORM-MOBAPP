@@ -22,7 +22,6 @@ import 'package:gozy/utils/common_api_controller.dart';
 import 'package:gozy/utils/duration_discount.dart';
 import 'package:gozy/widgets/bottom_sheet/bottom_sheet_refresh_controller.dart';
 import 'package:gozy/widgets/cancellation_policy_view.dart';
-import 'package:gozy/widgets/checkbox_group.dart';
 import 'package:gozy/widgets/common/custom_bottomsheet/custom_bottomsheet.dart';
 import 'package:gozy/widgets/common/custom_button/bottom_shadow_button.dart';
 import 'package:gozy/widgets/common/custom_button/primary_button.dart';
@@ -51,6 +50,10 @@ import '../../../../widgets/custom_tool_tip.dart';
 import '../../home/home_navigator.dart';
 import '../../home_item_detail/home_item_detail_controller.dart';
 import 'confirm_pay_page_controller.dart';
+import 'package:gozy/utils/booking_options.dart' show isDeliveryLocationValid;
+import 'package:gozy/utils/booking_options_i18n.dart';
+import 'package:gozy/widgets/booking/booking_option_price_lines.dart';
+import 'package:gozy/widgets/booking/booking_options_section.dart';
 
 part 'confirm_pay_page_function.dart';
 
@@ -341,57 +344,7 @@ class ConfirmAndPayPageState
                   }
                 });
               }),
-      if (confirmpaycontroller.pageType == 'pay')
-        IntrinsicHeight(
-          child: CustomBorderContainer(
-            borderRadius: appLayoutMap[AppLayout.viewCar]?.borderRadius,
-            body: [
-              Assets.drawableMinibus
-                  .toSVG(size: 30)
-                  .toPad(all: 12)
-                  .toPad(vertical: 5),
-              VerticalDivider(width: 1.2, color: appColors.customBorderColor),
-              10.toWidth(),
-              [
-                CustomText(
-                  text: label_include_doorstep_delivery.tr,
-                  size: AppDimen.textSize_16,
-                  fontWeight: AppFont.regular,
-                ),
-                CustomText(
-                    text: "(${label_delivery_charges.trParams({
-                          "field1": billingdata!.delivery.toNumberFormat(
-                              symbol: widget.controller.getCurrencySymbol(),
-                              maximumFractionDigits: 2)
-                        })})",
-                    size: AppDimen.textSize_14,
-                    fontWeight: AppFont.regular,
-                    color: appColors.secondaryColor),
-              ].toColumn(mainAxisAlignment: MainAxisAlignment.center),
-              Spacer(),
-              toOnTap(
-                onTap: () {
-                  confirmpaycontroller.isDeliveryCheck.value =
-                      !confirmpaycontroller.isDeliveryCheck.value;
-                  widget.controller.isDeliveryCheck.value =
-                      !widget.controller.isDeliveryCheck.value;
-                  print(
-                      "isdelivery>>>>${widget.controller.isDeliveryCheck.value}");
-                  widget.controller
-                      .checkNetwork(widget.controller.getBillingCalculation);
-                },
-                child: CustomCheckBox(
-                        boxshape: BoxShape.rectangle,
-                        ischeckCondition:
-                            !(widget.controller.isDeliveryCheck.value),
-                        borderColor: appColors.customBorderColor)
-                    .toPad(bottom: 4),
-              )
-            ].toRow(
-              mainAxisAlignment: MainAxisAlignment.start,
-            ),
-          ),
-        ),
+      if (confirmpaycontroller.pageType == 'pay') _buildBookingOptions(),
       if (confirmpaycontroller.pageType == 'pay') ...[
         20.toHeight(),
         overALLThemeType == 4
@@ -406,7 +359,10 @@ class ConfirmAndPayPageState
           text: label_reservation_charges.tr,
           size: AppDimen.textSize_16,
         ),
-        _priceDetailWidget(receiptItem: billingdata),
+        Obx(() => Opacity(
+              opacity: widget.controller.isOptionsRecalculating.value ? 0.45 : 1,
+              child: _priceDetailWidget(receiptItem: billingdata),
+            )),
       ]
     ].toColumn();
   }
@@ -483,6 +439,12 @@ class ConfirmAndPayPageState
         "billingcalculationdata: ${confirmpaycontroller.billingCalcuationData.value}");
     widget.controller.selectedStartTime = controllerData['selectedStartTime'];
     widget.controller.selectedEndTime = controllerData['selectedEndTime'];
+    // No options and services in a pre-approved booking (opened from a message).
+    widget.controller.isOptionsAllowed =
+        controllerData['isFromViewMessage'] != true;
+    if (!widget.controller.isOptionsAllowed) {
+      widget.controller.resetBookingOptions();
+    }
 
     widget.controller.billingCalcuationData.value =
         confirmpaycontroller.billingCalcuationData.value;
@@ -637,6 +599,7 @@ class ConfirmAndPayPageState
           days: currentDays,
         );
         final maxDays = widget.controller.itemInfo?.listingData?.maxDay as int?;
+        final isRecalculating = widget.controller.isOptionsRecalculating.value;
         return [
           if (nextOffer != null &&
               (maxDays == null ||
@@ -672,14 +635,13 @@ class ConfirmAndPayPageState
                           ),
                         TextSpan(
                           style: TextStyle(
-                              color: appColors.textColor,
+                              color: isRecalculating
+                                  ? appColors.textColor.withValues(alpha: 0.4)
+                                  : appColors.textColor,
                               fontSize: AppDimen.textSize_18,
                               fontFamily: AppFont.font,
                               fontWeight: AppFont.semiBold),
-                          text: (widget.controller.isDeliveryCheck.value ||
-                                      widget.controller.isPromoApplied.value
-                                  ? (widget.controller.totalValue.value)
-                                  : (widget.controller.totalValue.value))
+                          text: (widget.controller.totalValue.value)
                               .currencyConverted(
                                   convertedCurrency:
                                       currentBillingData?.currency ??
@@ -708,6 +670,15 @@ class ConfirmAndPayPageState
                                     ? label_book.tr
                                     : label_request_to_book.tr,
                             onTap: () {
+                              // Never book on a stale total: wait for the new calculation.
+                              if (widget.controller.isOptionsRecalculating.value) {
+                                return;
+                              }
+                              if (!widget.controller.validateBookingOptions()) {
+                                confirmpaycontroller.showSnackBar(
+                                    boText('bo_err_delivery_location'));
+                                return;
+                              }
                               if (widget.controller.isEmailVerified()) {
                                 _openAboutLicenceFromConfirmPay();
                               } else {
@@ -956,14 +927,9 @@ class ConfirmAndPayPageState
               amountFontSize: fontsize,
             ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0)
           : const SizedBox.shrink(),
-      (confirmpaycontroller.isDeliveryCheck.value)
-          ? CustomPriceBreakdownText(
-              label: delivery_fee.tr,
-              amount:
-                  '${receiptItem.delivery?.currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency, decimalDigits: 2)}',
-              amountFontSize: fontsize,
-            ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0)
-          : const SizedBox.shrink(),
+      ...buildBookingOptionPriceLines(receiptItem,
+          fontSize: fontsize,
+          horizontalPadding: (isPaddedContent ?? false) ? 10 : 0),
       CustomPriceBreakdownText(
               label: label_service_fee.tr,
               amount:
@@ -982,11 +948,52 @@ class ConfirmAndPayPageState
       CustomPriceBreakdownText(
         label: label_total.tr.toUpperLowerCase(),
         amount:
-            '${(confirmpaycontroller.isDeliveryCheck.value) ? (receiptItem.total ?? 0.0) : (receiptItem.total ?? 0.0).currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency)}',
+            (receiptItem.total ?? 0.0).currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency),
         isTotal: true,
         amountFontSize: fontsize,
       ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0),
     ].toColumn();
+  }
+
+  /// "Options and services" panel of the summary. Every change prices the
+  /// booking again on the server; nothing is computed here.
+  Widget _buildBookingOptions() {
+    return Obx(() {
+      final controller = widget.controller;
+      controller.optionSelectionTick.value;
+      controller.optionsValidationRequested.value;
+      if (!controller.isOptionsAllowed) {
+        if (controller.allBookingOptions.isEmpty) {
+          return const SizedBox.shrink();
+        }
+        return CustomText(
+          text: boText('bo_pre_approved_unavailable'),
+          size: AppDimen.textSize_14,
+          fontWeight: AppFont.regular,
+          color: appColors.textfieldHintColor,
+        ).toPad(top: 12, bottom: 4);
+      }
+      final options = controller.bookableBookingOptions;
+      if (options.isEmpty) return const SizedBox.shrink();
+      return BookingOptionsSection(
+        options: options,
+        isSelected: controller.isBookingOptionSelected,
+        onToggle: (option, selected) => controller
+            .setBookingOptionSelected(option, selected, recalculate: true),
+        locationController: controller.deliveryLocationController,
+        onLocationChanged: (value) =>
+            controller.onDeliveryLocationChanged(value, recalculate: true),
+        onLocationSubmitted: (value) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          if (isDeliveryLocationValid(value)) {
+            controller.scheduleOptionsRecalculation(delay: Duration.zero);
+          }
+        },
+        listingCurrency: controller.listingCurrency,
+        showSubtitle: false,
+        showLocationError: controller.optionsValidationRequested.value,
+      ).toPad(top: 12, bottom: 4);
+    });
   }
 
   dynamic _getToolTipWidget(

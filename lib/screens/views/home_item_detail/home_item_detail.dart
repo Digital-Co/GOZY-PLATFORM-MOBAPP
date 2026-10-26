@@ -58,6 +58,8 @@ import '../../../resources/app_layout.dart';
 import '../booking/upload_profile_photo/upload_profile_photo.dart';
 import '../home/home_controller.dart';
 import '../home/home_navigator.dart';
+import 'package:gozy/utils/booking_options_i18n.dart';
+import 'package:gozy/widgets/booking/booking_options_section.dart';
 
 part 'home_item_detail_part2.dart';
 part 'home_item_detail_part3.dart';
@@ -112,6 +114,28 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         monthlyDiscount: controller.itemInfo?.listingData?.monthlyDiscount,
       ).toPad(top: 12, bottom: 16, horizontal: 16);
 
+  /// Options and services of the vehicle. Only ticks them: the amounts are
+  /// computed by the API on the booking summary.
+  Widget _showBookingOptions() => Obx(() {
+        controller.optionSelectionTick.value;
+        controller.optionsValidationRequested.value;
+        final isOwnListing = controller.itemInfo?.userId != null &&
+            controller.itemInfo?.userId == controller.appPreference.userID;
+        final options = controller.bookableBookingOptions;
+        if (isOwnListing || options.isEmpty) return const SizedBox.shrink();
+        return BookingOptionsSection(
+          title: boText('bo_available_title'),
+          options: options,
+          isSelected: controller.isBookingOptionSelected,
+          onToggle: (option, selected) =>
+              controller.setBookingOptionSelected(option, selected),
+          locationController: controller.deliveryLocationController,
+          onLocationChanged: controller.onDeliveryLocationChanged,
+          listingCurrency: controller.listingCurrency,
+          showLocationError: controller.optionsValidationRequested.value,
+        ).toPad(top: 4, bottom: 16, horizontal: 16);
+      });
+
   Color? _shareView_IconBGColor;
   double? _insideImageBorderRadius;
   Color? _shareView_BottomSectionBGColor;
@@ -126,6 +150,8 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
     isShowLoader = true;
     if (Get.currentRoute.toLowerCase().contains('itemdetail')) {
       contactHostBookingType = '';
+      controller.isOptionsAllowed = true;
+      controller.resetBookingOptions();
       controller.isLoading.value = true;
       _itemKey = RectGetter.createGlobalKey();
       _overlayKey = RectGetter.createGlobalKey();
@@ -318,6 +344,7 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
     );
     return [
       _showDurationDiscounts(),
+      _showBookingOptions(),
       ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin),
     ].toColumn();
   }
@@ -369,6 +396,7 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
     );
     return [
       _showDurationDiscounts(),
+      _showBookingOptions(),
       listItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin),
     ].toColumn();
   }
@@ -460,6 +488,7 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
     );
     return [
       _showDurationDiscounts(),
+      _showBookingOptions(),
       ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin),
     ].toColumn();
   }
@@ -518,6 +547,7 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
     );
     return [
       _showDurationDiscounts(),
+      _showBookingOptions(),
       ListItemWidgetsWithDivider.toColumn().toPad(horizontal: AppDimen.startMargin),
     ].toColumn();
   }
@@ -896,7 +926,7 @@ class HomeItemDetailState extends CustomStatefulWidgetState<HomeItemDetailView>
         map['itemInfo'] = controller.itemInfo;
         map['message'] = controller.confirmpayMessageController.Ttext;
         map['threadId'] = controller.threadId;
-        map['isDeliveryCheck'] = controller.isDeliveryCheck.value;
+        map['options'] = controller.optionInputsForRequest();
         map['startTime'] = controller.startTime24Four;
         map['endTime'] = controller.endTime24Four;
         map['licenceNumber'] = controller.licenceNoController.Ttext;

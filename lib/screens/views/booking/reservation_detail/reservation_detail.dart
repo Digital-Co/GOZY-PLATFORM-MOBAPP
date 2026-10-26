@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:gozy/generated/assets.dart';
 import 'package:gozy/resources/app_font.dart';
 import 'package:gozy/screens/views/booking/booking_navigator.dart';
+import 'package:gozy/utils/booking_options.dart';
+import 'package:gozy/utils/booking_options_i18n.dart';
 import 'package:gozy/screens/views/booking/reservation_detail/reservation_detail_controller.dart';
 import 'package:gozy/screens/views/home/home_controller.dart';
 import 'package:gozy/widgets/common/custom_container/custom_border_container.dart';
@@ -152,6 +154,7 @@ class ReservationDetailState extends CustomStatefulWidgetState<ReservationDetail
     List<Widget> filterwidgets = [];
     filterwidgets.add(_hostListingInfo());
      filterwidgets.add(_billingInfo());
+     filterwidgets.add(_includedOptionsInfo());
      filterwidgets.add(_billingAddressInfo());
      filterwidgets.add(_hostProfileInfo());
     return toListScroll(WidgetList: filterwidgets,padding: pad(w: AppDimen.startMargin), isFromItinerary: overALLThemeType == 4 ? true : false);
@@ -303,7 +306,6 @@ class ReservationDetailState extends CustomStatefulWidgetState<ReservationDetail
     String billingAmountForOneDay = (controller.reservationResult?.isSpecialPriceAssigned ?? false) ?  double.parse((controller.reservationResult?.isSpecialPriceAverage)?.toString() ?? '0').currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!) : double.parse((controller.reservationResult?.basePrice)?.toString() ?? '0').currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!);
     String billingAmount = (controller.reservationResult?.isSpecialPriceAssigned ?? false) ?  double.parse((((controller.reservationResult?.isSpecialPriceAverage ?? 0) * days)).toString() ?? '0').currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!) : double.parse(((controller.reservationResult?.basePrice ?? 0) * days).toString() ?? '0').currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!);
     String securityDeposit = double.parse((controller.reservationResult?.securityDeposit ?? 0 ).toString()).currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!);
-    String deliveryFee = double.parse((controller.reservationResult?.delivery ?? 0).toString()).currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!);
     String serviceFee = double.parse(((appPreference.isOwner! ? controller.reservationResult?.hostServiceFee : controller.reservationResult?.guestServiceFee) ?? 0).toString()).currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!);
     String weeklyDiscount = double.parse((controller.reservationResult?.discount ?? 0).toString()).currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!);
     String couponDiscount = double.parse((controller.reservationResult?.promoDiscount ?? 0).toString()).currencyConverted(convertedCurrency: controller.reservationResult?.currency ?? defaultCurrency).toNumberFormat(symbol:symbol!);
@@ -358,8 +360,10 @@ class ReservationDetailState extends CustomStatefulWidgetState<ReservationDetail
                 horizontal: (overALLThemeType == 1 || overALLThemeType == 3)
                     ? 16
                     : 0),
-          if ((controller.reservationResult?.delivery ?? 0) > 0)
-            commonNavigationWidget(title: delivery_fee.tr, value: deliveryFee)
+          for (final line in _optionLines)
+            commonNavigationWidget(
+                    title: bookingOptionLineTitle(line),
+                    value: _formatOptionAmount(line))
                 .toPad(
                     top: 12,
                     horizontal: (overALLThemeType == 1 || overALLThemeType == 3)
@@ -412,6 +416,106 @@ class ReservationDetailState extends CustomStatefulWidgetState<ReservationDetail
       )
     ].toColumn();
   }
+
+  /// Options of the reservation: the stored snapshot (label, price and mode as
+  /// booked). An old reservation without snapshot shows its `delivery` as one
+  /// flat line, never both, so nothing is counted twice.
+  List<BookingOptionLine> get _optionLines {
+    final reservation = controller.reservationResult;
+    if (reservation == null) return const [];
+    return reservationOptionLines(
+      snapshots: reservation.reservationOptions
+          ?.where((line) => line != null)
+          .map((line) => BookingOptionLine.fromJson(
+              Map<String, dynamic>.from(line!.toJson())))
+          .toList(),
+      delivery: reservation.delivery,
+      currency: reservation.currency,
+    );
+  }
+
+  String _formatOptionAmount(BookingOptionLine line) => line.amount
+      .currencyConverted(
+          convertedCurrency: line.currency ??
+              controller.reservationResult?.currency ??
+              defaultCurrency)
+      .toNumberFormat(symbol: symbol!);
+
+  /// "Options and services included": what was booked, with the delivery
+  /// location, and the note that the owner will get in touch.
+  Widget _includedOptionsInfo() {
+    final lines = _optionLines;
+    if (lines.isEmpty) return const SizedBox.shrink();
+    final isOwner = appPreference.isOwner ?? false;
+    return [
+      _headerText(boText('bo_included')).toPad(bottom: 12),
+      CustomBorderContainer(
+        borderRadius: imageAndBillingBorderRadius,
+        borderColor: billingBorderColor,
+        color: billingContainerColor,
+        padding: pad(a: 12),
+        body: [
+          for (var i = 0; i < lines.length; i++) ...[
+            if (i > 0) 12.toHeight(),
+            _includedOptionRow(lines[i]),
+          ],
+          if (!isOwner) ...[
+            12.toHeight(),
+            CustomText(
+              text: boText('bo_owner_will_contact'),
+              size: AppDimen.textSize_12,
+              fontWeight: AppFont.regular,
+              color: appColors.textfieldHintColor,
+            ),
+          ],
+        ].toColumn(crossAxisAlignment: CrossAxisAlignment.start),
+      ).toPad(bottom: 12),
+      20.toHeight(),
+    ].toColumn(crossAxisAlignment: CrossAxisAlignment.start);
+  }
+
+  Widget _includedOptionRow(BookingOptionLine line) {
+    final location = (line.userInput ?? '').trim();
+    final detail = line.isPerDay
+        ? '${_formatUnitPrice(line)} ${bookingModeShort(line.billingMode)} x ${line.quantity}'
+        : bookingModeShort(line.billingMode);
+    return [
+      [
+        CustomText(
+          text: bookingOptionLineLabel(line),
+          size: AppDimen.textSize_14,
+          fontWeight: AppFont.medium,
+        ).toStretch(isExpanded: true),
+        8.toWidth(),
+        CustomText(
+          text: _formatOptionAmount(line),
+          size: AppDimen.textSize_14,
+          fontWeight: AppFont.medium,
+        ),
+      ].toRow(crossAxisAlignment: CrossAxisAlignment.start),
+      2.toHeight(),
+      CustomText(
+        text: detail,
+        size: AppDimen.textSize_12,
+        fontWeight: AppFont.regular,
+        color: appColors.textfieldHintColor,
+      ),
+      if (location.isNotEmpty)
+        CustomText(
+          text: '${boText('bo_delivery_location_shown')}: $location',
+          size: AppDimen.textSize_12,
+          fontWeight: AppFont.regular,
+          color: appColors.customTextColor,
+        ).toPad(top: 2),
+    ].toColumn(crossAxisAlignment: CrossAxisAlignment.start);
+  }
+
+  String _formatUnitPrice(BookingOptionLine line) => line.unitPrice
+      .currencyConverted(
+          convertedCurrency: line.currency ??
+              controller.reservationResult?.currency ??
+              defaultCurrency)
+      .toNumberFormat(symbol: symbol!);
 
   Widget _hostProfileInfo() {
     return [

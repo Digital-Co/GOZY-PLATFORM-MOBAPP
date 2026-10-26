@@ -1,3 +1,5 @@
+import 'package:gozy/utils/booking_options.dart';
+import 'package:gozy/utils/booking_options_i18n.dart';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -438,7 +440,6 @@ pw.Widget priceDetailWidget(
       : double.parse(((receiptItem.basePrice ?? 0) * days).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol, overrideLocale: !controller.isRTL() ? Get.locale?.languageCode : 'en');
   String weeklyDiscount = double.parse((receiptItem.discount ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol, overrideLocale: !controller.isRTL() ? Get.locale?.languageCode : 'en');
   String couponDiscount = double.parse((receiptItem.promoDiscount ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol, overrideLocale: !controller.isRTL() ? Get.locale?.languageCode : 'en');
-  String deliveryFee = double.parse((receiptItem.delivery ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol, overrideLocale: !controller.isRTL() ? Get.locale?.languageCode : 'en');
   String serviceFee = double.parse(((appPreference.isOwner! ? receiptItem.hostServiceFee : receiptItem.guestServiceFee) ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol, overrideLocale: !controller.isRTL() ? Get.locale?.languageCode : 'en');
   String securityDeposit = double.parse((receiptItem.securityDeposit ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol, overrideLocale: !controller.isRTL() ? Get.locale?.languageCode : 'en');
   String claimRefund = double.parse((receiptItem.claimRefund ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol, overrideLocale: !controller.isRTL() ? Get.locale?.languageCode : 'en');
@@ -530,10 +531,12 @@ pw.Widget priceDetailWidget(
                   infoSVG: resources['infosvg'],
                   hideDivider: true
                 ),
-              if ((receiptItem.delivery ?? 0) > 0)
+              for (final line in receiptOptionLines(receiptItem))
                 getPriceBreakdownText(
-                  label: delivery_fee.tr,
-                  amount: deliveryFee,
+                  label: bookingOptionReceiptLabel(line),
+                  amount: line.amount
+                      .currencyConverted(convertedCurrency: line.currency ?? convertedCurrency)
+                      .toNumberFormat(symbol: currencySymbol, overrideLocale: !controller.isRTL() ? Get.locale?.languageCode : 'en'),
                   amountFontSize: fontsize,
                   resources: resources,
                   controller: controller,
