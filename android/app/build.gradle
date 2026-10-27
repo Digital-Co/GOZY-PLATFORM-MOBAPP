@@ -53,8 +53,8 @@ if (project.hasProperty('dart-defines')) {
         applicationId "com.gozy.app"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
-		versionCode 12
-        versionName '2.0.3'
+		versionCode 13
+        versionName '2.0.4'
         resValue "string", "SECURE_API_KEY", secureKey
         ndk {
             abiFilters 'arm64-v8a', 'armeabi-v7a'
