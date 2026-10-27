@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/inspection/inspection_result_fragment.graphql'
+
+mutation saveInspectionDraft($reservationId: Int!, $type: String!, $input: InspectionInput!, $expectedVersion: Int) {
+  saveInspectionDraft(reservationId: $reservationId, type: $type, input: $input, expectedVersion: $expectedVersion) {
+    ...inspectionResultFragment
+  }
+}

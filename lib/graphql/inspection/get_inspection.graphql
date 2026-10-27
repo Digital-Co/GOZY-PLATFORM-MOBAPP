@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/inspection/inspection_result_fragment.graphql'
+
+query getInspection($reservationId: Int!, $type: String!) {
+  getInspection(reservationId: $reservationId, type: $type) {
+    ...inspectionResultFragment
+  }
+}

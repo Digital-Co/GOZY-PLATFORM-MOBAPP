@@ -1,0 +1,37 @@
+# import 'package:gozy/graphql/inspection/inspection_photo_fragment.graphql'
+
+fragment inspectionFragment on Inspection {
+  id
+  reservationId
+  type
+  status
+  version
+  authorId
+  authorRole
+  generalState
+  mileage
+  fuelLevel
+  keysConfirmed
+  hasDamage
+  damageDescription
+  comment
+  checklist {
+    key
+    present
+  }
+  hostValidatedAt
+  guestValidatedAt
+  contestedAt
+  lockedAt
+  createdAt
+  updatedAt
+  photos {
+    ...inspectionPhotoFragment
+  }
+  viewerRole
+  windowOpen
+  windowReason
+  canEdit
+  canValidate
+  canContest
+}

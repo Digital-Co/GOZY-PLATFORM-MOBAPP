@@ -793,6 +793,20 @@ class _$GgetAllReservationData_getAllReservation_resultSerializer
             specifiedType: const FullType(
                 GgetAllReservationData_getAllReservation_result_futureTransactionTotal)));
     }
+    value = object.inspectionStatus;
+    if (value != null) {
+      result
+        ..add('inspectionStatus')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.closureState;
+    if (value != null) {
+      result
+        ..add('closureState')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -1110,6 +1124,14 @@ class _$GgetAllReservationData_getAllReservation_resultSerializer
                   specifiedType: const FullType(
                       GgetAllReservationData_getAllReservation_result_futureTransactionTotal))!
               as GgetAllReservationData_getAllReservation_result_futureTransactionTotal);
+          break;
+        case 'inspectionStatus':
+          result.inspectionStatus = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'closureState':
+          result.closureState = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -6524,6 +6546,10 @@ class _$GgetAllReservationData_getAllReservation_result
   @override
   final GgetAllReservationData_getAllReservation_result_futureTransactionTotal?
       futureTransactionTotal;
+  @override
+  final String? inspectionStatus;
+  @override
+  final String? closureState;
 
   factory _$GgetAllReservationData_getAllReservation_result(
           [void Function(
@@ -6603,7 +6629,9 @@ class _$GgetAllReservationData_getAllReservation_result
       this.hostServiceFeeValue,
       this.bookingType,
       this.completedTotal,
-      this.futureTransactionTotal})
+      this.futureTransactionTotal,
+      this.inspectionStatus,
+      this.closureState})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
         r'GgetAllReservationData_getAllReservation_result', 'G__typename');
@@ -6693,7 +6721,9 @@ class _$GgetAllReservationData_getAllReservation_result
         hostServiceFeeValue == other.hostServiceFeeValue &&
         bookingType == other.bookingType &&
         completedTotal == other.completedTotal &&
-        futureTransactionTotal == other.futureTransactionTotal;
+        futureTransactionTotal == other.futureTransactionTotal &&
+        inspectionStatus == other.inspectionStatus &&
+        closureState == other.closureState;
   }
 
   @override
@@ -6769,6 +6799,8 @@ class _$GgetAllReservationData_getAllReservation_result
     _$hash = $jc(_$hash, bookingType.hashCode);
     _$hash = $jc(_$hash, completedTotal.hashCode);
     _$hash = $jc(_$hash, futureTransactionTotal.hashCode);
+    _$hash = $jc(_$hash, inspectionStatus.hashCode);
+    _$hash = $jc(_$hash, closureState.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -6846,7 +6878,9 @@ class _$GgetAllReservationData_getAllReservation_result
           ..add('hostServiceFeeValue', hostServiceFeeValue)
           ..add('bookingType', bookingType)
           ..add('completedTotal', completedTotal)
-          ..add('futureTransactionTotal', futureTransactionTotal))
+          ..add('futureTransactionTotal', futureTransactionTotal)
+          ..add('inspectionStatus', inspectionStatus)
+          ..add('closureState', closureState))
         .toString();
   }
 }
@@ -7221,6 +7255,15 @@ class GgetAllReservationData_getAllReservation_resultBuilder
               futureTransactionTotal) =>
       _$this._futureTransactionTotal = futureTransactionTotal;
 
+  String? _inspectionStatus;
+  String? get inspectionStatus => _$this._inspectionStatus;
+  set inspectionStatus(String? inspectionStatus) =>
+      _$this._inspectionStatus = inspectionStatus;
+
+  String? _closureState;
+  String? get closureState => _$this._closureState;
+  set closureState(String? closureState) => _$this._closureState = closureState;
+
   GgetAllReservationData_getAllReservation_resultBuilder() {
     GgetAllReservationData_getAllReservation_result._initializeBuilder(this);
   }
@@ -7298,6 +7341,8 @@ class GgetAllReservationData_getAllReservation_resultBuilder
       _bookingType = $v.bookingType;
       _completedTotal = $v.completedTotal?.toBuilder();
       _futureTransactionTotal = $v.futureTransactionTotal?.toBuilder();
+      _inspectionStatus = $v.inspectionStatus;
+      _closureState = $v.closureState;
       _$v = null;
     }
     return this;
@@ -7396,7 +7441,9 @@ class GgetAllReservationData_getAllReservation_resultBuilder
               hostServiceFeeValue: hostServiceFeeValue,
               bookingType: bookingType,
               completedTotal: _completedTotal?.build(),
-              futureTransactionTotal: _futureTransactionTotal?.build());
+              futureTransactionTotal: _futureTransactionTotal?.build(),
+              inspectionStatus: inspectionStatus,
+              closureState: closureState);
     } catch (_) {
       late String _$failedField;
       try {

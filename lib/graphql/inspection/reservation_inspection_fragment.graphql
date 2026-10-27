@@ -1,0 +1,6 @@
+# Derived check-in / check-out status of a reservation, shown as a badge on the trips and bookings lists.
+fragment reservationInspectionFragment on Reservation {
+  id
+  inspectionStatus
+  closureState
+}

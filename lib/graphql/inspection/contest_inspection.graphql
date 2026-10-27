@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/inspection/inspection_result_fragment.graphql'
+
+mutation contestInspection($reservationId: Int!, $type: String!, $comment: String!) {
+  contestInspection(reservationId: $reservationId, type: $type, comment: $comment) {
+    ...inspectionResultFragment
+  }
+}

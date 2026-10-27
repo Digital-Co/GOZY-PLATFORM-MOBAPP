@@ -1,0 +1,36 @@
+fragment disputeResultFragment on DisputeResult {
+  status
+  errorMessage
+  dispute {
+    id
+    reservationId
+    openedBy
+    openedByRole
+    reasonCode
+    status
+    isActive
+    depositAmount
+    depositStatus
+    createdAt
+    closedAt
+    statements {
+      id
+      disputeId
+      userId
+      role
+      content
+      attachments
+      createdAt
+    }
+    decisions {
+      id
+      type
+      retainedAmount
+      refundAmount
+      requestedAmount
+      currency
+      motive
+      createdAt
+    }
+  }
+}

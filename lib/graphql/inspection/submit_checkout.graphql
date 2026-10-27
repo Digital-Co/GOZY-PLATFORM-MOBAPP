@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/inspection/inspection_result_fragment.graphql'
+
+mutation submitCheckout($reservationId: Int!, $hasDamage: Boolean!, $input: CheckoutInput!) {
+  submitCheckout(reservationId: $reservationId, hasDamage: $hasDamage, input: $input) {
+    ...inspectionResultFragment
+  }
+}

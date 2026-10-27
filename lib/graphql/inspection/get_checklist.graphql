@@ -1,0 +1,12 @@
+query getChecklist($reservationId: Int!) {
+  getChecklist(reservationId: $reservationId) {
+    status
+    errorMessage
+    results {
+      key
+      labelKey
+      required
+      sortOrder
+    }
+  }
+}

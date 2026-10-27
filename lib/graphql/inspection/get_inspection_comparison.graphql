@@ -1,0 +1,16 @@
+query getInspectionComparison($reservationId: Int!) {
+  getInspectionComparison(reservationId: $reservationId) {
+    status
+    errorMessage
+    kmDriven
+    fuelDelta
+    hasDamage
+    newDamagePhotos
+    globalStatus
+    alerts {
+      code
+      severity
+      value
+    }
+  }
+}

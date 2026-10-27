@@ -1,0 +1,7 @@
+fragment inspectionPhotoFragment on InspectionPhoto {
+  id
+  kind
+  position
+  uploadedBy
+  createdAt
+}

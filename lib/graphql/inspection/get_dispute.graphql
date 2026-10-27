@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/inspection/dispute_result_fragment.graphql'
+
+query getDispute($reservationId: Int!) {
+  getDispute(reservationId: $reservationId) {
+    ...disputeResultFragment
+  }
+}

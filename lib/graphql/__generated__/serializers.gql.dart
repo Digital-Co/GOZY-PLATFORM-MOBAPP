@@ -224,7 +224,12 @@ import 'package:gozy/graphql/__generated__/reviews_fragment.req.gql.dart'
 import 'package:gozy/graphql/__generated__/reviews_fragment.var.gql.dart'
     show GreviewsFragmentVars;
 import 'package:gozy/graphql/__generated__/schema.schema.gql.dart'
-    show GPawaPayOperation, GReservationOptionInput;
+    show
+        GCheckoutInput,
+        GInspectionChecklistAnswerInput,
+        GInspectionInput,
+        GPawaPayOperation,
+        GReservationOptionInput;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
     show GthreadItemsFragmentData;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.req.gql.dart'
@@ -703,6 +708,153 @@ import 'package:gozy/graphql/inbox/__generated__/Inbox.var.gql.dart'
         GgetUnReadThreadCountVars,
         GreadMessageVars,
         GsendMessageVars;
+import 'package:gozy/graphql/inspection/__generated__/add_dispute_statement.data.gql.dart'
+    show
+        GaddDisputeStatementData,
+        GaddDisputeStatementData_addDisputeStatement,
+        GaddDisputeStatementData_addDisputeStatement_dispute,
+        GaddDisputeStatementData_addDisputeStatement_dispute_decisions,
+        GaddDisputeStatementData_addDisputeStatement_dispute_statements;
+import 'package:gozy/graphql/inspection/__generated__/add_dispute_statement.req.gql.dart'
+    show GaddDisputeStatementReq;
+import 'package:gozy/graphql/inspection/__generated__/add_dispute_statement.var.gql.dart'
+    show GaddDisputeStatementVars;
+import 'package:gozy/graphql/inspection/__generated__/contest_inspection.data.gql.dart'
+    show
+        GcontestInspectionData,
+        GcontestInspectionData_contestInspection,
+        GcontestInspectionData_contestInspection_inspection,
+        GcontestInspectionData_contestInspection_inspection_checklist,
+        GcontestInspectionData_contestInspection_inspection_photos;
+import 'package:gozy/graphql/inspection/__generated__/contest_inspection.req.gql.dart'
+    show GcontestInspectionReq;
+import 'package:gozy/graphql/inspection/__generated__/contest_inspection.var.gql.dart'
+    show GcontestInspectionVars;
+import 'package:gozy/graphql/inspection/__generated__/dispute_result_fragment.data.gql.dart'
+    show
+        GdisputeResultFragmentData,
+        GdisputeResultFragmentData_dispute,
+        GdisputeResultFragmentData_dispute_decisions,
+        GdisputeResultFragmentData_dispute_statements;
+import 'package:gozy/graphql/inspection/__generated__/dispute_result_fragment.req.gql.dart'
+    show GdisputeResultFragmentReq;
+import 'package:gozy/graphql/inspection/__generated__/dispute_result_fragment.var.gql.dart'
+    show GdisputeResultFragmentVars;
+import 'package:gozy/graphql/inspection/__generated__/get_checklist.data.gql.dart'
+    show
+        GgetChecklistData,
+        GgetChecklistData_getChecklist,
+        GgetChecklistData_getChecklist_results;
+import 'package:gozy/graphql/inspection/__generated__/get_checklist.req.gql.dart'
+    show GgetChecklistReq;
+import 'package:gozy/graphql/inspection/__generated__/get_checklist.var.gql.dart'
+    show GgetChecklistVars;
+import 'package:gozy/graphql/inspection/__generated__/get_dispute.data.gql.dart'
+    show
+        GgetDisputeData,
+        GgetDisputeData_getDispute,
+        GgetDisputeData_getDispute_dispute,
+        GgetDisputeData_getDispute_dispute_decisions,
+        GgetDisputeData_getDispute_dispute_statements;
+import 'package:gozy/graphql/inspection/__generated__/get_dispute.req.gql.dart'
+    show GgetDisputeReq;
+import 'package:gozy/graphql/inspection/__generated__/get_dispute.var.gql.dart'
+    show GgetDisputeVars;
+import 'package:gozy/graphql/inspection/__generated__/get_inspection.data.gql.dart'
+    show
+        GgetInspectionData,
+        GgetInspectionData_getInspection,
+        GgetInspectionData_getInspection_inspection,
+        GgetInspectionData_getInspection_inspection_checklist,
+        GgetInspectionData_getInspection_inspection_photos;
+import 'package:gozy/graphql/inspection/__generated__/get_inspection.req.gql.dart'
+    show GgetInspectionReq;
+import 'package:gozy/graphql/inspection/__generated__/get_inspection.var.gql.dart'
+    show GgetInspectionVars;
+import 'package:gozy/graphql/inspection/__generated__/get_inspection_comparison.data.gql.dart'
+    show
+        GgetInspectionComparisonData,
+        GgetInspectionComparisonData_getInspectionComparison,
+        GgetInspectionComparisonData_getInspectionComparison_alerts;
+import 'package:gozy/graphql/inspection/__generated__/get_inspection_comparison.req.gql.dart'
+    show GgetInspectionComparisonReq;
+import 'package:gozy/graphql/inspection/__generated__/get_inspection_comparison.var.gql.dart'
+    show GgetInspectionComparisonVars;
+import 'package:gozy/graphql/inspection/__generated__/inspection_fragment.data.gql.dart'
+    show
+        GinspectionFragmentData,
+        GinspectionFragmentData_checklist,
+        GinspectionFragmentData_photos;
+import 'package:gozy/graphql/inspection/__generated__/inspection_fragment.req.gql.dart'
+    show GinspectionFragmentReq;
+import 'package:gozy/graphql/inspection/__generated__/inspection_fragment.var.gql.dart'
+    show GinspectionFragmentVars;
+import 'package:gozy/graphql/inspection/__generated__/inspection_photo_fragment.data.gql.dart'
+    show GinspectionPhotoFragmentData;
+import 'package:gozy/graphql/inspection/__generated__/inspection_photo_fragment.req.gql.dart'
+    show GinspectionPhotoFragmentReq;
+import 'package:gozy/graphql/inspection/__generated__/inspection_photo_fragment.var.gql.dart'
+    show GinspectionPhotoFragmentVars;
+import 'package:gozy/graphql/inspection/__generated__/inspection_result_fragment.data.gql.dart'
+    show
+        GinspectionResultFragmentData,
+        GinspectionResultFragmentData_inspection,
+        GinspectionResultFragmentData_inspection_checklist,
+        GinspectionResultFragmentData_inspection_photos;
+import 'package:gozy/graphql/inspection/__generated__/inspection_result_fragment.req.gql.dart'
+    show GinspectionResultFragmentReq;
+import 'package:gozy/graphql/inspection/__generated__/inspection_result_fragment.var.gql.dart'
+    show GinspectionResultFragmentVars;
+import 'package:gozy/graphql/inspection/__generated__/open_dispute.data.gql.dart'
+    show
+        GopenDisputeData,
+        GopenDisputeData_openDispute,
+        GopenDisputeData_openDispute_dispute,
+        GopenDisputeData_openDispute_dispute_decisions,
+        GopenDisputeData_openDispute_dispute_statements;
+import 'package:gozy/graphql/inspection/__generated__/open_dispute.req.gql.dart'
+    show GopenDisputeReq;
+import 'package:gozy/graphql/inspection/__generated__/open_dispute.var.gql.dart'
+    show GopenDisputeVars;
+import 'package:gozy/graphql/inspection/__generated__/reservation_inspection_fragment.data.gql.dart'
+    show GreservationInspectionFragmentData;
+import 'package:gozy/graphql/inspection/__generated__/reservation_inspection_fragment.req.gql.dart'
+    show GreservationInspectionFragmentReq;
+import 'package:gozy/graphql/inspection/__generated__/reservation_inspection_fragment.var.gql.dart'
+    show GreservationInspectionFragmentVars;
+import 'package:gozy/graphql/inspection/__generated__/save_inspection_draft.data.gql.dart'
+    show
+        GsaveInspectionDraftData,
+        GsaveInspectionDraftData_saveInspectionDraft,
+        GsaveInspectionDraftData_saveInspectionDraft_inspection,
+        GsaveInspectionDraftData_saveInspectionDraft_inspection_checklist,
+        GsaveInspectionDraftData_saveInspectionDraft_inspection_photos;
+import 'package:gozy/graphql/inspection/__generated__/save_inspection_draft.req.gql.dart'
+    show GsaveInspectionDraftReq;
+import 'package:gozy/graphql/inspection/__generated__/save_inspection_draft.var.gql.dart'
+    show GsaveInspectionDraftVars;
+import 'package:gozy/graphql/inspection/__generated__/submit_checkout.data.gql.dart'
+    show
+        GsubmitCheckoutData,
+        GsubmitCheckoutData_submitCheckout,
+        GsubmitCheckoutData_submitCheckout_inspection,
+        GsubmitCheckoutData_submitCheckout_inspection_checklist,
+        GsubmitCheckoutData_submitCheckout_inspection_photos;
+import 'package:gozy/graphql/inspection/__generated__/submit_checkout.req.gql.dart'
+    show GsubmitCheckoutReq;
+import 'package:gozy/graphql/inspection/__generated__/submit_checkout.var.gql.dart'
+    show GsubmitCheckoutVars;
+import 'package:gozy/graphql/inspection/__generated__/validate_inspection.data.gql.dart'
+    show
+        GvalidateInspectionData,
+        GvalidateInspectionData_validateInspection,
+        GvalidateInspectionData_validateInspection_inspection,
+        GvalidateInspectionData_validateInspection_inspection_checklist,
+        GvalidateInspectionData_validateInspection_inspection_photos;
+import 'package:gozy/graphql/inspection/__generated__/validate_inspection.req.gql.dart'
+    show GvalidateInspectionReq;
+import 'package:gozy/graphql/inspection/__generated__/validate_inspection.var.gql.dart'
+    show GvalidateInspectionVars;
 import 'package:gozy/graphql/layoutSettings/__generated__/layout_settings.data.gql.dart'
     show
         GgetLayoutSettingsData,
@@ -1517,6 +1669,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GCancellationDataData_cancelReservationData_results_listData_user_verification,
   GCancellationDataReq,
   GCancellationDataVars,
+  GCheckoutInput,
   GCodeVerificationData,
   GCodeVerificationData_EmailVerification,
   GCodeVerificationReq,
@@ -1556,6 +1709,8 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GForgotPasswordVerificationData_verifyForgotPassword,
   GForgotPasswordVerificationReq,
   GForgotPasswordVerificationVars,
+  GInspectionChecklistAnswerInput,
+  GInspectionInput,
   GLoginData,
   GLoginData_userLogin,
   GLoginData_userLogin_result,
@@ -1695,6 +1850,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GVerifyPhoneNumberData_VerifyPhoneNumber,
   GVerifyPhoneNumberReq,
   GVerifyPhoneNumberVars,
+  GaddDisputeStatementData,
+  GaddDisputeStatementData_addDisputeStatement,
+  GaddDisputeStatementData_addDisputeStatement_dispute,
+  GaddDisputeStatementData_addDisputeStatement_dispute_decisions,
+  GaddDisputeStatementData_addDisputeStatement_dispute_statements,
+  GaddDisputeStatementReq,
+  GaddDisputeStatementVars,
   GaddPawaPayPayoutAccountData,
   GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount,
   GaddPawaPayPayoutAccountData_addPawaPayPayoutAccount_result,
@@ -1839,6 +2001,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GcontactSupportData_contactSupport_result,
   GcontactSupportReq,
   GcontactSupportVars,
+  GcontestInspectionData,
+  GcontestInspectionData_contestInspection,
+  GcontestInspectionData_contestInspection_inspection,
+  GcontestInspectionData_contestInspection_inspection_checklist,
+  GcontestInspectionData_contestInspection_inspection_photos,
+  GcontestInspectionReq,
+  GcontestInspectionVars,
   GcreateListingData,
   GcreateListingData_createListing,
   GcreateListingData_createListing_results,
@@ -1896,6 +2065,12 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GdeleteUserData_deleteUser,
   GdeleteUserReq,
   GdeleteUserVars,
+  GdisputeResultFragmentData,
+  GdisputeResultFragmentData_dispute,
+  GdisputeResultFragmentData_dispute_decisions,
+  GdisputeResultFragmentData_dispute_statements,
+  GdisputeResultFragmentReq,
+  GdisputeResultFragmentVars,
   GgetAllPurchaseServicePlanData,
   GgetAllPurchaseServicePlanData_getAllPurchaseServicePlan,
   GgetAllPurchaseServicePlanData_getAllPurchaseServicePlan_results,
@@ -2011,6 +2186,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetBillingCalculationData_getBillingCalculation_result_specialPricing,
   GgetBillingCalculationReq,
   GgetBillingCalculationVars,
+  GgetChecklistData,
+  GgetChecklistData_getChecklist,
+  GgetChecklistData_getChecklist_results,
+  GgetChecklistReq,
+  GgetChecklistVars,
   GgetCountriesData,
   GgetCountriesData_getCountries,
   GgetCountriesData_getCountries_results,
@@ -2026,6 +2206,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetCurrencyData_Currency_result,
   GgetCurrencyReq,
   GgetCurrencyVars,
+  GgetDisputeData,
+  GgetDisputeData_getDispute,
+  GgetDisputeData_getDispute_dispute,
+  GgetDisputeData_getDispute_dispute_decisions,
+  GgetDisputeData_getDispute_dispute_statements,
+  GgetDisputeReq,
+  GgetDisputeVars,
   GgetExploreListingsData,
   GgetExploreListingsData_getMostViewedListing,
   GgetExploreListingsData_getMostViewedListing_results,
@@ -2070,6 +2257,18 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetImageBannerData_getImageBanner_result,
   GgetImageBannerReq,
   GgetImageBannerVars,
+  GgetInspectionComparisonData,
+  GgetInspectionComparisonData_getInspectionComparison,
+  GgetInspectionComparisonData_getInspectionComparison_alerts,
+  GgetInspectionComparisonReq,
+  GgetInspectionComparisonVars,
+  GgetInspectionData,
+  GgetInspectionData_getInspection,
+  GgetInspectionData_getInspection_inspection,
+  GgetInspectionData_getInspection_inspection_checklist,
+  GgetInspectionData_getInspection_inspection_photos,
+  GgetInspectionReq,
+  GgetInspectionVars,
   GgetLayoutSettingsData,
   GgetLayoutSettingsData_getLayoutSettings,
   GgetLayoutSettingsData_getLayoutSettings_result,
@@ -2408,6 +2607,20 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GinitiatePawaPayDepositData_initiatePawaPayDeposit,
   GinitiatePawaPayDepositReq,
   GinitiatePawaPayDepositVars,
+  GinspectionFragmentData,
+  GinspectionFragmentData_checklist,
+  GinspectionFragmentData_photos,
+  GinspectionFragmentReq,
+  GinspectionFragmentVars,
+  GinspectionPhotoFragmentData,
+  GinspectionPhotoFragmentReq,
+  GinspectionPhotoFragmentVars,
+  GinspectionResultFragmentData,
+  GinspectionResultFragmentData_inspection,
+  GinspectionResultFragmentData_inspection_checklist,
+  GinspectionResultFragmentData_inspection_photos,
+  GinspectionResultFragmentReq,
+  GinspectionResultFragmentVars,
   GlistBlockedDatesData,
   GlistBlockedDatesData_getListBlockedDates,
   GlistBlockedDatesData_getListBlockedDates_results,
@@ -2450,6 +2663,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GmanagePublishStatusData_managePublishStatus,
   GmanagePublishStatusReq,
   GmanagePublishStatusVars,
+  GopenDisputeData,
+  GopenDisputeData_openDispute,
+  GopenDisputeData_openDispute_dispute,
+  GopenDisputeData_openDispute_dispute_decisions,
+  GopenDisputeData_openDispute_dispute_statements,
+  GopenDisputeReq,
+  GopenDisputeVars,
   GpriceSettingsData,
   GpriceSettingsData_getSearchSettings,
   GpriceSettingsData_getSearchSettings_results,
@@ -2495,6 +2715,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GreservationFragmentData_threadData,
   GreservationFragmentReq,
   GreservationFragmentVars,
+  GreservationInspectionFragmentData,
+  GreservationInspectionFragmentReq,
+  GreservationInspectionFragmentVars,
   GreservationOptionSnapshotFragmentData,
   GreservationOptionSnapshotFragmentReq,
   GreservationOptionSnapshotFragmentVars,
@@ -2548,6 +2771,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GreviewsFragmentData_userData_userVerification,
   GreviewsFragmentReq,
   GreviewsFragmentVars,
+  GsaveInspectionDraftData,
+  GsaveInspectionDraftData_saveInspectionDraft,
+  GsaveInspectionDraftData_saveInspectionDraft_inspection,
+  GsaveInspectionDraftData_saveInspectionDraft_inspection_checklist,
+  GsaveInspectionDraftData_saveInspectionDraft_inspection_photos,
+  GsaveInspectionDraftReq,
+  GsaveInspectionDraftVars,
   GsaveListingOptionData,
   GsaveListingOptionData_saveListingOption,
   GsaveListingOptionData_saveListingOption_results,
@@ -2590,6 +2820,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GshowUserProfileData_showUserProfile_results_userData_userVerification,
   GshowUserProfileReq,
   GshowUserProfileVars,
+  GsubmitCheckoutData,
+  GsubmitCheckoutData_submitCheckout,
+  GsubmitCheckoutData_submitCheckout_inspection,
+  GsubmitCheckoutData_submitCheckout_inspection_checklist,
+  GsubmitCheckoutData_submitCheckout_inspection_photos,
+  GsubmitCheckoutReq,
+  GsubmitCheckoutVars,
   GthreadItemsFragmentData,
   GthreadItemsFragmentReq,
   GthreadItemsFragmentVars,
@@ -2640,6 +2877,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GuserVerifiedInfoFragmentData,
   GuserVerifiedInfoFragmentReq,
   GuserVerifiedInfoFragmentVars,
+  GvalidateInspectionData,
+  GvalidateInspectionData_validateInspection,
+  GvalidateInspectionData_validateInspection_inspection,
+  GvalidateInspectionData_validateInspection_inspection_checklist,
+  GvalidateInspectionData_validateInspection_inspection_photos,
+  GvalidateInspectionReq,
+  GvalidateInspectionVars,
   GvalidatePromoCodeData,
   GvalidatePromoCodeData_validatePromoCode,
   GvalidatePromoCodeData_validatePromoCode_result,

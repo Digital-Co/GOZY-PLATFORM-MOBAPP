@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/inspection/dispute_result_fragment.graphql'
+
+mutation openDispute($reservationId: Int!, $reasonCode: String!, $comment: String!) {
+  openDispute(reservationId: $reservationId, reasonCode: $reasonCode, comment: $comment) {
+    ...disputeResultFragment
+  }
+}

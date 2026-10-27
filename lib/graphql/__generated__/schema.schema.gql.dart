@@ -50,4 +50,94 @@ abstract class GReservationOptionInput
       );
 }
 
+abstract class GInspectionChecklistAnswerInput
+    implements
+        Built<GInspectionChecklistAnswerInput,
+            GInspectionChecklistAnswerInputBuilder> {
+  GInspectionChecklistAnswerInput._();
+
+  factory GInspectionChecklistAnswerInput(
+          [void Function(GInspectionChecklistAnswerInputBuilder b) updates]) =
+      _$GInspectionChecklistAnswerInput;
+
+  String get key;
+  bool get present;
+  static Serializer<GInspectionChecklistAnswerInput> get serializer =>
+      _$gInspectionChecklistAnswerInputSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GInspectionChecklistAnswerInput.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GInspectionChecklistAnswerInput? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GInspectionChecklistAnswerInput.serializer,
+        json,
+      );
+}
+
+abstract class GInspectionInput
+    implements Built<GInspectionInput, GInspectionInputBuilder> {
+  GInspectionInput._();
+
+  factory GInspectionInput([void Function(GInspectionInputBuilder b) updates]) =
+      _$GInspectionInput;
+
+  String? get generalState;
+  int? get mileage;
+  String? get fuelLevel;
+  bool? get keysConfirmed;
+  String? get comment;
+  BuiltList<GInspectionChecklistAnswerInput>? get checklist;
+  bool? get hasDamage;
+  String? get damageDescription;
+  BuiltList<int>? get photoIds;
+  static Serializer<GInspectionInput> get serializer =>
+      _$gInspectionInputSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GInspectionInput.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GInspectionInput? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GInspectionInput.serializer,
+        json,
+      );
+}
+
+abstract class GCheckoutInput
+    implements Built<GCheckoutInput, GCheckoutInputBuilder> {
+  GCheckoutInput._();
+
+  factory GCheckoutInput([void Function(GCheckoutInputBuilder b) updates]) =
+      _$GCheckoutInput;
+
+  String? get generalState;
+  int? get mileage;
+  String? get fuelLevel;
+  bool? get keysConfirmed;
+  String? get comment;
+  BuiltList<GInspectionChecklistAnswerInput>? get checklist;
+  bool? get hasDamage;
+  String? get damageDescription;
+  BuiltList<int>? get photoIds;
+  int? get expectedVersion;
+  static Serializer<GCheckoutInput> get serializer =>
+      _$gCheckoutInputSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GCheckoutInput.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GCheckoutInput? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GCheckoutInput.serializer,
+        json,
+      );
+}
+
 const Map<String, Set<String>> possibleTypesMap = {};

@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/inspection/inspection_result_fragment.graphql'
+
+mutation validateInspection($reservationId: Int!, $type: String!, $version: Int!) {
+  validateInspection(reservationId: $reservationId, type: $type, version: $version) {
+    ...inspectionResultFragment
+  }
+}

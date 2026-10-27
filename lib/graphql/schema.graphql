@@ -730,6 +730,12 @@ type MobileLanguageType {
 }
 
 type Mutation {
+  saveInspectionDraft(reservationId: Int!, type: String!, input: InspectionInput!, expectedVersion: Int): InspectionResult
+  validateInspection(reservationId: Int!, type: String!, version: Int!): InspectionResult
+  contestInspection(reservationId: Int!, type: String!, comment: String!): InspectionResult
+  submitCheckout(reservationId: Int!, hasDamage: Boolean!, input: CheckoutInput!): InspectionResult
+  openDispute(reservationId: Int!, reasonCode: String!, comment: String!): DisputeResult
+  addDisputeStatement(disputeId: Int!, content: String!, attachments: [Int!]): DisputeResult
   createUser(firstName: String, lastName: String, email: String!, password: String!, dateOfBirth: String, deviceType: String!, deviceDetail: String, deviceId: String!, registerType: String): UserCommon
   userLogout(deviceType: String!, deviceId: String!): UserType
   userUpdate(userId: String!, fieldName: String!, fieldValue: String, deviceType: String!, deviceId: String!): UserType
@@ -992,6 +998,10 @@ type PurchaseSpecialFeaturesType {
 }
 
 type Query {
+  getInspection(reservationId: Int!, type: String!): InspectionResult
+  getInspectionComparison(reservationId: Int!): InspectionComparison
+  getChecklist(reservationId: Int!): ChecklistResult
+  getDispute(reservationId: Int!): DisputeResult
   validateEmailExist(email: String!): CommonType
   userLogin(email: String!, password: String!, deviceType: String!, deviceDetail: String, deviceId: String!): UserCommon
   userAccount: WholeAccount
@@ -1133,6 +1143,8 @@ type Reservation {
   basePrice: Float
   delivery: Float
   optionsTotal: Float
+  closureState: String
+  inspectionStatus: String
   reservationOptions: [ReservationOptionSnapshot]
   currency: String
   isCancelEnabled: Boolean
@@ -2004,4 +2016,170 @@ type ReservationOptionSnapshot {
 input ReservationOptionInput {
   optionId: Int!
   userInput: String
+}
+
+type InspectionPhoto {
+  id: Int
+  kind: String
+  position: Int
+  sha256: String
+  uploadedBy: String
+  createdAt: String
+}
+
+type InspectionChecklistAnswer {
+  key: String
+  present: Boolean
+}
+
+input InspectionChecklistAnswerInput {
+  key: String!
+  present: Boolean!
+}
+
+input InspectionInput {
+  generalState: String
+  mileage: Int
+  fuelLevel: String
+  keysConfirmed: Boolean
+  comment: String
+  checklist: [InspectionChecklistAnswerInput!]
+  hasDamage: Boolean
+  damageDescription: String
+  photoIds: [Int!]
+}
+
+input CheckoutInput {
+  generalState: String
+  mileage: Int
+  fuelLevel: String
+  keysConfirmed: Boolean
+  comment: String
+  checklist: [InspectionChecklistAnswerInput!]
+  hasDamage: Boolean
+  damageDescription: String
+  photoIds: [Int!]
+  expectedVersion: Int
+}
+
+type Inspection {
+  id: Int
+  reservationId: Int
+  type: String
+  status: String
+  version: Int
+  authorId: String
+  authorRole: String
+  generalState: String
+  mileage: Int
+  fuelLevel: String
+  keysConfirmed: Boolean
+  hasDamage: Boolean
+  damageDescription: String
+  comment: String
+  checklist: [InspectionChecklistAnswer]
+  hostValidatedAt: String
+  guestValidatedAt: String
+  contestedAt: String
+  contentHash: String
+  lockedAt: String
+  createdAt: String
+  updatedAt: String
+  photos: [InspectionPhoto]
+  viewerRole: String
+  windowOpen: Boolean
+  windowReason: String
+  canEdit: Boolean
+  canValidate: Boolean
+  canContest: Boolean
+}
+
+type InspectionResult {
+  status: Int
+  errorMessage: String
+  inspection: Inspection
+  windowOpen: Boolean
+  windowReason: String
+  opensAt: String
+  closesAt: String
+  viewerRole: String
+}
+
+type InspectionAlert {
+  code: String
+  severity: String
+  value: Float
+}
+
+type InspectionComparison {
+  status: Int
+  errorMessage: String
+  kmDriven: Int
+  fuelDelta: Int
+  hasDamage: Boolean
+  newDamagePhotos: Int
+  alerts: [InspectionAlert]
+  checkin: Inspection
+  checkout: Inspection
+  globalStatus: String
+}
+
+type ChecklistItem {
+  key: String
+  labelKey: String
+  required: Boolean
+  sortOrder: Int
+}
+
+type ChecklistResult {
+  status: Int
+  errorMessage: String
+  results: [ChecklistItem]
+}
+
+type DisputeStatement {
+  id: Int
+  disputeId: Int
+  userId: String
+  role: String
+  content: String
+  attachments: [Int]
+  isInternal: Boolean
+  createdAt: String
+}
+
+type DisputeDecision {
+  id: Int
+  disputeId: Int
+  adminId: String
+  type: String
+  retainedAmount: Float
+  refundAmount: Float
+  requestedAmount: Float
+  currency: String
+  motive: String
+  attachments: [Int]
+  createdAt: String
+}
+
+type Dispute {
+  id: Int
+  reservationId: Int
+  openedBy: String
+  openedByRole: String
+  reasonCode: String
+  status: String
+  isActive: Boolean
+  depositAmount: Float
+  depositStatus: String
+  createdAt: String
+  closedAt: String
+  statements: [DisputeStatement]
+  decisions: [DisputeDecision]
+}
+
+type DisputeResult {
+  status: Int
+  errorMessage: String
+  dispute: Dispute
 }

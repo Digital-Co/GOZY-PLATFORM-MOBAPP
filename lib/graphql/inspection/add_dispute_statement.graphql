@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/inspection/dispute_result_fragment.graphql'
+
+mutation addDisputeStatement($disputeId: Int!, $content: String!, $attachments: [Int!]) {
+  addDisputeStatement(disputeId: $disputeId, content: $content, attachments: $attachments) {
+    ...disputeResultFragment
+  }
+}

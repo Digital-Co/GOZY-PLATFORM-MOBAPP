@@ -1,10 +1,12 @@
 # import 'package:gozy/graphql/reservation_fragment.graphql'
+# import 'package:gozy/graphql/inspection/reservation_inspection_fragment.graphql'
 
 #Trips
 query getAllReservation ($userType: String, $currentPage: Int, $dateFilter: String){
 getAllReservation(userType: $userType, currentPage: $currentPage, dateFilter: $dateFilter){
 result {
     ...reservationFragment
+    ...reservationInspectionFragment
 }
 count
 status

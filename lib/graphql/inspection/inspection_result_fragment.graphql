@@ -1,0 +1,14 @@
+# import 'package:gozy/graphql/inspection/inspection_fragment.graphql'
+
+fragment inspectionResultFragment on InspectionResult {
+  status
+  errorMessage
+  windowOpen
+  windowReason
+  opensAt
+  closesAt
+  viewerRole
+  inspection {
+    ...inspectionFragment
+  }
+}
