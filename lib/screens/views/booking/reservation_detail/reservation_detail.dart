@@ -1,3 +1,4 @@
+import 'package:gozy/screens/views/inspection/inspection_entry.dart';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -153,6 +154,7 @@ class ReservationDetailState extends CustomStatefulWidgetState<ReservationDetail
   Widget showContentWidget() {
     List<Widget> filterwidgets = [];
     filterwidgets.add(_hostListingInfo());
+     filterwidgets.add(_inspectionInfo());
      filterwidgets.add(_billingInfo());
      filterwidgets.add(_includedOptionsInfo());
      filterwidgets.add(_billingAddressInfo());
@@ -160,6 +162,15 @@ class ReservationDetailState extends CustomStatefulWidgetState<ReservationDetail
     return toListScroll(WidgetList: filterwidgets,padding: pad(w: AppDimen.startMargin), isFromItinerary: overALLThemeType == 4 ? true : false);
   }
 
+
+  /// Check-in / check-out entry points of the reservation (the screens
+  /// explain by themselves when they are not open yet).
+  Widget _inspectionInfo() {
+    final reservation = controller.reservationResult;
+    if (reservation == null) return const SizedBox.shrink();
+    return InspectionEntryRow(item: reservation, isOwner: appPreference.isOwner ?? false)
+        .toPad(top: 6, bottom: 4);
+  }
 
   Widget _hostListingInfo() {
     String photo = imgListingMedium + (controller.itemInfo.listPhotoName?.toString() ?? '');

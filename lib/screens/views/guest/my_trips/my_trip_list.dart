@@ -9,6 +9,7 @@ import 'package:gozy/resources/app_dimen.dart';
 import 'package:gozy/resources/app_font.dart';
 import 'package:gozy/resources/app_lang.dart';
 import 'package:gozy/resources/app_layout.dart';
+import 'package:gozy/screens/views/inspection/inspection_entry.dart';
 import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/screens/views/custom_scaffold.dart';
 import 'package:gozy/screens/views/guest/my_trips/my_trip_list_navigator.dart';
@@ -862,6 +863,8 @@ class MyTripsListPageState extends CustomStatefulWidgetState<MyTripsListPage> wi
             IntrinsicHeight(child: fullWidthDashDivider().toFitToDeviceWidth(width: deviceWidth - 50)),
           ],
           12.toHeight(),
+          if (!isshimmerloading && item != null)
+            InspectionEntryRow(item: item, isOwner: appPreference.isOwner ?? false),
           [
             !(appPreference.isOwner ?? false)
                 ? _getAmountView(
@@ -895,7 +898,7 @@ class MyTripsListPageState extends CustomStatefulWidgetState<MyTripsListPage> wi
       double? borderRadius,
       double? statusFontSize,
       Color? textColor}) {
-    return ((bookingStatusColor != null && bookingStatusColor.$2.isNotEmpty) || isshimmerloading)
+    final statusRow = ((bookingStatusColor != null && bookingStatusColor.$2.isNotEmpty) || isshimmerloading)
         ? [
             _getReservationStatusWidget(
                 fillColor: fillColor ?? appColors.myTripsBGColor,
@@ -919,6 +922,15 @@ class MyTripsListPageState extends CustomStatefulWidgetState<MyTripsListPage> wi
             ]
           ].toRow(crossAxisAlignment: CrossAxisAlignment.center).toPad(bottom: 10)
         : 0.toHeight();
+    // Check-in / check-out entry points (hidden for unconfirmed reservations).
+    if (isshimmerloading || item == null) return statusRow;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        statusRow,
+        InspectionEntryRow(item: item, isOwner: appPreference.isOwner ?? false),
+      ],
+    );
   }
 
   Widget _getAddressView({required bool isshimmerloading, String? address}) {
