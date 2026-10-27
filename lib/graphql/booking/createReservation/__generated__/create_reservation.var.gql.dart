@@ -2,9 +2,11 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
+import 'package:gozy/graphql/__generated__/schema.schema.gql.dart' as _i1;
+import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i2;
 
 part 'create_reservation.var.gql.g.dart';
 
@@ -22,7 +24,7 @@ abstract class GcreateReservationVars
   int get guests;
   String get message;
   double get basePrice;
-  double get delivery;
+  double? get delivery;
   String get currency;
   double? get discount;
   String? get discountType;
@@ -45,16 +47,17 @@ abstract class GcreateReservationVars
   bool? get isDeliveryIncluded;
   String? get paymentCurrency;
   String? get promoCode;
+  BuiltList<_i1.GReservationOptionInput?>? get options;
   static Serializer<GcreateReservationVars> get serializer =>
       _$gcreateReservationVarsSerializer;
 
-  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i2.serializers.serializeWith(
         GcreateReservationVars.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GcreateReservationVars? fromJson(Map<String, dynamic> json) =>
-      _i1.serializers.deserializeWith(
+      _i2.serializers.deserializeWith(
         GcreateReservationVars.serializer,
         json,
       );

@@ -146,7 +146,6 @@ abstract class GupdateListingStep3Vars
   int? get minDay;
   int? get maxDay;
   double? get basePrice;
-  double? get delivery;
   String? get currency;
   double? get weeklyDiscount;
   double? get monthlyDiscount;

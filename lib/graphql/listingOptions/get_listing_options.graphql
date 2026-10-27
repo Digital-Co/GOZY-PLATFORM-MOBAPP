@@ -1,0 +1,8 @@
+# import 'package:gozy/graphql/listingOptions/listing_options_result_fragment.graphql'
+
+# Owner view: every option (fixed ones always listed) plus the admin limits.
+query getListingOptions($listId: Int!) {
+  getListingOptions(listId: $listId) {
+    ...listingOptionsResultFragment
+  }
+}

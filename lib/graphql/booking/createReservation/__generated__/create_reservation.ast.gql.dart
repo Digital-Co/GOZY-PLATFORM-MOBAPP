@@ -18,6 +18,8 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.ast.gql.dart'
     as _i5;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i6;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.ast.gql.dart'
+    as _i10;
 import 'package:gql/ast.dart' as _i1;
 
 const createReservation = _i1.OperationDefinitionNode(
@@ -82,7 +84,7 @@ const createReservation = _i1.OperationDefinitionNode(
       variable: _i1.VariableNode(name: _i1.NameNode(value: 'delivery')),
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'Float'),
-        isNonNull: true,
+        isNonNull: false,
       ),
       defaultValue: _i1.DefaultValueNode(value: null),
       directives: [],
@@ -286,6 +288,18 @@ const createReservation = _i1.OperationDefinitionNode(
       defaultValue: _i1.DefaultValueNode(value: null),
       directives: [],
     ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'options')),
+      type: _i1.ListTypeNode(
+        type: _i1.NamedTypeNode(
+          name: _i1.NameNode(value: 'ReservationOptionInput'),
+          isNonNull: false,
+        ),
+        isNonNull: false,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
   ],
   directives: [],
   selectionSet: _i1.SelectionSetNode(selections: [
@@ -410,6 +424,10 @@ const createReservation = _i1.OperationDefinitionNode(
           name: _i1.NameNode(value: 'promoCode'),
           value: _i1.VariableNode(name: _i1.NameNode(value: 'promoCode')),
         ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'options'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'options')),
+        ),
       ],
       directives: [],
       selectionSet: _i1.SelectionSetNode(selections: [
@@ -432,4 +450,5 @@ const document = _i1.DocumentNode(definitions: [
   _i8.listingDataFragment,
   _i8.cancellationDataFragment,
   _i9.listingUserFragment,
+  _i10.reservationOptionSnapshotFragment,
 ]);

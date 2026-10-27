@@ -1,0 +1,15 @@
+fragment listingOptionFragment on ListingOption {
+  id
+  listId
+  slot
+  code
+  isFixed
+  label
+  description
+  price
+  billingMode
+  isActive
+  adminDisabled
+  icon
+  sortOrder
+}

@@ -6,6 +6,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.data.gql.dart'
+    as _i2;
 
 part 'get_billing_calculation.data.gql.g.dart';
 
@@ -99,6 +101,9 @@ abstract class GgetBillingCalculationData_getBillingCalculation_result
   int? get days;
   double? get basePrice;
   double? get delivery;
+  BuiltList<GgetBillingCalculationData_getBillingCalculation_result_options?>?
+      get options;
+  double? get optionsTotal;
   int? get guests;
   BuiltList<
           GgetBillingCalculationData_getBillingCalculation_result_specialPricing?>?
@@ -137,6 +142,72 @@ abstract class GgetBillingCalculationData_getBillingCalculation_result
         GgetBillingCalculationData_getBillingCalculation_result.serializer,
         json,
       );
+}
+
+abstract class GgetBillingCalculationData_getBillingCalculation_result_options
+    implements
+        Built<GgetBillingCalculationData_getBillingCalculation_result_options,
+            GgetBillingCalculationData_getBillingCalculation_result_optionsBuilder>,
+        _i2.GbookingOptionLineFragment {
+  GgetBillingCalculationData_getBillingCalculation_result_options._();
+
+  factory GgetBillingCalculationData_getBillingCalculation_result_options(
+          [void Function(
+                  GgetBillingCalculationData_getBillingCalculation_result_optionsBuilder
+                      b)
+              updates]) =
+      _$GgetBillingCalculationData_getBillingCalculation_result_options;
+
+  static void _initializeBuilder(
+          GgetBillingCalculationData_getBillingCalculation_result_optionsBuilder
+              b) =>
+      b..G__typename = 'BookingOptionLineType';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get listingOptionId;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get labelKey;
+  @override
+  String? get description;
+  @override
+  String? get billingMode;
+  @override
+  double? get unitPrice;
+  @override
+  int? get quantity;
+  @override
+  double? get amount;
+  @override
+  String? get currency;
+  @override
+  String? get userInput;
+  static Serializer<
+          GgetBillingCalculationData_getBillingCalculation_result_options>
+      get serializer =>
+          _$ggetBillingCalculationDataGetBillingCalculationResultOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetBillingCalculationData_getBillingCalculation_result_options
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetBillingCalculationData_getBillingCalculation_result_options?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetBillingCalculationData_getBillingCalculation_result_options
+                .serializer,
+            json,
+          );
 }
 
 abstract class GgetBillingCalculationData_getBillingCalculation_result_specialPricing

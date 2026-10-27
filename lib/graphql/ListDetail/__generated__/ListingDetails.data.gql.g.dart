@@ -86,6 +86,9 @@ Serializer<GviewListingDetailsData_viewListing_results_listingData>
 Serializer<GviewListingDetailsData_viewListing_results_listingData_cancellation>
     _$gviewListingDetailsDataViewListingResultsListingDataCancellationSerializer =
     new _$GviewListingDetailsData_viewListing_results_listingData_cancellationSerializer();
+Serializer<GviewListingDetailsData_viewListing_results_listingOptions>
+    _$gviewListingDetailsDataViewListingResultsListingOptionsSerializer =
+    new _$GviewListingDetailsData_viewListing_results_listingOptionsSerializer();
 Serializer<GviewListingDetailsData_viewListing_results_blockedDates>
     _$gviewListingDetailsDataViewListingResultsBlockedDatesSerializer =
     new _$GviewListingDetailsData_viewListing_results_blockedDatesSerializer();
@@ -2510,6 +2513,16 @@ class _$GviewListingDetailsData_viewListing_resultsSerializer
             specifiedType: const FullType(
                 GviewListingDetailsData_viewListing_results_listingData)));
     }
+    value = object.listingOptions;
+    if (value != null) {
+      result
+        ..add('listingOptions')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType.nullable(
+                  GviewListingDetailsData_viewListing_results_listingOptions)
+            ])));
+    }
     value = object.blockedDates;
     if (value != null) {
       result
@@ -2832,6 +2845,13 @@ class _$GviewListingDetailsData_viewListing_resultsSerializer
                   specifiedType: const FullType(
                       GviewListingDetailsData_viewListing_results_listingData))!
               as GviewListingDetailsData_viewListing_results_listingData);
+          break;
+        case 'listingOptions':
+          result.listingOptions.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType.nullable(
+                    GviewListingDetailsData_viewListing_results_listingOptions)
+              ]))! as BuiltList<Object?>);
           break;
         case 'blockedDates':
           result.blockedDates.replace(serializers.deserialize(value,
@@ -3855,6 +3875,196 @@ class _$GviewListingDetailsData_viewListing_results_listingData_cancellationSeri
         case 'status':
           result.status = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GviewListingDetailsData_viewListing_results_listingOptionsSerializer
+    implements
+        StructuredSerializer<
+            GviewListingDetailsData_viewListing_results_listingOptions> {
+  @override
+  final Iterable<Type> types = const [
+    GviewListingDetailsData_viewListing_results_listingOptions,
+    _$GviewListingDetailsData_viewListing_results_listingOptions
+  ];
+  @override
+  final String wireName =
+      'GviewListingDetailsData_viewListing_results_listingOptions';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GviewListingDetailsData_viewListing_results_listingOptions object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.listId;
+    if (value != null) {
+      result
+        ..add('listId')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.slot;
+    if (value != null) {
+      result
+        ..add('slot')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.code;
+    if (value != null) {
+      result
+        ..add('code')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.isFixed;
+    if (value != null) {
+      result
+        ..add('isFixed')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.label;
+    if (value != null) {
+      result
+        ..add('label')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.description;
+    if (value != null) {
+      result
+        ..add('description')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.price;
+    if (value != null) {
+      result
+        ..add('price')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.billingMode;
+    if (value != null) {
+      result
+        ..add('billingMode')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.isActive;
+    if (value != null) {
+      result
+        ..add('isActive')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.adminDisabled;
+    if (value != null) {
+      result
+        ..add('adminDisabled')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.icon;
+    if (value != null) {
+      result
+        ..add('icon')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sortOrder;
+    if (value != null) {
+      result
+        ..add('sortOrder')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    return result;
+  }
+
+  @override
+  GviewListingDetailsData_viewListing_results_listingOptions deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result =
+        new GviewListingDetailsData_viewListing_results_listingOptionsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'listId':
+          result.listId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'slot':
+          result.slot = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'code':
+          result.code = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'isFixed':
+          result.isFixed = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'label':
+          result.label = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'price':
+          result.price = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'billingMode':
+          result.billingMode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'isActive':
+          result.isActive = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'adminDisabled':
+          result.adminDisabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'icon':
+          result.icon = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'sortOrder':
+          result.sortOrder = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
       }
     }
@@ -10660,6 +10870,9 @@ class _$GviewListingDetailsData_viewListing_results
   @override
   final GviewListingDetailsData_viewListing_results_listingData? listingData;
   @override
+  final BuiltList<GviewListingDetailsData_viewListing_results_listingOptions?>?
+      listingOptions;
+  @override
   final BuiltList<GviewListingDetailsData_viewListing_results_blockedDates?>?
       blockedDates;
   @override
@@ -10758,6 +10971,7 @@ class _$GviewListingDetailsData_viewListing_results
       this.year,
       this.odometer,
       this.listingData,
+      this.listingOptions,
       this.blockedDates,
       this.carType,
       this.isPublished,
@@ -10824,6 +11038,7 @@ class _$GviewListingDetailsData_viewListing_results
         year == other.year &&
         odometer == other.odometer &&
         listingData == other.listingData &&
+        listingOptions == other.listingOptions &&
         blockedDates == other.blockedDates &&
         carType == other.carType &&
         isPublished == other.isPublished &&
@@ -10876,6 +11091,7 @@ class _$GviewListingDetailsData_viewListing_results
     _$hash = $jc(_$hash, year.hashCode);
     _$hash = $jc(_$hash, odometer.hashCode);
     _$hash = $jc(_$hash, listingData.hashCode);
+    _$hash = $jc(_$hash, listingOptions.hashCode);
     _$hash = $jc(_$hash, blockedDates.hashCode);
     _$hash = $jc(_$hash, carType.hashCode);
     _$hash = $jc(_$hash, isPublished.hashCode);
@@ -10931,6 +11147,7 @@ class _$GviewListingDetailsData_viewListing_results
           ..add('year', year)
           ..add('odometer', odometer)
           ..add('listingData', listingData)
+          ..add('listingOptions', listingOptions)
           ..add('blockedDates', blockedDates)
           ..add('carType', carType)
           ..add('isPublished', isPublished)
@@ -11043,6 +11260,17 @@ class GviewListingDetailsData_viewListing_resultsBuilder
           GviewListingDetailsData_viewListing_results_listingDataBuilder?
               listingData) =>
       _$this._listingData = listingData;
+
+  ListBuilder<GviewListingDetailsData_viewListing_results_listingOptions?>?
+      _listingOptions;
+  ListBuilder<GviewListingDetailsData_viewListing_results_listingOptions?>
+      get listingOptions => _$this._listingOptions ??= new ListBuilder<
+          GviewListingDetailsData_viewListing_results_listingOptions?>();
+  set listingOptions(
+          ListBuilder<
+                  GviewListingDetailsData_viewListing_results_listingOptions?>?
+              listingOptions) =>
+      _$this._listingOptions = listingOptions;
 
   ListBuilder<GviewListingDetailsData_viewListing_results_blockedDates?>?
       _blockedDates;
@@ -11282,6 +11510,7 @@ class GviewListingDetailsData_viewListing_resultsBuilder
       _year = $v.year;
       _odometer = $v.odometer;
       _listingData = $v.listingData?.toBuilder();
+      _listingOptions = $v.listingOptions?.toBuilder();
       _blockedDates = $v.blockedDates?.toBuilder();
       _carType = $v.carType;
       _isPublished = $v.isPublished;
@@ -11358,6 +11587,7 @@ class GviewListingDetailsData_viewListing_resultsBuilder
               year: year,
               odometer: odometer,
               listingData: _listingData?.build(),
+              listingOptions: _listingOptions?.build(),
               blockedDates: _blockedDates?.build(),
               carType: carType,
               isPublished: isPublished,
@@ -11397,6 +11627,8 @@ class GviewListingDetailsData_viewListing_resultsBuilder
 
         _$failedField = 'listingData';
         _listingData?.build();
+        _$failedField = 'listingOptions';
+        _listingOptions?.build();
         _$failedField = 'blockedDates';
         _blockedDates?.build();
 
@@ -12758,6 +12990,278 @@ class GviewListingDetailsData_viewListing_results_listingData_cancellationBuilde
             hostFeeDuringCheckIn: hostFeeDuringCheckIn,
             isEnable: isEnable,
             status: status);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GviewListingDetailsData_viewListing_results_listingOptions
+    extends GviewListingDetailsData_viewListing_results_listingOptions {
+  @override
+  final String G__typename;
+  @override
+  final int? id;
+  @override
+  final int? listId;
+  @override
+  final String? slot;
+  @override
+  final String? code;
+  @override
+  final bool? isFixed;
+  @override
+  final String? label;
+  @override
+  final String? description;
+  @override
+  final double? price;
+  @override
+  final String? billingMode;
+  @override
+  final bool? isActive;
+  @override
+  final bool? adminDisabled;
+  @override
+  final String? icon;
+  @override
+  final int? sortOrder;
+
+  factory _$GviewListingDetailsData_viewListing_results_listingOptions(
+          [void Function(
+                  GviewListingDetailsData_viewListing_results_listingOptionsBuilder)?
+              updates]) =>
+      (new GviewListingDetailsData_viewListing_results_listingOptionsBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GviewListingDetailsData_viewListing_results_listingOptions._(
+      {required this.G__typename,
+      this.id,
+      this.listId,
+      this.slot,
+      this.code,
+      this.isFixed,
+      this.label,
+      this.description,
+      this.price,
+      this.billingMode,
+      this.isActive,
+      this.adminDisabled,
+      this.icon,
+      this.sortOrder})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename,
+        r'GviewListingDetailsData_viewListing_results_listingOptions',
+        'G__typename');
+  }
+
+  @override
+  GviewListingDetailsData_viewListing_results_listingOptions rebuild(
+          void Function(
+                  GviewListingDetailsData_viewListing_results_listingOptionsBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GviewListingDetailsData_viewListing_results_listingOptionsBuilder
+      toBuilder() =>
+          new GviewListingDetailsData_viewListing_results_listingOptionsBuilder()
+            ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other
+            is GviewListingDetailsData_viewListing_results_listingOptions &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        listId == other.listId &&
+        slot == other.slot &&
+        code == other.code &&
+        isFixed == other.isFixed &&
+        label == other.label &&
+        description == other.description &&
+        price == other.price &&
+        billingMode == other.billingMode &&
+        isActive == other.isActive &&
+        adminDisabled == other.adminDisabled &&
+        icon == other.icon &&
+        sortOrder == other.sortOrder;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, listId.hashCode);
+    _$hash = $jc(_$hash, slot.hashCode);
+    _$hash = $jc(_$hash, code.hashCode);
+    _$hash = $jc(_$hash, isFixed.hashCode);
+    _$hash = $jc(_$hash, label.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, billingMode.hashCode);
+    _$hash = $jc(_$hash, isActive.hashCode);
+    _$hash = $jc(_$hash, adminDisabled.hashCode);
+    _$hash = $jc(_$hash, icon.hashCode);
+    _$hash = $jc(_$hash, sortOrder.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GviewListingDetailsData_viewListing_results_listingOptions')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('listId', listId)
+          ..add('slot', slot)
+          ..add('code', code)
+          ..add('isFixed', isFixed)
+          ..add('label', label)
+          ..add('description', description)
+          ..add('price', price)
+          ..add('billingMode', billingMode)
+          ..add('isActive', isActive)
+          ..add('adminDisabled', adminDisabled)
+          ..add('icon', icon)
+          ..add('sortOrder', sortOrder))
+        .toString();
+  }
+}
+
+class GviewListingDetailsData_viewListing_results_listingOptionsBuilder
+    implements
+        Builder<GviewListingDetailsData_viewListing_results_listingOptions,
+            GviewListingDetailsData_viewListing_results_listingOptionsBuilder> {
+  _$GviewListingDetailsData_viewListing_results_listingOptions? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  int? _listId;
+  int? get listId => _$this._listId;
+  set listId(int? listId) => _$this._listId = listId;
+
+  String? _slot;
+  String? get slot => _$this._slot;
+  set slot(String? slot) => _$this._slot = slot;
+
+  String? _code;
+  String? get code => _$this._code;
+  set code(String? code) => _$this._code = code;
+
+  bool? _isFixed;
+  bool? get isFixed => _$this._isFixed;
+  set isFixed(bool? isFixed) => _$this._isFixed = isFixed;
+
+  String? _label;
+  String? get label => _$this._label;
+  set label(String? label) => _$this._label = label;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  double? _price;
+  double? get price => _$this._price;
+  set price(double? price) => _$this._price = price;
+
+  String? _billingMode;
+  String? get billingMode => _$this._billingMode;
+  set billingMode(String? billingMode) => _$this._billingMode = billingMode;
+
+  bool? _isActive;
+  bool? get isActive => _$this._isActive;
+  set isActive(bool? isActive) => _$this._isActive = isActive;
+
+  bool? _adminDisabled;
+  bool? get adminDisabled => _$this._adminDisabled;
+  set adminDisabled(bool? adminDisabled) =>
+      _$this._adminDisabled = adminDisabled;
+
+  String? _icon;
+  String? get icon => _$this._icon;
+  set icon(String? icon) => _$this._icon = icon;
+
+  int? _sortOrder;
+  int? get sortOrder => _$this._sortOrder;
+  set sortOrder(int? sortOrder) => _$this._sortOrder = sortOrder;
+
+  GviewListingDetailsData_viewListing_results_listingOptionsBuilder() {
+    GviewListingDetailsData_viewListing_results_listingOptions
+        ._initializeBuilder(this);
+  }
+
+  GviewListingDetailsData_viewListing_results_listingOptionsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id;
+      _listId = $v.listId;
+      _slot = $v.slot;
+      _code = $v.code;
+      _isFixed = $v.isFixed;
+      _label = $v.label;
+      _description = $v.description;
+      _price = $v.price;
+      _billingMode = $v.billingMode;
+      _isActive = $v.isActive;
+      _adminDisabled = $v.adminDisabled;
+      _icon = $v.icon;
+      _sortOrder = $v.sortOrder;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(
+      GviewListingDetailsData_viewListing_results_listingOptions other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GviewListingDetailsData_viewListing_results_listingOptions;
+  }
+
+  @override
+  void update(
+      void Function(
+              GviewListingDetailsData_viewListing_results_listingOptionsBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GviewListingDetailsData_viewListing_results_listingOptions build() =>
+      _build();
+
+  _$GviewListingDetailsData_viewListing_results_listingOptions _build() {
+    final _$result = _$v ??
+        new _$GviewListingDetailsData_viewListing_results_listingOptions._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename,
+                r'GviewListingDetailsData_viewListing_results_listingOptions',
+                'G__typename'),
+            id: id,
+            listId: listId,
+            slot: slot,
+            code: code,
+            isFixed: isFixed,
+            label: label,
+            description: description,
+            price: price,
+            billingMode: billingMode,
+            isActive: isActive,
+            adminDisabled: adminDisabled,
+            icon: icon,
+            sortOrder: sortOrder);
     replace(_$result);
     return _$result;
   }

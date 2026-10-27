@@ -14,6 +14,8 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.ast.gql.dart'
     as _i3;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i4;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.ast.gql.dart'
+    as _i8;
 import 'package:gql/ast.dart' as _i1;
 
 const reservationFragment = _i1.FragmentDefinitionNode(
@@ -265,6 +267,25 @@ const reservationFragment = _i1.FragmentDefinitionNode(
       arguments: [],
       directives: [],
       selectionSet: null,
+    ),
+    _i1.FieldNode(
+      name: _i1.NameNode(value: 'optionsTotal'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    _i1.FieldNode(
+      name: _i1.NameNode(value: 'reservationOptions'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: _i1.SelectionSetNode(selections: [
+        _i1.FragmentSpreadNode(
+          name: _i1.NameNode(value: 'reservationOptionSnapshotFragment'),
+          directives: [],
+        )
+      ]),
     ),
     _i1.FieldNode(
       name: _i1.NameNode(value: 'currency'),
@@ -698,4 +719,5 @@ const document = _i1.DocumentNode(definitions: [
   _i6.listingDataFragment,
   _i6.cancellationDataFragment,
   _i7.listingUserFragment,
+  _i8.reservationOptionSnapshotFragment,
 ]);

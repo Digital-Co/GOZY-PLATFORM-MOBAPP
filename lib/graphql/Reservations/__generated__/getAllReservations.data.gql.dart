@@ -15,11 +15,13 @@ import 'package:gozy/graphql/__generated__/reservation_fragment.data.gql.dart'
     as _i2;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
-    as _i8;
+    as _i9;
 import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
     as _i7;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i6;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.data.gql.dart'
+    as _i8;
 
 part 'getAllReservations.data.gql.g.dart';
 
@@ -137,6 +139,12 @@ abstract class GgetAllReservationData_getAllReservation_result
   double? get basePrice;
   @override
   double? get delivery;
+  @override
+  double? get optionsTotal;
+  @override
+  BuiltList<
+          GgetAllReservationData_getAllReservation_result_reservationOptions?>?
+      get reservationOptions;
   @override
   String? get currency;
   @override
@@ -1963,12 +1971,80 @@ abstract class GgetAllReservationData_getAllReservation_result_guestData_userVer
           );
 }
 
+abstract class GgetAllReservationData_getAllReservation_result_reservationOptions
+    implements
+        Built<
+            GgetAllReservationData_getAllReservation_result_reservationOptions,
+            GgetAllReservationData_getAllReservation_result_reservationOptionsBuilder>,
+        _i2.GreservationFragment_reservationOptions,
+        _i8.GreservationOptionSnapshotFragment {
+  GgetAllReservationData_getAllReservation_result_reservationOptions._();
+
+  factory GgetAllReservationData_getAllReservation_result_reservationOptions(
+          [void Function(
+                  GgetAllReservationData_getAllReservation_result_reservationOptionsBuilder
+                      b)
+              updates]) =
+      _$GgetAllReservationData_getAllReservation_result_reservationOptions;
+
+  static void _initializeBuilder(
+          GgetAllReservationData_getAllReservation_result_reservationOptionsBuilder
+              b) =>
+      b..G__typename = 'ReservationOptionSnapshot';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get labelKey;
+  @override
+  String? get description;
+  @override
+  String? get billingMode;
+  @override
+  double? get unitPrice;
+  @override
+  int? get quantity;
+  @override
+  double? get amount;
+  @override
+  String? get currency;
+  @override
+  String? get userInput;
+  static Serializer<
+          GgetAllReservationData_getAllReservation_result_reservationOptions>
+      get serializer =>
+          _$ggetAllReservationDataGetAllReservationResultReservationOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetAllReservationData_getAllReservation_result_reservationOptions
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetAllReservationData_getAllReservation_result_reservationOptions?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetAllReservationData_getAllReservation_result_reservationOptions
+                .serializer,
+            json,
+          );
+}
+
 abstract class GgetAllReservationData_getAllReservation_result_threadData
     implements
         Built<GgetAllReservationData_getAllReservation_result_threadData,
             GgetAllReservationData_getAllReservation_result_threadDataBuilder>,
         _i2.GreservationFragment_threadData,
-        _i8.GthreadItemsFragment {
+        _i9.GthreadItemsFragment {
   GgetAllReservationData_getAllReservation_result_threadData._();
 
   factory GgetAllReservationData_getAllReservation_result_threadData(

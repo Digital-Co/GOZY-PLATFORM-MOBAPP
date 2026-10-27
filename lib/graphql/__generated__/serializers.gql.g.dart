@@ -158,6 +158,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GManageListingsData_ManageListings_results_listingData.serializer)
       ..add(GManageListingsData_ManageListings_results_listingData_cancellation
           .serializer)
+      ..add(
+          GManageListingsData_ManageListings_results_listingOptions.serializer)
       ..add(GManageListingsData_ManageListings_results_listingSteps.serializer)
       ..add(GManageListingsData_ManageListings_results_user.serializer)
       ..add(GManageListingsData_ManageListings_results_user_profile.serializer)
@@ -183,6 +185,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GRemoveMultiPhotosData_removeMultiPhotos.serializer)
       ..add(GRemoveMultiPhotosReq.serializer)
       ..add(GRemoveMultiPhotosVars.serializer)
+      ..add(GReservationOptionInput.serializer)
       ..add(GReservationStatusData.serializer)
       ..add(GReservationStatusData_reservationStatus.serializer)
       ..add(GReservationStatusReq.serializer)
@@ -314,6 +317,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GavailabilityFragmentData.serializer)
       ..add(GavailabilityFragmentReq.serializer)
       ..add(GavailabilityFragmentVars.serializer)
+      ..add(GbookingOptionLineFragmentData.serializer)
+      ..add(GbookingOptionLineFragmentReq.serializer)
+      ..add(GbookingOptionLineFragmentVars.serializer)
       ..add(GcancelPurchasePlanData.serializer)
       ..add(GcancelPurchasePlanData_cancelPurchasePlan.serializer)
       ..add(GcancelPurchasePlanReq.serializer)
@@ -419,6 +425,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(
           GconfirmPayPalExecuteData_confirmPayPalExecute_results_listData_user_verification
               .serializer)
+      ..add(
+          GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions
+              .serializer)
       ..add(GconfirmPayPalExecuteData_confirmPayPalExecute_results_threadData
           .serializer)
       ..add(GconfirmPayPalExecuteReq.serializer)
@@ -519,6 +528,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(
           GconfirmReservationData_confirmReservation_results_listData_user_verification
               .serializer)
+      ..add(
+          GconfirmReservationData_confirmReservation_results_reservationOptions
+              .serializer)
       ..add(GconfirmReservationData_confirmReservation_results_threadData
           .serializer)
       ..add(GconfirmReservationReq.serializer)
@@ -617,6 +629,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(
           GcreateReservationData_createReservation_results_listData_user_verification
               .serializer)
+      ..add(GcreateReservationData_createReservation_results_reservationOptions
+          .serializer)
       ..add(GcreateReservationData_createReservation_results_threadData
           .serializer)
       ..add(GcreateReservationReq.serializer)
@@ -626,6 +640,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GdateAvailabilityData_dateAvailability_results.serializer)
       ..add(GdateAvailabilityReq.serializer)
       ..add(GdateAvailabilityVars.serializer)
+      ..add(GdeleteListingOptionData.serializer)
+      ..add(GdeleteListingOptionData_deleteListingOption.serializer)
+      ..add(GdeleteListingOptionData_deleteListingOption_results.serializer)
+      ..add(GdeleteListingOptionReq.serializer)
+      ..add(GdeleteListingOptionVars.serializer)
       ..add(GdeleteUserData.serializer)
       ..add(GdeleteUserData_deleteUser.serializer)
       ..add(GdeleteUserReq.serializer)
@@ -725,6 +744,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(
           GgetAllReservationData_getAllReservation_result_listData_user_verification
               .serializer)
+      ..add(GgetAllReservationData_getAllReservation_result_reservationOptions
+          .serializer)
       ..add(
           GgetAllReservationData_getAllReservation_result_threadData.serializer)
       ..add(GgetAllReservationReq.serializer)
@@ -854,6 +875,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GgetBillingCalculationData.serializer)
       ..add(GgetBillingCalculationData_getBillingCalculation.serializer)
       ..add(GgetBillingCalculationData_getBillingCalculation_result.serializer)
+      ..add(GgetBillingCalculationData_getBillingCalculation_result_options
+          .serializer)
       ..add(
           GgetBillingCalculationData_getBillingCalculation_result_specialPricing
               .serializer)
@@ -967,6 +990,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
               .serializer)
       ..add(GgetListSettingsItemNameReq.serializer)
       ..add(GgetListSettingsItemNameVars.serializer)
+      ..add(GgetListingOptionsData.serializer)
+      ..add(GgetListingOptionsData_getListingOptions.serializer)
+      ..add(GgetListingOptionsData_getListingOptions_results.serializer)
+      ..add(GgetListingOptionsReq.serializer)
+      ..add(GgetListingOptionsVars.serializer)
       ..add(GgetListingSettingsCommonData.serializer)
       ..add(GgetListingSettingsCommonData_getListingSettingsCommon.serializer)
       ..add(GgetListingSettingsCommonData_getListingSettingsCommon_results
@@ -1170,6 +1198,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GgetPurchaseServicePlanVars.serializer)
       ..add(GgetReservationData.serializer)
       ..add(GgetReservationData_getReservation.serializer)
+      ..add(GgetReservationData_getReservation_convertedOptions.serializer)
       ..add(GgetReservationData_getReservation_results.serializer)
       ..add(GgetReservationData_getReservation_results_cancellation.serializer)
       ..add(GgetReservationData_getReservation_results_cancellationDetails
@@ -1236,6 +1265,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(
           GgetReservationData_getReservation_results_listData_user_verification
               .serializer)
+      ..add(GgetReservationData_getReservation_results_reservationOptions
+          .serializer)
       ..add(GgetReservationData_getReservation_results_threadData.serializer)
       ..add(GgetReservationReq.serializer)
       ..add(GgetReservationVars.serializer)
@@ -1439,6 +1470,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_user_verification
               .serializer)
       ..add(
+          GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions
+              .serializer)
+      ..add(
           GgetTransactionHistoryData_getTransactionHistory_reservationData_threadData
               .serializer)
       ..add(
@@ -1566,6 +1600,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GlistingDataFragmentData_cancellation.serializer)
       ..add(GlistingDataFragmentReq.serializer)
       ..add(GlistingDataFragmentVars.serializer)
+      ..add(GlistingOptionFragmentData.serializer)
+      ..add(GlistingOptionFragmentReq.serializer)
+      ..add(GlistingOptionFragmentVars.serializer)
+      ..add(GlistingOptionsResultFragmentData.serializer)
+      ..add(GlistingOptionsResultFragmentData_results.serializer)
+      ..add(GlistingOptionsResultFragmentReq.serializer)
+      ..add(GlistingOptionsResultFragmentVars.serializer)
       ..add(GlistingSettingsFragmentData.serializer)
       ..add(GlistingSettingsFragmentData_dynamicItemName.serializer)
       ..add(GlistingSettingsFragmentReq.serializer)
@@ -1639,9 +1680,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GreservationFragmentData_listData_user.serializer)
       ..add(GreservationFragmentData_listData_user_profile.serializer)
       ..add(GreservationFragmentData_listData_user_verification.serializer)
+      ..add(GreservationFragmentData_reservationOptions.serializer)
       ..add(GreservationFragmentData_threadData.serializer)
       ..add(GreservationFragmentReq.serializer)
       ..add(GreservationFragmentVars.serializer)
+      ..add(GreservationOptionSnapshotFragmentData.serializer)
+      ..add(GreservationOptionSnapshotFragmentReq.serializer)
+      ..add(GreservationOptionSnapshotFragmentVars.serializer)
       ..add(GreservationPaymentFragmentData.serializer)
       ..add(GreservationPaymentFragmentData_results.serializer)
       ..add(GreservationPaymentFragmentData_results_cancellation.serializer)
@@ -1704,6 +1749,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
           .serializer)
       ..add(GreservationPaymentFragmentData_results_listData_user_verification
           .serializer)
+      ..add(
+          GreservationPaymentFragmentData_results_reservationOptions.serializer)
       ..add(GreservationPaymentFragmentData_results_threadData.serializer)
       ..add(GreservationPaymentFragmentReq.serializer)
       ..add(GreservationPaymentFragmentVars.serializer)
@@ -1721,6 +1768,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GreviewsFragmentData_userData_userVerification.serializer)
       ..add(GreviewsFragmentReq.serializer)
       ..add(GreviewsFragmentVars.serializer)
+      ..add(GsaveListingOptionData.serializer)
+      ..add(GsaveListingOptionData_saveListingOption.serializer)
+      ..add(GsaveListingOptionData_saveListingOption_results.serializer)
+      ..add(GsaveListingOptionReq.serializer)
+      ..add(GsaveListingOptionVars.serializer)
       ..add(GsendMessageData.serializer)
       ..add(GsendMessageData_sendMessage.serializer)
       ..add(GsendMessageData_sendMessage_results.serializer)
@@ -1734,6 +1786,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GsetDefaultPayoutData_setDefaultPayout.serializer)
       ..add(GsetDefaultPayoutReq.serializer)
       ..add(GsetDefaultPayoutVars.serializer)
+      ..add(GsetListingOptionActiveData.serializer)
+      ..add(GsetListingOptionActiveData_setListingOptionActive.serializer)
+      ..add(
+          GsetListingOptionActiveData_setListingOptionActive_results.serializer)
+      ..add(GsetListingOptionActiveReq.serializer)
+      ..add(GsetListingOptionActiveVars.serializer)
       ..add(GshowUserProfileData.serializer)
       ..add(GshowUserProfileData_showUserProfile.serializer)
       ..add(GshowUserProfileData_showUserProfile_results.serializer)
@@ -1869,6 +1927,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GviewListingDetailsData_viewListing_results_listingData.serializer)
       ..add(GviewListingDetailsData_viewListing_results_listingData_cancellation
           .serializer)
+      ..add(
+          GviewListingDetailsData_viewListing_results_listingOptions.serializer)
       ..add(GviewListingDetailsData_viewListing_results_listingSteps.serializer)
       ..add(GviewListingDetailsData_viewListing_results_user.serializer)
       ..add(GviewListingDetailsData_viewListing_results_user_profile.serializer)
@@ -1894,6 +1954,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GviewListingDetailsFragmentData_listPhotos.serializer)
       ..add(GviewListingDetailsFragmentData_listingData.serializer)
       ..add(GviewListingDetailsFragmentData_listingData_cancellation.serializer)
+      ..add(GviewListingDetailsFragmentData_listingOptions.serializer)
       ..add(GviewListingDetailsFragmentData_listingSteps.serializer)
       ..add(GviewListingDetailsFragmentData_user.serializer)
       ..add(GviewListingDetailsFragmentData_user_profile.serializer)
@@ -1971,6 +2032,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
+                GManageListingsData_ManageListings_results_listingOptions)
+          ]),
+          () => new ListBuilder<
+              GManageListingsData_ManageListings_results_listingOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
                 GManageListingsData_ManageListings_results_blockedDates)
           ]),
           () => new ListBuilder<
@@ -2015,6 +2083,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType.nullable(GRemoveListingData_RemoveListing_results)
           ]),
           () => new ListBuilder<GRemoveListingData_RemoveListing_results?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList,
+              const [const FullType.nullable(GReservationOptionInput)]),
+          () => new ListBuilder<GReservationOptionInput?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList,
+              const [const FullType.nullable(GReservationOptionInput)]),
+          () => new ListBuilder<GReservationOptionInput?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(GSearchListingData_searchListing_results)
@@ -2131,6 +2207,16 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
+                GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions)
+          ]),
+          () => new ListBuilder<
+              GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType.nullable(String)]),
+          () => new ListBuilder<String?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
                 GconfirmReservationData_confirmReservation_results_listData_dynamicListingTitle)
           ]),
           () => new ListBuilder<
@@ -2163,6 +2249,16 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new ListBuilder<
               GconfirmReservationData_confirmReservation_results_listData_listPhotos?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GconfirmReservationData_confirmReservation_results_reservationOptions)
+          ]),
+          () => new ListBuilder<
+              GconfirmReservationData_confirmReservation_results_reservationOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType.nullable(String)]),
+          () => new ListBuilder<String?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
@@ -2201,10 +2297,27 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
+                GcreateReservationData_createReservation_results_reservationOptions)
+          ]),
+          () => new ListBuilder<
+              GcreateReservationData_createReservation_results_reservationOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType.nullable(String)]),
+          () => new ListBuilder<String?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
                 GdateAvailabilityData_dateAvailability_results)
           ]),
           () => new ListBuilder<
               GdateAvailabilityData_dateAvailability_results?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GdeleteListingOptionData_deleteListingOption_results)
+          ]),
+          () => new ListBuilder<
+              GdeleteListingOptionData_deleteListingOption_results?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
@@ -2261,6 +2374,16 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new ListBuilder<
               GgetAllReservationData_getAllReservation_result_listData_listPhotos?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetAllReservationData_getAllReservation_result_reservationOptions)
+          ]),
+          () => new ListBuilder<
+              GgetAllReservationData_getAllReservation_result_reservationOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType.nullable(String)]),
+          () => new ListBuilder<String?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(GgetAllThreadsData_getAllThreads_results)
@@ -2357,6 +2480,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new ListBuilder<
               GgetAllWishListGroupData_getAllWishListGroup_results_wishLists?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetBillingCalculationData_getBillingCalculation_result_options)
+          ]),
+          () => new ListBuilder<
+              GgetBillingCalculationData_getBillingCalculation_result_options?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
@@ -2488,6 +2618,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new ListBuilder<
               GgetListSettingsItemNameData_getListSettingsItemName_results?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetListingOptionsData_getListingOptions_results)
+          ]),
+          () => new ListBuilder<
+              GgetListingOptionsData_getListingOptions_results?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
@@ -2650,6 +2787,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
+                GgetReservationData_getReservation_convertedOptions)
+          ]),
+          () => new ListBuilder<
+              GgetReservationData_getReservation_convertedOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
                 GgetReservationData_getReservation_results_listData_dynamicListingTitle)
           ]),
           () => new ListBuilder<
@@ -2682,6 +2826,16 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new ListBuilder<
               GgetReservationData_getReservation_results_listData_listPhotos?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetReservationData_getReservation_results_reservationOptions)
+          ]),
+          () => new ListBuilder<
+              GgetReservationData_getReservation_results_reservationOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType.nullable(String)]),
+          () => new ListBuilder<String?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(GgetReviewsListData_getReviews_results)
@@ -2829,6 +2983,16 @@ Serializers _$serializers = (new Serializers().toBuilder()
               GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_listPhotos?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions)
+          ]),
+          () => new ListBuilder<
+              GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType.nullable(String)]),
+          () => new ListBuilder<String?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
             const FullType.nullable(GgetUserReviewsData_getUserReviews_results)
           ]),
           () => new ListBuilder<GgetUserReviewsData_getUserReviews_results?>())
@@ -2881,6 +3045,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
               GlistBlockedDatesData_getListBlockedDates_results_blockedDates?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
+            const FullType.nullable(GlistingOptionsResultFragmentData_results)
+          ]),
+          () => new ListBuilder<GlistingOptionsResultFragmentData_results?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
             const FullType.nullable(
                 GlistingSettingsTypesFragmentData_listSettings)
           ]),
@@ -2921,6 +3090,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
               new ListBuilder<GreservationFragmentData_listData_listPhotos?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
+            const FullType.nullable(GreservationFragmentData_reservationOptions)
+          ]),
+          () => new ListBuilder<GreservationFragmentData_reservationOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType.nullable(String)]),
+          () => new ListBuilder<String?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
             const FullType.nullable(
                 GreservationPaymentFragmentData_results_listData_dynamicListingTitle)
           ]),
@@ -2957,6 +3134,30 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
+                GreservationPaymentFragmentData_results_reservationOptions)
+          ]),
+          () => new ListBuilder<
+              GreservationPaymentFragmentData_results_reservationOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType.nullable(String)]),
+          () => new ListBuilder<String?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GsaveListingOptionData_saveListingOption_results)
+          ]),
+          () => new ListBuilder<
+              GsaveListingOptionData_saveListingOption_results?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GsetListingOptionActiveData_setListingOptionActive_results)
+          ]),
+          () => new ListBuilder<
+              GsetListingOptionActiveData_setListingOptionActive_results?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
                 GshowUserProfileData_showUserProfile_results_reviews)
           ]),
           () => new ListBuilder<
@@ -2966,6 +3167,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType.nullable(GuserReviewsData_userReviews_results)
           ]),
           () => new ListBuilder<GuserReviewsData_userReviews_results?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GviewListingDetailsData_viewListing_results_listingOptions)
+          ]),
+          () => new ListBuilder<
+              GviewListingDetailsData_viewListing_results_listingOptions?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
@@ -3040,6 +3248,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
+                GviewListingDetailsFragmentData_listingOptions)
+          ]),
+          () => new ListBuilder<
+              GviewListingDetailsFragmentData_listingOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
                 GviewListingDetailsFragmentData_blockedDates)
           ]),
           () =>
@@ -3073,30 +3288,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType.nullable(GviewListingShortFragmentData_listPhotos)
           ]),
           () => new ListBuilder<GviewListingShortFragmentData_listPhotos?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType.nullable(String)]),
-          () => new ListBuilder<String?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType.nullable(String)]),
-          () => new ListBuilder<String?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType.nullable(String)]),
-          () => new ListBuilder<String?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType.nullable(String)]),
-          () => new ListBuilder<String?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType.nullable(String)]),
-          () => new ListBuilder<String?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType.nullable(String)]),
-          () => new ListBuilder<String?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType.nullable(String)]),
-          () => new ListBuilder<String?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType.nullable(String)]),
-          () => new ListBuilder<String?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType.nullable(String)]),
           () => new ListBuilder<String?>())

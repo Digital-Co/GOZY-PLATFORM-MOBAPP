@@ -18,7 +18,6 @@ class ConfirmAndPayPageController extends BaseController {
   var rxUpdatedGuestCount = ReactiveVariable("rxUpdatedGuestCount", 1);
   dynamic itemInfo;
   List<DateTime> contactHostDates = <DateTime>[];
-  RxBool isDeliveryCheck = false.obs;
   String? pageType = '', content = '';
   var rxSelectedDates = ReactiveVariable('selectedDates', <DateTime>[]);
 
@@ -133,7 +132,6 @@ class ConfirmAndPayPageController extends BaseController {
     rxUpdatedGuestCount.value = 1;
     itemInfo = null;
     contactHostDates = [];
-    isDeliveryCheck.value = true;
     rxSelectedDates.value = [];
     rxSelectedStartTime.value = "";
     rxSelectedEndTime.value = "";

@@ -101,7 +101,10 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                       : label_book_now.tr,
                   isResizeText: true,
                   onTap: () {
-                    controller.isDeliveryCheck.value = false;
+                    if (!controller.validateBookingOptions()) {
+                      controller.showToast(boText('bo_err_delivery_location'));
+                      return;
+                    }
                     if ((controller.appPreference.accessToken!.isNotEmpty &&
                             controller.itemInfo?.userId ==
                                 controller.appPreference.userID) ||

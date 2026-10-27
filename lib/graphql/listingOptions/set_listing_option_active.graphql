@@ -1,0 +1,7 @@
+# import 'package:gozy/graphql/listingOptions/listing_options_result_fragment.graphql'
+
+mutation setListingOptionActive($listId: Int!, $slot: String!, $isActive: Boolean!) {
+  setListingOptionActive(listId: $listId, slot: $slot, isActive: $isActive) {
+    ...listingOptionsResultFragment
+  }
+}

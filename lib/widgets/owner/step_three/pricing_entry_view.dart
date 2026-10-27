@@ -7,6 +7,7 @@ import 'package:gozy/screens/binding/property_steps_binding.dart';
 import 'package:gozy/screens/views/owner/generate_with_ai_owner/generate_base_price_with_ai.dart';
 import 'package:gozy/screens/views/owner/step_three/step_three_controller.dart';
 import 'package:gozy/widgets/common_extension_functions.dart';
+import 'package:gozy/widgets/owner/step_three/listing_options_view.dart';
 
 import '../../../config/client.dart';
 import '../../../constant.dart';
@@ -36,9 +37,9 @@ class PricingEntryView extends GetView {
       if (aiTextGeneration && (aiAccessMarketPricing || ownerServicePlanAIFeatureStatus))
       _showGenerateWithAIView(),
       20.toHeight(),
-      _cleaningFeeEntryWidget(),
-      20.toHeight(),
       _taxesEntryWidget(),
+      20.toHeight(),
+      ListingOptionsView(controller: controller),
       20.toHeight(),
     ];
     return toListView(
@@ -83,23 +84,6 @@ class PricingEntryView extends GetView {
         ],
         textInputAction: TextInputAction.next,
         onSubmitted: (value) {
-          controller.cleaningFeeFocusNode.changeFocus();
-        });
-  }
-
-  Widget _cleaningFeeEntryWidget() {
-    return TitleTextField(
-        title: label_doorstep_delivery.tr,
-        tooltipcontent: "label_doorstep_delivery_renter".tr,
-        controller: controller.doorStepDeliveryController,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        characterlength: 13,
-        focusNode: controller.cleaningFeeFocusNode,
-        filteringTextInputFormatter: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-        ],
-        textInputAction: TextInputAction.next,
-        onSubmitted: (value) {
           controller.taxesFocusNode.changeFocus();
         });
   }
@@ -133,17 +117,7 @@ class PricingEntryView extends GetView {
           baseprice.substring(0, baseprice.length - 1);
     }
 
-    String cleaningprice = controller.doorStepDeliveryController.Ttext;
-    if (cleaningprice.isNotEmpty &&
-        cleaningprice.substring(cleaningprice.length - 1) == '.') {
-      controller.doorStepDeliveryController.text =
-          cleaningprice.substring(0, cleaningprice.length - 1);
-    }
-
     if (controller.basePriceFocusNode.hasFocus && Platform.isIOS) {
-      controller.cleaningFeeFocusNode.requestFocus();
-      return false;
-    } else if (controller.cleaningFeeFocusNode.hasFocus && Platform.isIOS) {
       controller.taxesFocusNode.requestFocus();
       return false;
     } else if (MediaQuery.of(Get.context!).viewInsets.bottom > 0.0) {

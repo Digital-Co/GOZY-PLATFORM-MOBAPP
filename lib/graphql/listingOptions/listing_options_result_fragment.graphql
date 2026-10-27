@@ -1,0 +1,11 @@
+# import 'package:gozy/graphql/listingOptions/listing_option_fragment.graphql'
+
+fragment listingOptionsResultFragment on ListingOptionsResult {
+  status
+  errorMessage
+  maxCustom
+  customCount
+  results {
+    ...listingOptionFragment
+  }
+}

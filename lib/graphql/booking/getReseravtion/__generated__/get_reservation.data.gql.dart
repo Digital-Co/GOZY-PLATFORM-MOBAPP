@@ -15,11 +15,15 @@ import 'package:gozy/graphql/__generated__/reservation_fragment.data.gql.dart'
     as _i2;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
-    as _i8;
+    as _i9;
 import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
     as _i7;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i6;
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.data.gql.dart'
+    as _i10;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.data.gql.dart'
+    as _i8;
 
 part 'get_reservation.data.gql.g.dart';
 
@@ -83,6 +87,9 @@ abstract class GgetReservationData_getReservation
   double? get convertedTotalDaysAmount;
   double? get convertTotalWithGuestServiceFee;
   double? get convertedDeliveryPrice;
+  double? get convertedOptionsTotal;
+  BuiltList<GgetReservationData_getReservation_convertedOptions?>?
+      get convertedOptions;
   double? get convertedTotalWithHostServiceFee;
   double? get convertedDiscount;
   static Serializer<GgetReservationData_getReservation> get serializer =>
@@ -150,6 +157,11 @@ abstract class GgetReservationData_getReservation_results
   double? get basePrice;
   @override
   double? get delivery;
+  @override
+  double? get optionsTotal;
+  @override
+  BuiltList<GgetReservationData_getReservation_results_reservationOptions?>?
+      get reservationOptions;
   @override
   String? get currency;
   @override
@@ -1946,12 +1958,79 @@ abstract class GgetReservationData_getReservation_results_guestData_userVerifica
           );
 }
 
+abstract class GgetReservationData_getReservation_results_reservationOptions
+    implements
+        Built<GgetReservationData_getReservation_results_reservationOptions,
+            GgetReservationData_getReservation_results_reservationOptionsBuilder>,
+        _i2.GreservationFragment_reservationOptions,
+        _i8.GreservationOptionSnapshotFragment {
+  GgetReservationData_getReservation_results_reservationOptions._();
+
+  factory GgetReservationData_getReservation_results_reservationOptions(
+          [void Function(
+                  GgetReservationData_getReservation_results_reservationOptionsBuilder
+                      b)
+              updates]) =
+      _$GgetReservationData_getReservation_results_reservationOptions;
+
+  static void _initializeBuilder(
+          GgetReservationData_getReservation_results_reservationOptionsBuilder
+              b) =>
+      b..G__typename = 'ReservationOptionSnapshot';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get labelKey;
+  @override
+  String? get description;
+  @override
+  String? get billingMode;
+  @override
+  double? get unitPrice;
+  @override
+  int? get quantity;
+  @override
+  double? get amount;
+  @override
+  String? get currency;
+  @override
+  String? get userInput;
+  static Serializer<
+          GgetReservationData_getReservation_results_reservationOptions>
+      get serializer =>
+          _$ggetReservationDataGetReservationResultsReservationOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetReservationData_getReservation_results_reservationOptions
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetReservationData_getReservation_results_reservationOptions?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetReservationData_getReservation_results_reservationOptions
+                .serializer,
+            json,
+          );
+}
+
 abstract class GgetReservationData_getReservation_results_threadData
     implements
         Built<GgetReservationData_getReservation_results_threadData,
             GgetReservationData_getReservation_results_threadDataBuilder>,
         _i2.GreservationFragment_threadData,
-        _i8.GthreadItemsFragment {
+        _i9.GthreadItemsFragment {
   GgetReservationData_getReservation_results_threadData._();
 
   factory GgetReservationData_getReservation_results_threadData(
@@ -2148,4 +2227,65 @@ abstract class GgetReservationData_getReservation_results_futureTransactionTotal
                 .serializer,
             json,
           );
+}
+
+abstract class GgetReservationData_getReservation_convertedOptions
+    implements
+        Built<GgetReservationData_getReservation_convertedOptions,
+            GgetReservationData_getReservation_convertedOptionsBuilder>,
+        _i10.GbookingOptionLineFragment {
+  GgetReservationData_getReservation_convertedOptions._();
+
+  factory GgetReservationData_getReservation_convertedOptions(
+      [void Function(
+              GgetReservationData_getReservation_convertedOptionsBuilder b)
+          updates]) = _$GgetReservationData_getReservation_convertedOptions;
+
+  static void _initializeBuilder(
+          GgetReservationData_getReservation_convertedOptionsBuilder b) =>
+      b..G__typename = 'BookingOptionLineType';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get listingOptionId;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get labelKey;
+  @override
+  String? get description;
+  @override
+  String? get billingMode;
+  @override
+  double? get unitPrice;
+  @override
+  int? get quantity;
+  @override
+  double? get amount;
+  @override
+  String? get currency;
+  @override
+  String? get userInput;
+  static Serializer<GgetReservationData_getReservation_convertedOptions>
+      get serializer =>
+          _$ggetReservationDataGetReservationConvertedOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetReservationData_getReservation_convertedOptions.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetReservationData_getReservation_convertedOptions? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetReservationData_getReservation_convertedOptions.serializer,
+        json,
+      );
 }

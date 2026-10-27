@@ -1,0 +1,26 @@
+# import 'package:gozy/graphql/listingOptions/listing_options_result_fragment.graphql'
+
+# Creates (no slot) or updates an option of a listing.
+mutation saveListingOption(
+  $listId: Int!
+  $slot: String
+  $label: String
+  $description: String
+  $price: Float!
+  $billingMode: String
+  $icon: String
+  $isActive: Boolean
+) {
+  saveListingOption(
+    listId: $listId
+    slot: $slot
+    label: $label
+    description: $description
+    price: $price
+    billingMode: $billingMode
+    icon: $icon
+    isActive: $isActive
+  ) {
+    ...listingOptionsResultFragment
+  }
+}

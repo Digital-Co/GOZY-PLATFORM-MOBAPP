@@ -145,6 +145,8 @@ type BillingType {
   days: Int
   basePrice: Float
   delivery: Float
+  options: [BookingOptionLineType]
+  optionsTotal: Float
   currency: String
   discount: Float
   discountLabel: String
@@ -736,7 +738,10 @@ type Mutation {
   userForgotPassword(email: String!): UserType
   updateForgotPassword(email: String!, password: String!, token: String!): UserType
   CreateEnquiry(listId: Int!, hostId: String!, content: String!, userId: String!, type: String, startDate: String!, endDate: String!, personCapacity: Int, startTime: Float, endTime: Float): Enquiry
-  createReservation(listId: Int!, checkIn: String!, checkOut: String!, guests: Int!, message: String!, basePrice: Float!, delivery: Float, currency: String!, discount: Float, discountType: String, guestServiceFee: Float, hostServiceFee: Float, total: Float!, bookingType: String, paymentType: Int, cardToken: String, averagePrice: Float, days: Int, startTime: Float, endTime: Float, licenseNumber: String!, firstName: String!, middleName: String, lastName: String!, dateOfBirth: String!, countryCode: String, isDeliveryIncluded: Boolean, paymentCurrency: String, threadId: Int, promoCode: String): ReservationPayment
+  saveListingOption(listId: Int!, slot: String, label: String, description: String, price: Float!, billingMode: String, icon: String, isActive: Boolean): ListingOptionsResult
+  setListingOptionActive(listId: Int!, slot: String!, isActive: Boolean!): ListingOptionsResult
+  deleteListingOption(listId: Int!, slot: String!): ListingOptionsResult
+  createReservation(listId: Int!, checkIn: String!, checkOut: String!, guests: Int!, message: String!, basePrice: Float!, delivery: Float, currency: String!, discount: Float, discountType: String, guestServiceFee: Float, hostServiceFee: Float, total: Float!, bookingType: String, paymentType: Int, cardToken: String, averagePrice: Float, days: Int, startTime: Float, endTime: Float, licenseNumber: String!, firstName: String!, middleName: String, lastName: String!, dateOfBirth: String!, countryCode: String, isDeliveryIncluded: Boolean, paymentCurrency: String, threadId: Int, promoCode: String, options: [ReservationOptionInput]): ReservationPayment
   confirmReservation(reservationId: Int!, paymentIntentId: String!, paymentType: Int!): ReservationPayment
   sendMessage(threadId: Int!, content: String, type: String, startDate: String, endDate: String, personCapacity: Int, reservationId: Int, startTime: Float, endTime: Float): SendMessage
   readMessage(threadId: Int!): SendMessage
@@ -1004,8 +1009,9 @@ type Query {
   dateAvailability(listId: Int!, startDate: String!, endDate: String!): DateAvailabilityType
   getListingSettingsCommon(step: String, isValue: Boolean): listingSettingCommonTypes
   getAllReservation(userType: String, currentPage: Int, dateFilter: String): AllReservation
-  getBillingCalculation(listId: Int!, startDate: String!, endDate: String!, guests: Int!, convertCurrency: String!, startTime: Float, endTime: Float, isDeliveryIncluded: Boolean, userLanguage: String, userId: String, promoCode: String): AllBillingType
+  getBillingCalculation(listId: Int!, startDate: String!, endDate: String!, guests: Int!, convertCurrency: String!, startTime: Float, endTime: Float, isDeliveryIncluded: Boolean, userLanguage: String, userId: String, promoCode: String, options: [ReservationOptionInput]): AllBillingType
   getCurrencies: AllCurrenciesType
+  getListingOptions(listId: Int!): ListingOptionsResult
   Currency: Currency
   getSearchSettings: AllSearchSettingsType
   getDateAvailability(listId: Int!, startDate: String!, endDate: String!): ContactHostAvailability
@@ -1126,6 +1132,8 @@ type Reservation {
   message: String
   basePrice: Float
   delivery: Float
+  optionsTotal: Float
+  reservationOptions: [ReservationOptionSnapshot]
   currency: String
   isCancelEnabled: Boolean
   discount: Float
@@ -1237,6 +1245,8 @@ type Reservationlist {
   convertedHostServiceFee: Float
   convertTotalWithGuestServiceFee: Float
   convertedDeliveryPrice: Float
+  convertedOptionsTotal: Float
+  convertedOptions: [BookingOptionLineType]
   convertedDiscount: Float
   convertedTotalWithHostServiceFee: Float
   convertedSecurityDeposit: Float
@@ -1441,6 +1451,7 @@ type ShowListing {
   odometer: String
   dynamicOdometer: DynamicListTitleObjectType
   listingData: listingData
+  listingOptions: [ListingOption]
   blockedDates: [listBlockedDates]
   listingSteps: userListingSteps
   recommend: recommend
@@ -1934,4 +1945,63 @@ type WishListTypeData {
   wishListGroupId: Int
   listId: Int
   eventkeyValue: Boolean
+}
+
+type ListingOption {
+  id: Int
+  listId: Int
+  slot: String
+  code: String
+  isFixed: Boolean
+  label: String
+  description: String
+  price: Float
+  billingMode: String
+  isActive: Boolean
+  adminDisabled: Boolean
+  icon: String
+  sortOrder: Int
+}
+
+type ListingOptionsResult {
+  status: Int
+  errorMessage: String
+  results: [ListingOption]
+  maxCustom: Int
+  customCount: Int
+}
+
+type BookingOptionLineType {
+  listingOptionId: Int
+  code: String
+  isFixed: Boolean
+  label: String
+  labelKey: String
+  description: String
+  billingMode: String
+  unitPrice: Float
+  quantity: Int
+  amount: Float
+  currency: String
+  userInput: String
+}
+
+type ReservationOptionSnapshot {
+  id: Int
+  code: String
+  isFixed: Boolean
+  label: String
+  labelKey: String
+  description: String
+  billingMode: String
+  unitPrice: Float
+  quantity: Int
+  amount: Float
+  currency: String
+  userInput: String
+}
+
+input ReservationOptionInput {
+  optionId: Int!
+  userInput: String
 }

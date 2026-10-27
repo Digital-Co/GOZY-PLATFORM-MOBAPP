@@ -1,3 +1,5 @@
+import 'package:gozy/utils/booking_options.dart';
+import 'package:gozy/utils/booking_options_i18n.dart';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
@@ -371,7 +373,6 @@ class CustomerReceiptBottomSheet {
         : double.parse(((receiptItem.basePrice ?? 0) * days).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol);
     String weeklyDiscount = double.parse((receiptItem.discount ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol);
     String couponDiscount = double.parse((receiptItem.promoDiscount ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol);
-    String deliveryFee = double.parse((receiptItem.delivery ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol);
     String serviceFee = double.parse(((appPreference.isOwner! ? receiptItem.hostServiceFee : receiptItem.guestServiceFee) ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol);
     String securityDeposit = double.parse((receiptItem.securityDeposit ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol);
     String claimRefund = double.parse((receiptItem.claimRefund ?? 0).toString()).currencyConverted(convertedCurrency: convertedCurrency).toNumberFormat(symbol: currencySymbol);
@@ -418,10 +419,12 @@ class CustomerReceiptBottomSheet {
           value: couponDiscount,
           isDiscount: true,
         ).toPad(horizontal: (isPaddedContent ?? false) ? _horizontalPadding : 0),
-      if ((receiptItem.delivery ?? 0) > 0)
+      for (final line in receiptOptionLines(receiptItem))
         _commonBillingRow(
-          title: delivery_fee.tr,
-          value: deliveryFee,
+          title: bookingOptionReceiptLabel(line),
+          value: line.amount
+              .currencyConverted(convertedCurrency: line.currency ?? convertedCurrency)
+              .toNumberFormat(symbol: currencySymbol),
         ).toPad(horizontal: (isPaddedContent ?? false) ? _horizontalPadding : 0),
       if ((appPreference.isOwner! ? receiptItem.hostServiceFee : receiptItem.guestServiceFee) != null &&
           (appPreference.isOwner! ? receiptItem.hostServiceFee : receiptItem.guestServiceFee) != 0)

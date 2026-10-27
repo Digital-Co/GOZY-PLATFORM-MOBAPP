@@ -74,6 +74,14 @@ class _$GgetBillingCalculationVarsSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.options;
+    if (value != null) {
+      result
+        ..add('options')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList,
+                const [const FullType.nullable(_i1.GReservationOptionInput)])));
+    }
     return result;
   }
 
@@ -129,6 +137,12 @@ class _$GgetBillingCalculationVarsSerializer
           result.promoCode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'options':
+          result.options.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType.nullable(_i1.GReservationOptionInput)
+              ]))! as BuiltList<Object?>);
+          break;
       }
     }
 
@@ -157,6 +171,8 @@ class _$GgetBillingCalculationVars extends GgetBillingCalculationVars {
   final String? userId;
   @override
   final String? promoCode;
+  @override
+  final BuiltList<_i1.GReservationOptionInput?>? options;
 
   factory _$GgetBillingCalculationVars(
           [void Function(GgetBillingCalculationVarsBuilder)? updates]) =>
@@ -172,7 +188,8 @@ class _$GgetBillingCalculationVars extends GgetBillingCalculationVars {
       this.endTime,
       this.isDeliveryIncluded,
       this.userId,
-      this.promoCode})
+      this.promoCode,
+      this.options})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         listId, r'GgetBillingCalculationVars', 'listId');
@@ -208,7 +225,8 @@ class _$GgetBillingCalculationVars extends GgetBillingCalculationVars {
         endTime == other.endTime &&
         isDeliveryIncluded == other.isDeliveryIncluded &&
         userId == other.userId &&
-        promoCode == other.promoCode;
+        promoCode == other.promoCode &&
+        options == other.options;
   }
 
   @override
@@ -224,6 +242,7 @@ class _$GgetBillingCalculationVars extends GgetBillingCalculationVars {
     _$hash = $jc(_$hash, isDeliveryIncluded.hashCode);
     _$hash = $jc(_$hash, userId.hashCode);
     _$hash = $jc(_$hash, promoCode.hashCode);
+    _$hash = $jc(_$hash, options.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -240,7 +259,8 @@ class _$GgetBillingCalculationVars extends GgetBillingCalculationVars {
           ..add('endTime', endTime)
           ..add('isDeliveryIncluded', isDeliveryIncluded)
           ..add('userId', userId)
-          ..add('promoCode', promoCode))
+          ..add('promoCode', promoCode)
+          ..add('options', options))
         .toString();
   }
 }
@@ -292,6 +312,12 @@ class GgetBillingCalculationVarsBuilder
   String? get promoCode => _$this._promoCode;
   set promoCode(String? promoCode) => _$this._promoCode = promoCode;
 
+  ListBuilder<_i1.GReservationOptionInput?>? _options;
+  ListBuilder<_i1.GReservationOptionInput?> get options =>
+      _$this._options ??= new ListBuilder<_i1.GReservationOptionInput?>();
+  set options(ListBuilder<_i1.GReservationOptionInput?>? options) =>
+      _$this._options = options;
+
   GgetBillingCalculationVarsBuilder();
 
   GgetBillingCalculationVarsBuilder get _$this {
@@ -307,6 +333,7 @@ class GgetBillingCalculationVarsBuilder
       _isDeliveryIncluded = $v.isDeliveryIncluded;
       _userId = $v.userId;
       _promoCode = $v.promoCode;
+      _options = $v.options?.toBuilder();
       _$v = null;
     }
     return this;
@@ -327,25 +354,39 @@ class GgetBillingCalculationVarsBuilder
   GgetBillingCalculationVars build() => _build();
 
   _$GgetBillingCalculationVars _build() {
-    final _$result = _$v ??
-        new _$GgetBillingCalculationVars._(
-            listId: BuiltValueNullFieldError.checkNotNull(
-                listId, r'GgetBillingCalculationVars', 'listId'),
-            startDate: BuiltValueNullFieldError.checkNotNull(
-                startDate, r'GgetBillingCalculationVars', 'startDate'),
-            endDate: BuiltValueNullFieldError.checkNotNull(
-                endDate, r'GgetBillingCalculationVars', 'endDate'),
-            guests: BuiltValueNullFieldError.checkNotNull(
-                guests, r'GgetBillingCalculationVars', 'guests'),
-            convertCurrency: BuiltValueNullFieldError.checkNotNull(
-                convertCurrency,
-                r'GgetBillingCalculationVars',
-                'convertCurrency'),
-            startTime: startTime,
-            endTime: endTime,
-            isDeliveryIncluded: isDeliveryIncluded,
-            userId: userId,
-            promoCode: promoCode);
+    _$GgetBillingCalculationVars _$result;
+    try {
+      _$result = _$v ??
+          new _$GgetBillingCalculationVars._(
+              listId: BuiltValueNullFieldError.checkNotNull(
+                  listId, r'GgetBillingCalculationVars', 'listId'),
+              startDate: BuiltValueNullFieldError.checkNotNull(
+                  startDate, r'GgetBillingCalculationVars', 'startDate'),
+              endDate: BuiltValueNullFieldError.checkNotNull(
+                  endDate, r'GgetBillingCalculationVars', 'endDate'),
+              guests: BuiltValueNullFieldError.checkNotNull(
+                  guests, r'GgetBillingCalculationVars', 'guests'),
+              convertCurrency: BuiltValueNullFieldError.checkNotNull(
+                  convertCurrency,
+                  r'GgetBillingCalculationVars',
+                  'convertCurrency'),
+              startTime: startTime,
+              endTime: endTime,
+              isDeliveryIncluded: isDeliveryIncluded,
+              userId: userId,
+              promoCode: promoCode,
+              options: _options?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'options';
+        _options?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GgetBillingCalculationVars', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

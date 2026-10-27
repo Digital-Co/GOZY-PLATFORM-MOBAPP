@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:collection/collection.dart';
+import 'package:ferry/ferry.dart' show OperationResponse;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
@@ -12,12 +14,17 @@ import 'package:gozy/graphql/Reviews/__generated__/Reviews.req.gql.dart';
 import 'package:gozy/graphql/__generated__/base_listing_info_fragment.data.gql.dart';
 import 'package:gozy/graphql/__generated__/listing_fragment.data.gql.dart';
 import 'package:gozy/graphql/__generated__/listing_fragment.req.gql.dart';
+import 'package:gozy/graphql/__generated__/schema.schema.gql.dart';
+import 'package:gozy/graphql/listingOptions/__generated__/get_listing_options.data.gql.dart';
+import 'package:gozy/graphql/listingOptions/__generated__/get_listing_options.req.gql.dart';
 import 'package:gozy/graphql/booking/validatePromocode/__generated__/validate_promo_code.data.gql.dart';
 import 'package:gozy/graphql/booking/validatePromocode/__generated__/validate_promo_code.req.gql.dart';
 import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/screens/views/home/home_controller.dart';
 import 'package:gozy/screens/views/static_page/not_found.dart';
 import 'package:gozy/utils/common_api_controller.dart';
+import 'package:gozy/utils/booking_options.dart';
+import 'package:gozy/utils/booking_options_i18n.dart';
 import 'package:gozy/utils/duration_discount.dart';
 import 'package:gozy/utils/text_editing_controller.dart';
 import 'package:gozy/widgets/common_extension_functions.dart';
@@ -39,7 +46,19 @@ class HomeItemDetailController extends BaseController {
   dynamic itemInfo;
   Map<String, dynamic> _itemInfoMap = {};
   bool isNavigateToPaymentType = false;
-  RxBool isDeliveryCheck = false.obs;
+  /// Options chosen by the renter. Nothing is selected by default.
+  final BookingOptionSelection optionSelection = BookingOptionSelection();
+  final RxInt optionSelectionTick = 0.obs;
+  final CustomTextEditingController deliveryLocationController =
+      CustomTextEditingController();
+
+  /// Set once the renter tried to continue: shows the delivery location error.
+  final RxBool optionsValidationRequested = false.obs;
+
+  /// False for a pre-approved booking (no options there).
+  bool isOptionsAllowed = true;
+  List<BookingOption>? _refreshedOptions;
+  Timer? _optionsRecalcTimer;
   RxBool isPromoCodeTyping = false.obs;
   RxBool isPromoApplied = false.obs;
   bool isRemoveClicked = false;
@@ -366,7 +385,8 @@ class HomeItemDetailController extends BaseController {
       String? startTimeVal,
       String? endTimeVal,
       bool updateState = true,
-      bool isFromPromo = false}) async {
+      bool isFromPromo = false,
+      bool showLoader = true}) async {
     List<DateTime> finalDates = dates ?? selectedDates;
     String finalStartTime = startTimeVal ?? selectedStartTime.value;
     String finalEndTime = endTimeVal ?? selectedEndTime.value;
@@ -389,7 +409,10 @@ class HomeItemDetailController extends BaseController {
       b.vars.endDate = endDate;
       b.vars.startTime = startTime;
       b.vars.endTime = endTime;
-      b.vars.isDeliveryIncluded = (isDeliveryCheck.value);
+      final optionInputs = optionInputsForRequest(onlyReady: true);
+      if (optionInputs.isNotEmpty) {
+        b.vars.options.replace(optionInputs);
+      }
       b.vars.convertCurrency = appPreference.preferredCurrency;
       b.vars.guests = rxUpdatedGuestCount.value;
       if (isPromoApplied.value && !isRemoveClicked) {
@@ -398,21 +421,37 @@ class HomeItemDetailController extends BaseController {
       b.vars.build();
     });
 
-    log("_getBillingCalculationReq: ---$isNavigateToPaymentType --- ${!(isDeliveryCheck.value)}");
+    log("_getBillingCalculationReq: ---$isNavigateToPaymentType --- ${optionSelection.ids}");
     final int requestId = ++_currentBillingRequestId;
+    if (!showLoader && updateState) isOptionsRecalculating.value = true;
 
-    var res = await FerryLoggerClient.makeRequest(
-        getBillingCalculationReq,
-        this,
-        () => getBillingCalculation(
-              isNavigate: isNavigate,
-              dates: dates,
-              startTimeVal: startTimeVal,
-              endTimeVal: endTimeVal,
-              updateState: updateState,
-              isFromPromo: isFromPromo,
-            ),
-        isToGet400Message: true);
+    OperationResponse<dynamic, dynamic>? res;
+    try {
+      var pending = FerryLoggerClient.makeRequest(
+          getBillingCalculationReq,
+          this,
+          () => getBillingCalculation(
+                isNavigate: isNavigate,
+                dates: dates,
+                startTimeVal: startTimeVal,
+                endTimeVal: endTimeVal,
+                updateState: updateState,
+                isFromPromo: isFromPromo,
+                showLoader: showLoader,
+              ),
+          isToGet400Message: true,
+          isStartLoader: showLoader);
+      res = await (showLoader
+          ? pending
+          : pending?.timeout(const Duration(seconds: 45)));
+    } on TimeoutException {
+      res = null;
+    } finally {
+      if (requestId == _currentBillingRequestId) {
+        isOptionsRecalculating.value = false;
+        if (!showLoader) isLoading.value = false;
+      }
+    }
 
     // Race Condition Defense: If a newer request was fired while this one was pending, immediately discard this stale response.
     if (requestId != _currentBillingRequestId) {
@@ -431,7 +470,7 @@ class HomeItemDetailController extends BaseController {
           Get.currentRoute
               .toLowerCase()
               .contains('/ConfirmAndPayPage'.toLowerCase())) {
-        isDeliveryCheck.refresh();
+        optionSelectionTick.refresh();
         if (isRemoveClicked) {
           isRemoveClicked = false;
           couponCodeController.text = "";
@@ -453,8 +492,165 @@ class HomeItemDetailController extends BaseController {
     }
     if (data?.getBillingCalculation?.status == 400) {
       if (isFromPromo) isPromoApplied.value = false;
+      // The server already explained the problem (the message is shown).
+      // When options were sent, reload them: one of them may have changed.
+      if (updateState && !optionSelection.isEmpty) {
+        unawaited(refreshBookingOptions(recalculate: true));
+      }
     }
     return null;
+  }
+
+  // ---------------------------------------------------------------------
+  // Booking options (renter side)
+  // ---------------------------------------------------------------------
+
+  final RxBool isOptionsRecalculating = false.obs;
+
+  /// Every option of the listing as sent by the API (the server only returns
+  /// the bookable ones to a renter), or the reloaded list after an error.
+  List<BookingOption> get allBookingOptions {
+    final refreshed = _refreshedOptions;
+    if (refreshed != null) return refreshed;
+    try {
+      final raw = itemInfo?.listingOptions;
+      if (raw == null) return const [];
+      return (raw as Iterable)
+          .where((option) => option != null)
+          .map((option) => BookingOption.fromJson(
+              Map<String, dynamic>.from((option as dynamic).toJson() as Map)))
+          .toList();
+    } catch (_) {
+      return const [];
+    }
+  }
+
+  /// Options shown to the renter. None for a pre-approved booking.
+  List<BookingOption> get bookableBookingOptions =>
+      isOptionsAllowed ? bookableOptions(allBookingOptions) : const [];
+
+  bool isBookingOptionSelected(int id) {
+    optionSelectionTick.value;
+    return optionSelection.contains(id);
+  }
+
+  String? get listingCurrency {
+    try {
+      return itemInfo?.listingData?.currency?.toString();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Ticks or unticks an option. With [recalculate] the billing is refreshed
+  /// (summary screen); otherwise only the selection changes (car page).
+  void setBookingOptionSelected(BookingOption option, bool selected,
+      {bool recalculate = false}) {
+    if (!isOptionsAllowed) return;
+    if (selected) {
+      optionSelection.select(option.id);
+    } else {
+      optionSelection.deselect(option.id);
+      if (option.isDelivery) optionsValidationRequested.value = false;
+    }
+    optionSelectionTick.refresh();
+    if (!recalculate) return;
+    // A delivery without a valid location cannot be priced yet.
+    if (option.isDelivery &&
+        selected &&
+        !isDeliveryLocationValid(deliveryLocationController.Ttext)) {
+      return;
+    }
+    scheduleOptionsRecalculation(delay: Duration.zero);
+  }
+
+  void onDeliveryLocationChanged(String value, {bool recalculate = false}) {
+    optionSelectionTick.refresh();
+    if (!recalculate) return;
+    if (optionSelection.isDeliverySelected(allBookingOptions) &&
+        isDeliveryLocationValid(value)) {
+      scheduleOptionsRecalculation(
+          delay: const Duration(milliseconds: 700));
+    }
+  }
+
+  void scheduleOptionsRecalculation({required Duration delay}) {
+    _optionsRecalcTimer?.cancel();
+    if (selectedDates.isEmpty) return;
+    // Invalidate the answer of any request already in flight.
+    _currentBillingRequestId++;
+    isOptionsRecalculating.value = true;
+    _optionsRecalcTimer = Timer(delay, () {
+      checkNetwork(() => getBillingCalculation(showLoader: false));
+    });
+  }
+
+  /// False (and the error is displayed) when the delivery is ticked without a
+  /// valid location.
+  bool validateBookingOptions() {
+    if (!isOptionsAllowed || optionSelection.isEmpty) return true;
+    final ready = optionSelection.isReady(
+        bookableBookingOptions, deliveryLocationController.Ttext);
+    optionsValidationRequested.value = !ready;
+    if (!ready) optionSelectionTick.refresh();
+    return ready;
+  }
+
+  /// Selection as GraphQL inputs (`[{optionId, userInput}]`). Prices are never
+  /// sent.
+  List<GReservationOptionInput> optionInputsForRequest(
+      {bool onlyReady = false}) {
+    if (!isOptionsAllowed) return const [];
+    return optionSelection
+        .toInputs(allBookingOptions, deliveryLocationController.Ttext,
+            onlyReady: onlyReady)
+        .map((input) => GReservationOptionInput((b) => b
+          ..optionId = input['optionId'] as int
+          ..userInput = input['userInput'] as String?))
+        .toList();
+  }
+
+  /// Forgets everything about the options (new listing, new booking).
+  void resetBookingOptions() {
+    _optionsRecalcTimer?.cancel();
+    optionSelection.clear();
+    deliveryLocationController.clear();
+    optionsValidationRequested.value = false;
+    isOptionsRecalculating.value = false;
+    _refreshedOptions = null;
+    optionSelectionTick.refresh();
+  }
+
+  /// Reloads the options from the server after an error, drops the ones that
+  /// are no longer available and, when asked, prices the booking again.
+  Future<void> refreshBookingOptions({bool recalculate = false}) async {
+    final listId = itemInfo?.id;
+    if (listId == null) return;
+    final request = GgetListingOptionsReq((b) => b..vars.listId = listId);
+    try {
+      final res = await FerryLoggerClient.makeRequest(
+          request, this, () => refreshBookingOptions(),
+          isViewLoader: false,
+          isViewErrorMessage: false,
+          isToGet400Message: true,
+          isStartLoader: false);
+      final data = res?.data as GgetListingOptionsData?;
+      final result = data?.getListingOptions;
+      if (result?.status != 200) return;
+      final refreshed = result?.results?.whereType<Object>() ?? const <Object>[];
+      _refreshedOptions = refreshed
+          .map((option) => BookingOption.fromJson(
+              Map<String, dynamic>.from((option as dynamic).toJson() as Map)))
+          .toList();
+      final dropped = optionSelection.prune(_refreshedOptions!);
+      optionSelectionTick.refresh();
+      if (dropped.isNotEmpty) showToast(boText('bo_options_removed'));
+      if (recalculate && dropped.isNotEmpty) {
+        scheduleOptionsRecalculation(delay: Duration.zero);
+      }
+    } catch (e) {
+      debugPrint('refreshBookingOptions failed: $e');
+    }
   }
 
   void _applyBillingCalculation(
@@ -601,6 +797,12 @@ class HomeItemDetailController extends BaseController {
       FerryLoggerClient.client?.cache.writeFragment(viewlistFragmentReq, data);
       setItemInfo(id);
     }
+  }
+
+  @override
+  void onClose() {
+    _optionsRecalcTimer?.cancel();
+    super.onClose();
   }
 
   bool isEmailVerified() {

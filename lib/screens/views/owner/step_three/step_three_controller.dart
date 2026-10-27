@@ -1,3 +1,4 @@
+import 'package:gozy/screens/views/owner/step_three/listing_options_controller.dart';
 import 'package:built_collection/src/list.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -46,14 +47,15 @@ class StepThreeController extends BaseController {
   dynamic selectedCheckOutTime;
   GgetListingSettingsData? listingSettingData;
 
+  /// Options and services of the vehicle, saved at once (not with the step).
+  late final ListingOptionsController listingOptionsController = ListingOptionsController(this);
+
   CustomTextEditingController basePriceEditController = CustomTextEditingController();
-  CustomTextEditingController doorStepDeliveryController = CustomTextEditingController();
   CustomTextEditingController securityDepositController = CustomTextEditingController();
   CustomTextEditingController weeklyDiscountEditController = CustomTextEditingController();
   CustomTextEditingController monthlyDiscountEditController = CustomTextEditingController();
 
   CustomFocusNode basePriceFocusNode = CustomFocusNode();
-  CustomFocusNode cleaningFeeFocusNode = CustomFocusNode();
   CustomFocusNode taxesFocusNode = CustomFocusNode();
   CustomFocusNode weeklyDiscountFocusNode = CustomFocusNode();
   CustomFocusNode monthlyDiscountFocusNode = CustomFocusNode();
@@ -188,10 +190,6 @@ class StepThreeController extends BaseController {
           basePriceEditController.text = (itemInfo.listingData.basePrice)%1==0?itemInfo.listingData.basePrice.toInt().toString():itemInfo.listingData.basePrice.toString();
         }
 
-        if(itemInfo.listingData.delivery !=null && itemInfo.listingData.delivery >0) {
-          doorStepDeliveryController.text = (itemInfo.listingData.delivery)%1==0?itemInfo.listingData.delivery.toInt().toString():itemInfo.listingData.delivery.toString();
-        }
-
         if(itemInfo.listingData.securityDeposit !=null && itemInfo.listingData.securityDeposit >0) {
           securityDepositController.text = (itemInfo.listingData.securityDeposit)%1==0?itemInfo.listingData.securityDeposit.toInt().toString():itemInfo.listingData.securityDeposit.toString();
         }
@@ -266,7 +264,6 @@ class StepThreeController extends BaseController {
       ..vars.maxDaysNotice = selectedAvailabilityWindow.value
       ..vars.securityDeposit = securityDepositController.Ttext.isNotEmpty ? double.parse(securityDepositController.Ttext) : 0
       ..vars.cancellationPolicy = selectedCancellationPolicy.value
-      ..vars.delivery = doorStepDeliveryController.Ttext.isNotEmpty ? double.parse(doorStepDeliveryController.Ttext) :0
       ..vars.weeklyDiscount = weeklyDiscountEditController.Ttext.isNotEmpty ? double.parse(weeklyDiscountEditController.Ttext) : 0
       ..vars.monthlyDiscount = monthlyDiscountEditController.Ttext.isNotEmpty ?double.parse(monthlyDiscountEditController.Ttext) : 0
       ..vars.build());
@@ -315,11 +312,6 @@ class StepThreeController extends BaseController {
         listingdataBuilder.securityDeposit = double.parse(securityDepositController.Ttext);
       } else {
         listingdataBuilder.securityDeposit = 0.0;
-      }
-      if(doorStepDeliveryController.Ttext.isNotEmpty) {
-        listingdataBuilder.delivery = double.parse(doorStepDeliveryController.Ttext);
-      } else {
-        listingdataBuilder.delivery = 0.0;
       }
       if(weeklyDiscountEditController.Ttext.isNotEmpty) {
         listingdataBuilder.weeklyDiscount = double.parse(weeklyDiscountEditController.Ttext);

@@ -7,7 +7,7 @@ mutation createReservation(
     $guests: Int!
     $message: String!
     $basePrice: Float!
-    $delivery: Float!
+    $delivery: Float
     $currency: String!
     $discount: Float
     $discountType: String
@@ -30,6 +30,7 @@ mutation createReservation(
     $isDeliveryIncluded: Boolean,
     $paymentCurrency: String,
     $promoCode:String
+    $options: [ReservationOptionInput]
 ) {
     createReservation(
         listId: $listId
@@ -61,6 +62,7 @@ mutation createReservation(
         isDeliveryIncluded: $isDeliveryIncluded
         paymentCurrency: $paymentCurrency
         promoCode:$promoCode
+        options: $options
     ) {
     ...reservationPaymentFragment
     }

@@ -18,6 +18,8 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.ast.gql.dart'
     as _i5;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i6;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.ast.gql.dart'
+    as _i10;
 import 'package:gql/ast.dart' as _i1;
 
 const confirmPayPalExecute = _i1.OperationDefinitionNode(
@@ -105,4 +107,5 @@ const document = _i1.DocumentNode(definitions: [
   _i8.listingDataFragment,
   _i8.cancellationDataFragment,
   _i9.listingUserFragment,
+  _i10.reservationOptionSnapshotFragment,
 ]);

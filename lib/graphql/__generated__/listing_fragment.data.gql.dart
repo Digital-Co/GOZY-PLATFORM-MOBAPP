@@ -11,9 +11,11 @@ import 'package:gozy/graphql/__generated__/listing_data_fragment.data.gql.dart'
     as _i2;
 import 'package:gozy/graphql/__generated__/listing_user_fragment.data.gql.dart'
     as _i3;
-import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i5;
+import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i6;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
     as _i4;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+    as _i5;
 
 part 'listing_fragment.data.gql.g.dart';
 
@@ -90,6 +92,7 @@ abstract class GviewListingDetailsFragment
   String? get buildingName;
   String? get year;
   String? get odometer;
+  BuiltList<GviewListingDetailsFragment_listingOptions?>? get listingOptions;
   BuiltList<GviewListingDetailsFragment_blockedDates?>? get blockedDates;
   bool? get isPublished;
   bool? get isReady;
@@ -502,6 +505,40 @@ abstract class GviewListingDetailsFragment_user_verification
   Map<String, dynamic> toJson();
 }
 
+abstract class GviewListingDetailsFragment_listingOptions
+    implements _i5.GlistingOptionFragment {
+  @override
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  int? get listId;
+  @override
+  String? get slot;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get description;
+  @override
+  double? get price;
+  @override
+  String? get billingMode;
+  @override
+  bool? get isActive;
+  @override
+  bool? get adminDisabled;
+  @override
+  String? get icon;
+  @override
+  int? get sortOrder;
+  @override
+  Map<String, dynamic> toJson();
+}
+
 abstract class GviewListingDetailsFragment_blockedDates {
   String get G__typename;
   int? get id;
@@ -623,6 +660,9 @@ abstract class GviewListingDetailsFragmentData
   @override
   String? get odometer;
   @override
+  BuiltList<GviewListingDetailsFragmentData_listingOptions?>?
+      get listingOptions;
+  @override
   BuiltList<GviewListingDetailsFragmentData_blockedDates?>? get blockedDates;
   @override
   bool? get isPublished;
@@ -638,13 +678,13 @@ abstract class GviewListingDetailsFragmentData
       _$gviewListingDetailsFragmentDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData? fromJson(Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData.serializer,
         json,
       );
@@ -679,14 +719,14 @@ abstract class GviewListingDetailsFragmentData_dynamicListingTitle
           _$gviewListingDetailsFragmentDataDynamicListingTitleSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicListingTitle.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicListingTitle? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicListingTitle.serializer,
         json,
       );
@@ -722,14 +762,14 @@ abstract class GviewListingDetailsFragmentData_dynamicListingDescription
           _$gviewListingDetailsFragmentDataDynamicListingDescriptionSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicListingDescription.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicListingDescription? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicListingDescription.serializer,
         json,
       );
@@ -771,14 +811,14 @@ abstract class GviewListingDetailsFragmentData_dynamicListTitle
           _$gviewListingDetailsFragmentDataDynamicListTitleSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicListTitle.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicListTitle? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicListTitle.serializer,
         json,
       );
@@ -821,14 +861,14 @@ abstract class GviewListingDetailsFragmentData_dynamicListDescription
           _$gviewListingDetailsFragmentDataDynamicListDescriptionSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicListDescription.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicListDescription? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicListDescription.serializer,
         json,
       );
@@ -870,14 +910,14 @@ abstract class GviewListingDetailsFragmentData_dynamicCarType
           _$gviewListingDetailsFragmentDataDynamicCarTypeSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicCarType.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicCarType? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicCarType.serializer,
         json,
       );
@@ -918,14 +958,14 @@ abstract class GviewListingDetailsFragmentData_dynamicmake
       get serializer => _$gviewListingDetailsFragmentDataDynamicmakeSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicmake.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicmake? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicmake.serializer,
         json,
       );
@@ -966,14 +1006,14 @@ abstract class GviewListingDetailsFragmentData_dynamicModel
       get serializer => _$gviewListingDetailsFragmentDataDynamicModelSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicModel.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicModel? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicModel.serializer,
         json,
       );
@@ -1014,14 +1054,14 @@ abstract class GviewListingDetailsFragmentData_dynamicYear
       get serializer => _$gviewListingDetailsFragmentDataDynamicYearSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicYear.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicYear? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicYear.serializer,
         json,
       );
@@ -1063,14 +1103,14 @@ abstract class GviewListingDetailsFragmentData_dynamicOdometer
           _$gviewListingDetailsFragmentDataDynamicOdometerSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_dynamicOdometer.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_dynamicOdometer? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_dynamicOdometer.serializer,
         json,
       );
@@ -1105,14 +1145,14 @@ abstract class GviewListingDetailsFragmentData_carRules
       _$gviewListingDetailsFragmentDataCarRulesSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_carRules.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_carRules? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_carRules.serializer,
         json,
       );
@@ -1155,14 +1195,14 @@ abstract class GviewListingDetailsFragmentData_carRules_dynamicItemName
           _$gviewListingDetailsFragmentDataCarRulesDynamicItemNameSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_carRules_dynamicItemName.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_carRules_dynamicItemName? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_carRules_dynamicItemName.serializer,
         json,
       );
@@ -1198,14 +1238,14 @@ abstract class GviewListingDetailsFragmentData_carFeatures
       get serializer => _$gviewListingDetailsFragmentDataCarFeaturesSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_carFeatures.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_carFeatures? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_carFeatures.serializer,
         json,
       );
@@ -1250,14 +1290,14 @@ abstract class GviewListingDetailsFragmentData_carFeatures_dynamicItemName
           _$gviewListingDetailsFragmentDataCarFeaturesDynamicItemNameSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_carFeatures_dynamicItemName.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_carFeatures_dynamicItemName? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_carFeatures_dynamicItemName.serializer,
         json,
       );
@@ -1290,14 +1330,14 @@ abstract class GviewListingDetailsFragmentData_listPhotos
       get serializer => _$gviewListingDetailsFragmentDataListPhotosSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_listPhotos.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_listPhotos? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_listPhotos.serializer,
         json,
       );
@@ -1363,14 +1403,14 @@ abstract class GviewListingDetailsFragmentData_listingData
       get serializer => _$gviewListingDetailsFragmentDataListingDataSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_listingData.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_listingData? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_listingData.serializer,
         json,
       );
@@ -1442,14 +1482,14 @@ abstract class GviewListingDetailsFragmentData_listingData_cancellation
           _$gviewListingDetailsFragmentDataListingDataCancellationSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_listingData_cancellation.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_listingData_cancellation? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_listingData_cancellation.serializer,
         json,
       );
@@ -1486,14 +1526,14 @@ abstract class GviewListingDetailsFragmentData_user
       _$gviewListingDetailsFragmentDataUserSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_user.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_user? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_user.serializer,
         json,
       );
@@ -1538,14 +1578,14 @@ abstract class GviewListingDetailsFragmentData_user_profile
       get serializer => _$gviewListingDetailsFragmentDataUserProfileSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_user_profile.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_user_profile? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_user_profile.serializer,
         json,
       );
@@ -1588,15 +1628,78 @@ abstract class GviewListingDetailsFragmentData_user_verification
           _$gviewListingDetailsFragmentDataUserVerificationSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_user_verification.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_user_verification? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_user_verification.serializer,
+        json,
+      );
+}
+
+abstract class GviewListingDetailsFragmentData_listingOptions
+    implements
+        Built<GviewListingDetailsFragmentData_listingOptions,
+            GviewListingDetailsFragmentData_listingOptionsBuilder>,
+        GviewListingDetailsFragment_listingOptions,
+        _i5.GlistingOptionFragment {
+  GviewListingDetailsFragmentData_listingOptions._();
+
+  factory GviewListingDetailsFragmentData_listingOptions(
+      [void Function(GviewListingDetailsFragmentData_listingOptionsBuilder b)
+          updates]) = _$GviewListingDetailsFragmentData_listingOptions;
+
+  static void _initializeBuilder(
+          GviewListingDetailsFragmentData_listingOptionsBuilder b) =>
+      b..G__typename = 'ListingOption';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  int? get listId;
+  @override
+  String? get slot;
+  @override
+  String? get code;
+  @override
+  bool? get isFixed;
+  @override
+  String? get label;
+  @override
+  String? get description;
+  @override
+  double? get price;
+  @override
+  String? get billingMode;
+  @override
+  bool? get isActive;
+  @override
+  bool? get adminDisabled;
+  @override
+  String? get icon;
+  @override
+  int? get sortOrder;
+  static Serializer<GviewListingDetailsFragmentData_listingOptions>
+      get serializer =>
+          _$gviewListingDetailsFragmentDataListingOptionsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GviewListingDetailsFragmentData_listingOptions.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GviewListingDetailsFragmentData_listingOptions? fromJson(
+          Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GviewListingDetailsFragmentData_listingOptions.serializer,
         json,
       );
 }
@@ -1635,14 +1738,14 @@ abstract class GviewListingDetailsFragmentData_blockedDates
       get serializer => _$gviewListingDetailsFragmentDataBlockedDatesSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_blockedDates.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_blockedDates? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_blockedDates.serializer,
         json,
       );
@@ -1676,14 +1779,14 @@ abstract class GviewListingDetailsFragmentData_listingSteps
       get serializer => _$gviewListingDetailsFragmentDataListingStepsSerializer;
 
   @override
-  Map<String, dynamic> toJson() => (_i5.serializers.serializeWith(
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
         GviewListingDetailsFragmentData_listingSteps.serializer,
         this,
       ) as Map<String, dynamic>);
 
   static GviewListingDetailsFragmentData_listingSteps? fromJson(
           Map<String, dynamic> json) =>
-      _i5.serializers.deserializeWith(
+      _i6.serializers.deserializeWith(
         GviewListingDetailsFragmentData_listingSteps.serializer,
         json,
       );

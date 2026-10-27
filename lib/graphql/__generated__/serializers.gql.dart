@@ -86,6 +86,7 @@ import 'package:gozy/graphql/__generated__/listing_fragment.data.gql.dart'
         GviewListingDetailsFragmentData_listPhotos,
         GviewListingDetailsFragmentData_listingData,
         GviewListingDetailsFragmentData_listingData_cancellation,
+        GviewListingDetailsFragmentData_listingOptions,
         GviewListingDetailsFragmentData_listingSteps,
         GviewListingDetailsFragmentData_user,
         GviewListingDetailsFragmentData_user_profile,
@@ -158,6 +159,7 @@ import 'package:gozy/graphql/__generated__/reservation_fragment.data.gql.dart'
         GreservationFragmentData_listData_user,
         GreservationFragmentData_listData_user_profile,
         GreservationFragmentData_listData_user_verification,
+        GreservationFragmentData_reservationOptions,
         GreservationFragmentData_threadData;
 import 'package:gozy/graphql/__generated__/reservation_fragment.req.gql.dart'
     show GreservationFragmentReq;
@@ -198,6 +200,7 @@ import 'package:gozy/graphql/__generated__/reservation_payment_fragment.data.gql
         GreservationPaymentFragmentData_results_listData_user,
         GreservationPaymentFragmentData_results_listData_user_profile,
         GreservationPaymentFragmentData_results_listData_user_verification,
+        GreservationPaymentFragmentData_results_reservationOptions,
         GreservationPaymentFragmentData_results_threadData;
 import 'package:gozy/graphql/__generated__/reservation_payment_fragment.req.gql.dart'
     show GreservationPaymentFragmentReq;
@@ -221,7 +224,7 @@ import 'package:gozy/graphql/__generated__/reviews_fragment.req.gql.dart'
 import 'package:gozy/graphql/__generated__/reviews_fragment.var.gql.dart'
     show GreviewsFragmentVars;
 import 'package:gozy/graphql/__generated__/schema.schema.gql.dart'
-    show GPawaPayOperation;
+    show GPawaPayOperation, GReservationOptionInput;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
     show GthreadItemsFragmentData;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.req.gql.dart'
@@ -285,6 +288,7 @@ import 'package:gozy/graphql/booking/confirmPayPalExecute/__generated__/confirm_
         GconfirmPayPalExecuteData_confirmPayPalExecute_results_listData_user,
         GconfirmPayPalExecuteData_confirmPayPalExecute_results_listData_user_profile,
         GconfirmPayPalExecuteData_confirmPayPalExecute_results_listData_user_verification,
+        GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions,
         GconfirmPayPalExecuteData_confirmPayPalExecute_results_threadData;
 import 'package:gozy/graphql/booking/confirmPayPalExecute/__generated__/confirm_paypal_execute.req.gql.dart'
     show GconfirmPayPalExecuteReq;
@@ -326,6 +330,7 @@ import 'package:gozy/graphql/booking/confirmReservation/__generated__/confirm_re
         GconfirmReservationData_confirmReservation_results_listData_user,
         GconfirmReservationData_confirmReservation_results_listData_user_profile,
         GconfirmReservationData_confirmReservation_results_listData_user_verification,
+        GconfirmReservationData_confirmReservation_results_reservationOptions,
         GconfirmReservationData_confirmReservation_results_threadData;
 import 'package:gozy/graphql/booking/confirmReservation/__generated__/confirm_reservation.req.gql.dart'
     show GconfirmReservationReq;
@@ -367,6 +372,7 @@ import 'package:gozy/graphql/booking/createReservation/__generated__/create_rese
         GcreateReservationData_createReservation_results_listData_user,
         GcreateReservationData_createReservation_results_listData_user_profile,
         GcreateReservationData_createReservation_results_listData_user_verification,
+        GcreateReservationData_createReservation_results_reservationOptions,
         GcreateReservationData_createReservation_results_threadData;
 import 'package:gozy/graphql/booking/createReservation/__generated__/create_reservation.req.gql.dart'
     show GcreateReservationReq;
@@ -377,6 +383,7 @@ import 'package:gozy/graphql/booking/getBillingCalculation/__generated__/get_bil
         GgetBillingCalculationData,
         GgetBillingCalculationData_getBillingCalculation,
         GgetBillingCalculationData_getBillingCalculation_result,
+        GgetBillingCalculationData_getBillingCalculation_result_options,
         GgetBillingCalculationData_getBillingCalculation_result_specialPricing;
 import 'package:gozy/graphql/booking/getBillingCalculation/__generated__/get_billing_calculation.req.gql.dart'
     show GgetBillingCalculationReq;
@@ -386,6 +393,7 @@ import 'package:gozy/graphql/booking/getReseravtion/__generated__/get_reservatio
     show
         GgetReservationData,
         GgetReservationData_getReservation,
+        GgetReservationData_getReservation_convertedOptions,
         GgetReservationData_getReservation_results,
         GgetReservationData_getReservation_results_cancellation,
         GgetReservationData_getReservation_results_cancellationDetails,
@@ -418,6 +426,7 @@ import 'package:gozy/graphql/booking/getReseravtion/__generated__/get_reservatio
         GgetReservationData_getReservation_results_listData_user,
         GgetReservationData_getReservation_results_listData_user_profile,
         GgetReservationData_getReservation_results_listData_user_verification,
+        GgetReservationData_getReservation_results_reservationOptions,
         GgetReservationData_getReservation_results_threadData;
 import 'package:gozy/graphql/booking/getReseravtion/__generated__/get_reservation.req.gql.dart'
     show GgetReservationReq;
@@ -761,6 +770,7 @@ import 'package:gozy/graphql/ListDetail/__generated__/ListingDetails.data.gql.da
         GviewListingDetailsData_viewListing_results_listPhotos,
         GviewListingDetailsData_viewListing_results_listingData,
         GviewListingDetailsData_viewListing_results_listingData_cancellation,
+        GviewListingDetailsData_viewListing_results_listingOptions,
         GviewListingDetailsData_viewListing_results_listingSteps,
         GviewListingDetailsData_viewListing_results_user,
         GviewListingDetailsData_viewListing_results_user_profile,
@@ -783,6 +793,68 @@ import 'package:gozy/graphql/ListDetail/__generated__/ListingDetails.var.gql.dar
         GgetReviewsListVars,
         GgetSimilarListingVars,
         GviewListingDetailsVars;
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.data.gql.dart'
+    show GbookingOptionLineFragmentData;
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.req.gql.dart'
+    show GbookingOptionLineFragmentReq;
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.var.gql.dart'
+    show GbookingOptionLineFragmentVars;
+import 'package:gozy/graphql/listingOptions/__generated__/delete_listing_option.data.gql.dart'
+    show
+        GdeleteListingOptionData,
+        GdeleteListingOptionData_deleteListingOption,
+        GdeleteListingOptionData_deleteListingOption_results;
+import 'package:gozy/graphql/listingOptions/__generated__/delete_listing_option.req.gql.dart'
+    show GdeleteListingOptionReq;
+import 'package:gozy/graphql/listingOptions/__generated__/delete_listing_option.var.gql.dart'
+    show GdeleteListingOptionVars;
+import 'package:gozy/graphql/listingOptions/__generated__/get_listing_options.data.gql.dart'
+    show
+        GgetListingOptionsData,
+        GgetListingOptionsData_getListingOptions,
+        GgetListingOptionsData_getListingOptions_results;
+import 'package:gozy/graphql/listingOptions/__generated__/get_listing_options.req.gql.dart'
+    show GgetListingOptionsReq;
+import 'package:gozy/graphql/listingOptions/__generated__/get_listing_options.var.gql.dart'
+    show GgetListingOptionsVars;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.data.gql.dart'
+    show GlistingOptionFragmentData;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.req.gql.dart'
+    show GlistingOptionFragmentReq;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.var.gql.dart'
+    show GlistingOptionFragmentVars;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_options_result_fragment.data.gql.dart'
+    show
+        GlistingOptionsResultFragmentData,
+        GlistingOptionsResultFragmentData_results;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_options_result_fragment.req.gql.dart'
+    show GlistingOptionsResultFragmentReq;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_options_result_fragment.var.gql.dart'
+    show GlistingOptionsResultFragmentVars;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.data.gql.dart'
+    show GreservationOptionSnapshotFragmentData;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.req.gql.dart'
+    show GreservationOptionSnapshotFragmentReq;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.var.gql.dart'
+    show GreservationOptionSnapshotFragmentVars;
+import 'package:gozy/graphql/listingOptions/__generated__/save_listing_option.data.gql.dart'
+    show
+        GsaveListingOptionData,
+        GsaveListingOptionData_saveListingOption,
+        GsaveListingOptionData_saveListingOption_results;
+import 'package:gozy/graphql/listingOptions/__generated__/save_listing_option.req.gql.dart'
+    show GsaveListingOptionReq;
+import 'package:gozy/graphql/listingOptions/__generated__/save_listing_option.var.gql.dart'
+    show GsaveListingOptionVars;
+import 'package:gozy/graphql/listingOptions/__generated__/set_listing_option_active.data.gql.dart'
+    show
+        GsetListingOptionActiveData,
+        GsetListingOptionActiveData_setListingOptionActive,
+        GsetListingOptionActiveData_setListingOptionActive_results;
+import 'package:gozy/graphql/listingOptions/__generated__/set_listing_option_active.req.gql.dart'
+    show GsetListingOptionActiveReq;
+import 'package:gozy/graphql/listingOptions/__generated__/set_listing_option_active.var.gql.dart'
+    show GsetListingOptionActiveVars;
 import 'package:gozy/graphql/ListingSettings/__generated__/getListingSettings.data.gql.dart'
     show
         GgetListingSettingsData,
@@ -852,6 +924,7 @@ import 'package:gozy/graphql/manageListings/__generated__/manageListings.data.gq
         GManageListingsData_ManageListings_results_listPhotos,
         GManageListingsData_ManageListings_results_listingData,
         GManageListingsData_ManageListings_results_listingData_cancellation,
+        GManageListingsData_ManageListings_results_listingOptions,
         GManageListingsData_ManageListings_results_listingSteps,
         GManageListingsData_ManageListings_results_user,
         GManageListingsData_ManageListings_results_user_profile,
@@ -1029,6 +1102,7 @@ import 'package:gozy/graphql/Reservations/__generated__/getAllReservations.data.
         GgetAllReservationData_getAllReservation_result_listData_user,
         GgetAllReservationData_getAllReservation_result_listData_user_profile,
         GgetAllReservationData_getAllReservation_result_listData_user_verification,
+        GgetAllReservationData_getAllReservation_result_reservationOptions,
         GgetAllReservationData_getAllReservation_result_threadData;
 import 'package:gozy/graphql/Reservations/__generated__/getAllReservations.req.gql.dart'
     show GReservationStatusReq, GcontactSupportReq, GgetAllReservationReq;
@@ -1210,6 +1284,7 @@ import 'package:gozy/graphql/transactionHistory/__generated__/transaction_histor
         GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_user,
         GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_user_profile,
         GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_user_verification,
+        GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions,
         GgetTransactionHistoryData_getTransactionHistory_reservationData_threadData,
         GgetTransactionHistoryData_getTransactionHistory_totalData,
         GgetTransactionHistoryData_getTransactionHistory_totalData_cancellationDetails,
@@ -1513,6 +1588,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GManageListingsData_ManageListings_results_listPhotos,
   GManageListingsData_ManageListings_results_listingData,
   GManageListingsData_ManageListings_results_listingData_cancellation,
+  GManageListingsData_ManageListings_results_listingOptions,
   GManageListingsData_ManageListings_results_listingSteps,
   GManageListingsData_ManageListings_results_user,
   GManageListingsData_ManageListings_results_user_profile,
@@ -1537,6 +1613,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GRemoveMultiPhotosData_removeMultiPhotos,
   GRemoveMultiPhotosReq,
   GRemoveMultiPhotosVars,
+  GReservationOptionInput,
   GReservationStatusData,
   GReservationStatusData_reservationStatus,
   GReservationStatusReq,
@@ -1656,6 +1733,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GavailabilityFragmentData,
   GavailabilityFragmentReq,
   GavailabilityFragmentVars,
+  GbookingOptionLineFragmentData,
+  GbookingOptionLineFragmentReq,
+  GbookingOptionLineFragmentVars,
   GcancelPurchasePlanData,
   GcancelPurchasePlanData_cancelPurchasePlan,
   GcancelPurchasePlanReq,
@@ -1704,6 +1784,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GconfirmPayPalExecuteData_confirmPayPalExecute_results_listData_user,
   GconfirmPayPalExecuteData_confirmPayPalExecute_results_listData_user_profile,
   GconfirmPayPalExecuteData_confirmPayPalExecute_results_listData_user_verification,
+  GconfirmPayPalExecuteData_confirmPayPalExecute_results_reservationOptions,
   GconfirmPayPalExecuteData_confirmPayPalExecute_results_threadData,
   GconfirmPayPalExecuteReq,
   GconfirmPayPalExecuteVars,
@@ -1749,6 +1830,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GconfirmReservationData_confirmReservation_results_listData_user,
   GconfirmReservationData_confirmReservation_results_listData_user_profile,
   GconfirmReservationData_confirmReservation_results_listData_user_verification,
+  GconfirmReservationData_confirmReservation_results_reservationOptions,
   GconfirmReservationData_confirmReservation_results_threadData,
   GconfirmReservationReq,
   GconfirmReservationVars,
@@ -1796,6 +1878,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GcreateReservationData_createReservation_results_listData_user,
   GcreateReservationData_createReservation_results_listData_user_profile,
   GcreateReservationData_createReservation_results_listData_user_verification,
+  GcreateReservationData_createReservation_results_reservationOptions,
   GcreateReservationData_createReservation_results_threadData,
   GcreateReservationReq,
   GcreateReservationVars,
@@ -1804,6 +1887,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GdateAvailabilityData_dateAvailability_results,
   GdateAvailabilityReq,
   GdateAvailabilityVars,
+  GdeleteListingOptionData,
+  GdeleteListingOptionData_deleteListingOption,
+  GdeleteListingOptionData_deleteListingOption_results,
+  GdeleteListingOptionReq,
+  GdeleteListingOptionVars,
   GdeleteUserData,
   GdeleteUserData_deleteUser,
   GdeleteUserReq,
@@ -1854,6 +1942,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetAllReservationData_getAllReservation_result_listData_user,
   GgetAllReservationData_getAllReservation_result_listData_user_profile,
   GgetAllReservationData_getAllReservation_result_listData_user_verification,
+  GgetAllReservationData_getAllReservation_result_reservationOptions,
   GgetAllReservationData_getAllReservation_result_threadData,
   GgetAllReservationReq,
   GgetAllReservationVars,
@@ -1918,6 +2007,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetBillingCalculationData,
   GgetBillingCalculationData_getBillingCalculation,
   GgetBillingCalculationData_getBillingCalculation_result,
+  GgetBillingCalculationData_getBillingCalculation_result_options,
   GgetBillingCalculationData_getBillingCalculation_result_specialPricing,
   GgetBillingCalculationReq,
   GgetBillingCalculationVars,
@@ -1993,6 +2083,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetListSettingsItemNameData_getListSettingsItemName_results_dynamicItemName,
   GgetListSettingsItemNameReq,
   GgetListSettingsItemNameVars,
+  GgetListingOptionsData,
+  GgetListingOptionsData_getListingOptions,
+  GgetListingOptionsData_getListingOptions_results,
+  GgetListingOptionsReq,
+  GgetListingOptionsVars,
   GgetListingSettingsCommonData,
   GgetListingSettingsCommonData_getListingSettingsCommon,
   GgetListingSettingsCommonData_getListingSettingsCommon_results,
@@ -2107,6 +2202,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetPurchaseServicePlanVars,
   GgetReservationData,
   GgetReservationData_getReservation,
+  GgetReservationData_getReservation_convertedOptions,
   GgetReservationData_getReservation_results,
   GgetReservationData_getReservation_results_cancellation,
   GgetReservationData_getReservation_results_cancellationDetails,
@@ -2139,6 +2235,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetReservationData_getReservation_results_listData_user,
   GgetReservationData_getReservation_results_listData_user_profile,
   GgetReservationData_getReservation_results_listData_user_verification,
+  GgetReservationData_getReservation_results_reservationOptions,
   GgetReservationData_getReservation_results_threadData,
   GgetReservationReq,
   GgetReservationVars,
@@ -2242,6 +2339,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_user,
   GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_user_profile,
   GgetTransactionHistoryData_getTransactionHistory_reservationData_listData_user_verification,
+  GgetTransactionHistoryData_getTransactionHistory_reservationData_reservationOptions,
   GgetTransactionHistoryData_getTransactionHistory_reservationData_threadData,
   GgetTransactionHistoryData_getTransactionHistory_totalData,
   GgetTransactionHistoryData_getTransactionHistory_totalData_cancellationDetails,
@@ -2320,6 +2418,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GlistingDataFragmentData_cancellation,
   GlistingDataFragmentReq,
   GlistingDataFragmentVars,
+  GlistingOptionFragmentData,
+  GlistingOptionFragmentReq,
+  GlistingOptionFragmentVars,
+  GlistingOptionsResultFragmentData,
+  GlistingOptionsResultFragmentData_results,
+  GlistingOptionsResultFragmentReq,
+  GlistingOptionsResultFragmentVars,
   GlistingSettingsFragmentData,
   GlistingSettingsFragmentData_dynamicItemName,
   GlistingSettingsFragmentReq,
@@ -2386,9 +2491,13 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GreservationFragmentData_listData_user,
   GreservationFragmentData_listData_user_profile,
   GreservationFragmentData_listData_user_verification,
+  GreservationFragmentData_reservationOptions,
   GreservationFragmentData_threadData,
   GreservationFragmentReq,
   GreservationFragmentVars,
+  GreservationOptionSnapshotFragmentData,
+  GreservationOptionSnapshotFragmentReq,
+  GreservationOptionSnapshotFragmentVars,
   GreservationPaymentFragmentData,
   GreservationPaymentFragmentData_results,
   GreservationPaymentFragmentData_results_cancellation,
@@ -2422,6 +2531,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GreservationPaymentFragmentData_results_listData_user,
   GreservationPaymentFragmentData_results_listData_user_profile,
   GreservationPaymentFragmentData_results_listData_user_verification,
+  GreservationPaymentFragmentData_results_reservationOptions,
   GreservationPaymentFragmentData_results_threadData,
   GreservationPaymentFragmentReq,
   GreservationPaymentFragmentVars,
@@ -2438,6 +2548,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GreviewsFragmentData_userData_userVerification,
   GreviewsFragmentReq,
   GreviewsFragmentVars,
+  GsaveListingOptionData,
+  GsaveListingOptionData_saveListingOption,
+  GsaveListingOptionData_saveListingOption_results,
+  GsaveListingOptionReq,
+  GsaveListingOptionVars,
   GsendMessageData,
   GsendMessageData_sendMessage,
   GsendMessageData_sendMessage_results,
@@ -2451,6 +2566,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GsetDefaultPayoutData_setDefaultPayout,
   GsetDefaultPayoutReq,
   GsetDefaultPayoutVars,
+  GsetListingOptionActiveData,
+  GsetListingOptionActiveData_setListingOptionActive,
+  GsetListingOptionActiveData_setListingOptionActive_results,
+  GsetListingOptionActiveReq,
+  GsetListingOptionActiveVars,
   GshowUserProfileData,
   GshowUserProfileData_showUserProfile,
   GshowUserProfileData_showUserProfile_results,
@@ -2549,6 +2669,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GviewListingDetailsData_viewListing_results_listPhotos,
   GviewListingDetailsData_viewListing_results_listingData,
   GviewListingDetailsData_viewListing_results_listingData_cancellation,
+  GviewListingDetailsData_viewListing_results_listingOptions,
   GviewListingDetailsData_viewListing_results_listingSteps,
   GviewListingDetailsData_viewListing_results_user,
   GviewListingDetailsData_viewListing_results_user_profile,
@@ -2571,6 +2692,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GviewListingDetailsFragmentData_listPhotos,
   GviewListingDetailsFragmentData_listingData,
   GviewListingDetailsFragmentData_listingData_cancellation,
+  GviewListingDetailsFragmentData_listingOptions,
   GviewListingDetailsFragmentData_listingSteps,
   GviewListingDetailsFragmentData_user,
   GviewListingDetailsFragmentData_user_profile,

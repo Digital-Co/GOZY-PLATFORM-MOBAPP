@@ -19,6 +19,7 @@ import 'package:gozy/graphql/createServicePlan/__generated__/createServicePlan.d
 import 'package:gozy/graphql/createServicePlan/__generated__/createServicePlan.req.gql.dart';
 import 'package:gozy/screens/views/base_controller.dart';
 import 'package:gozy/screens/views/booking/booking_navigator.dart';
+import 'package:gozy/screens/views/home_item_detail/home_item_detail_controller.dart';
 import 'package:gozy/screens/views/profile/profile_navigator.dart';
 import 'package:gozy/resources/app_lang.dart';
 import 'package:gozy/utils/common_api_controller.dart';
@@ -41,7 +42,9 @@ class PaymentTypeController extends BaseController {
   String? selectedpaymentCurrency;
   String? paymentIntentId;
   bool isPaymentPending = false;
-  bool isDeliveryCheck = false;
+  /// Options chosen by the renter (`[{optionId, userInput}]`). Prices are not
+  /// sent: the server prices them again.
+  List<GReservationOptionInput> bookingOptions = const [];
   bool isPromoApplied = false;
   double startTime = 0.0;
   double endTime = 0.0;
@@ -614,7 +617,6 @@ class PaymentTypeController extends BaseController {
                 : 'requestToBook'
         ..vars.checkIn = billingdata?.checkIn
         ..vars.checkOut = billingdata?.checkOut
-        ..vars.delivery = billingdata?.delivery
         ..vars.startTime = startTime
         ..vars.endTime = endTime
         ..vars.licenseNumber = licenceNumber
@@ -632,7 +634,6 @@ class PaymentTypeController extends BaseController {
         ..vars.total = billingdata?.total
         ..vars.message = message
         ..vars.paymentType = rxSelectedPaymentType.value ?? 1
-        ..vars.isDeliveryIncluded = isDeliveryCheck
         ..vars.averagePrice = billingdata?.averagePrice
         ..vars.days = billingdata?.days
         ..vars.paymentCurrency =
@@ -642,6 +643,9 @@ class PaymentTypeController extends BaseController {
                 : null;
       if (isPromoApplied) {
         b.vars.promoCode = couponCode;
+      }
+      if (bookingOptions.isNotEmpty) {
+        b.vars.options.replace(bookingOptions);
       }
       b.vars.build();
     });
@@ -658,9 +662,27 @@ class PaymentTypeController extends BaseController {
       reservationId = createReservationData.createReservation?.reservationId;
       redirectUrl = createReservationData.createReservation?.redirectUrl;
       this.createReservationData = createReservationData;
+      if (createReservationData.createReservation?.status == 400 &&
+          bookingOptions.isNotEmpty) {
+        unawaited(_reloadOptionsAfterError());
+      }
       createreservationCompleter.complete(createReservationData);
     });
     return createreservationCompleter.future;
+  }
+
+  /// The server refused the booking (option unavailable, total changed...) and
+  /// already explained why: reload the options and the calculation so the
+  /// summary shown here is the current one.
+  Future<void> _reloadOptionsAfterError() async {
+    if (!Get.isRegistered<HomeItemDetailController>()) return;
+    final detail = Get.find<HomeItemDetailController>();
+    await detail.refreshBookingOptions();
+    final data = await detail.getBillingCalculation(showLoader: false);
+    if (data != null) {
+      billingCalcuationData.value = data;
+    }
+    bookingOptions = detail.optionInputsForRequest();
   }
 
   Future<GCreatePurchaseServicePlanData> createPurchasePlan() {

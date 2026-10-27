@@ -530,13 +530,6 @@ class _$GupdateListingStep3VarsSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    value = object.delivery;
-    if (value != null) {
-      result
-        ..add('delivery')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(double)));
-    }
     value = object.currency;
     if (value != null) {
       result
@@ -630,10 +623,6 @@ class _$GupdateListingStep3VarsSerializer
           break;
         case 'basePrice':
           result.basePrice = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double?;
-          break;
-        case 'delivery':
-          result.delivery = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
         case 'currency':
@@ -1399,8 +1388,6 @@ class _$GupdateListingStep3Vars extends GupdateListingStep3Vars {
   @override
   final double? basePrice;
   @override
-  final double? delivery;
-  @override
   final String? currency;
   @override
   final double? weeklyDiscount;
@@ -1429,7 +1416,6 @@ class _$GupdateListingStep3Vars extends GupdateListingStep3Vars {
       this.minDay,
       this.maxDay,
       this.basePrice,
-      this.delivery,
       this.currency,
       this.weeklyDiscount,
       this.monthlyDiscount,
@@ -1464,7 +1450,6 @@ class _$GupdateListingStep3Vars extends GupdateListingStep3Vars {
         minDay == other.minDay &&
         maxDay == other.maxDay &&
         basePrice == other.basePrice &&
-        delivery == other.delivery &&
         currency == other.currency &&
         weeklyDiscount == other.weeklyDiscount &&
         monthlyDiscount == other.monthlyDiscount &&
@@ -1486,7 +1471,6 @@ class _$GupdateListingStep3Vars extends GupdateListingStep3Vars {
     _$hash = $jc(_$hash, minDay.hashCode);
     _$hash = $jc(_$hash, maxDay.hashCode);
     _$hash = $jc(_$hash, basePrice.hashCode);
-    _$hash = $jc(_$hash, delivery.hashCode);
     _$hash = $jc(_$hash, currency.hashCode);
     _$hash = $jc(_$hash, weeklyDiscount.hashCode);
     _$hash = $jc(_$hash, monthlyDiscount.hashCode);
@@ -1510,7 +1494,6 @@ class _$GupdateListingStep3Vars extends GupdateListingStep3Vars {
           ..add('minDay', minDay)
           ..add('maxDay', maxDay)
           ..add('basePrice', basePrice)
-          ..add('delivery', delivery)
           ..add('currency', currency)
           ..add('weeklyDiscount', weeklyDiscount)
           ..add('monthlyDiscount', monthlyDiscount)
@@ -1566,10 +1549,6 @@ class GupdateListingStep3VarsBuilder
   double? get basePrice => _$this._basePrice;
   set basePrice(double? basePrice) => _$this._basePrice = basePrice;
 
-  double? _delivery;
-  double? get delivery => _$this._delivery;
-  set delivery(double? delivery) => _$this._delivery = delivery;
-
   String? _currency;
   String? get currency => _$this._currency;
   set currency(String? currency) => _$this._currency = currency;
@@ -1618,7 +1597,6 @@ class GupdateListingStep3VarsBuilder
       _minDay = $v.minDay;
       _maxDay = $v.maxDay;
       _basePrice = $v.basePrice;
-      _delivery = $v.delivery;
       _currency = $v.currency;
       _weeklyDiscount = $v.weeklyDiscount;
       _monthlyDiscount = $v.monthlyDiscount;
@@ -1659,7 +1637,6 @@ class GupdateListingStep3VarsBuilder
               minDay: minDay,
               maxDay: maxDay,
               basePrice: basePrice,
-              delivery: delivery,
               currency: currency,
               weeklyDiscount: weeklyDiscount,
               monthlyDiscount: monthlyDiscount,

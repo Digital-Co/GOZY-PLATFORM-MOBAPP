@@ -10,6 +10,8 @@ import 'package:gozy/graphql/__generated__/listing_user_fragment.ast.gql.dart'
     as _i4;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i5;
+import 'package:gozy/graphql/listingOptions/__generated__/listing_option_fragment.ast.gql.dart'
+    as _i6;
 import 'package:gql/ast.dart' as _i1;
 
 const viewListingDetailsFragment = _i1.FragmentDefinitionNode(
@@ -141,6 +143,18 @@ const viewListingDetailsFragment = _i1.FragmentDefinitionNode(
       ]),
     ),
     _i1.FieldNode(
+      name: _i1.NameNode(value: 'listingOptions'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: _i1.SelectionSetNode(selections: [
+        _i1.FragmentSpreadNode(
+          name: _i1.NameNode(value: 'listingOptionFragment'),
+          directives: [],
+        )
+      ]),
+    ),
+    _i1.FieldNode(
       name: _i1.NameNode(value: 'blockedDates'),
       alias: null,
       arguments: [],
@@ -263,4 +277,5 @@ const document = _i1.DocumentNode(definitions: [
   _i3.cancellationDataFragment,
   _i4.listingUserFragment,
   _i5.userVerifiedInfoFragment,
+  _i6.listingOptionFragment,
 ]);

@@ -1,3 +1,5 @@
+import 'package:gozy/graphql/__generated__/schema.schema.gql.dart';
+import 'package:gozy/widgets/booking/booking_option_price_lines.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -79,8 +81,9 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
           controller.billingCalcuationData.value =
               Get.arguments['billingCalcuationData'];
           controller.message = Get.arguments['message'];
-          controller.isDeliveryCheck =
-              Get.arguments['isDeliveryCheck'] ?? false;
+          controller.bookingOptions =
+              (Get.arguments['options'] as List<GReservationOptionInput>?) ??
+                  const [];
           controller.startTime = Get.arguments['startTime'];
           controller.endTime = Get.arguments['endTime'];
           controller.licenceNumber = Get.arguments['licenceNumber'];
@@ -689,14 +692,9 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
               amountFontSize: fontsize,
             ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0)
           : const SizedBox.shrink(),
-      (controller.isDeliveryCheck)
-          ? CustomPriceBreakdownText(
-              label: delivery_fee.tr,
-              amount:
-                  '${receiptItem.delivery?.currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency)}',
-              amountFontSize: fontsize,
-            ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0)
-          : const SizedBox.shrink(),
+      ...buildBookingOptionPriceLines(receiptItem,
+          fontSize: fontsize,
+          horizontalPadding: (isPaddedContent ?? false) ? 10 : 0),
       CustomPriceBreakdownText(
               label: label_service_fee.tr,
               amount:
@@ -714,7 +712,7 @@ class PaymentTypePageState extends CustomStatefulWidgetState<PaymentTypePage>
       CustomPriceBreakdownText(
         label: label_total.tr.toUpperLowerCase(),
         amount:
-            '${(!controller.isDeliveryCheck) ? (receiptItem.total ?? 0.0) : (receiptItem.total ?? 0.0).currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency)}',
+            (receiptItem.total ?? 0.0).currencyConverted(convertedCurrency: receiptItem.currency ?? defaultCurrency),
         isTotal: true,
         amountFontSize: fontsize,
       ).toPad(horizontal: (isPaddedContent ?? false) ? 10 : 0),
