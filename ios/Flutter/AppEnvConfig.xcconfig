@@ -7,7 +7,7 @@ GRAPHQL_DOMAIN = https:/$()/www.gozyapp.com/api
 UPLOAD_URL = https:/$()/www.gozyapp.com
 SECURE_API_KEY = JjQI:gHf+^=D
 APP_VERSION = 2.0.4
-BUILD_VERSION = 13
+BUILD_VERSION = 14
 PACKAGE_NAME = com.gozy.app
 APP_COLOR_SECONDARY = 5e17eb
 
