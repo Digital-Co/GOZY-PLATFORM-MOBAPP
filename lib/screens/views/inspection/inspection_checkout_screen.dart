@@ -381,11 +381,13 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
       InspCard(
         title: inspText('insp_question_title'),
         subtitle: inspText('insp_question_help'),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          tile(yes: true),
-          const SizedBox(width: 10),
-          tile(yes: false),
-        ]),
+        child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            tile(yes: true),
+            const SizedBox(width: 10),
+            tile(yes: false),
+          ]),
+        ),
       ),
       InspBanner(text: inspText('insp_checkout_info_process')),
     ];
