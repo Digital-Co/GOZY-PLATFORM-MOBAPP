@@ -1,4 +1,5 @@
 # import 'package:gozy/graphql/reservation_fragment.graphql'
+# import 'package:gozy/graphql/inspection/reservation_inspection_fragment.graphql'
 # import 'package:gozy/graphql/listingOptions/booking_option_line_fragment.graphql'
 
 # Reservation Details
@@ -8,6 +9,7 @@ query getReservation($reservationId: Int!,$convertCurrency: String) {
     errorMessage
     results {
     ...reservationFragment
+    ...reservationInspectionFragment
     }
     convertedSecurityDeposit
     convertedClaimRefund

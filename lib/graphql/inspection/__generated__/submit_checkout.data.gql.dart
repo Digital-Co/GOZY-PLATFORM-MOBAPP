@@ -76,6 +76,12 @@ abstract class GsubmitCheckoutData_submitCheckout
   @override
   String? get viewerRole;
   @override
+  bool? get inspectionEnabled;
+  @override
+  int? get photoMin;
+  @override
+  int? get photoMax;
+  @override
   GsubmitCheckoutData_submitCheckout_inspection? get inspection;
   static Serializer<GsubmitCheckoutData_submitCheckout> get serializer =>
       _$gsubmitCheckoutDataSubmitCheckoutSerializer;

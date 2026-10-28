@@ -10,10 +10,26 @@ const int inspectionStatementMax = 2000;
 const int inspectionMileageMax = 9999999;
 
 /// How many more photos can be added to a series of [inspectionPhotoMaxCount].
-int remainingPhotoSlots({required int stored, required int queued}) {
-  final left = inspectionPhotoMaxCount - stored - queued;
+int remainingPhotoSlots({
+  required int stored,
+  required int queued,
+  int max = inspectionPhotoMaxCount,
+}) {
+  final left = max - stored - queued;
   return left < 0 ? 0 : left;
 }
+
+/// Photo limit sent by the server, 8 when it is not sent (or invalid).
+int effectivePhotoMax(int? serverValue) =>
+    serverValue == null || serverValue < 0 ? inspectionPhotoMaxCount : serverValue;
+
+/// Minimum photos sent by the server, 0 when it is not sent (or invalid).
+int effectivePhotoMin(int? serverValue) =>
+    serverValue == null || serverValue < 0 ? 0 : serverValue;
+
+/// Check-in / check-out buttons are hidden only when the server says the
+/// feature is off (null = unknown, the current behaviour is kept).
+bool isInspectionEnabled(bool? serverValue) => serverValue != false;
 
 class MileageCheck {
   const MileageCheck.ok(this.value) : errorKey = null;
@@ -125,9 +141,12 @@ typedef FormErrors = Map<String, String>;
 /// Check-in form (one page): state, mileage, fuel, checklist and comment.
 FormErrors validateCheckinForm(
   InspectionFormData form,
-  List<ChecklistItemInfo> checklist,
-) {
+  List<ChecklistItemInfo> checklist, {
+  int photoCount = 0,
+  int photoMin = 0,
+}) {
   final errors = <String, String>{};
+  if (photoCount < photoMin) errors['photos'] = 'insp_err_photo_min';
   if (!isGeneralState(form.generalState)) {
     errors['generalState'] = 'insp_err_state_required';
   }
@@ -147,6 +166,7 @@ FormErrors validateCheckoutForm(
   InspectionFormData form, {
   int? minMileage,
   int damagePhotoCount = 0,
+  int photoMin = 0,
 }) {
   final errors = <String, String>{};
   if (form.hasDamage == null) errors['hasDamage'] = 'insp_err_damage_answer';
@@ -157,6 +177,7 @@ FormErrors validateCheckoutForm(
     errors['comment'] = 'insp_err_comment_long';
   }
   if (form.hasDamage == true) {
+    if (damagePhotoCount < photoMin) errors['photos'] = 'insp_err_photo_min';
     final description = form.damageDescription.trim();
     if (description.isEmpty) {
       errors['damageDescription'] = 'insp_err_damage_description';

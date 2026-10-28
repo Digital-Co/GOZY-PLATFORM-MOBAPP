@@ -22,6 +22,9 @@ abstract class GinspectionResultFragment {
   String? get opensAt;
   String? get closesAt;
   String? get viewerRole;
+  bool? get inspectionEnabled;
+  int? get photoMin;
+  int? get photoMax;
   GinspectionResultFragment_inspection? get inspection;
   Map<String, dynamic> toJson();
 }
@@ -151,6 +154,12 @@ abstract class GinspectionResultFragmentData
   String? get closesAt;
   @override
   String? get viewerRole;
+  @override
+  bool? get inspectionEnabled;
+  @override
+  int? get photoMin;
+  @override
+  int? get photoMax;
   @override
   GinspectionResultFragmentData_inspection? get inspection;
   static Serializer<GinspectionResultFragmentData> get serializer =>

@@ -216,6 +216,9 @@ class InspectionOutcome {
     this.opensAt,
     this.closesAt,
     this.viewerRole,
+    this.inspectionEnabled,
+    this.photoMin,
+    this.photoMax,
     this.networkFailure = false,
   });
 
@@ -229,6 +232,9 @@ class InspectionOutcome {
         opensAt = null,
         closesAt = null,
         viewerRole = null,
+        inspectionEnabled = null,
+        photoMin = null,
+        photoMax = null,
         networkFailure = true;
 
   final int? status;
@@ -239,6 +245,12 @@ class InspectionOutcome {
   final String? opensAt;
   final String? closesAt;
   final String? viewerRole;
+
+  /// Platform settings sent with the result (null = not sent, e.g. a mutation
+  /// that did not return them).
+  final bool? inspectionEnabled;
+  final int? photoMin;
+  final int? photoMax;
   final bool networkFailure;
 
   bool get isOk => status == 200;
@@ -257,6 +269,9 @@ class InspectionOutcome {
       opensAt: _asString(json['opensAt']),
       closesAt: _asString(json['closesAt']),
       viewerRole: _asString(json['viewerRole']),
+      inspectionEnabled: _asBool(json['inspectionEnabled']),
+      photoMin: _asInt(json['photoMin']),
+      photoMax: _asInt(json['photoMax']),
     );
   }
 }

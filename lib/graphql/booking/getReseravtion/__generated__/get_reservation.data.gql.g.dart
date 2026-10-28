@@ -969,6 +969,27 @@ class _$GgetReservationData_getReservation_resultsSerializer
             specifiedType: const FullType(
                 GgetReservationData_getReservation_results_futureTransactionTotal)));
     }
+    value = object.inspectionStatus;
+    if (value != null) {
+      result
+        ..add('inspectionStatus')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.closureState;
+    if (value != null) {
+      result
+        ..add('closureState')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.inspectionEnabled;
+    if (value != null) {
+      result
+        ..add('inspectionEnabled')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -1286,6 +1307,18 @@ class _$GgetReservationData_getReservation_resultsSerializer
                   specifiedType: const FullType(
                       GgetReservationData_getReservation_results_futureTransactionTotal))!
               as GgetReservationData_getReservation_results_futureTransactionTotal);
+          break;
+        case 'inspectionStatus':
+          result.inspectionStatus = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'closureState':
+          result.closureState = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'inspectionEnabled':
+          result.inspectionEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
       }
     }
@@ -6754,6 +6787,12 @@ class _$GgetReservationData_getReservation_results
   @override
   final GgetReservationData_getReservation_results_futureTransactionTotal?
       futureTransactionTotal;
+  @override
+  final String? inspectionStatus;
+  @override
+  final String? closureState;
+  @override
+  final bool? inspectionEnabled;
 
   factory _$GgetReservationData_getReservation_results(
           [void Function(GgetReservationData_getReservation_resultsBuilder)?
@@ -6831,7 +6870,10 @@ class _$GgetReservationData_getReservation_results
       this.hostServiceFeeValue,
       this.bookingType,
       this.completedTotal,
-      this.futureTransactionTotal})
+      this.futureTransactionTotal,
+      this.inspectionStatus,
+      this.closureState,
+      this.inspectionEnabled})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
         r'GgetReservationData_getReservation_results', 'G__typename');
@@ -6920,7 +6962,10 @@ class _$GgetReservationData_getReservation_results
         hostServiceFeeValue == other.hostServiceFeeValue &&
         bookingType == other.bookingType &&
         completedTotal == other.completedTotal &&
-        futureTransactionTotal == other.futureTransactionTotal;
+        futureTransactionTotal == other.futureTransactionTotal &&
+        inspectionStatus == other.inspectionStatus &&
+        closureState == other.closureState &&
+        inspectionEnabled == other.inspectionEnabled;
   }
 
   @override
@@ -6996,6 +7041,9 @@ class _$GgetReservationData_getReservation_results
     _$hash = $jc(_$hash, bookingType.hashCode);
     _$hash = $jc(_$hash, completedTotal.hashCode);
     _$hash = $jc(_$hash, futureTransactionTotal.hashCode);
+    _$hash = $jc(_$hash, inspectionStatus.hashCode);
+    _$hash = $jc(_$hash, closureState.hashCode);
+    _$hash = $jc(_$hash, inspectionEnabled.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -7073,7 +7121,10 @@ class _$GgetReservationData_getReservation_results
           ..add('hostServiceFeeValue', hostServiceFeeValue)
           ..add('bookingType', bookingType)
           ..add('completedTotal', completedTotal)
-          ..add('futureTransactionTotal', futureTransactionTotal))
+          ..add('futureTransactionTotal', futureTransactionTotal)
+          ..add('inspectionStatus', inspectionStatus)
+          ..add('closureState', closureState)
+          ..add('inspectionEnabled', inspectionEnabled))
         .toString();
   }
 }
@@ -7444,6 +7495,20 @@ class GgetReservationData_getReservation_resultsBuilder
               futureTransactionTotal) =>
       _$this._futureTransactionTotal = futureTransactionTotal;
 
+  String? _inspectionStatus;
+  String? get inspectionStatus => _$this._inspectionStatus;
+  set inspectionStatus(String? inspectionStatus) =>
+      _$this._inspectionStatus = inspectionStatus;
+
+  String? _closureState;
+  String? get closureState => _$this._closureState;
+  set closureState(String? closureState) => _$this._closureState = closureState;
+
+  bool? _inspectionEnabled;
+  bool? get inspectionEnabled => _$this._inspectionEnabled;
+  set inspectionEnabled(bool? inspectionEnabled) =>
+      _$this._inspectionEnabled = inspectionEnabled;
+
   GgetReservationData_getReservation_resultsBuilder() {
     GgetReservationData_getReservation_results._initializeBuilder(this);
   }
@@ -7521,6 +7586,9 @@ class GgetReservationData_getReservation_resultsBuilder
       _bookingType = $v.bookingType;
       _completedTotal = $v.completedTotal?.toBuilder();
       _futureTransactionTotal = $v.futureTransactionTotal?.toBuilder();
+      _inspectionStatus = $v.inspectionStatus;
+      _closureState = $v.closureState;
+      _inspectionEnabled = $v.inspectionEnabled;
       _$v = null;
     }
     return this;
@@ -7617,7 +7685,10 @@ class GgetReservationData_getReservation_resultsBuilder
               hostServiceFeeValue: hostServiceFeeValue,
               bookingType: bookingType,
               completedTotal: _completedTotal?.build(),
-              futureTransactionTotal: _futureTransactionTotal?.build());
+              futureTransactionTotal: _futureTransactionTotal?.build(),
+              inspectionStatus: inspectionStatus,
+              closureState: closureState,
+              inspectionEnabled: inspectionEnabled);
     } catch (_) {
       late String _$failedField;
       try {

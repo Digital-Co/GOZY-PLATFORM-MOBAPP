@@ -937,6 +937,7 @@ const String insp_err_photo_format = 'insp_err_photo_format'; // ignore: constan
 const String insp_err_photo_too_large = 'insp_err_photo_too_large'; // ignore: constant_identifier_names
 const String insp_err_photo_failed = 'insp_err_photo_failed'; // ignore: constant_identifier_names
 const String insp_err_photo_limit = 'insp_err_photo_limit'; // ignore: constant_identifier_names
+const String insp_err_photo_min = 'insp_err_photo_min'; // ignore: constant_identifier_names
 const String insp_err_session = 'insp_err_session'; // ignore: constant_identifier_names
 const String insp_err_not_allowed = 'insp_err_not_allowed'; // ignore: constant_identifier_names
 const String insp_err_not_found = 'insp_err_not_found'; // ignore: constant_identifier_names

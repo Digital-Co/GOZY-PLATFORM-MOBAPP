@@ -1145,6 +1145,7 @@ type Reservation {
   optionsTotal: Float
   closureState: String
   inspectionStatus: String
+  inspectionEnabled: Boolean
   reservationOptions: [ReservationOptionSnapshot]
   currency: String
   isCancelEnabled: Boolean
@@ -2103,6 +2104,9 @@ type InspectionResult {
   opensAt: String
   closesAt: String
   viewerRole: String
+  inspectionEnabled: Boolean
+  photoMin: Int
+  photoMax: Int
 }
 
 type InspectionAlert {

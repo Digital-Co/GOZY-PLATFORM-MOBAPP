@@ -16,8 +16,10 @@ import 'package:gozy/graphql/__generated__/user_profile_fragment.ast.gql.dart'
     as _i4;
 import 'package:gozy/graphql/__generated__/user_verified_info_fragment.ast.gql.dart'
     as _i5;
-import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.ast.gql.dart'
+import 'package:gozy/graphql/inspection/__generated__/reservation_inspection_fragment.ast.gql.dart'
     as _i10;
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.ast.gql.dart'
+    as _i11;
 import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.ast.gql.dart'
     as _i9;
 import 'package:gql/ast.dart' as _i1;
@@ -85,7 +87,11 @@ const getReservation = _i1.OperationDefinitionNode(
             _i1.FragmentSpreadNode(
               name: _i1.NameNode(value: 'reservationFragment'),
               directives: [],
-            )
+            ),
+            _i1.FragmentSpreadNode(
+              name: _i1.NameNode(value: 'reservationInspectionFragment'),
+              directives: [],
+            ),
           ]),
         ),
         _i1.FieldNode(
@@ -234,5 +240,6 @@ const document = _i1.DocumentNode(definitions: [
   _i7.cancellationDataFragment,
   _i8.listingUserFragment,
   _i9.reservationOptionSnapshotFragment,
-  _i10.bookingOptionLineFragment,
+  _i10.reservationInspectionFragment,
+  _i11.bookingOptionLineFragment,
 ]);

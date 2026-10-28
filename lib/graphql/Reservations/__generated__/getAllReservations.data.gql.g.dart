@@ -807,6 +807,13 @@ class _$GgetAllReservationData_getAllReservation_resultSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.inspectionEnabled;
+    if (value != null) {
+      result
+        ..add('inspectionEnabled')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -1132,6 +1139,10 @@ class _$GgetAllReservationData_getAllReservation_resultSerializer
         case 'closureState':
           result.closureState = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'inspectionEnabled':
+          result.inspectionEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
       }
     }
@@ -6550,6 +6561,8 @@ class _$GgetAllReservationData_getAllReservation_result
   final String? inspectionStatus;
   @override
   final String? closureState;
+  @override
+  final bool? inspectionEnabled;
 
   factory _$GgetAllReservationData_getAllReservation_result(
           [void Function(
@@ -6631,7 +6644,8 @@ class _$GgetAllReservationData_getAllReservation_result
       this.completedTotal,
       this.futureTransactionTotal,
       this.inspectionStatus,
-      this.closureState})
+      this.closureState,
+      this.inspectionEnabled})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
         r'GgetAllReservationData_getAllReservation_result', 'G__typename');
@@ -6723,7 +6737,8 @@ class _$GgetAllReservationData_getAllReservation_result
         completedTotal == other.completedTotal &&
         futureTransactionTotal == other.futureTransactionTotal &&
         inspectionStatus == other.inspectionStatus &&
-        closureState == other.closureState;
+        closureState == other.closureState &&
+        inspectionEnabled == other.inspectionEnabled;
   }
 
   @override
@@ -6801,6 +6816,7 @@ class _$GgetAllReservationData_getAllReservation_result
     _$hash = $jc(_$hash, futureTransactionTotal.hashCode);
     _$hash = $jc(_$hash, inspectionStatus.hashCode);
     _$hash = $jc(_$hash, closureState.hashCode);
+    _$hash = $jc(_$hash, inspectionEnabled.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -6880,7 +6896,8 @@ class _$GgetAllReservationData_getAllReservation_result
           ..add('completedTotal', completedTotal)
           ..add('futureTransactionTotal', futureTransactionTotal)
           ..add('inspectionStatus', inspectionStatus)
-          ..add('closureState', closureState))
+          ..add('closureState', closureState)
+          ..add('inspectionEnabled', inspectionEnabled))
         .toString();
   }
 }
@@ -7264,6 +7281,11 @@ class GgetAllReservationData_getAllReservation_resultBuilder
   String? get closureState => _$this._closureState;
   set closureState(String? closureState) => _$this._closureState = closureState;
 
+  bool? _inspectionEnabled;
+  bool? get inspectionEnabled => _$this._inspectionEnabled;
+  set inspectionEnabled(bool? inspectionEnabled) =>
+      _$this._inspectionEnabled = inspectionEnabled;
+
   GgetAllReservationData_getAllReservation_resultBuilder() {
     GgetAllReservationData_getAllReservation_result._initializeBuilder(this);
   }
@@ -7343,6 +7365,7 @@ class GgetAllReservationData_getAllReservation_resultBuilder
       _futureTransactionTotal = $v.futureTransactionTotal?.toBuilder();
       _inspectionStatus = $v.inspectionStatus;
       _closureState = $v.closureState;
+      _inspectionEnabled = $v.inspectionEnabled;
       _$v = null;
     }
     return this;
@@ -7443,7 +7466,8 @@ class GgetAllReservationData_getAllReservation_resultBuilder
               completedTotal: _completedTotal?.build(),
               futureTransactionTotal: _futureTransactionTotal?.build(),
               inspectionStatus: inspectionStatus,
-              closureState: closureState);
+              closureState: closureState,
+              inspectionEnabled: inspectionEnabled);
     } catch (_) {
       late String _$failedField;
       try {

@@ -78,6 +78,12 @@ abstract class GsaveInspectionDraftData_saveInspectionDraft
   @override
   String? get viewerRole;
   @override
+  bool? get inspectionEnabled;
+  @override
+  int? get photoMin;
+  @override
+  int? get photoMax;
+  @override
   GsaveInspectionDraftData_saveInspectionDraft_inspection? get inspection;
   static Serializer<GsaveInspectionDraftData_saveInspectionDraft>
       get serializer => _$gsaveInspectionDraftDataSaveInspectionDraftSerializer;

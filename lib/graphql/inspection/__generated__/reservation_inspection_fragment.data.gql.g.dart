@@ -50,6 +50,13 @@ class _$GreservationInspectionFragmentDataSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.inspectionEnabled;
+    if (value != null) {
+      result
+        ..add('inspectionEnabled')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -81,6 +88,10 @@ class _$GreservationInspectionFragmentDataSerializer
           result.closureState = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'inspectionEnabled':
+          result.inspectionEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
       }
     }
 
@@ -98,6 +109,8 @@ class _$GreservationInspectionFragmentData
   final String? inspectionStatus;
   @override
   final String? closureState;
+  @override
+  final bool? inspectionEnabled;
 
   factory _$GreservationInspectionFragmentData(
           [void Function(GreservationInspectionFragmentDataBuilder)?
@@ -109,7 +122,8 @@ class _$GreservationInspectionFragmentData
       {required this.G__typename,
       this.id,
       this.inspectionStatus,
-      this.closureState})
+      this.closureState,
+      this.inspectionEnabled})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         G__typename, r'GreservationInspectionFragmentData', 'G__typename');
@@ -131,7 +145,8 @@ class _$GreservationInspectionFragmentData
         G__typename == other.G__typename &&
         id == other.id &&
         inspectionStatus == other.inspectionStatus &&
-        closureState == other.closureState;
+        closureState == other.closureState &&
+        inspectionEnabled == other.inspectionEnabled;
   }
 
   @override
@@ -141,6 +156,7 @@ class _$GreservationInspectionFragmentData
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, inspectionStatus.hashCode);
     _$hash = $jc(_$hash, closureState.hashCode);
+    _$hash = $jc(_$hash, inspectionEnabled.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -151,7 +167,8 @@ class _$GreservationInspectionFragmentData
           ..add('G__typename', G__typename)
           ..add('id', id)
           ..add('inspectionStatus', inspectionStatus)
-          ..add('closureState', closureState))
+          ..add('closureState', closureState)
+          ..add('inspectionEnabled', inspectionEnabled))
         .toString();
   }
 }
@@ -179,6 +196,11 @@ class GreservationInspectionFragmentDataBuilder
   String? get closureState => _$this._closureState;
   set closureState(String? closureState) => _$this._closureState = closureState;
 
+  bool? _inspectionEnabled;
+  bool? get inspectionEnabled => _$this._inspectionEnabled;
+  set inspectionEnabled(bool? inspectionEnabled) =>
+      _$this._inspectionEnabled = inspectionEnabled;
+
   GreservationInspectionFragmentDataBuilder() {
     GreservationInspectionFragmentData._initializeBuilder(this);
   }
@@ -190,6 +212,7 @@ class GreservationInspectionFragmentDataBuilder
       _id = $v.id;
       _inspectionStatus = $v.inspectionStatus;
       _closureState = $v.closureState;
+      _inspectionEnabled = $v.inspectionEnabled;
       _$v = null;
     }
     return this;
@@ -217,7 +240,8 @@ class GreservationInspectionFragmentDataBuilder
                 r'GreservationInspectionFragmentData', 'G__typename'),
             id: id,
             inspectionStatus: inspectionStatus,
-            closureState: closureState);
+            closureState: closureState,
+            inspectionEnabled: inspectionEnabled);
     replace(_$result);
     return _$result;
   }

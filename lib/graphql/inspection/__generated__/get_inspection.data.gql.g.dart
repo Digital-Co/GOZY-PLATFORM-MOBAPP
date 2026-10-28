@@ -145,6 +145,25 @@ class _$GgetInspectionData_getInspectionSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.inspectionEnabled;
+    if (value != null) {
+      result
+        ..add('inspectionEnabled')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.photoMin;
+    if (value != null) {
+      result
+        ..add('photoMin')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.photoMax;
+    if (value != null) {
+      result
+        ..add('photoMax')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.inspection;
     if (value != null) {
       result
@@ -199,6 +218,18 @@ class _$GgetInspectionData_getInspectionSerializer
         case 'viewerRole':
           result.viewerRole = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'inspectionEnabled':
+          result.inspectionEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'photoMin':
+          result.photoMin = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'photoMax':
+          result.photoMax = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'inspection':
           result.inspection.replace(serializers.deserialize(value,
@@ -886,6 +917,12 @@ class _$GgetInspectionData_getInspection
   @override
   final String? viewerRole;
   @override
+  final bool? inspectionEnabled;
+  @override
+  final int? photoMin;
+  @override
+  final int? photoMax;
+  @override
   final GgetInspectionData_getInspection_inspection? inspection;
 
   factory _$GgetInspectionData_getInspection(
@@ -901,6 +938,9 @@ class _$GgetInspectionData_getInspection
       this.opensAt,
       this.closesAt,
       this.viewerRole,
+      this.inspectionEnabled,
+      this.photoMin,
+      this.photoMax,
       this.inspection})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -928,6 +968,9 @@ class _$GgetInspectionData_getInspection
         opensAt == other.opensAt &&
         closesAt == other.closesAt &&
         viewerRole == other.viewerRole &&
+        inspectionEnabled == other.inspectionEnabled &&
+        photoMin == other.photoMin &&
+        photoMax == other.photoMax &&
         inspection == other.inspection;
   }
 
@@ -942,6 +985,9 @@ class _$GgetInspectionData_getInspection
     _$hash = $jc(_$hash, opensAt.hashCode);
     _$hash = $jc(_$hash, closesAt.hashCode);
     _$hash = $jc(_$hash, viewerRole.hashCode);
+    _$hash = $jc(_$hash, inspectionEnabled.hashCode);
+    _$hash = $jc(_$hash, photoMin.hashCode);
+    _$hash = $jc(_$hash, photoMax.hashCode);
     _$hash = $jc(_$hash, inspection.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -958,6 +1004,9 @@ class _$GgetInspectionData_getInspection
           ..add('opensAt', opensAt)
           ..add('closesAt', closesAt)
           ..add('viewerRole', viewerRole)
+          ..add('inspectionEnabled', inspectionEnabled)
+          ..add('photoMin', photoMin)
+          ..add('photoMax', photoMax)
           ..add('inspection', inspection))
         .toString();
   }
@@ -1001,6 +1050,19 @@ class GgetInspectionData_getInspectionBuilder
   String? get viewerRole => _$this._viewerRole;
   set viewerRole(String? viewerRole) => _$this._viewerRole = viewerRole;
 
+  bool? _inspectionEnabled;
+  bool? get inspectionEnabled => _$this._inspectionEnabled;
+  set inspectionEnabled(bool? inspectionEnabled) =>
+      _$this._inspectionEnabled = inspectionEnabled;
+
+  int? _photoMin;
+  int? get photoMin => _$this._photoMin;
+  set photoMin(int? photoMin) => _$this._photoMin = photoMin;
+
+  int? _photoMax;
+  int? get photoMax => _$this._photoMax;
+  set photoMax(int? photoMax) => _$this._photoMax = photoMax;
+
   GgetInspectionData_getInspection_inspectionBuilder? _inspection;
   GgetInspectionData_getInspection_inspectionBuilder get inspection =>
       _$this._inspection ??=
@@ -1024,6 +1086,9 @@ class GgetInspectionData_getInspectionBuilder
       _opensAt = $v.opensAt;
       _closesAt = $v.closesAt;
       _viewerRole = $v.viewerRole;
+      _inspectionEnabled = $v.inspectionEnabled;
+      _photoMin = $v.photoMin;
+      _photoMax = $v.photoMax;
       _inspection = $v.inspection?.toBuilder();
       _$v = null;
     }
@@ -1058,6 +1123,9 @@ class GgetInspectionData_getInspectionBuilder
               opensAt: opensAt,
               closesAt: closesAt,
               viewerRole: viewerRole,
+              inspectionEnabled: inspectionEnabled,
+              photoMin: photoMin,
+              photoMax: photoMax,
               inspection: _inspection?.build());
     } catch (_) {
       late String _$failedField;

@@ -77,6 +77,12 @@ abstract class GcontestInspectionData_contestInspection
   @override
   String? get viewerRole;
   @override
+  bool? get inspectionEnabled;
+  @override
+  int? get photoMin;
+  @override
+  int? get photoMax;
+  @override
   GcontestInspectionData_contestInspection_inspection? get inspection;
   static Serializer<GcontestInspectionData_contestInspection> get serializer =>
       _$gcontestInspectionDataContestInspectionSerializer;

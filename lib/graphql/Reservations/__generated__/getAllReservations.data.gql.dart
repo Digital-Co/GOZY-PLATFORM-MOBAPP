@@ -259,6 +259,8 @@ abstract class GgetAllReservationData_getAllReservation_result
   String? get inspectionStatus;
   @override
   String? get closureState;
+  @override
+  bool? get inspectionEnabled;
   static Serializer<GgetAllReservationData_getAllReservation_result>
       get serializer =>
           _$ggetAllReservationDataGetAllReservationResultSerializer;

@@ -149,6 +149,25 @@ class _$GcontestInspectionData_contestInspectionSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.inspectionEnabled;
+    if (value != null) {
+      result
+        ..add('inspectionEnabled')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.photoMin;
+    if (value != null) {
+      result
+        ..add('photoMin')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.photoMax;
+    if (value != null) {
+      result
+        ..add('photoMax')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.inspection;
     if (value != null) {
       result
@@ -203,6 +222,18 @@ class _$GcontestInspectionData_contestInspectionSerializer
         case 'viewerRole':
           result.viewerRole = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'inspectionEnabled':
+          result.inspectionEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'photoMin':
+          result.photoMin = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'photoMax':
+          result.photoMax = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'inspection':
           result.inspection.replace(serializers.deserialize(value,
@@ -896,6 +927,12 @@ class _$GcontestInspectionData_contestInspection
   @override
   final String? viewerRole;
   @override
+  final bool? inspectionEnabled;
+  @override
+  final int? photoMin;
+  @override
+  final int? photoMax;
+  @override
   final GcontestInspectionData_contestInspection_inspection? inspection;
 
   factory _$GcontestInspectionData_contestInspection(
@@ -913,6 +950,9 @@ class _$GcontestInspectionData_contestInspection
       this.opensAt,
       this.closesAt,
       this.viewerRole,
+      this.inspectionEnabled,
+      this.photoMin,
+      this.photoMax,
       this.inspection})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
@@ -941,6 +981,9 @@ class _$GcontestInspectionData_contestInspection
         opensAt == other.opensAt &&
         closesAt == other.closesAt &&
         viewerRole == other.viewerRole &&
+        inspectionEnabled == other.inspectionEnabled &&
+        photoMin == other.photoMin &&
+        photoMax == other.photoMax &&
         inspection == other.inspection;
   }
 
@@ -955,6 +998,9 @@ class _$GcontestInspectionData_contestInspection
     _$hash = $jc(_$hash, opensAt.hashCode);
     _$hash = $jc(_$hash, closesAt.hashCode);
     _$hash = $jc(_$hash, viewerRole.hashCode);
+    _$hash = $jc(_$hash, inspectionEnabled.hashCode);
+    _$hash = $jc(_$hash, photoMin.hashCode);
+    _$hash = $jc(_$hash, photoMax.hashCode);
     _$hash = $jc(_$hash, inspection.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -972,6 +1018,9 @@ class _$GcontestInspectionData_contestInspection
           ..add('opensAt', opensAt)
           ..add('closesAt', closesAt)
           ..add('viewerRole', viewerRole)
+          ..add('inspectionEnabled', inspectionEnabled)
+          ..add('photoMin', photoMin)
+          ..add('photoMax', photoMax)
           ..add('inspection', inspection))
         .toString();
   }
@@ -1015,6 +1064,19 @@ class GcontestInspectionData_contestInspectionBuilder
   String? get viewerRole => _$this._viewerRole;
   set viewerRole(String? viewerRole) => _$this._viewerRole = viewerRole;
 
+  bool? _inspectionEnabled;
+  bool? get inspectionEnabled => _$this._inspectionEnabled;
+  set inspectionEnabled(bool? inspectionEnabled) =>
+      _$this._inspectionEnabled = inspectionEnabled;
+
+  int? _photoMin;
+  int? get photoMin => _$this._photoMin;
+  set photoMin(int? photoMin) => _$this._photoMin = photoMin;
+
+  int? _photoMax;
+  int? get photoMax => _$this._photoMax;
+  set photoMax(int? photoMax) => _$this._photoMax = photoMax;
+
   GcontestInspectionData_contestInspection_inspectionBuilder? _inspection;
   GcontestInspectionData_contestInspection_inspectionBuilder get inspection =>
       _$this._inspection ??=
@@ -1039,6 +1101,9 @@ class GcontestInspectionData_contestInspectionBuilder
       _opensAt = $v.opensAt;
       _closesAt = $v.closesAt;
       _viewerRole = $v.viewerRole;
+      _inspectionEnabled = $v.inspectionEnabled;
+      _photoMin = $v.photoMin;
+      _photoMax = $v.photoMax;
       _inspection = $v.inspection?.toBuilder();
       _$v = null;
     }
@@ -1074,6 +1139,9 @@ class GcontestInspectionData_contestInspectionBuilder
               opensAt: opensAt,
               closesAt: closesAt,
               viewerRole: viewerRole,
+              inspectionEnabled: inspectionEnabled,
+              photoMin: photoMin,
+              photoMax: photoMax,
               inspection: _inspection?.build());
     } catch (_) {
       late String _$failedField;

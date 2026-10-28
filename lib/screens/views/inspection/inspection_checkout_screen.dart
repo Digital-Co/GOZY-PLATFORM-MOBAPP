@@ -14,7 +14,6 @@ import 'package:gozy/screens/views/inspection/inspection_widgets.dart';
 import 'package:gozy/utils/inspection/inspection_format.dart';
 import 'package:gozy/utils/inspection/inspection_i18n.dart';
 import 'package:gozy/utils/inspection/inspection_models.dart';
-import 'package:gozy/utils/inspection/inspection_photo_processor.dart';
 import 'package:gozy/utils/inspection/inspection_rules.dart';
 import 'package:gozy/widgets/custom_stateful_widget.dart';
 
@@ -202,12 +201,13 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
           number: next(),
           title: inspText('insp_photos_damage'),
           subtitle: inspText('insp_photos_damage_help'),
-          trailing: Text('${c.photoCount}/$inspectionPhotoMaxCount',
+          trailing: Text('${c.photoCount}/${c.photoMax}',
               style: inspStyle(12, AppFont.medium, color: appColors.textfieldHintColor)),
-          child: Obx(() => InspPhotoGrid(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Obx(() => InspPhotoGrid(
                 stored: c.serverPhotos,
                 queued: c.queuedPhotos,
-                maxCount: inspectionPhotoMaxCount,
+                maxCount: c.photoMax,
                 editable: enabled,
                 processing: c.processingPhotos.value,
                 onAdd: () => addPhotosFlow(context, c),
@@ -217,6 +217,8 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
                 onOpen: (i) => Get.to(() => InspPhotoViewer(
                     photoIds: c.serverPhotos.map((p) => p.id).toList(), initial: i)),
               )),
+          InspErrorText(_err('photos')),
+          ]),
         ),
         InspCard(
           number: next(),
@@ -496,7 +498,7 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
           child: InspPhotoGrid(
             stored: stored,
             queued: const [],
-            maxCount: inspectionPhotoMaxCount,
+            maxCount: c.photoMax,
             editable: false,
             onOpen: (i) => Get.to(() => InspPhotoViewer(
                 photoIds: stored.map((p) => p.id).toList(), initial: i)),

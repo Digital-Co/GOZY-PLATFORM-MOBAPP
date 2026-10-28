@@ -77,6 +77,12 @@ abstract class GvalidateInspectionData_validateInspection
   @override
   String? get viewerRole;
   @override
+  bool? get inspectionEnabled;
+  @override
+  int? get photoMin;
+  @override
+  int? get photoMax;
+  @override
   GvalidateInspectionData_validateInspection_inspection? get inspection;
   static Serializer<GvalidateInspectionData_validateInspection>
       get serializer => _$gvalidateInspectionDataValidateInspectionSerializer;

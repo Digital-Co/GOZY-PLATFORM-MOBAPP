@@ -8,6 +8,9 @@ fragment inspectionResultFragment on InspectionResult {
   opensAt
   closesAt
   viewerRole
+  inspectionEnabled
+  photoMin
+  photoMax
   inspection {
     ...inspectionFragment
   }

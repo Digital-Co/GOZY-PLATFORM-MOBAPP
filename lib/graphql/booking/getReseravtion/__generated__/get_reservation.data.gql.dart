@@ -6,24 +6,26 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:gozy/graphql/__generated__/base_listing_info_fragment.data.gql.dart'
-    as _i4;
-import 'package:gozy/graphql/__generated__/listing_data_fragment.data.gql.dart'
-    as _i3;
-import 'package:gozy/graphql/__generated__/listing_user_fragment.data.gql.dart'
     as _i5;
+import 'package:gozy/graphql/__generated__/listing_data_fragment.data.gql.dart'
+    as _i4;
+import 'package:gozy/graphql/__generated__/listing_user_fragment.data.gql.dart'
+    as _i6;
 import 'package:gozy/graphql/__generated__/reservation_fragment.data.gql.dart'
     as _i2;
 import 'package:gozy/graphql/__generated__/serializers.gql.dart' as _i1;
 import 'package:gozy/graphql/__generated__/thread_item_fragment.data.gql.dart'
-    as _i9;
-import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
-    as _i7;
-import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
-    as _i6;
-import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.data.gql.dart'
     as _i10;
-import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.data.gql.dart'
+import 'package:gozy/graphql/__generated__/user_profile_fragment.data.gql.dart'
     as _i8;
+import 'package:gozy/graphql/__generated__/user_verified_info_fragment.data.gql.dart'
+    as _i7;
+import 'package:gozy/graphql/inspection/__generated__/reservation_inspection_fragment.data.gql.dart'
+    as _i3;
+import 'package:gozy/graphql/listingOptions/__generated__/booking_option_line_fragment.data.gql.dart'
+    as _i11;
+import 'package:gozy/graphql/listingOptions/__generated__/reservation_option_snapshot_fragment.data.gql.dart'
+    as _i9;
 
 part 'get_reservation.data.gql.g.dart';
 
@@ -112,7 +114,8 @@ abstract class GgetReservationData_getReservation_results
     implements
         Built<GgetReservationData_getReservation_results,
             GgetReservationData_getReservation_resultsBuilder>,
-        _i2.GreservationFragment {
+        _i2.GreservationFragment,
+        _i3.GreservationInspectionFragment {
   GgetReservationData_getReservation_results._();
 
   factory GgetReservationData_getReservation_results(
@@ -268,6 +271,12 @@ abstract class GgetReservationData_getReservation_results
   @override
   GgetReservationData_getReservation_results_futureTransactionTotal?
       get futureTransactionTotal;
+  @override
+  String? get inspectionStatus;
+  @override
+  String? get closureState;
+  @override
+  bool? get inspectionEnabled;
   static Serializer<GgetReservationData_getReservation_results>
       get serializer => _$ggetReservationDataGetReservationResultsSerializer;
 
@@ -290,7 +299,7 @@ abstract class GgetReservationData_getReservation_results_cancellation
         Built<GgetReservationData_getReservation_results_cancellation,
             GgetReservationData_getReservation_results_cancellationBuilder>,
         _i2.GreservationFragment_cancellation,
-        _i3.GcancellationDataFragment {
+        _i4.GcancellationDataFragment {
   GgetReservationData_getReservation_results_cancellation._();
 
   factory GgetReservationData_getReservation_results_cancellation(
@@ -368,7 +377,7 @@ abstract class GgetReservationData_getReservation_results_listData
         Built<GgetReservationData_getReservation_results_listData,
             GgetReservationData_getReservation_results_listDataBuilder>,
         _i2.GreservationFragment_listData,
-        _i4.GviewListingShortFragment {
+        _i5.GviewListingShortFragment {
   GgetReservationData_getReservation_results_listData._();
 
   factory GgetReservationData_getReservation_results_listData(
@@ -488,7 +497,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicListin
             GgetReservationData_getReservation_results_listData_dynamicListingTitle,
             GgetReservationData_getReservation_results_listData_dynamicListingTitleBuilder>,
         _i2.GreservationFragment_listData_dynamicListingTitle,
-        _i4.GviewListingShortFragment_dynamicListingTitle {
+        _i5.GviewListingShortFragment_dynamicListingTitle {
   GgetReservationData_getReservation_results_listData_dynamicListingTitle._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicListingTitle(
@@ -536,7 +545,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicListin
             GgetReservationData_getReservation_results_listData_dynamicListingDescription,
             GgetReservationData_getReservation_results_listData_dynamicListingDescriptionBuilder>,
         _i2.GreservationFragment_listData_dynamicListingDescription,
-        _i4.GviewListingShortFragment_dynamicListingDescription {
+        _i5.GviewListingShortFragment_dynamicListingDescription {
   GgetReservationData_getReservation_results_listData_dynamicListingDescription._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicListingDescription(
@@ -584,7 +593,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicListTi
             GgetReservationData_getReservation_results_listData_dynamicListTitle,
             GgetReservationData_getReservation_results_listData_dynamicListTitleBuilder>,
         _i2.GreservationFragment_listData_dynamicListTitle,
-        _i4.GviewListingShortFragment_dynamicListTitle {
+        _i5.GviewListingShortFragment_dynamicListTitle {
   GgetReservationData_getReservation_results_listData_dynamicListTitle._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicListTitle(
@@ -640,7 +649,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicListDe
             GgetReservationData_getReservation_results_listData_dynamicListDescription,
             GgetReservationData_getReservation_results_listData_dynamicListDescriptionBuilder>,
         _i2.GreservationFragment_listData_dynamicListDescription,
-        _i4.GviewListingShortFragment_dynamicListDescription {
+        _i5.GviewListingShortFragment_dynamicListDescription {
   GgetReservationData_getReservation_results_listData_dynamicListDescription._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicListDescription(
@@ -696,7 +705,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicCarTyp
             GgetReservationData_getReservation_results_listData_dynamicCarType,
             GgetReservationData_getReservation_results_listData_dynamicCarTypeBuilder>,
         _i2.GreservationFragment_listData_dynamicCarType,
-        _i4.GviewListingShortFragment_dynamicCarType {
+        _i5.GviewListingShortFragment_dynamicCarType {
   GgetReservationData_getReservation_results_listData_dynamicCarType._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicCarType(
@@ -751,7 +760,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicmake
         Built<GgetReservationData_getReservation_results_listData_dynamicmake,
             GgetReservationData_getReservation_results_listData_dynamicmakeBuilder>,
         _i2.GreservationFragment_listData_dynamicmake,
-        _i4.GviewListingShortFragment_dynamicmake {
+        _i5.GviewListingShortFragment_dynamicmake {
   GgetReservationData_getReservation_results_listData_dynamicmake._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicmake(
@@ -806,7 +815,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicModel
         Built<GgetReservationData_getReservation_results_listData_dynamicModel,
             GgetReservationData_getReservation_results_listData_dynamicModelBuilder>,
         _i2.GreservationFragment_listData_dynamicModel,
-        _i4.GviewListingShortFragment_dynamicModel {
+        _i5.GviewListingShortFragment_dynamicModel {
   GgetReservationData_getReservation_results_listData_dynamicModel._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicModel(
@@ -861,7 +870,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicYear
         Built<GgetReservationData_getReservation_results_listData_dynamicYear,
             GgetReservationData_getReservation_results_listData_dynamicYearBuilder>,
         _i2.GreservationFragment_listData_dynamicYear,
-        _i4.GviewListingShortFragment_dynamicYear {
+        _i5.GviewListingShortFragment_dynamicYear {
   GgetReservationData_getReservation_results_listData_dynamicYear._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicYear(
@@ -917,7 +926,7 @@ abstract class GgetReservationData_getReservation_results_listData_dynamicOdomet
             GgetReservationData_getReservation_results_listData_dynamicOdometer,
             GgetReservationData_getReservation_results_listData_dynamicOdometerBuilder>,
         _i2.GreservationFragment_listData_dynamicOdometer,
-        _i4.GviewListingShortFragment_dynamicOdometer {
+        _i5.GviewListingShortFragment_dynamicOdometer {
   GgetReservationData_getReservation_results_listData_dynamicOdometer._();
 
   factory GgetReservationData_getReservation_results_listData_dynamicOdometer(
@@ -972,7 +981,7 @@ abstract class GgetReservationData_getReservation_results_listData_carRules
         Built<GgetReservationData_getReservation_results_listData_carRules,
             GgetReservationData_getReservation_results_listData_carRulesBuilder>,
         _i2.GreservationFragment_listData_carRules,
-        _i4.GviewListingShortFragment_carRules {
+        _i5.GviewListingShortFragment_carRules {
   GgetReservationData_getReservation_results_listData_carRules._();
 
   factory GgetReservationData_getReservation_results_listData_carRules(
@@ -1022,7 +1031,7 @@ abstract class GgetReservationData_getReservation_results_listData_carRules_dyna
             GgetReservationData_getReservation_results_listData_carRules_dynamicItemName,
             GgetReservationData_getReservation_results_listData_carRules_dynamicItemNameBuilder>,
         _i2.GreservationFragment_listData_carRules_dynamicItemName,
-        _i4.GviewListingShortFragment_carRules_dynamicItemName {
+        _i5.GviewListingShortFragment_carRules_dynamicItemName {
   GgetReservationData_getReservation_results_listData_carRules_dynamicItemName._();
 
   factory GgetReservationData_getReservation_results_listData_carRules_dynamicItemName(
@@ -1077,7 +1086,7 @@ abstract class GgetReservationData_getReservation_results_listData_carFeatures
         Built<GgetReservationData_getReservation_results_listData_carFeatures,
             GgetReservationData_getReservation_results_listData_carFeaturesBuilder>,
         _i2.GreservationFragment_listData_carFeatures,
-        _i4.GviewListingShortFragment_carFeatures {
+        _i5.GviewListingShortFragment_carFeatures {
   GgetReservationData_getReservation_results_listData_carFeatures._();
 
   factory GgetReservationData_getReservation_results_listData_carFeatures(
@@ -1128,7 +1137,7 @@ abstract class GgetReservationData_getReservation_results_listData_carFeatures_d
             GgetReservationData_getReservation_results_listData_carFeatures_dynamicItemName,
             GgetReservationData_getReservation_results_listData_carFeatures_dynamicItemNameBuilder>,
         _i2.GreservationFragment_listData_carFeatures_dynamicItemName,
-        _i4.GviewListingShortFragment_carFeatures_dynamicItemName {
+        _i5.GviewListingShortFragment_carFeatures_dynamicItemName {
   GgetReservationData_getReservation_results_listData_carFeatures_dynamicItemName._();
 
   factory GgetReservationData_getReservation_results_listData_carFeatures_dynamicItemName(
@@ -1183,7 +1192,7 @@ abstract class GgetReservationData_getReservation_results_listData_listPhotos
         Built<GgetReservationData_getReservation_results_listData_listPhotos,
             GgetReservationData_getReservation_results_listData_listPhotosBuilder>,
         _i2.GreservationFragment_listData_listPhotos,
-        _i4.GviewListingShortFragment_listPhotos {
+        _i5.GviewListingShortFragment_listPhotos {
   GgetReservationData_getReservation_results_listData_listPhotos._();
 
   factory GgetReservationData_getReservation_results_listData_listPhotos(
@@ -1230,8 +1239,8 @@ abstract class GgetReservationData_getReservation_results_listData_listingData
         Built<GgetReservationData_getReservation_results_listData_listingData,
             GgetReservationData_getReservation_results_listData_listingDataBuilder>,
         _i2.GreservationFragment_listData_listingData,
-        _i4.GviewListingShortFragment_listingData,
-        _i3.GlistingDataFragment {
+        _i5.GviewListingShortFragment_listingData,
+        _i4.GlistingDataFragment {
   GgetReservationData_getReservation_results_listData_listingData._();
 
   factory GgetReservationData_getReservation_results_listData_listingData(
@@ -1312,8 +1321,8 @@ abstract class GgetReservationData_getReservation_results_listData_listingData_c
             GgetReservationData_getReservation_results_listData_listingData_cancellation,
             GgetReservationData_getReservation_results_listData_listingData_cancellationBuilder>,
         _i2.GreservationFragment_listData_listingData_cancellation,
-        _i3.GlistingDataFragment_cancellation,
-        _i3.GcancellationDataFragment {
+        _i4.GlistingDataFragment_cancellation,
+        _i4.GcancellationDataFragment {
   GgetReservationData_getReservation_results_listData_listingData_cancellation._();
 
   factory GgetReservationData_getReservation_results_listData_listingData_cancellation(
@@ -1396,7 +1405,7 @@ abstract class GgetReservationData_getReservation_results_listData_user
         Built<GgetReservationData_getReservation_results_listData_user,
             GgetReservationData_getReservation_results_listData_userBuilder>,
         _i2.GreservationFragment_listData_user,
-        _i5.GlistingUserFragment {
+        _i6.GlistingUserFragment {
   GgetReservationData_getReservation_results_listData_user._();
 
   factory GgetReservationData_getReservation_results_listData_user(
@@ -1443,7 +1452,7 @@ abstract class GgetReservationData_getReservation_results_listData_user_profile
         Built<GgetReservationData_getReservation_results_listData_user_profile,
             GgetReservationData_getReservation_results_listData_user_profileBuilder>,
         _i2.GreservationFragment_listData_user_profile,
-        _i5.GlistingUserFragment_profile {
+        _i6.GlistingUserFragment_profile {
   GgetReservationData_getReservation_results_listData_user_profile._();
 
   factory GgetReservationData_getReservation_results_listData_user_profile(
@@ -1503,8 +1512,8 @@ abstract class GgetReservationData_getReservation_results_listData_user_verifica
             GgetReservationData_getReservation_results_listData_user_verification,
             GgetReservationData_getReservation_results_listData_user_verificationBuilder>,
         _i2.GreservationFragment_listData_user_verification,
-        _i5.GlistingUserFragment_verification,
-        _i6.GuserVerifiedInfoFragment {
+        _i6.GlistingUserFragment_verification,
+        _i7.GuserVerifiedInfoFragment {
   GgetReservationData_getReservation_results_listData_user_verification._();
 
   factory GgetReservationData_getReservation_results_listData_user_verification(
@@ -1610,7 +1619,7 @@ abstract class GgetReservationData_getReservation_results_hostData
         Built<GgetReservationData_getReservation_results_hostData,
             GgetReservationData_getReservation_results_hostDataBuilder>,
         _i2.GreservationFragment_hostData,
-        _i7.GuserProfileFragment {
+        _i8.GuserProfileFragment {
   GgetReservationData_getReservation_results_hostData._();
 
   factory GgetReservationData_getReservation_results_hostData(
@@ -1679,7 +1688,7 @@ abstract class GgetReservationData_getReservation_results_hostData_userData
         Built<GgetReservationData_getReservation_results_hostData_userData,
             GgetReservationData_getReservation_results_hostData_userDataBuilder>,
         _i2.GreservationFragment_hostData_userData,
-        _i7.GuserProfileFragment_userData {
+        _i8.GuserProfileFragment_userData {
   GgetReservationData_getReservation_results_hostData_userData._();
 
   factory GgetReservationData_getReservation_results_hostData_userData(
@@ -1730,8 +1739,8 @@ abstract class GgetReservationData_getReservation_results_hostData_userVerificat
             GgetReservationData_getReservation_results_hostData_userVerification,
             GgetReservationData_getReservation_results_hostData_userVerificationBuilder>,
         _i2.GreservationFragment_hostData_userVerification,
-        _i7.GuserProfileFragment_userVerification,
-        _i6.GuserVerifiedInfoFragment {
+        _i8.GuserProfileFragment_userVerification,
+        _i7.GuserVerifiedInfoFragment {
   GgetReservationData_getReservation_results_hostData_userVerification._();
 
   factory GgetReservationData_getReservation_results_hostData_userVerification(
@@ -1786,7 +1795,7 @@ abstract class GgetReservationData_getReservation_results_guestData
         Built<GgetReservationData_getReservation_results_guestData,
             GgetReservationData_getReservation_results_guestDataBuilder>,
         _i2.GreservationFragment_guestData,
-        _i7.GuserProfileFragment {
+        _i8.GuserProfileFragment {
   GgetReservationData_getReservation_results_guestData._();
 
   factory GgetReservationData_getReservation_results_guestData(
@@ -1855,7 +1864,7 @@ abstract class GgetReservationData_getReservation_results_guestData_userData
         Built<GgetReservationData_getReservation_results_guestData_userData,
             GgetReservationData_getReservation_results_guestData_userDataBuilder>,
         _i2.GreservationFragment_guestData_userData,
-        _i7.GuserProfileFragment_userData {
+        _i8.GuserProfileFragment_userData {
   GgetReservationData_getReservation_results_guestData_userData._();
 
   factory GgetReservationData_getReservation_results_guestData_userData(
@@ -1907,8 +1916,8 @@ abstract class GgetReservationData_getReservation_results_guestData_userVerifica
             GgetReservationData_getReservation_results_guestData_userVerification,
             GgetReservationData_getReservation_results_guestData_userVerificationBuilder>,
         _i2.GreservationFragment_guestData_userVerification,
-        _i7.GuserProfileFragment_userVerification,
-        _i6.GuserVerifiedInfoFragment {
+        _i8.GuserProfileFragment_userVerification,
+        _i7.GuserVerifiedInfoFragment {
   GgetReservationData_getReservation_results_guestData_userVerification._();
 
   factory GgetReservationData_getReservation_results_guestData_userVerification(
@@ -1963,7 +1972,7 @@ abstract class GgetReservationData_getReservation_results_reservationOptions
         Built<GgetReservationData_getReservation_results_reservationOptions,
             GgetReservationData_getReservation_results_reservationOptionsBuilder>,
         _i2.GreservationFragment_reservationOptions,
-        _i8.GreservationOptionSnapshotFragment {
+        _i9.GreservationOptionSnapshotFragment {
   GgetReservationData_getReservation_results_reservationOptions._();
 
   factory GgetReservationData_getReservation_results_reservationOptions(
@@ -2030,7 +2039,7 @@ abstract class GgetReservationData_getReservation_results_threadData
         Built<GgetReservationData_getReservation_results_threadData,
             GgetReservationData_getReservation_results_threadDataBuilder>,
         _i2.GreservationFragment_threadData,
-        _i9.GthreadItemsFragment {
+        _i10.GthreadItemsFragment {
   GgetReservationData_getReservation_results_threadData._();
 
   factory GgetReservationData_getReservation_results_threadData(
@@ -2233,7 +2242,7 @@ abstract class GgetReservationData_getReservation_convertedOptions
     implements
         Built<GgetReservationData_getReservation_convertedOptions,
             GgetReservationData_getReservation_convertedOptionsBuilder>,
-        _i10.GbookingOptionLineFragment {
+        _i11.GbookingOptionLineFragment {
   GgetReservationData_getReservation_convertedOptions._();
 
   factory GgetReservationData_getReservation_convertedOptions(

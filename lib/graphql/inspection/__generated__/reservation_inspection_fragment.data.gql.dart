@@ -13,6 +13,7 @@ abstract class GreservationInspectionFragment {
   int? get id;
   String? get inspectionStatus;
   String? get closureState;
+  bool? get inspectionEnabled;
   Map<String, dynamic> toJson();
 }
 
@@ -39,6 +40,8 @@ abstract class GreservationInspectionFragmentData
   String? get inspectionStatus;
   @override
   String? get closureState;
+  @override
+  bool? get inspectionEnabled;
   static Serializer<GreservationInspectionFragmentData> get serializer =>
       _$greservationInspectionFragmentDataSerializer;
 

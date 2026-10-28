@@ -48,6 +48,25 @@ String? inspectionStatusOf(dynamic item) {
   }
 }
 
+/// False only when the server says the feature is switched off (null or
+/// missing = unknown: the buttons stay, as before).
+bool inspectionEnabledOf(dynamic item) {
+  try {
+    final direct = item.inspectionEnabled;
+    if (direct is bool) return isInspectionEnabled(direct);
+  } catch (_) {}
+  final id = _idOf(item);
+  if (id == null) return true;
+  try {
+    final GreservationInspectionFragmentData? data = FerryLoggerClient.client
+        ?.cache
+        .readFragment(GreservationInspectionFragmentReq((b) => b..idFields = {'id': id}));
+    return isInspectionEnabled(data?.inspectionEnabled);
+  } catch (_) {
+    return true;
+  }
+}
+
 int? _idOf(dynamic item) {
   try {
     final id = item?.id;
@@ -71,6 +90,7 @@ class InspectionEntryRow extends StatelessWidget {
       InspectionServices.instance.statuses.length;
       final ctx = InspectionContext.fromReservation(item, isOwner: isOwner);
       if (ctx.reservationId == 0) return const SizedBox.shrink();
+      if (!inspectionEnabledOf(item)) return const SizedBox.shrink();
       final entry = inspectionEntryFor(
         reservationState: ctx.reservationState,
         globalStatus: inspectionStatusOf(item),

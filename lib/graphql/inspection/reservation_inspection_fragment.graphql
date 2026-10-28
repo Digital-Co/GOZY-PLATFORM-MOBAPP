@@ -3,4 +3,5 @@ fragment reservationInspectionFragment on Reservation {
   id
   inspectionStatus
   closureState
+  inspectionEnabled
 }

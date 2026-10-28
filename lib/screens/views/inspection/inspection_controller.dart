@@ -31,7 +31,18 @@ class InspectionController extends BaseController {
   String get userId => appPreference.userID ?? '';
 
   // ---- server state ----
-  InspectionOutcome? outcome;
+  InspectionOutcome? _outcome;
+  int? _knownPhotoMax;
+  int? _knownPhotoMin;
+  InspectionOutcome? get outcome => _outcome;
+
+  /// A mutation may answer without the platform limits: the last ones sent by
+  /// the server are kept.
+  set outcome(InspectionOutcome? value) {
+    _outcome = value;
+    if (value?.photoMax != null) _knownPhotoMax = value!.photoMax;
+    if (value?.photoMin != null) _knownPhotoMin = value!.photoMin;
+  }
   List<ChecklistItemInfo> checklist = [];
   DisputeRecord? dispute;
   InspectionRecord? checkinRecord;
@@ -89,9 +100,14 @@ class InspectionController extends BaseController {
           .where((item) => item.status != UploadStatus.done)
           .toList();
 
+  /// Photo limits of the platform (fallback: 8 max, no minimum).
+  int get photoMax => effectivePhotoMax(_knownPhotoMax);
+  int get photoMin => effectivePhotoMin(_knownPhotoMin);
+
   int get photoCount => serverPhotos.length + queuedPhotos.length;
   int get remainingSlots =>
-      remainingPhotoSlots(stored: serverPhotos.length, queued: queuedPhotos.length);
+      remainingPhotoSlots(
+          stored: serverPhotos.length, queued: queuedPhotos.length, max: photoMax);
   bool get hasPendingUploads =>
       services.isReady && services.queue.hasActive(ctx.reservationId, type);
   bool get hasFailedUploads =>
@@ -352,7 +368,8 @@ class InspectionController extends BaseController {
   /// saves the next version (the editor's validation is implied).
   Future<bool> submitCheckin() async {
     if (working.value) return false;
-    errors = validateCheckinForm(form, checklist);
+    errors = validateCheckinForm(form, checklist,
+        photoCount: photoCount, photoMin: photoMin);
     update();
     if (errors.isNotEmpty) {
       showSnackBar(inspText('insp_err_form'), isltralign: true);
@@ -423,6 +440,7 @@ class InspectionController extends BaseController {
       form,
       minMileage: checkinRecord?.mileage,
       damagePhotoCount: photoCount,
+      photoMin: photoMin,
     );
     final reviewCheck = validateReview(reviewRating, reviewText, required: !ctx.isOwner);
     errors = {...errors, ...reviewCheck.errors};
