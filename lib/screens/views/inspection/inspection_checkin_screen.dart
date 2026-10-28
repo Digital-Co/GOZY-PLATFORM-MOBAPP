@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gozy/constant.dart';
 import 'package:gozy/resources/app_dimen.dart';
 import 'package:gozy/resources/app_font.dart';
 import 'package:gozy/screens/views/base_controller.dart';
@@ -62,6 +63,10 @@ class _InspectionCheckinScreenState extends CustomStatefulWidgetState<Inspection
     return CustomScaffold(
       controller: c,
       isShowAppBar: true,
+      backIconWidget: getBackIconWidget(
+        themeType: overALLThemeType,
+        onTap: () => Get.back(),
+      ),
       title: inspText('insp_checkin_title'),
       isShowBGOnLoader: false,
       loader: LottieLoaders.three_dots_loader,
