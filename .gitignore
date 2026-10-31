@@ -51,3 +51,6 @@ Keystore/*
 ios/Pods/
 ios/.symlinks/
 ios/Flutter/ephemeral/
+
+# Build-time environment files (dart-define)
+env/
