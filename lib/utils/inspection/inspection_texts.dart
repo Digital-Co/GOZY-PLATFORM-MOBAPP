@@ -236,6 +236,14 @@ const Map<String, String> inspectionTextEn = {
   'insp_msg_window_closed': 'The period to fill in this step is over.',
   'insp_msg_waiting_owner': 'The owner has not started the check-in yet. You will be notified to validate it.',
   'insp_msg_not_available': 'Not available for this reservation (it must be confirmed and paid).',
+  'insp_view_checkin': 'View check-in',
+  'insp_view_checkout': 'View check-out',
+  'insp_step_validated': 'Validated',
+  'insp_step_to_validate_you': 'To validate by you',
+  'insp_step_waiting_owner': 'Waiting for the owner',
+  'insp_step_waiting_renter': 'Waiting for the renter',
+  'insp_step_draft': 'Draft',
+  'insp_review_already_sent': 'Your review has already been sent',
 };
 
 const Map<String, String> inspectionTextFr = {
@@ -471,4 +479,12 @@ const Map<String, String> inspectionTextFr = {
   'insp_msg_window_closed': 'La période pour effectuer cette étape est terminée.',
   'insp_msg_waiting_owner': "Le propriétaire n'a pas encore commencé le check-in. Vous serez notifié pour le valider.",
   'insp_msg_not_available': 'Non disponible pour cette réservation (elle doit être confirmée et payée).',
+  'insp_view_checkin': 'Voir le check-in',
+  'insp_view_checkout': 'Voir le check-out',
+  'insp_step_validated': 'Validé',
+  'insp_step_to_validate_you': 'À valider par vous',
+  'insp_step_waiting_owner': 'En attente du propriétaire',
+  'insp_step_waiting_renter': 'En attente du locataire',
+  'insp_step_draft': 'Brouillon',
+  'insp_review_already_sent': 'Votre avis a déjà été envoyé',
 };

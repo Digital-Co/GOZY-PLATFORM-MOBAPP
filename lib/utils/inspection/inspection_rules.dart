@@ -340,7 +340,6 @@ InspectionEntry inspectionEntryFor({
     return const InspectionEntry(showCheckin: false, showCheckout: false);
   }
   final badge = switch (globalStatus) {
-    'to_validate' => (key: 'insp_status_to_validate', tone: BadgeTone.warning),
     'damage_declared' => (key: 'insp_status_damage_declared', tone: BadgeTone.danger),
     'dispute' => (key: 'insp_status_dispute', tone: BadgeTone.danger),
     'dispute_closed' => (key: 'insp_status_dispute_closed', tone: BadgeTone.neutral),
@@ -374,3 +373,60 @@ String photoHttpErrorKey(int? httpStatus) => switch (httpStatus) {
       503 => 'insp_err_unavailable',
       _ => 'insp_err_generic',
     };
+
+/// What one button (check-in or check-out) of the lists shows.
+class InspectionStepEntry {
+  const InspectionStepEntry({
+    required this.visible,
+    this.readOnly = false,
+    this.statusKey,
+    this.statusTone = BadgeTone.neutral,
+  });
+  final bool visible;
+
+  /// "View" button: opens the record without any action.
+  final bool readOnly;
+  final String? statusKey;
+  final BadgeTone statusTone;
+}
+
+/// Visibility, label mode and explicit status of one button, from the step
+/// the API sends for the viewer. [step] null (old server, not a party) keeps
+/// the former behaviour: [legacyVisible] decides and no status is shown.
+InspectionStepEntry inspectionStepEntryFor({
+  required InspectionStepInfo? step,
+  required bool isOwner,
+  bool legacyVisible = true,
+}) {
+  if (step == null) return InspectionStepEntry(visible: legacyVisible);
+  final status = step.status ?? 'not_done';
+  final normal = step.open || step.awaitingViewer;
+  final visible = normal || status != 'not_done';
+  if (!visible) return const InspectionStepEntry(visible: false);
+  final (statusKey, tone) = switch (status) {
+    'validated' => ('insp_step_validated', BadgeTone.success),
+    'to_validate' when step.awaitingViewer => ('insp_step_to_validate_you', BadgeTone.warning),
+    'to_validate' => (
+        isOwner ? 'insp_step_waiting_renter' : 'insp_step_waiting_owner',
+        BadgeTone.info
+      ),
+    'draft' => ('insp_step_draft', BadgeTone.neutral),
+    _ => (null, BadgeTone.neutral),
+  };
+  return InspectionStepEntry(
+    visible: true,
+    readOnly: !normal,
+    statusKey: statusKey,
+    statusTone: tone,
+  );
+}
+
+/// Shows an already sent review (read only) instead of the review form.
+bool isReviewLocked(ViewerReviewInfo? review) => review != null;
+
+/// The review is validated and sent only when none was already sent.
+bool shouldSendReview(ViewerReviewInfo? existing, double rating, String text) =>
+    existing == null && hasReviewContent(rating, text);
+
+/// Banners "not available" / "period over" only when there is no record to show.
+bool showsWindowBanner({required bool hasRecord}) => !hasRecord;

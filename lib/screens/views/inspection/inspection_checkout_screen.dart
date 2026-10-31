@@ -23,8 +23,9 @@ import 'package:gozy/widgets/custom_stateful_widget.dart';
 /// party then sees a recap and validates it, modifies it or reports a
 /// disagreement. No new set of vehicle photos is ever asked (rule R22).
 class InspectionCheckoutScreen extends CustomStatefulWidget {
-  const InspectionCheckoutScreen({super.key, required this.ctx});
+  const InspectionCheckoutScreen({super.key, required this.ctx, this.viewOnly = false});
   final InspectionContext ctx;
+  final bool viewOnly;
 
   @override
   CustomStatefulWidgetState<InspectionCheckoutScreen> createState() =>
@@ -42,7 +43,7 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
 
   @override
   void initState() {
-    c = Get.put(InspectionController(ctx: widget.ctx, type: inspectionTypeCheckout), tag: _tag);
+    c = Get.put(InspectionController(ctx: widget.ctx, viewOnly: widget.viewOnly, type: inspectionTypeCheckout), tag: _tag);
     super.initState();
   }
 
@@ -104,7 +105,9 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
     if (!c.firstLoadDone || c.outcome == null) return const SizedBox.shrink();
     _syncFields();
     final stage = c.stage;
-    final blocking = inspStageMessage(stage,
+    final blocking = !c.showWindowBanner
+        ? null
+        : inspStageMessage(stage,
         opensAt: c.outcome?.opensAt, closesAt: c.outcome?.closesAt, type: inspectionTypeCheckout);
     return RefreshIndicator(
       onRefresh: () => c.load(silent: true),
@@ -398,6 +401,30 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
   Widget _reviewCard(int number, bool enabled) {
     final owner = widget.ctx.isOwner;
     final who = widget.ctx.receiverName;
+    final sent = c.viewerReview;
+    if (sent != null) {
+      return InspCard(
+        number: number,
+        title: owner ? inspText('insp_review_renter') : inspText('insp_review_owner'),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          if (who.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(who, style: inspStyle(13, AppFont.medium)),
+            ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: InspStars(rating: sent.rating, onChanged: null),
+          ),
+          if (sent.reviewContent.trim().isNotEmpty) ...[
+            const SizedBox(height: 6),
+            Text(sent.reviewContent, style: inspStyle(14, AppFont.regular)),
+          ],
+          const SizedBox(height: 8),
+          InspBanner(text: inspText('insp_review_already_sent'), tone: BadgeTone.success),
+        ]),
+      );
+    }
     return InspCard(
       number: number,
       title: owner ? inspText('insp_review_renter') : inspText('insp_review_owner'),
@@ -530,7 +557,7 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
           title: inspText('insp_comment'),
           child: Text(record.comment!, style: inspStyle(14, AppFont.regular)),
         ),
-      if (c.reviewWarning != null) ...[
+      if (c.reviewWarning != null && !c.reviewLocked) ...[
         InspBanner(text: c.reviewWarning!, tone: BadgeTone.warning),
         const SizedBox(height: 12),
       ],
@@ -539,6 +566,7 @@ class _InspectionCheckoutScreenState extends CustomStatefulWidgetState<Inspectio
   }
 
   List<Widget> _recapActions(InspectionRecord record, InspectionStage stage) {
+    if (c.viewOnly) return const [];
     final busy = c.working.value;
     final locked = c.readOnly;
     final widgets = <Widget>[];

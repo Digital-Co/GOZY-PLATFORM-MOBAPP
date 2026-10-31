@@ -276,7 +276,7 @@ void main() {
     test('badge follows the derived status sent by the API', () {
       InspectionEntry entry(String status) => inspectionEntryFor(
           reservationState: 'approved', globalStatus: status);
-      expect(entry('to_validate').badgeKey, 'insp_status_to_validate');
+      expect(entry('to_validate').badgeKey, isNull); // shown on each button instead
       expect(entry('damage_declared').badgeTone, BadgeTone.danger);
       expect(entry('dispute').badgeKey, 'insp_status_dispute');
       expect(entry('dispute_closed').badgeKey, 'insp_status_dispute_closed');

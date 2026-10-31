@@ -21,8 +21,9 @@ import 'package:gozy/widgets/custom_stateful_widget.dart';
 /// documents, keys, comment), a recap with Validate / Modify for the renter
 /// (and for the owner while the other party has to validate).
 class InspectionCheckinScreen extends CustomStatefulWidget {
-  const InspectionCheckinScreen({super.key, required this.ctx});
+  const InspectionCheckinScreen({super.key, required this.ctx, this.viewOnly = false});
   final InspectionContext ctx;
+  final bool viewOnly;
 
   @override
   CustomStatefulWidgetState<InspectionCheckinScreen> createState() =>
@@ -38,7 +39,7 @@ class _InspectionCheckinScreenState extends CustomStatefulWidgetState<Inspection
 
   @override
   void initState() {
-    c = Get.put(InspectionController(ctx: widget.ctx, type: inspectionTypeCheckin), tag: _tag);
+    c = Get.put(InspectionController(ctx: widget.ctx, viewOnly: widget.viewOnly, type: inspectionTypeCheckin), tag: _tag);
     super.initState();
   }
 
@@ -92,7 +93,9 @@ class _InspectionCheckinScreenState extends CustomStatefulWidgetState<Inspection
     if (!c.firstLoadDone || c.outcome == null) return const SizedBox.shrink();
     _syncFields();
     final stage = c.stage;
-    final blocking = inspStageMessage(stage,
+    final blocking = !c.showWindowBanner
+        ? null
+        : inspStageMessage(stage,
         opensAt: c.outcome?.opensAt, closesAt: c.outcome?.closesAt, type: inspectionTypeCheckin);
     return RefreshIndicator(
       onRefresh: () => c.load(silent: true),
@@ -466,6 +469,7 @@ class _InspectionCheckinScreenState extends CustomStatefulWidgetState<Inspection
   }
 
   List<Widget> _recapActions(InspectionRecord record, InspectionStage stage) {
+    if (c.viewOnly) return const [];
     final busy = c.working.value;
     final widgets = <Widget>[];
     if (record.canValidate && stage == InspectionStage.toValidateByMe) {

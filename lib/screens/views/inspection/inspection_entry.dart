@@ -18,10 +18,10 @@ import 'package:gozy/utils/inspection/inspection_rules.dart';
 
 /// Opens the check-in or the check-out of a reservation, then refreshes the
 /// derived status shown by the lists.
-Future<void> openInspection(InspectionContext ctx, String type) async {
+Future<void> openInspection(InspectionContext ctx, String type, {bool viewOnly = false}) async {
   await Get.to(() => type == inspectionTypeCheckin
-      ? InspectionCheckinScreen(ctx: ctx)
-      : InspectionCheckoutScreen(ctx: ctx));
+      ? InspectionCheckinScreen(ctx: ctx, viewOnly: viewOnly)
+      : InspectionCheckoutScreen(ctx: ctx, viewOnly: viewOnly));
   final comparison = await InspectionApi(basecontroller).getComparison(ctx.reservationId);
   final status = comparison?.globalStatus;
   if (status != null) InspectionServices.instance.statuses[ctx.reservationId] = status;
@@ -67,6 +67,49 @@ bool inspectionEnabledOf(dynamic item) {
   }
 }
 
+InspectionStepInfo? _stepFrom(dynamic step) {
+  if (step == null) return null;
+  try {
+    return InspectionStepInfo(
+      status: step.status as String?,
+      open: step.open == true,
+      awaitingViewer: step.awaitingViewer == true,
+    );
+  } catch (_) {
+    return null;
+  }
+}
+
+/// Steps sent by the API for the viewer (`inspectionSteps`): null when the
+/// server does not send them (old server, not a party).
+({InspectionStepInfo? checkin, InspectionStepInfo? checkout})? inspectionStepsOf(dynamic item) {
+  dynamic steps;
+  try {
+    steps = item.inspectionSteps;
+  } catch (_) {}
+  if (steps == null) {
+    final id = _idOf(item);
+    if (id != null) {
+      try {
+        final GreservationInspectionFragmentData? data = FerryLoggerClient.client
+            ?.cache
+            .readFragment(GreservationInspectionFragmentReq((b) => b..idFields = {'id': id}));
+        steps = data?.inspectionSteps;
+      } catch (_) {}
+    }
+  }
+  if (steps == null) return null;
+  dynamic checkin, checkout;
+  try {
+    checkin = steps.checkin;
+    checkout = steps.checkout;
+  } catch (_) {}
+  final a = _stepFrom(checkin);
+  final b = _stepFrom(checkout);
+  if (a == null && b == null) return null;
+  return (checkin: a, checkout: b);
+}
+
 int? _idOf(dynamic item) {
   try {
     final id = item?.id;
@@ -90,28 +133,60 @@ class InspectionEntryRow extends StatelessWidget {
       InspectionServices.instance.statuses.length;
       final ctx = InspectionContext.fromReservation(item, isOwner: isOwner);
       if (ctx.reservationId == 0) return const SizedBox.shrink();
-      if (!inspectionEnabledOf(item)) return const SizedBox.shrink();
-      final entry = inspectionEntryFor(
-        reservationState: ctx.reservationState,
-        globalStatus: inspectionStatusOf(item),
-      );
-      if (!entry.isVisible) return const SizedBox.shrink();
+      final steps = inspectionStepsOf(item);
+      final settled = ctx.reservationState == 'approved' || ctx.reservationState == 'completed';
+      final InspectionStepEntry checkin;
+      final InspectionStepEntry checkout;
+      final String? damageBadgeKey;
+      final BadgeTone damageTone;
+      if (steps == null) {
+        // Old server: former behaviour.
+        if (!inspectionEnabledOf(item)) return const SizedBox.shrink();
+        final entry = inspectionEntryFor(
+          reservationState: ctx.reservationState,
+          globalStatus: inspectionStatusOf(item),
+        );
+        checkin = InspectionStepEntry(visible: entry.showCheckin);
+        checkout = InspectionStepEntry(visible: entry.showCheckout);
+        damageBadgeKey = entry.badgeKey;
+        damageTone = entry.badgeTone;
+      } else {
+        checkin = inspectionStepEntryFor(step: steps.checkin, isOwner: ctx.isOwner, legacyVisible: settled);
+        checkout = inspectionStepEntryFor(step: steps.checkout, isOwner: ctx.isOwner, legacyVisible: settled);
+        final entry = inspectionEntryFor(
+            reservationState: 'approved', globalStatus: inspectionStatusOf(item));
+        damageBadgeKey = entry.badgeKey;
+        damageTone = entry.badgeTone;
+      }
+      if (!checkin.visible && !checkout.visible) return const SizedBox.shrink();
       return inspScale(
         context,
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            if (entry.badgeKey != null)
+            if (damageBadgeKey != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: InspBadge(text: inspText(entry.badgeKey!), tone: entry.badgeTone),
+                child: InspBadge(text: inspText(damageBadgeKey), tone: damageTone),
               ),
-            Row(children: [
-              if (entry.showCheckin)
-                Expanded(child: _EntryButton(label: inspText('insp_checkin'), icon: Icons.login, onTap: () => openInspection(ctx, inspectionTypeCheckin))),
-              if (entry.showCheckin && entry.showCheckout) const SizedBox(width: 8),
-              if (entry.showCheckout)
-                Expanded(child: _EntryButton(label: inspText('insp_checkout'), icon: Icons.logout, onTap: () => openInspection(ctx, inspectionTypeCheckout))),
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              if (checkin.visible)
+                Expanded(
+                    child: _EntryButton(
+                  label: inspText(checkin.readOnly ? 'insp_view_checkin' : 'insp_checkin'),
+                  icon: checkin.readOnly ? Icons.visibility_outlined : Icons.login,
+                  status: checkin,
+                  onTap: () => openInspection(ctx, inspectionTypeCheckin, viewOnly: checkin.readOnly),
+                )),
+              if (checkin.visible && checkout.visible) const SizedBox(width: 8),
+              if (checkout.visible)
+                Expanded(
+                    child: _EntryButton(
+                  label: inspText(checkout.readOnly ? 'insp_view_checkout' : 'insp_checkout'),
+                  icon: checkout.readOnly ? Icons.visibility_outlined : Icons.logout,
+                  status: checkout,
+                  onTap: () => openInspection(ctx, inspectionTypeCheckout, viewOnly: checkout.readOnly),
+                )),
             ]),
           ]),
         ),
@@ -121,14 +196,16 @@ class InspectionEntryRow extends StatelessWidget {
 }
 
 class _EntryButton extends StatelessWidget {
-  const _EntryButton({required this.label, required this.icon, required this.onTap});
+  const _EntryButton({required this.label, required this.icon, required this.onTap, this.status});
+  final InspectionStepEntry? status;
   final String label;
   final IconData icon;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
+    final statusKey = status?.statusKey;
+    final button = Semantics(
       button: true,
       label: label,
       child: InkWell(
@@ -154,5 +231,14 @@ class _EntryButton extends StatelessWidget {
         ),
       ),
     );
+    if (statusKey == null) return button;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      button,
+      const SizedBox(height: 4),
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: InspBadge(text: inspText(statusKey), tone: status!.statusTone),
+      ),
+    ]);
   }
 }

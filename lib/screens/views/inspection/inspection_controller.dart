@@ -17,12 +17,15 @@ import 'package:gozy/utils/inspection/inspection_upload_queue.dart';
 /// judge of every rule (window, version, validation, limits): the controller
 /// reloads the record after a refusal and shows what the server really has.
 class InspectionController extends BaseController {
-  InspectionController({required this.ctx, required this.type});
+  InspectionController({required this.ctx, required this.type, this.viewOnly = false});
 
   final InspectionContext ctx;
 
   /// inspectionTypeCheckin or inspectionTypeCheckout.
   final String type;
+
+  /// Opened with a "View" button: the record is shown without any action.
+  final bool viewOnly;
 
   late final InspectionApi api = InspectionApi(this);
   final InspectionServices services = InspectionServices.instance;
@@ -85,9 +88,15 @@ class InspectionController extends BaseController {
         windowReason: outcome?.windowReason,
       );
 
-  bool get readOnly => isCheckin
-      ? (record?.isLocked ?? false)
-      : isCheckoutReadOnly(record, dispute);
+  bool get readOnly => viewOnly ||
+      (isCheckin ? (record?.isLocked ?? false) : isCheckoutReadOnly(record, dispute));
+
+  /// Review already sent by the viewer (shown read only, never sent again).
+  ViewerReviewInfo? get viewerReview => outcome?.viewerReview;
+  bool get reviewLocked => isReviewLocked(viewerReview);
+
+  /// "Not available" / "period over" banners: only without any record to show.
+  bool get showWindowBanner => showsWindowBanner(hasRecord: record != null);
 
   /// Pictures stored on the server for this series.
   List<InspectionPhotoItem> get serverPhotos => record?.mainPhotos ?? const [];
@@ -194,7 +203,7 @@ class InspectionController extends BaseController {
   Future<void> _initForm() async {
     _formInitialised = true;
     final current = record;
-    final open = stage == InspectionStage.todo;
+    final open = stage == InspectionStage.todo && !viewOnly;
     if (current != null) {
       form = InspectionFormData.fromRecord(current);
     }
@@ -213,6 +222,7 @@ class InspectionController extends BaseController {
 
   /// "Modify": the form opens with the values of the displayed version.
   void startEditing() {
+    if (viewOnly) return;
     final current = record;
     if (current != null) form = InspectionFormData.fromRecord(current);
     errors = {};
@@ -442,8 +452,10 @@ class InspectionController extends BaseController {
       damagePhotoCount: photoCount,
       photoMin: photoMin,
     );
-    final reviewCheck = validateReview(reviewRating, reviewText, required: !ctx.isOwner);
-    errors = {...errors, ...reviewCheck.errors};
+    if (!reviewLocked) {
+      final reviewCheck = validateReview(reviewRating, reviewText, required: !ctx.isOwner);
+      errors = {...errors, ...reviewCheck.errors};
+    }
     update();
     if (errors.isNotEmpty) {
       showSnackBar(inspText('insp_err_form'), isltralign: true);
@@ -485,7 +497,7 @@ class InspectionController extends BaseController {
 
   Future<void> _sendReview() async {
     reviewWarning = null;
-    if (!hasReviewContent(reviewRating, reviewText)) return;
+    if (!shouldSendReview(viewerReview, reviewRating, reviewText)) return;
     final receiver = ctx.receiverId;
     if (receiver == null || receiver.isEmpty || ctx.listId == 0) {
       reviewWarning = inspText('insp_review_failed');

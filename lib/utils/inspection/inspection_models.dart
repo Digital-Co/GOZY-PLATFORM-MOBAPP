@@ -219,6 +219,7 @@ class InspectionOutcome {
     this.inspectionEnabled,
     this.photoMin,
     this.photoMax,
+    this.viewerReview,
     this.networkFailure = false,
   });
 
@@ -235,6 +236,7 @@ class InspectionOutcome {
         inspectionEnabled = null,
         photoMin = null,
         photoMax = null,
+        viewerReview = null,
         networkFailure = true;
 
   final int? status;
@@ -251,6 +253,9 @@ class InspectionOutcome {
   final bool? inspectionEnabled;
   final int? photoMin;
   final int? photoMax;
+
+  /// The review the viewer already wrote for this reservation (null = none).
+  final ViewerReviewInfo? viewerReview;
   final bool networkFailure;
 
   bool get isOk => status == 200;
@@ -272,8 +277,36 @@ class InspectionOutcome {
       inspectionEnabled: _asBool(json['inspectionEnabled']),
       photoMin: _asInt(json['photoMin']),
       photoMax: _asInt(json['photoMax']),
+      viewerReview: ViewerReviewInfo.fromJson(json['viewerReview']),
     );
   }
+}
+
+/// Review already sent by the viewer for this reservation (read only).
+class ViewerReviewInfo {
+  const ViewerReviewInfo({this.id, required this.rating, this.reviewContent = ''});
+  final int? id;
+  final double rating;
+  final String reviewContent;
+
+  static ViewerReviewInfo? fromJson(Object? raw) {
+    if (raw is! Map) return null;
+    final rating = raw['rating'];
+    return ViewerReviewInfo(
+      id: _asInt(raw['id']),
+      rating: rating is num ? rating.toDouble() : 0,
+      reviewContent: _asString(raw['reviewContent']) ?? '',
+    );
+  }
+}
+
+/// Status of one step (check-in or check-out) for the viewer, as sent by the
+/// API in `Reservation.inspectionSteps`.
+class InspectionStepInfo {
+  const InspectionStepInfo({this.status, this.open = false, this.awaitingViewer = false});
+  final String? status;
+  final bool open;
+  final bool awaitingViewer;
 }
 
 class ChecklistItemInfo {
