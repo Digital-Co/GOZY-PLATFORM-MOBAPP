@@ -11,6 +11,9 @@ Serializer<GgetInspectionData> _$ggetInspectionDataSerializer =
 Serializer<GgetInspectionData_getInspection>
     _$ggetInspectionDataGetInspectionSerializer =
     new _$GgetInspectionData_getInspectionSerializer();
+Serializer<GgetInspectionData_getInspection_viewerReview>
+    _$ggetInspectionDataGetInspectionViewerReviewSerializer =
+    new _$GgetInspectionData_getInspection_viewerReviewSerializer();
 Serializer<GgetInspectionData_getInspection_inspection>
     _$ggetInspectionDataGetInspectionInspectionSerializer =
     new _$GgetInspectionData_getInspection_inspectionSerializer();
@@ -164,6 +167,14 @@ class _$GgetInspectionData_getInspectionSerializer
         ..add('photoMax')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.viewerReview;
+    if (value != null) {
+      result
+        ..add('viewerReview')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(GgetInspectionData_getInspection_viewerReview)));
+    }
     value = object.inspection;
     if (value != null) {
       result
@@ -231,11 +242,96 @@ class _$GgetInspectionData_getInspectionSerializer
           result.photoMax = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'viewerReview':
+          result.viewerReview.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GgetInspectionData_getInspection_viewerReview))!
+              as GgetInspectionData_getInspection_viewerReview);
+          break;
         case 'inspection':
           result.inspection.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       GgetInspectionData_getInspection_inspection))!
               as GgetInspectionData_getInspection_inspection);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GgetInspectionData_getInspection_viewerReviewSerializer
+    implements
+        StructuredSerializer<GgetInspectionData_getInspection_viewerReview> {
+  @override
+  final Iterable<Type> types = const [
+    GgetInspectionData_getInspection_viewerReview,
+    _$GgetInspectionData_getInspection_viewerReview
+  ];
+  @override
+  final String wireName = 'GgetInspectionData_getInspection_viewerReview';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GgetInspectionData_getInspection_viewerReview object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.rating;
+    if (value != null) {
+      result
+        ..add('rating')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.reviewContent;
+    if (value != null) {
+      result
+        ..add('reviewContent')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GgetInspectionData_getInspection_viewerReview deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GgetInspectionData_getInspection_viewerReviewBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'rating':
+          result.rating = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'reviewContent':
+          result.reviewContent = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -923,6 +1019,8 @@ class _$GgetInspectionData_getInspection
   @override
   final int? photoMax;
   @override
+  final GgetInspectionData_getInspection_viewerReview? viewerReview;
+  @override
   final GgetInspectionData_getInspection_inspection? inspection;
 
   factory _$GgetInspectionData_getInspection(
@@ -941,6 +1039,7 @@ class _$GgetInspectionData_getInspection
       this.inspectionEnabled,
       this.photoMin,
       this.photoMax,
+      this.viewerReview,
       this.inspection})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -971,6 +1070,7 @@ class _$GgetInspectionData_getInspection
         inspectionEnabled == other.inspectionEnabled &&
         photoMin == other.photoMin &&
         photoMax == other.photoMax &&
+        viewerReview == other.viewerReview &&
         inspection == other.inspection;
   }
 
@@ -988,6 +1088,7 @@ class _$GgetInspectionData_getInspection
     _$hash = $jc(_$hash, inspectionEnabled.hashCode);
     _$hash = $jc(_$hash, photoMin.hashCode);
     _$hash = $jc(_$hash, photoMax.hashCode);
+    _$hash = $jc(_$hash, viewerReview.hashCode);
     _$hash = $jc(_$hash, inspection.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1007,6 +1108,7 @@ class _$GgetInspectionData_getInspection
           ..add('inspectionEnabled', inspectionEnabled)
           ..add('photoMin', photoMin)
           ..add('photoMax', photoMax)
+          ..add('viewerReview', viewerReview)
           ..add('inspection', inspection))
         .toString();
   }
@@ -1063,6 +1165,14 @@ class GgetInspectionData_getInspectionBuilder
   int? get photoMax => _$this._photoMax;
   set photoMax(int? photoMax) => _$this._photoMax = photoMax;
 
+  GgetInspectionData_getInspection_viewerReviewBuilder? _viewerReview;
+  GgetInspectionData_getInspection_viewerReviewBuilder get viewerReview =>
+      _$this._viewerReview ??=
+          new GgetInspectionData_getInspection_viewerReviewBuilder();
+  set viewerReview(
+          GgetInspectionData_getInspection_viewerReviewBuilder? viewerReview) =>
+      _$this._viewerReview = viewerReview;
+
   GgetInspectionData_getInspection_inspectionBuilder? _inspection;
   GgetInspectionData_getInspection_inspectionBuilder get inspection =>
       _$this._inspection ??=
@@ -1089,6 +1199,7 @@ class GgetInspectionData_getInspectionBuilder
       _inspectionEnabled = $v.inspectionEnabled;
       _photoMin = $v.photoMin;
       _photoMax = $v.photoMax;
+      _viewerReview = $v.viewerReview?.toBuilder();
       _inspection = $v.inspection?.toBuilder();
       _$v = null;
     }
@@ -1126,10 +1237,13 @@ class GgetInspectionData_getInspectionBuilder
               inspectionEnabled: inspectionEnabled,
               photoMin: photoMin,
               photoMax: photoMax,
+              viewerReview: _viewerReview?.build(),
               inspection: _inspection?.build());
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'viewerReview';
+        _viewerReview?.build();
         _$failedField = 'inspection';
         _inspection?.build();
       } catch (e) {
@@ -1138,6 +1252,144 @@ class GgetInspectionData_getInspectionBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetInspectionData_getInspection_viewerReview
+    extends GgetInspectionData_getInspection_viewerReview {
+  @override
+  final String G__typename;
+  @override
+  final int? id;
+  @override
+  final double? rating;
+  @override
+  final String? reviewContent;
+
+  factory _$GgetInspectionData_getInspection_viewerReview(
+          [void Function(GgetInspectionData_getInspection_viewerReviewBuilder)?
+              updates]) =>
+      (new GgetInspectionData_getInspection_viewerReviewBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GgetInspectionData_getInspection_viewerReview._(
+      {required this.G__typename, this.id, this.rating, this.reviewContent})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GgetInspectionData_getInspection_viewerReview', 'G__typename');
+  }
+
+  @override
+  GgetInspectionData_getInspection_viewerReview rebuild(
+          void Function(GgetInspectionData_getInspection_viewerReviewBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetInspectionData_getInspection_viewerReviewBuilder toBuilder() =>
+      new GgetInspectionData_getInspection_viewerReviewBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GgetInspectionData_getInspection_viewerReview &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        rating == other.rating &&
+        reviewContent == other.reviewContent;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, rating.hashCode);
+    _$hash = $jc(_$hash, reviewContent.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GgetInspectionData_getInspection_viewerReview')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('rating', rating)
+          ..add('reviewContent', reviewContent))
+        .toString();
+  }
+}
+
+class GgetInspectionData_getInspection_viewerReviewBuilder
+    implements
+        Builder<GgetInspectionData_getInspection_viewerReview,
+            GgetInspectionData_getInspection_viewerReviewBuilder> {
+  _$GgetInspectionData_getInspection_viewerReview? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  double? _rating;
+  double? get rating => _$this._rating;
+  set rating(double? rating) => _$this._rating = rating;
+
+  String? _reviewContent;
+  String? get reviewContent => _$this._reviewContent;
+  set reviewContent(String? reviewContent) =>
+      _$this._reviewContent = reviewContent;
+
+  GgetInspectionData_getInspection_viewerReviewBuilder() {
+    GgetInspectionData_getInspection_viewerReview._initializeBuilder(this);
+  }
+
+  GgetInspectionData_getInspection_viewerReviewBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id;
+      _rating = $v.rating;
+      _reviewContent = $v.reviewContent;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GgetInspectionData_getInspection_viewerReview other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetInspectionData_getInspection_viewerReview;
+  }
+
+  @override
+  void update(
+      void Function(GgetInspectionData_getInspection_viewerReviewBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetInspectionData_getInspection_viewerReview build() => _build();
+
+  _$GgetInspectionData_getInspection_viewerReview _build() {
+    final _$result = _$v ??
+        new _$GgetInspectionData_getInspection_viewerReview._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename,
+                r'GgetInspectionData_getInspection_viewerReview',
+                'G__typename'),
+            id: id,
+            rating: rating,
+            reviewContent: reviewContent);
     replace(_$result);
     return _$result;
   }

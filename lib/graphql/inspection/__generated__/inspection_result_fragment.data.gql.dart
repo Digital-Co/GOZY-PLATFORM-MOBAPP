@@ -25,7 +25,16 @@ abstract class GinspectionResultFragment {
   bool? get inspectionEnabled;
   int? get photoMin;
   int? get photoMax;
+  GinspectionResultFragment_viewerReview? get viewerReview;
   GinspectionResultFragment_inspection? get inspection;
+  Map<String, dynamic> toJson();
+}
+
+abstract class GinspectionResultFragment_viewerReview {
+  String get G__typename;
+  int? get id;
+  double? get rating;
+  String? get reviewContent;
   Map<String, dynamic> toJson();
 }
 
@@ -161,6 +170,8 @@ abstract class GinspectionResultFragmentData
   @override
   int? get photoMax;
   @override
+  GinspectionResultFragmentData_viewerReview? get viewerReview;
+  @override
   GinspectionResultFragmentData_inspection? get inspection;
   static Serializer<GinspectionResultFragmentData> get serializer =>
       _$ginspectionResultFragmentDataSerializer;
@@ -174,6 +185,47 @@ abstract class GinspectionResultFragmentData
   static GinspectionResultFragmentData? fromJson(Map<String, dynamic> json) =>
       _i3.serializers.deserializeWith(
         GinspectionResultFragmentData.serializer,
+        json,
+      );
+}
+
+abstract class GinspectionResultFragmentData_viewerReview
+    implements
+        Built<GinspectionResultFragmentData_viewerReview,
+            GinspectionResultFragmentData_viewerReviewBuilder>,
+        GinspectionResultFragment_viewerReview {
+  GinspectionResultFragmentData_viewerReview._();
+
+  factory GinspectionResultFragmentData_viewerReview(
+      [void Function(GinspectionResultFragmentData_viewerReviewBuilder b)
+          updates]) = _$GinspectionResultFragmentData_viewerReview;
+
+  static void _initializeBuilder(
+          GinspectionResultFragmentData_viewerReviewBuilder b) =>
+      b..G__typename = 'ViewerReview';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  double? get rating;
+  @override
+  String? get reviewContent;
+  static Serializer<GinspectionResultFragmentData_viewerReview>
+      get serializer => _$ginspectionResultFragmentDataViewerReviewSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i3.serializers.serializeWith(
+        GinspectionResultFragmentData_viewerReview.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GinspectionResultFragmentData_viewerReview? fromJson(
+          Map<String, dynamic> json) =>
+      _i3.serializers.deserializeWith(
+        GinspectionResultFragmentData_viewerReview.serializer,
         json,
       );
 }

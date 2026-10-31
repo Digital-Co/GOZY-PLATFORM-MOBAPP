@@ -83,6 +83,8 @@ abstract class GvalidateInspectionData_validateInspection
   @override
   int? get photoMax;
   @override
+  GvalidateInspectionData_validateInspection_viewerReview? get viewerReview;
+  @override
   GvalidateInspectionData_validateInspection_inspection? get inspection;
   static Serializer<GvalidateInspectionData_validateInspection>
       get serializer => _$gvalidateInspectionDataValidateInspectionSerializer;
@@ -97,6 +99,49 @@ abstract class GvalidateInspectionData_validateInspection
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GvalidateInspectionData_validateInspection.serializer,
+        json,
+      );
+}
+
+abstract class GvalidateInspectionData_validateInspection_viewerReview
+    implements
+        Built<GvalidateInspectionData_validateInspection_viewerReview,
+            GvalidateInspectionData_validateInspection_viewerReviewBuilder>,
+        _i2.GinspectionResultFragment_viewerReview {
+  GvalidateInspectionData_validateInspection_viewerReview._();
+
+  factory GvalidateInspectionData_validateInspection_viewerReview(
+      [void Function(
+              GvalidateInspectionData_validateInspection_viewerReviewBuilder b)
+          updates]) = _$GvalidateInspectionData_validateInspection_viewerReview;
+
+  static void _initializeBuilder(
+          GvalidateInspectionData_validateInspection_viewerReviewBuilder b) =>
+      b..G__typename = 'ViewerReview';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  double? get rating;
+  @override
+  String? get reviewContent;
+  static Serializer<GvalidateInspectionData_validateInspection_viewerReview>
+      get serializer =>
+          _$gvalidateInspectionDataValidateInspectionViewerReviewSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GvalidateInspectionData_validateInspection_viewerReview.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GvalidateInspectionData_validateInspection_viewerReview? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GvalidateInspectionData_validateInspection_viewerReview.serializer,
         json,
       );
 }

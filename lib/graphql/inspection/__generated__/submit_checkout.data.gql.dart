@@ -82,6 +82,8 @@ abstract class GsubmitCheckoutData_submitCheckout
   @override
   int? get photoMax;
   @override
+  GsubmitCheckoutData_submitCheckout_viewerReview? get viewerReview;
+  @override
   GsubmitCheckoutData_submitCheckout_inspection? get inspection;
   static Serializer<GsubmitCheckoutData_submitCheckout> get serializer =>
       _$gsubmitCheckoutDataSubmitCheckoutSerializer;
@@ -96,6 +98,48 @@ abstract class GsubmitCheckoutData_submitCheckout
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GsubmitCheckoutData_submitCheckout.serializer,
+        json,
+      );
+}
+
+abstract class GsubmitCheckoutData_submitCheckout_viewerReview
+    implements
+        Built<GsubmitCheckoutData_submitCheckout_viewerReview,
+            GsubmitCheckoutData_submitCheckout_viewerReviewBuilder>,
+        _i2.GinspectionResultFragment_viewerReview {
+  GsubmitCheckoutData_submitCheckout_viewerReview._();
+
+  factory GsubmitCheckoutData_submitCheckout_viewerReview(
+      [void Function(GsubmitCheckoutData_submitCheckout_viewerReviewBuilder b)
+          updates]) = _$GsubmitCheckoutData_submitCheckout_viewerReview;
+
+  static void _initializeBuilder(
+          GsubmitCheckoutData_submitCheckout_viewerReviewBuilder b) =>
+      b..G__typename = 'ViewerReview';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  double? get rating;
+  @override
+  String? get reviewContent;
+  static Serializer<GsubmitCheckoutData_submitCheckout_viewerReview>
+      get serializer =>
+          _$gsubmitCheckoutDataSubmitCheckoutViewerReviewSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GsubmitCheckoutData_submitCheckout_viewerReview.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GsubmitCheckoutData_submitCheckout_viewerReview? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GsubmitCheckoutData_submitCheckout_viewerReview.serializer,
         json,
       );
 }

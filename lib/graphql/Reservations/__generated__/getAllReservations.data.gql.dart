@@ -261,6 +261,9 @@ abstract class GgetAllReservationData_getAllReservation_result
   String? get closureState;
   @override
   bool? get inspectionEnabled;
+  @override
+  GgetAllReservationData_getAllReservation_result_inspectionSteps?
+      get inspectionSteps;
   static Serializer<GgetAllReservationData_getAllReservation_result>
       get serializer =>
           _$ggetAllReservationDataGetAllReservationResultSerializer;
@@ -2255,6 +2258,152 @@ abstract class GgetAllReservationData_getAllReservation_result_futureTransaction
   static GgetAllReservationData_getAllReservation_result_futureTransactionTotal?
       fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
             GgetAllReservationData_getAllReservation_result_futureTransactionTotal
+                .serializer,
+            json,
+          );
+}
+
+abstract class GgetAllReservationData_getAllReservation_result_inspectionSteps
+    implements
+        Built<GgetAllReservationData_getAllReservation_result_inspectionSteps,
+            GgetAllReservationData_getAllReservation_result_inspectionStepsBuilder>,
+        _i3.GreservationInspectionFragment_inspectionSteps {
+  GgetAllReservationData_getAllReservation_result_inspectionSteps._();
+
+  factory GgetAllReservationData_getAllReservation_result_inspectionSteps(
+          [void Function(
+                  GgetAllReservationData_getAllReservation_result_inspectionStepsBuilder
+                      b)
+              updates]) =
+      _$GgetAllReservationData_getAllReservation_result_inspectionSteps;
+
+  static void _initializeBuilder(
+          GgetAllReservationData_getAllReservation_result_inspectionStepsBuilder
+              b) =>
+      b..G__typename = 'InspectionSteps';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin?
+      get checkin;
+  @override
+  GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout?
+      get checkout;
+  static Serializer<
+          GgetAllReservationData_getAllReservation_result_inspectionSteps>
+      get serializer =>
+          _$ggetAllReservationDataGetAllReservationResultInspectionStepsSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetAllReservationData_getAllReservation_result_inspectionSteps
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetAllReservationData_getAllReservation_result_inspectionSteps?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetAllReservationData_getAllReservation_result_inspectionSteps
+                .serializer,
+            json,
+          );
+}
+
+abstract class GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin
+    implements
+        Built<
+            GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin,
+            GgetAllReservationData_getAllReservation_result_inspectionSteps_checkinBuilder>,
+        _i3.GreservationInspectionFragment_inspectionSteps_checkin {
+  GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin._();
+
+  factory GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin(
+          [void Function(
+                  GgetAllReservationData_getAllReservation_result_inspectionSteps_checkinBuilder
+                      b)
+              updates]) =
+      _$GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin;
+
+  static void _initializeBuilder(
+          GgetAllReservationData_getAllReservation_result_inspectionSteps_checkinBuilder
+              b) =>
+      b..G__typename = 'InspectionStep';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  String? get status;
+  @override
+  bool? get open;
+  @override
+  bool? get awaitingViewer;
+  static Serializer<
+          GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin>
+      get serializer =>
+          _$ggetAllReservationDataGetAllReservationResultInspectionStepsCheckinSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin
+                .serializer,
+            json,
+          );
+}
+
+abstract class GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout
+    implements
+        Built<
+            GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout,
+            GgetAllReservationData_getAllReservation_result_inspectionSteps_checkoutBuilder>,
+        _i3.GreservationInspectionFragment_inspectionSteps_checkout {
+  GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout._();
+
+  factory GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout(
+          [void Function(
+                  GgetAllReservationData_getAllReservation_result_inspectionSteps_checkoutBuilder
+                      b)
+              updates]) =
+      _$GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout;
+
+  static void _initializeBuilder(
+          GgetAllReservationData_getAllReservation_result_inspectionSteps_checkoutBuilder
+              b) =>
+      b..G__typename = 'InspectionStep';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  String? get status;
+  @override
+  bool? get open;
+  @override
+  bool? get awaitingViewer;
+  static Serializer<
+          GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout>
+      get serializer =>
+          _$ggetAllReservationDataGetAllReservationResultInspectionStepsCheckoutSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout
+            .serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout?
+      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
+            GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout
                 .serializer,
             json,
           );

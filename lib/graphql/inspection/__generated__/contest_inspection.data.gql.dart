@@ -83,6 +83,8 @@ abstract class GcontestInspectionData_contestInspection
   @override
   int? get photoMax;
   @override
+  GcontestInspectionData_contestInspection_viewerReview? get viewerReview;
+  @override
   GcontestInspectionData_contestInspection_inspection? get inspection;
   static Serializer<GcontestInspectionData_contestInspection> get serializer =>
       _$gcontestInspectionDataContestInspectionSerializer;
@@ -97,6 +99,49 @@ abstract class GcontestInspectionData_contestInspection
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GcontestInspectionData_contestInspection.serializer,
+        json,
+      );
+}
+
+abstract class GcontestInspectionData_contestInspection_viewerReview
+    implements
+        Built<GcontestInspectionData_contestInspection_viewerReview,
+            GcontestInspectionData_contestInspection_viewerReviewBuilder>,
+        _i2.GinspectionResultFragment_viewerReview {
+  GcontestInspectionData_contestInspection_viewerReview._();
+
+  factory GcontestInspectionData_contestInspection_viewerReview(
+      [void Function(
+              GcontestInspectionData_contestInspection_viewerReviewBuilder b)
+          updates]) = _$GcontestInspectionData_contestInspection_viewerReview;
+
+  static void _initializeBuilder(
+          GcontestInspectionData_contestInspection_viewerReviewBuilder b) =>
+      b..G__typename = 'ViewerReview';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  double? get rating;
+  @override
+  String? get reviewContent;
+  static Serializer<GcontestInspectionData_contestInspection_viewerReview>
+      get serializer =>
+          _$gcontestInspectionDataContestInspectionViewerReviewSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GcontestInspectionData_contestInspection_viewerReview.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GcontestInspectionData_contestInspection_viewerReview? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GcontestInspectionData_contestInspection_viewerReview.serializer,
         json,
       );
 }

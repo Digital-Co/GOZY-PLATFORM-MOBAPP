@@ -4,4 +4,16 @@ fragment reservationInspectionFragment on Reservation {
   inspectionStatus
   closureState
   inspectionEnabled
+  inspectionSteps {
+    checkin {
+      status
+      open
+      awaitingViewer
+    }
+    checkout {
+      status
+      open
+      awaitingViewer
+    }
+  }
 }

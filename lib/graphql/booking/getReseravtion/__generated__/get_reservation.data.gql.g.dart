@@ -121,6 +121,15 @@ Serializer<GgetReservationData_getReservation_results_completedTotal>
 Serializer<GgetReservationData_getReservation_results_futureTransactionTotal>
     _$ggetReservationDataGetReservationResultsFutureTransactionTotalSerializer =
     new _$GgetReservationData_getReservation_results_futureTransactionTotalSerializer();
+Serializer<GgetReservationData_getReservation_results_inspectionSteps>
+    _$ggetReservationDataGetReservationResultsInspectionStepsSerializer =
+    new _$GgetReservationData_getReservation_results_inspectionStepsSerializer();
+Serializer<GgetReservationData_getReservation_results_inspectionSteps_checkin>
+    _$ggetReservationDataGetReservationResultsInspectionStepsCheckinSerializer =
+    new _$GgetReservationData_getReservation_results_inspectionSteps_checkinSerializer();
+Serializer<GgetReservationData_getReservation_results_inspectionSteps_checkout>
+    _$ggetReservationDataGetReservationResultsInspectionStepsCheckoutSerializer =
+    new _$GgetReservationData_getReservation_results_inspectionSteps_checkoutSerializer();
 Serializer<GgetReservationData_getReservation_convertedOptions>
     _$ggetReservationDataGetReservationConvertedOptionsSerializer =
     new _$GgetReservationData_getReservation_convertedOptionsSerializer();
@@ -990,6 +999,14 @@ class _$GgetReservationData_getReservation_resultsSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.inspectionSteps;
+    if (value != null) {
+      result
+        ..add('inspectionSteps')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                GgetReservationData_getReservation_results_inspectionSteps)));
+    }
     return result;
   }
 
@@ -1319,6 +1336,12 @@ class _$GgetReservationData_getReservation_resultsSerializer
         case 'inspectionEnabled':
           result.inspectionEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'inspectionSteps':
+          result.inspectionSteps.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GgetReservationData_getReservation_results_inspectionSteps))!
+              as GgetReservationData_getReservation_results_inspectionSteps);
           break;
       }
     }
@@ -5943,6 +5966,252 @@ class _$GgetReservationData_getReservation_results_futureTransactionTotalSeriali
   }
 }
 
+class _$GgetReservationData_getReservation_results_inspectionStepsSerializer
+    implements
+        StructuredSerializer<
+            GgetReservationData_getReservation_results_inspectionSteps> {
+  @override
+  final Iterable<Type> types = const [
+    GgetReservationData_getReservation_results_inspectionSteps,
+    _$GgetReservationData_getReservation_results_inspectionSteps
+  ];
+  @override
+  final String wireName =
+      'GgetReservationData_getReservation_results_inspectionSteps';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GgetReservationData_getReservation_results_inspectionSteps object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.checkin;
+    if (value != null) {
+      result
+        ..add('checkin')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                GgetReservationData_getReservation_results_inspectionSteps_checkin)));
+    }
+    value = object.checkout;
+    if (value != null) {
+      result
+        ..add('checkout')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                GgetReservationData_getReservation_results_inspectionSteps_checkout)));
+    }
+    return result;
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result =
+        new GgetReservationData_getReservation_results_inspectionStepsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'checkin':
+          result.checkin.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GgetReservationData_getReservation_results_inspectionSteps_checkin))!
+              as GgetReservationData_getReservation_results_inspectionSteps_checkin);
+          break;
+        case 'checkout':
+          result.checkout.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GgetReservationData_getReservation_results_inspectionSteps_checkout))!
+              as GgetReservationData_getReservation_results_inspectionSteps_checkout);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GgetReservationData_getReservation_results_inspectionSteps_checkinSerializer
+    implements
+        StructuredSerializer<
+            GgetReservationData_getReservation_results_inspectionSteps_checkin> {
+  @override
+  final Iterable<Type> types = const [
+    GgetReservationData_getReservation_results_inspectionSteps_checkin,
+    _$GgetReservationData_getReservation_results_inspectionSteps_checkin
+  ];
+  @override
+  final String wireName =
+      'GgetReservationData_getReservation_results_inspectionSteps_checkin';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GgetReservationData_getReservation_results_inspectionSteps_checkin object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.status;
+    if (value != null) {
+      result
+        ..add('status')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.open;
+    if (value != null) {
+      result
+        ..add('open')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.awaitingViewer;
+    if (value != null) {
+      result
+        ..add('awaitingViewer')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    return result;
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps_checkin
+      deserialize(Serializers serializers, Iterable<Object?> serialized,
+          {FullType specifiedType = FullType.unspecified}) {
+    final result =
+        new GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'status':
+          result.status = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'open':
+          result.open = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'awaitingViewer':
+          result.awaitingViewer = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GgetReservationData_getReservation_results_inspectionSteps_checkoutSerializer
+    implements
+        StructuredSerializer<
+            GgetReservationData_getReservation_results_inspectionSteps_checkout> {
+  @override
+  final Iterable<Type> types = const [
+    GgetReservationData_getReservation_results_inspectionSteps_checkout,
+    _$GgetReservationData_getReservation_results_inspectionSteps_checkout
+  ];
+  @override
+  final String wireName =
+      'GgetReservationData_getReservation_results_inspectionSteps_checkout';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers,
+      GgetReservationData_getReservation_results_inspectionSteps_checkout
+          object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.status;
+    if (value != null) {
+      result
+        ..add('status')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.open;
+    if (value != null) {
+      result
+        ..add('open')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.awaitingViewer;
+    if (value != null) {
+      result
+        ..add('awaitingViewer')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    return result;
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps_checkout
+      deserialize(Serializers serializers, Iterable<Object?> serialized,
+          {FullType specifiedType = FullType.unspecified}) {
+    final result =
+        new GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'status':
+          result.status = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'open':
+          result.open = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'awaitingViewer':
+          result.awaitingViewer = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$GgetReservationData_getReservation_convertedOptionsSerializer
     implements
         StructuredSerializer<
@@ -6793,6 +7062,9 @@ class _$GgetReservationData_getReservation_results
   final String? closureState;
   @override
   final bool? inspectionEnabled;
+  @override
+  final GgetReservationData_getReservation_results_inspectionSteps?
+      inspectionSteps;
 
   factory _$GgetReservationData_getReservation_results(
           [void Function(GgetReservationData_getReservation_resultsBuilder)?
@@ -6873,7 +7145,8 @@ class _$GgetReservationData_getReservation_results
       this.futureTransactionTotal,
       this.inspectionStatus,
       this.closureState,
-      this.inspectionEnabled})
+      this.inspectionEnabled,
+      this.inspectionSteps})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
         r'GgetReservationData_getReservation_results', 'G__typename');
@@ -6965,7 +7238,8 @@ class _$GgetReservationData_getReservation_results
         futureTransactionTotal == other.futureTransactionTotal &&
         inspectionStatus == other.inspectionStatus &&
         closureState == other.closureState &&
-        inspectionEnabled == other.inspectionEnabled;
+        inspectionEnabled == other.inspectionEnabled &&
+        inspectionSteps == other.inspectionSteps;
   }
 
   @override
@@ -7044,6 +7318,7 @@ class _$GgetReservationData_getReservation_results
     _$hash = $jc(_$hash, inspectionStatus.hashCode);
     _$hash = $jc(_$hash, closureState.hashCode);
     _$hash = $jc(_$hash, inspectionEnabled.hashCode);
+    _$hash = $jc(_$hash, inspectionSteps.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -7124,7 +7399,8 @@ class _$GgetReservationData_getReservation_results
           ..add('futureTransactionTotal', futureTransactionTotal)
           ..add('inspectionStatus', inspectionStatus)
           ..add('closureState', closureState)
-          ..add('inspectionEnabled', inspectionEnabled))
+          ..add('inspectionEnabled', inspectionEnabled)
+          ..add('inspectionSteps', inspectionSteps))
         .toString();
   }
 }
@@ -7509,6 +7785,16 @@ class GgetReservationData_getReservation_resultsBuilder
   set inspectionEnabled(bool? inspectionEnabled) =>
       _$this._inspectionEnabled = inspectionEnabled;
 
+  GgetReservationData_getReservation_results_inspectionStepsBuilder?
+      _inspectionSteps;
+  GgetReservationData_getReservation_results_inspectionStepsBuilder
+      get inspectionSteps => _$this._inspectionSteps ??=
+          new GgetReservationData_getReservation_results_inspectionStepsBuilder();
+  set inspectionSteps(
+          GgetReservationData_getReservation_results_inspectionStepsBuilder?
+              inspectionSteps) =>
+      _$this._inspectionSteps = inspectionSteps;
+
   GgetReservationData_getReservation_resultsBuilder() {
     GgetReservationData_getReservation_results._initializeBuilder(this);
   }
@@ -7589,6 +7875,7 @@ class GgetReservationData_getReservation_resultsBuilder
       _inspectionStatus = $v.inspectionStatus;
       _closureState = $v.closureState;
       _inspectionEnabled = $v.inspectionEnabled;
+      _inspectionSteps = $v.inspectionSteps?.toBuilder();
       _$v = null;
     }
     return this;
@@ -7688,7 +7975,8 @@ class GgetReservationData_getReservation_resultsBuilder
               futureTransactionTotal: _futureTransactionTotal?.build(),
               inspectionStatus: inspectionStatus,
               closureState: closureState,
-              inspectionEnabled: inspectionEnabled);
+              inspectionEnabled: inspectionEnabled,
+              inspectionSteps: _inspectionSteps?.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -7718,6 +8006,9 @@ class GgetReservationData_getReservation_resultsBuilder
         _completedTotal?.build();
         _$failedField = 'futureTransactionTotal';
         _futureTransactionTotal?.build();
+
+        _$failedField = 'inspectionSteps';
+        _inspectionSteps?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GgetReservationData_getReservation_results',
@@ -15165,6 +15456,484 @@ class GgetReservationData_getReservation_results_futureTransactionTotalBuilder
                 'G__typename'),
             totalAmount: totalAmount,
             currency: currency);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetReservationData_getReservation_results_inspectionSteps
+    extends GgetReservationData_getReservation_results_inspectionSteps {
+  @override
+  final String G__typename;
+  @override
+  final GgetReservationData_getReservation_results_inspectionSteps_checkin?
+      checkin;
+  @override
+  final GgetReservationData_getReservation_results_inspectionSteps_checkout?
+      checkout;
+
+  factory _$GgetReservationData_getReservation_results_inspectionSteps(
+          [void Function(
+                  GgetReservationData_getReservation_results_inspectionStepsBuilder)?
+              updates]) =>
+      (new GgetReservationData_getReservation_results_inspectionStepsBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GgetReservationData_getReservation_results_inspectionSteps._(
+      {required this.G__typename, this.checkin, this.checkout})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename,
+        r'GgetReservationData_getReservation_results_inspectionSteps',
+        'G__typename');
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps rebuild(
+          void Function(
+                  GgetReservationData_getReservation_results_inspectionStepsBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetReservationData_getReservation_results_inspectionStepsBuilder
+      toBuilder() =>
+          new GgetReservationData_getReservation_results_inspectionStepsBuilder()
+            ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other
+            is GgetReservationData_getReservation_results_inspectionSteps &&
+        G__typename == other.G__typename &&
+        checkin == other.checkin &&
+        checkout == other.checkout;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, checkin.hashCode);
+    _$hash = $jc(_$hash, checkout.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GgetReservationData_getReservation_results_inspectionSteps')
+          ..add('G__typename', G__typename)
+          ..add('checkin', checkin)
+          ..add('checkout', checkout))
+        .toString();
+  }
+}
+
+class GgetReservationData_getReservation_results_inspectionStepsBuilder
+    implements
+        Builder<GgetReservationData_getReservation_results_inspectionSteps,
+            GgetReservationData_getReservation_results_inspectionStepsBuilder> {
+  _$GgetReservationData_getReservation_results_inspectionSteps? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder?
+      _checkin;
+  GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder
+      get checkin => _$this._checkin ??=
+          new GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder();
+  set checkin(
+          GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder?
+              checkin) =>
+      _$this._checkin = checkin;
+
+  GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder?
+      _checkout;
+  GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder
+      get checkout => _$this._checkout ??=
+          new GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder();
+  set checkout(
+          GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder?
+              checkout) =>
+      _$this._checkout = checkout;
+
+  GgetReservationData_getReservation_results_inspectionStepsBuilder() {
+    GgetReservationData_getReservation_results_inspectionSteps
+        ._initializeBuilder(this);
+  }
+
+  GgetReservationData_getReservation_results_inspectionStepsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _checkin = $v.checkin?.toBuilder();
+      _checkout = $v.checkout?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(
+      GgetReservationData_getReservation_results_inspectionSteps other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetReservationData_getReservation_results_inspectionSteps;
+  }
+
+  @override
+  void update(
+      void Function(
+              GgetReservationData_getReservation_results_inspectionStepsBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps build() =>
+      _build();
+
+  _$GgetReservationData_getReservation_results_inspectionSteps _build() {
+    _$GgetReservationData_getReservation_results_inspectionSteps _$result;
+    try {
+      _$result = _$v ??
+          new _$GgetReservationData_getReservation_results_inspectionSteps._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(
+                  G__typename,
+                  r'GgetReservationData_getReservation_results_inspectionSteps',
+                  'G__typename'),
+              checkin: _checkin?.build(),
+              checkout: _checkout?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'checkin';
+        _checkin?.build();
+        _$failedField = 'checkout';
+        _checkout?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GgetReservationData_getReservation_results_inspectionSteps',
+            _$failedField,
+            e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetReservationData_getReservation_results_inspectionSteps_checkin
+    extends GgetReservationData_getReservation_results_inspectionSteps_checkin {
+  @override
+  final String G__typename;
+  @override
+  final String? status;
+  @override
+  final bool? open;
+  @override
+  final bool? awaitingViewer;
+
+  factory _$GgetReservationData_getReservation_results_inspectionSteps_checkin(
+          [void Function(
+                  GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder)?
+              updates]) =>
+      (new GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GgetReservationData_getReservation_results_inspectionSteps_checkin._(
+      {required this.G__typename, this.status, this.open, this.awaitingViewer})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename,
+        r'GgetReservationData_getReservation_results_inspectionSteps_checkin',
+        'G__typename');
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps_checkin rebuild(
+          void Function(
+                  GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder
+      toBuilder() =>
+          new GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder()
+            ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other
+            is GgetReservationData_getReservation_results_inspectionSteps_checkin &&
+        G__typename == other.G__typename &&
+        status == other.status &&
+        open == other.open &&
+        awaitingViewer == other.awaitingViewer;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, open.hashCode);
+    _$hash = $jc(_$hash, awaitingViewer.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GgetReservationData_getReservation_results_inspectionSteps_checkin')
+          ..add('G__typename', G__typename)
+          ..add('status', status)
+          ..add('open', open)
+          ..add('awaitingViewer', awaitingViewer))
+        .toString();
+  }
+}
+
+class GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder
+    implements
+        Builder<
+            GgetReservationData_getReservation_results_inspectionSteps_checkin,
+            GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder> {
+  _$GgetReservationData_getReservation_results_inspectionSteps_checkin? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
+
+  bool? _open;
+  bool? get open => _$this._open;
+  set open(bool? open) => _$this._open = open;
+
+  bool? _awaitingViewer;
+  bool? get awaitingViewer => _$this._awaitingViewer;
+  set awaitingViewer(bool? awaitingViewer) =>
+      _$this._awaitingViewer = awaitingViewer;
+
+  GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder() {
+    GgetReservationData_getReservation_results_inspectionSteps_checkin
+        ._initializeBuilder(this);
+  }
+
+  GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder
+      get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _status = $v.status;
+      _open = $v.open;
+      _awaitingViewer = $v.awaitingViewer;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(
+      GgetReservationData_getReservation_results_inspectionSteps_checkin
+          other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other
+        as _$GgetReservationData_getReservation_results_inspectionSteps_checkin;
+  }
+
+  @override
+  void update(
+      void Function(
+              GgetReservationData_getReservation_results_inspectionSteps_checkinBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps_checkin build() =>
+      _build();
+
+  _$GgetReservationData_getReservation_results_inspectionSteps_checkin
+      _build() {
+    final _$result = _$v ??
+        new _$GgetReservationData_getReservation_results_inspectionSteps_checkin
+            ._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename,
+                r'GgetReservationData_getReservation_results_inspectionSteps_checkin',
+                'G__typename'),
+            status: status,
+            open: open,
+            awaitingViewer: awaitingViewer);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetReservationData_getReservation_results_inspectionSteps_checkout
+    extends GgetReservationData_getReservation_results_inspectionSteps_checkout {
+  @override
+  final String G__typename;
+  @override
+  final String? status;
+  @override
+  final bool? open;
+  @override
+  final bool? awaitingViewer;
+
+  factory _$GgetReservationData_getReservation_results_inspectionSteps_checkout(
+          [void Function(
+                  GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder)?
+              updates]) =>
+      (new GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GgetReservationData_getReservation_results_inspectionSteps_checkout._(
+      {required this.G__typename, this.status, this.open, this.awaitingViewer})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename,
+        r'GgetReservationData_getReservation_results_inspectionSteps_checkout',
+        'G__typename');
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps_checkout rebuild(
+          void Function(
+                  GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder
+      toBuilder() =>
+          new GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder()
+            ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other
+            is GgetReservationData_getReservation_results_inspectionSteps_checkout &&
+        G__typename == other.G__typename &&
+        status == other.status &&
+        open == other.open &&
+        awaitingViewer == other.awaitingViewer;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, open.hashCode);
+    _$hash = $jc(_$hash, awaitingViewer.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GgetReservationData_getReservation_results_inspectionSteps_checkout')
+          ..add('G__typename', G__typename)
+          ..add('status', status)
+          ..add('open', open)
+          ..add('awaitingViewer', awaitingViewer))
+        .toString();
+  }
+}
+
+class GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder
+    implements
+        Builder<
+            GgetReservationData_getReservation_results_inspectionSteps_checkout,
+            GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder> {
+  _$GgetReservationData_getReservation_results_inspectionSteps_checkout? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
+
+  bool? _open;
+  bool? get open => _$this._open;
+  set open(bool? open) => _$this._open = open;
+
+  bool? _awaitingViewer;
+  bool? get awaitingViewer => _$this._awaitingViewer;
+  set awaitingViewer(bool? awaitingViewer) =>
+      _$this._awaitingViewer = awaitingViewer;
+
+  GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder() {
+    GgetReservationData_getReservation_results_inspectionSteps_checkout
+        ._initializeBuilder(this);
+  }
+
+  GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder
+      get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _status = $v.status;
+      _open = $v.open;
+      _awaitingViewer = $v.awaitingViewer;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(
+      GgetReservationData_getReservation_results_inspectionSteps_checkout
+          other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other
+        as _$GgetReservationData_getReservation_results_inspectionSteps_checkout;
+  }
+
+  @override
+  void update(
+      void Function(
+              GgetReservationData_getReservation_results_inspectionSteps_checkoutBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetReservationData_getReservation_results_inspectionSteps_checkout build() =>
+      _build();
+
+  _$GgetReservationData_getReservation_results_inspectionSteps_checkout
+      _build() {
+    final _$result = _$v ??
+        new _$GgetReservationData_getReservation_results_inspectionSteps_checkout
+            ._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename,
+                r'GgetReservationData_getReservation_results_inspectionSteps_checkout',
+                'G__typename'),
+            status: status,
+            open: open,
+            awaitingViewer: awaitingViewer);
     replace(_$result);
     return _$result;
   }

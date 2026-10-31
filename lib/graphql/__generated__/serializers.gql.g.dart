@@ -559,6 +559,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
           .serializer)
       ..add(
           GcontestInspectionData_contestInspection_inspection_photos.serializer)
+      ..add(GcontestInspectionData_contestInspection_viewerReview.serializer)
       ..add(GcontestInspectionReq.serializer)
       ..add(GcontestInspectionVars.serializer)
       ..add(GcreateListingData.serializer)
@@ -720,6 +721,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
               .serializer)
       ..add(GgetAllReservationData_getAllReservation_result_hostTransaction
           .serializer)
+      ..add(GgetAllReservationData_getAllReservation_result_inspectionSteps
+          .serializer)
+      ..add(
+          GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin
+              .serializer)
+      ..add(
+          GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout
+              .serializer)
       ..add(GgetAllReservationData_getAllReservation_result_listData.serializer)
       ..add(GgetAllReservationData_getAllReservation_result_listData_carFeatures
           .serializer)
@@ -1024,6 +1033,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GgetInspectionData_getInspection_inspection.serializer)
       ..add(GgetInspectionData_getInspection_inspection_checklist.serializer)
       ..add(GgetInspectionData_getInspection_inspection_photos.serializer)
+      ..add(GgetInspectionData_getInspection_viewerReview.serializer)
       ..add(GgetInspectionReq.serializer)
       ..add(GgetInspectionVars.serializer)
       ..add(GgetLayoutSettingsData.serializer)
@@ -1272,6 +1282,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
           .serializer)
       ..add(
           GgetReservationData_getReservation_results_hostTransaction.serializer)
+      ..add(
+          GgetReservationData_getReservation_results_inspectionSteps.serializer)
+      ..add(GgetReservationData_getReservation_results_inspectionSteps_checkin
+          .serializer)
+      ..add(GgetReservationData_getReservation_results_inspectionSteps_checkout
+          .serializer)
       ..add(GgetReservationData_getReservation_results_listData.serializer)
       ..add(GgetReservationData_getReservation_results_listData_carFeatures
           .serializer)
@@ -1653,6 +1669,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GinspectionResultFragmentData_inspection.serializer)
       ..add(GinspectionResultFragmentData_inspection_checklist.serializer)
       ..add(GinspectionResultFragmentData_inspection_photos.serializer)
+      ..add(GinspectionResultFragmentData_viewerReview.serializer)
       ..add(GinspectionResultFragmentReq.serializer)
       ..add(GinspectionResultFragmentVars.serializer)
       ..add(GlistBlockedDatesData.serializer)
@@ -1758,6 +1775,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GreservationFragmentReq.serializer)
       ..add(GreservationFragmentVars.serializer)
       ..add(GreservationInspectionFragmentData.serializer)
+      ..add(GreservationInspectionFragmentData_inspectionSteps.serializer)
+      ..add(
+          GreservationInspectionFragmentData_inspectionSteps_checkin.serializer)
+      ..add(GreservationInspectionFragmentData_inspectionSteps_checkout
+          .serializer)
       ..add(GreservationInspectionFragmentReq.serializer)
       ..add(GreservationInspectionFragmentVars.serializer)
       ..add(GreservationOptionSnapshotFragmentData.serializer)
@@ -1851,6 +1873,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
           .serializer)
       ..add(GsaveInspectionDraftData_saveInspectionDraft_inspection_photos
           .serializer)
+      ..add(
+          GsaveInspectionDraftData_saveInspectionDraft_viewerReview.serializer)
       ..add(GsaveInspectionDraftReq.serializer)
       ..add(GsaveInspectionDraftVars.serializer)
       ..add(GsaveListingOptionData.serializer)
@@ -1920,6 +1944,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GsubmitCheckoutData_submitCheckout_inspection.serializer)
       ..add(GsubmitCheckoutData_submitCheckout_inspection_checklist.serializer)
       ..add(GsubmitCheckoutData_submitCheckout_inspection_photos.serializer)
+      ..add(GsubmitCheckoutData_submitCheckout_viewerReview.serializer)
       ..add(GsubmitCheckoutReq.serializer)
       ..add(GsubmitCheckoutVars.serializer)
       ..add(GthreadItemsFragmentData.serializer)
@@ -1986,6 +2011,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
           .serializer)
       ..add(GvalidateInspectionData_validateInspection_inspection_photos
           .serializer)
+      ..add(GvalidateInspectionData_validateInspection_viewerReview.serializer)
       ..add(GvalidateInspectionReq.serializer)
       ..add(GvalidateInspectionVars.serializer)
       ..add(GvalidatePromoCodeData.serializer)

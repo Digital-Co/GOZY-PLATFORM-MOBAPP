@@ -84,6 +84,8 @@ abstract class GsaveInspectionDraftData_saveInspectionDraft
   @override
   int? get photoMax;
   @override
+  GsaveInspectionDraftData_saveInspectionDraft_viewerReview? get viewerReview;
+  @override
   GsaveInspectionDraftData_saveInspectionDraft_inspection? get inspection;
   static Serializer<GsaveInspectionDraftData_saveInspectionDraft>
       get serializer => _$gsaveInspectionDraftDataSaveInspectionDraftSerializer;
@@ -98,6 +100,50 @@ abstract class GsaveInspectionDraftData_saveInspectionDraft
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GsaveInspectionDraftData_saveInspectionDraft.serializer,
+        json,
+      );
+}
+
+abstract class GsaveInspectionDraftData_saveInspectionDraft_viewerReview
+    implements
+        Built<GsaveInspectionDraftData_saveInspectionDraft_viewerReview,
+            GsaveInspectionDraftData_saveInspectionDraft_viewerReviewBuilder>,
+        _i2.GinspectionResultFragment_viewerReview {
+  GsaveInspectionDraftData_saveInspectionDraft_viewerReview._();
+
+  factory GsaveInspectionDraftData_saveInspectionDraft_viewerReview(
+      [void Function(
+              GsaveInspectionDraftData_saveInspectionDraft_viewerReviewBuilder
+                  b)
+          updates]) = _$GsaveInspectionDraftData_saveInspectionDraft_viewerReview;
+
+  static void _initializeBuilder(
+          GsaveInspectionDraftData_saveInspectionDraft_viewerReviewBuilder b) =>
+      b..G__typename = 'ViewerReview';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  double? get rating;
+  @override
+  String? get reviewContent;
+  static Serializer<GsaveInspectionDraftData_saveInspectionDraft_viewerReview>
+      get serializer =>
+          _$gsaveInspectionDraftDataSaveInspectionDraftViewerReviewSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GsaveInspectionDraftData_saveInspectionDraft_viewerReview.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GsaveInspectionDraftData_saveInspectionDraft_viewerReview? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GsaveInspectionDraftData_saveInspectionDraft_viewerReview.serializer,
         json,
       );
 }

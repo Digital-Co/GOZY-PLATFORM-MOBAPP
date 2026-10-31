@@ -11,6 +11,9 @@ Serializer<GcontestInspectionData> _$gcontestInspectionDataSerializer =
 Serializer<GcontestInspectionData_contestInspection>
     _$gcontestInspectionDataContestInspectionSerializer =
     new _$GcontestInspectionData_contestInspectionSerializer();
+Serializer<GcontestInspectionData_contestInspection_viewerReview>
+    _$gcontestInspectionDataContestInspectionViewerReviewSerializer =
+    new _$GcontestInspectionData_contestInspection_viewerReviewSerializer();
 Serializer<GcontestInspectionData_contestInspection_inspection>
     _$gcontestInspectionDataContestInspectionInspectionSerializer =
     new _$GcontestInspectionData_contestInspection_inspectionSerializer();
@@ -168,6 +171,14 @@ class _$GcontestInspectionData_contestInspectionSerializer
         ..add('photoMax')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.viewerReview;
+    if (value != null) {
+      result
+        ..add('viewerReview')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                GcontestInspectionData_contestInspection_viewerReview)));
+    }
     value = object.inspection;
     if (value != null) {
       result
@@ -235,11 +246,99 @@ class _$GcontestInspectionData_contestInspectionSerializer
           result.photoMax = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'viewerReview':
+          result.viewerReview.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GcontestInspectionData_contestInspection_viewerReview))!
+              as GcontestInspectionData_contestInspection_viewerReview);
+          break;
         case 'inspection':
           result.inspection.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       GcontestInspectionData_contestInspection_inspection))!
               as GcontestInspectionData_contestInspection_inspection);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GcontestInspectionData_contestInspection_viewerReviewSerializer
+    implements
+        StructuredSerializer<
+            GcontestInspectionData_contestInspection_viewerReview> {
+  @override
+  final Iterable<Type> types = const [
+    GcontestInspectionData_contestInspection_viewerReview,
+    _$GcontestInspectionData_contestInspection_viewerReview
+  ];
+  @override
+  final String wireName =
+      'GcontestInspectionData_contestInspection_viewerReview';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GcontestInspectionData_contestInspection_viewerReview object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.rating;
+    if (value != null) {
+      result
+        ..add('rating')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.reviewContent;
+    if (value != null) {
+      result
+        ..add('reviewContent')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GcontestInspectionData_contestInspection_viewerReview deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result =
+        new GcontestInspectionData_contestInspection_viewerReviewBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'rating':
+          result.rating = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'reviewContent':
+          result.reviewContent = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -933,6 +1032,8 @@ class _$GcontestInspectionData_contestInspection
   @override
   final int? photoMax;
   @override
+  final GcontestInspectionData_contestInspection_viewerReview? viewerReview;
+  @override
   final GcontestInspectionData_contestInspection_inspection? inspection;
 
   factory _$GcontestInspectionData_contestInspection(
@@ -953,6 +1054,7 @@ class _$GcontestInspectionData_contestInspection
       this.inspectionEnabled,
       this.photoMin,
       this.photoMax,
+      this.viewerReview,
       this.inspection})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(G__typename,
@@ -984,6 +1086,7 @@ class _$GcontestInspectionData_contestInspection
         inspectionEnabled == other.inspectionEnabled &&
         photoMin == other.photoMin &&
         photoMax == other.photoMax &&
+        viewerReview == other.viewerReview &&
         inspection == other.inspection;
   }
 
@@ -1001,6 +1104,7 @@ class _$GcontestInspectionData_contestInspection
     _$hash = $jc(_$hash, inspectionEnabled.hashCode);
     _$hash = $jc(_$hash, photoMin.hashCode);
     _$hash = $jc(_$hash, photoMax.hashCode);
+    _$hash = $jc(_$hash, viewerReview.hashCode);
     _$hash = $jc(_$hash, inspection.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -1021,6 +1125,7 @@ class _$GcontestInspectionData_contestInspection
           ..add('inspectionEnabled', inspectionEnabled)
           ..add('photoMin', photoMin)
           ..add('photoMax', photoMax)
+          ..add('viewerReview', viewerReview)
           ..add('inspection', inspection))
         .toString();
   }
@@ -1077,6 +1182,15 @@ class GcontestInspectionData_contestInspectionBuilder
   int? get photoMax => _$this._photoMax;
   set photoMax(int? photoMax) => _$this._photoMax = photoMax;
 
+  GcontestInspectionData_contestInspection_viewerReviewBuilder? _viewerReview;
+  GcontestInspectionData_contestInspection_viewerReviewBuilder
+      get viewerReview => _$this._viewerReview ??=
+          new GcontestInspectionData_contestInspection_viewerReviewBuilder();
+  set viewerReview(
+          GcontestInspectionData_contestInspection_viewerReviewBuilder?
+              viewerReview) =>
+      _$this._viewerReview = viewerReview;
+
   GcontestInspectionData_contestInspection_inspectionBuilder? _inspection;
   GcontestInspectionData_contestInspection_inspectionBuilder get inspection =>
       _$this._inspection ??=
@@ -1104,6 +1218,7 @@ class GcontestInspectionData_contestInspectionBuilder
       _inspectionEnabled = $v.inspectionEnabled;
       _photoMin = $v.photoMin;
       _photoMax = $v.photoMax;
+      _viewerReview = $v.viewerReview?.toBuilder();
       _inspection = $v.inspection?.toBuilder();
       _$v = null;
     }
@@ -1142,10 +1257,13 @@ class GcontestInspectionData_contestInspectionBuilder
               inspectionEnabled: inspectionEnabled,
               photoMin: photoMin,
               photoMax: photoMax,
+              viewerReview: _viewerReview?.build(),
               inspection: _inspection?.build());
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'viewerReview';
+        _viewerReview?.build();
         _$failedField = 'inspection';
         _inspection?.build();
       } catch (e) {
@@ -1156,6 +1274,151 @@ class GcontestInspectionData_contestInspectionBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GcontestInspectionData_contestInspection_viewerReview
+    extends GcontestInspectionData_contestInspection_viewerReview {
+  @override
+  final String G__typename;
+  @override
+  final int? id;
+  @override
+  final double? rating;
+  @override
+  final String? reviewContent;
+
+  factory _$GcontestInspectionData_contestInspection_viewerReview(
+          [void Function(
+                  GcontestInspectionData_contestInspection_viewerReviewBuilder)?
+              updates]) =>
+      (new GcontestInspectionData_contestInspection_viewerReviewBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GcontestInspectionData_contestInspection_viewerReview._(
+      {required this.G__typename, this.id, this.rating, this.reviewContent})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename,
+        r'GcontestInspectionData_contestInspection_viewerReview',
+        'G__typename');
+  }
+
+  @override
+  GcontestInspectionData_contestInspection_viewerReview rebuild(
+          void Function(
+                  GcontestInspectionData_contestInspection_viewerReviewBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GcontestInspectionData_contestInspection_viewerReviewBuilder toBuilder() =>
+      new GcontestInspectionData_contestInspection_viewerReviewBuilder()
+        ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GcontestInspectionData_contestInspection_viewerReview &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        rating == other.rating &&
+        reviewContent == other.reviewContent;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, rating.hashCode);
+    _$hash = $jc(_$hash, reviewContent.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GcontestInspectionData_contestInspection_viewerReview')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('rating', rating)
+          ..add('reviewContent', reviewContent))
+        .toString();
+  }
+}
+
+class GcontestInspectionData_contestInspection_viewerReviewBuilder
+    implements
+        Builder<GcontestInspectionData_contestInspection_viewerReview,
+            GcontestInspectionData_contestInspection_viewerReviewBuilder> {
+  _$GcontestInspectionData_contestInspection_viewerReview? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  double? _rating;
+  double? get rating => _$this._rating;
+  set rating(double? rating) => _$this._rating = rating;
+
+  String? _reviewContent;
+  String? get reviewContent => _$this._reviewContent;
+  set reviewContent(String? reviewContent) =>
+      _$this._reviewContent = reviewContent;
+
+  GcontestInspectionData_contestInspection_viewerReviewBuilder() {
+    GcontestInspectionData_contestInspection_viewerReview._initializeBuilder(
+        this);
+  }
+
+  GcontestInspectionData_contestInspection_viewerReviewBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id;
+      _rating = $v.rating;
+      _reviewContent = $v.reviewContent;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GcontestInspectionData_contestInspection_viewerReview other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GcontestInspectionData_contestInspection_viewerReview;
+  }
+
+  @override
+  void update(
+      void Function(
+              GcontestInspectionData_contestInspection_viewerReviewBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GcontestInspectionData_contestInspection_viewerReview build() => _build();
+
+  _$GcontestInspectionData_contestInspection_viewerReview _build() {
+    final _$result = _$v ??
+        new _$GcontestInspectionData_contestInspection_viewerReview._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename,
+                r'GcontestInspectionData_contestInspection_viewerReview',
+                'G__typename'),
+            id: id,
+            rating: rating,
+            reviewContent: reviewContent);
     replace(_$result);
     return _$result;
   }

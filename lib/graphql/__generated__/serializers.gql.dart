@@ -411,6 +411,9 @@ import 'package:gozy/graphql/booking/getReseravtion/__generated__/get_reservatio
         GgetReservationData_getReservation_results_hostData_userData,
         GgetReservationData_getReservation_results_hostData_userVerification,
         GgetReservationData_getReservation_results_hostTransaction,
+        GgetReservationData_getReservation_results_inspectionSteps,
+        GgetReservationData_getReservation_results_inspectionSteps_checkin,
+        GgetReservationData_getReservation_results_inspectionSteps_checkout,
         GgetReservationData_getReservation_results_listData,
         GgetReservationData_getReservation_results_listData_carFeatures,
         GgetReservationData_getReservation_results_listData_carFeatures_dynamicItemName,
@@ -725,7 +728,8 @@ import 'package:gozy/graphql/inspection/__generated__/contest_inspection.data.gq
         GcontestInspectionData_contestInspection,
         GcontestInspectionData_contestInspection_inspection,
         GcontestInspectionData_contestInspection_inspection_checklist,
-        GcontestInspectionData_contestInspection_inspection_photos;
+        GcontestInspectionData_contestInspection_inspection_photos,
+        GcontestInspectionData_contestInspection_viewerReview;
 import 'package:gozy/graphql/inspection/__generated__/contest_inspection.req.gql.dart'
     show GcontestInspectionReq;
 import 'package:gozy/graphql/inspection/__generated__/contest_inspection.var.gql.dart'
@@ -766,7 +770,8 @@ import 'package:gozy/graphql/inspection/__generated__/get_inspection.data.gql.da
         GgetInspectionData_getInspection,
         GgetInspectionData_getInspection_inspection,
         GgetInspectionData_getInspection_inspection_checklist,
-        GgetInspectionData_getInspection_inspection_photos;
+        GgetInspectionData_getInspection_inspection_photos,
+        GgetInspectionData_getInspection_viewerReview;
 import 'package:gozy/graphql/inspection/__generated__/get_inspection.req.gql.dart'
     show GgetInspectionReq;
 import 'package:gozy/graphql/inspection/__generated__/get_inspection.var.gql.dart'
@@ -800,7 +805,8 @@ import 'package:gozy/graphql/inspection/__generated__/inspection_result_fragment
         GinspectionResultFragmentData,
         GinspectionResultFragmentData_inspection,
         GinspectionResultFragmentData_inspection_checklist,
-        GinspectionResultFragmentData_inspection_photos;
+        GinspectionResultFragmentData_inspection_photos,
+        GinspectionResultFragmentData_viewerReview;
 import 'package:gozy/graphql/inspection/__generated__/inspection_result_fragment.req.gql.dart'
     show GinspectionResultFragmentReq;
 import 'package:gozy/graphql/inspection/__generated__/inspection_result_fragment.var.gql.dart'
@@ -817,7 +823,11 @@ import 'package:gozy/graphql/inspection/__generated__/open_dispute.req.gql.dart'
 import 'package:gozy/graphql/inspection/__generated__/open_dispute.var.gql.dart'
     show GopenDisputeVars;
 import 'package:gozy/graphql/inspection/__generated__/reservation_inspection_fragment.data.gql.dart'
-    show GreservationInspectionFragmentData;
+    show
+        GreservationInspectionFragmentData,
+        GreservationInspectionFragmentData_inspectionSteps,
+        GreservationInspectionFragmentData_inspectionSteps_checkin,
+        GreservationInspectionFragmentData_inspectionSteps_checkout;
 import 'package:gozy/graphql/inspection/__generated__/reservation_inspection_fragment.req.gql.dart'
     show GreservationInspectionFragmentReq;
 import 'package:gozy/graphql/inspection/__generated__/reservation_inspection_fragment.var.gql.dart'
@@ -828,7 +838,8 @@ import 'package:gozy/graphql/inspection/__generated__/save_inspection_draft.data
         GsaveInspectionDraftData_saveInspectionDraft,
         GsaveInspectionDraftData_saveInspectionDraft_inspection,
         GsaveInspectionDraftData_saveInspectionDraft_inspection_checklist,
-        GsaveInspectionDraftData_saveInspectionDraft_inspection_photos;
+        GsaveInspectionDraftData_saveInspectionDraft_inspection_photos,
+        GsaveInspectionDraftData_saveInspectionDraft_viewerReview;
 import 'package:gozy/graphql/inspection/__generated__/save_inspection_draft.req.gql.dart'
     show GsaveInspectionDraftReq;
 import 'package:gozy/graphql/inspection/__generated__/save_inspection_draft.var.gql.dart'
@@ -839,7 +850,8 @@ import 'package:gozy/graphql/inspection/__generated__/submit_checkout.data.gql.d
         GsubmitCheckoutData_submitCheckout,
         GsubmitCheckoutData_submitCheckout_inspection,
         GsubmitCheckoutData_submitCheckout_inspection_checklist,
-        GsubmitCheckoutData_submitCheckout_inspection_photos;
+        GsubmitCheckoutData_submitCheckout_inspection_photos,
+        GsubmitCheckoutData_submitCheckout_viewerReview;
 import 'package:gozy/graphql/inspection/__generated__/submit_checkout.req.gql.dart'
     show GsubmitCheckoutReq;
 import 'package:gozy/graphql/inspection/__generated__/submit_checkout.var.gql.dart'
@@ -850,7 +862,8 @@ import 'package:gozy/graphql/inspection/__generated__/validate_inspection.data.g
         GvalidateInspectionData_validateInspection,
         GvalidateInspectionData_validateInspection_inspection,
         GvalidateInspectionData_validateInspection_inspection_checklist,
-        GvalidateInspectionData_validateInspection_inspection_photos;
+        GvalidateInspectionData_validateInspection_inspection_photos,
+        GvalidateInspectionData_validateInspection_viewerReview;
 import 'package:gozy/graphql/inspection/__generated__/validate_inspection.req.gql.dart'
     show GvalidateInspectionReq;
 import 'package:gozy/graphql/inspection/__generated__/validate_inspection.var.gql.dart'
@@ -1234,6 +1247,9 @@ import 'package:gozy/graphql/Reservations/__generated__/getAllReservations.data.
         GgetAllReservationData_getAllReservation_result_hostData_userData,
         GgetAllReservationData_getAllReservation_result_hostData_userVerification,
         GgetAllReservationData_getAllReservation_result_hostTransaction,
+        GgetAllReservationData_getAllReservation_result_inspectionSteps,
+        GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin,
+        GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout,
         GgetAllReservationData_getAllReservation_result_listData,
         GgetAllReservationData_getAllReservation_result_listData_carFeatures,
         GgetAllReservationData_getAllReservation_result_listData_carFeatures_dynamicItemName,
@@ -2006,6 +2022,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GcontestInspectionData_contestInspection_inspection,
   GcontestInspectionData_contestInspection_inspection_checklist,
   GcontestInspectionData_contestInspection_inspection_photos,
+  GcontestInspectionData_contestInspection_viewerReview,
   GcontestInspectionReq,
   GcontestInspectionVars,
   GcreateListingData,
@@ -2097,6 +2114,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetAllReservationData_getAllReservation_result_hostData_userData,
   GgetAllReservationData_getAllReservation_result_hostData_userVerification,
   GgetAllReservationData_getAllReservation_result_hostTransaction,
+  GgetAllReservationData_getAllReservation_result_inspectionSteps,
+  GgetAllReservationData_getAllReservation_result_inspectionSteps_checkin,
+  GgetAllReservationData_getAllReservation_result_inspectionSteps_checkout,
   GgetAllReservationData_getAllReservation_result_listData,
   GgetAllReservationData_getAllReservation_result_listData_carFeatures,
   GgetAllReservationData_getAllReservation_result_listData_carFeatures_dynamicItemName,
@@ -2267,6 +2287,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetInspectionData_getInspection_inspection,
   GgetInspectionData_getInspection_inspection_checklist,
   GgetInspectionData_getInspection_inspection_photos,
+  GgetInspectionData_getInspection_viewerReview,
   GgetInspectionReq,
   GgetInspectionVars,
   GgetLayoutSettingsData,
@@ -2414,6 +2435,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetReservationData_getReservation_results_hostData_userData,
   GgetReservationData_getReservation_results_hostData_userVerification,
   GgetReservationData_getReservation_results_hostTransaction,
+  GgetReservationData_getReservation_results_inspectionSteps,
+  GgetReservationData_getReservation_results_inspectionSteps_checkin,
+  GgetReservationData_getReservation_results_inspectionSteps_checkout,
   GgetReservationData_getReservation_results_listData,
   GgetReservationData_getReservation_results_listData_carFeatures,
   GgetReservationData_getReservation_results_listData_carFeatures_dynamicItemName,
@@ -2619,6 +2643,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GinspectionResultFragmentData_inspection,
   GinspectionResultFragmentData_inspection_checklist,
   GinspectionResultFragmentData_inspection_photos,
+  GinspectionResultFragmentData_viewerReview,
   GinspectionResultFragmentReq,
   GinspectionResultFragmentVars,
   GlistBlockedDatesData,
@@ -2716,6 +2741,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GreservationFragmentReq,
   GreservationFragmentVars,
   GreservationInspectionFragmentData,
+  GreservationInspectionFragmentData_inspectionSteps,
+  GreservationInspectionFragmentData_inspectionSteps_checkin,
+  GreservationInspectionFragmentData_inspectionSteps_checkout,
   GreservationInspectionFragmentReq,
   GreservationInspectionFragmentVars,
   GreservationOptionSnapshotFragmentData,
@@ -2776,6 +2804,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GsaveInspectionDraftData_saveInspectionDraft_inspection,
   GsaveInspectionDraftData_saveInspectionDraft_inspection_checklist,
   GsaveInspectionDraftData_saveInspectionDraft_inspection_photos,
+  GsaveInspectionDraftData_saveInspectionDraft_viewerReview,
   GsaveInspectionDraftReq,
   GsaveInspectionDraftVars,
   GsaveListingOptionData,
@@ -2825,6 +2854,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GsubmitCheckoutData_submitCheckout_inspection,
   GsubmitCheckoutData_submitCheckout_inspection_checklist,
   GsubmitCheckoutData_submitCheckout_inspection_photos,
+  GsubmitCheckoutData_submitCheckout_viewerReview,
   GsubmitCheckoutReq,
   GsubmitCheckoutVars,
   GthreadItemsFragmentData,
@@ -2882,6 +2912,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GvalidateInspectionData_validateInspection_inspection,
   GvalidateInspectionData_validateInspection_inspection_checklist,
   GvalidateInspectionData_validateInspection_inspection_photos,
+  GvalidateInspectionData_validateInspection_viewerReview,
   GvalidateInspectionReq,
   GvalidateInspectionVars,
   GvalidatePromoCodeData,

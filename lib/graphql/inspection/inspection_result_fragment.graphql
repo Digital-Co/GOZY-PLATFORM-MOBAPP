@@ -11,6 +11,11 @@ fragment inspectionResultFragment on InspectionResult {
   inspectionEnabled
   photoMin
   photoMax
+  viewerReview {
+    id
+    rating
+    reviewContent
+  }
   inspection {
     ...inspectionFragment
   }

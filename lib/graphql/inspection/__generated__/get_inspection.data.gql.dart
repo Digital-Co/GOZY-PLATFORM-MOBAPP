@@ -82,6 +82,8 @@ abstract class GgetInspectionData_getInspection
   @override
   int? get photoMax;
   @override
+  GgetInspectionData_getInspection_viewerReview? get viewerReview;
+  @override
   GgetInspectionData_getInspection_inspection? get inspection;
   static Serializer<GgetInspectionData_getInspection> get serializer =>
       _$ggetInspectionDataGetInspectionSerializer;
@@ -96,6 +98,47 @@ abstract class GgetInspectionData_getInspection
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GgetInspectionData_getInspection.serializer,
+        json,
+      );
+}
+
+abstract class GgetInspectionData_getInspection_viewerReview
+    implements
+        Built<GgetInspectionData_getInspection_viewerReview,
+            GgetInspectionData_getInspection_viewerReviewBuilder>,
+        _i2.GinspectionResultFragment_viewerReview {
+  GgetInspectionData_getInspection_viewerReview._();
+
+  factory GgetInspectionData_getInspection_viewerReview(
+      [void Function(GgetInspectionData_getInspection_viewerReviewBuilder b)
+          updates]) = _$GgetInspectionData_getInspection_viewerReview;
+
+  static void _initializeBuilder(
+          GgetInspectionData_getInspection_viewerReviewBuilder b) =>
+      b..G__typename = 'ViewerReview';
+
+  @override
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  @override
+  int? get id;
+  @override
+  double? get rating;
+  @override
+  String? get reviewContent;
+  static Serializer<GgetInspectionData_getInspection_viewerReview>
+      get serializer => _$ggetInspectionDataGetInspectionViewerReviewSerializer;
+
+  @override
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetInspectionData_getInspection_viewerReview.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetInspectionData_getInspection_viewerReview? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetInspectionData_getInspection_viewerReview.serializer,
         json,
       );
 }

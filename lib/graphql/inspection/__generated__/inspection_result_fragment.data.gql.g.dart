@@ -9,6 +9,9 @@ part of 'inspection_result_fragment.data.gql.dart';
 Serializer<GinspectionResultFragmentData>
     _$ginspectionResultFragmentDataSerializer =
     new _$GinspectionResultFragmentDataSerializer();
+Serializer<GinspectionResultFragmentData_viewerReview>
+    _$ginspectionResultFragmentDataViewerReviewSerializer =
+    new _$GinspectionResultFragmentData_viewerReviewSerializer();
 Serializer<GinspectionResultFragmentData_inspection>
     _$ginspectionResultFragmentDataInspectionSerializer =
     new _$GinspectionResultFragmentData_inspectionSerializer();
@@ -106,6 +109,14 @@ class _$GinspectionResultFragmentDataSerializer
         ..add('photoMax')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.viewerReview;
+    if (value != null) {
+      result
+        ..add('viewerReview')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(GinspectionResultFragmentData_viewerReview)));
+    }
     value = object.inspection;
     if (value != null) {
       result
@@ -173,11 +184,96 @@ class _$GinspectionResultFragmentDataSerializer
           result.photoMax = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'viewerReview':
+          result.viewerReview.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GinspectionResultFragmentData_viewerReview))!
+              as GinspectionResultFragmentData_viewerReview);
+          break;
         case 'inspection':
           result.inspection.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(GinspectionResultFragmentData_inspection))!
               as GinspectionResultFragmentData_inspection);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GinspectionResultFragmentData_viewerReviewSerializer
+    implements
+        StructuredSerializer<GinspectionResultFragmentData_viewerReview> {
+  @override
+  final Iterable<Type> types = const [
+    GinspectionResultFragmentData_viewerReview,
+    _$GinspectionResultFragmentData_viewerReview
+  ];
+  @override
+  final String wireName = 'GinspectionResultFragmentData_viewerReview';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GinspectionResultFragmentData_viewerReview object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.rating;
+    if (value != null) {
+      result
+        ..add('rating')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.reviewContent;
+    if (value != null) {
+      result
+        ..add('reviewContent')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GinspectionResultFragmentData_viewerReview deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GinspectionResultFragmentData_viewerReviewBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'rating':
+          result.rating = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'reviewContent':
+          result.reviewContent = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -743,6 +839,8 @@ class _$GinspectionResultFragmentData extends GinspectionResultFragmentData {
   @override
   final int? photoMax;
   @override
+  final GinspectionResultFragmentData_viewerReview? viewerReview;
+  @override
   final GinspectionResultFragmentData_inspection? inspection;
 
   factory _$GinspectionResultFragmentData(
@@ -761,6 +859,7 @@ class _$GinspectionResultFragmentData extends GinspectionResultFragmentData {
       this.inspectionEnabled,
       this.photoMin,
       this.photoMax,
+      this.viewerReview,
       this.inspection})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -791,6 +890,7 @@ class _$GinspectionResultFragmentData extends GinspectionResultFragmentData {
         inspectionEnabled == other.inspectionEnabled &&
         photoMin == other.photoMin &&
         photoMax == other.photoMax &&
+        viewerReview == other.viewerReview &&
         inspection == other.inspection;
   }
 
@@ -808,6 +908,7 @@ class _$GinspectionResultFragmentData extends GinspectionResultFragmentData {
     _$hash = $jc(_$hash, inspectionEnabled.hashCode);
     _$hash = $jc(_$hash, photoMin.hashCode);
     _$hash = $jc(_$hash, photoMax.hashCode);
+    _$hash = $jc(_$hash, viewerReview.hashCode);
     _$hash = $jc(_$hash, inspection.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -827,6 +928,7 @@ class _$GinspectionResultFragmentData extends GinspectionResultFragmentData {
           ..add('inspectionEnabled', inspectionEnabled)
           ..add('photoMin', photoMin)
           ..add('photoMax', photoMax)
+          ..add('viewerReview', viewerReview)
           ..add('inspection', inspection))
         .toString();
   }
@@ -883,6 +985,14 @@ class GinspectionResultFragmentDataBuilder
   int? get photoMax => _$this._photoMax;
   set photoMax(int? photoMax) => _$this._photoMax = photoMax;
 
+  GinspectionResultFragmentData_viewerReviewBuilder? _viewerReview;
+  GinspectionResultFragmentData_viewerReviewBuilder get viewerReview =>
+      _$this._viewerReview ??=
+          new GinspectionResultFragmentData_viewerReviewBuilder();
+  set viewerReview(
+          GinspectionResultFragmentData_viewerReviewBuilder? viewerReview) =>
+      _$this._viewerReview = viewerReview;
+
   GinspectionResultFragmentData_inspectionBuilder? _inspection;
   GinspectionResultFragmentData_inspectionBuilder get inspection =>
       _$this._inspection ??=
@@ -908,6 +1018,7 @@ class GinspectionResultFragmentDataBuilder
       _inspectionEnabled = $v.inspectionEnabled;
       _photoMin = $v.photoMin;
       _photoMax = $v.photoMax;
+      _viewerReview = $v.viewerReview?.toBuilder();
       _inspection = $v.inspection?.toBuilder();
       _$v = null;
     }
@@ -945,10 +1056,13 @@ class GinspectionResultFragmentDataBuilder
               inspectionEnabled: inspectionEnabled,
               photoMin: photoMin,
               photoMax: photoMax,
+              viewerReview: _viewerReview?.build(),
               inspection: _inspection?.build());
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'viewerReview';
+        _viewerReview?.build();
         _$failedField = 'inspection';
         _inspection?.build();
       } catch (e) {
@@ -957,6 +1071,141 @@ class GinspectionResultFragmentDataBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GinspectionResultFragmentData_viewerReview
+    extends GinspectionResultFragmentData_viewerReview {
+  @override
+  final String G__typename;
+  @override
+  final int? id;
+  @override
+  final double? rating;
+  @override
+  final String? reviewContent;
+
+  factory _$GinspectionResultFragmentData_viewerReview(
+          [void Function(GinspectionResultFragmentData_viewerReviewBuilder)?
+              updates]) =>
+      (new GinspectionResultFragmentData_viewerReviewBuilder()..update(updates))
+          ._build();
+
+  _$GinspectionResultFragmentData_viewerReview._(
+      {required this.G__typename, this.id, this.rating, this.reviewContent})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GinspectionResultFragmentData_viewerReview', 'G__typename');
+  }
+
+  @override
+  GinspectionResultFragmentData_viewerReview rebuild(
+          void Function(GinspectionResultFragmentData_viewerReviewBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GinspectionResultFragmentData_viewerReviewBuilder toBuilder() =>
+      new GinspectionResultFragmentData_viewerReviewBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GinspectionResultFragmentData_viewerReview &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        rating == other.rating &&
+        reviewContent == other.reviewContent;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, rating.hashCode);
+    _$hash = $jc(_$hash, reviewContent.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GinspectionResultFragmentData_viewerReview')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('rating', rating)
+          ..add('reviewContent', reviewContent))
+        .toString();
+  }
+}
+
+class GinspectionResultFragmentData_viewerReviewBuilder
+    implements
+        Builder<GinspectionResultFragmentData_viewerReview,
+            GinspectionResultFragmentData_viewerReviewBuilder> {
+  _$GinspectionResultFragmentData_viewerReview? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  double? _rating;
+  double? get rating => _$this._rating;
+  set rating(double? rating) => _$this._rating = rating;
+
+  String? _reviewContent;
+  String? get reviewContent => _$this._reviewContent;
+  set reviewContent(String? reviewContent) =>
+      _$this._reviewContent = reviewContent;
+
+  GinspectionResultFragmentData_viewerReviewBuilder() {
+    GinspectionResultFragmentData_viewerReview._initializeBuilder(this);
+  }
+
+  GinspectionResultFragmentData_viewerReviewBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id;
+      _rating = $v.rating;
+      _reviewContent = $v.reviewContent;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GinspectionResultFragmentData_viewerReview other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GinspectionResultFragmentData_viewerReview;
+  }
+
+  @override
+  void update(
+      void Function(GinspectionResultFragmentData_viewerReviewBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GinspectionResultFragmentData_viewerReview build() => _build();
+
+  _$GinspectionResultFragmentData_viewerReview _build() {
+    final _$result = _$v ??
+        new _$GinspectionResultFragmentData_viewerReview._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
+                r'GinspectionResultFragmentData_viewerReview', 'G__typename'),
+            id: id,
+            rating: rating,
+            reviewContent: reviewContent);
     replace(_$result);
     return _$result;
   }
