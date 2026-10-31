@@ -25,7 +25,9 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                       controller.itemInfo.listingData!.currency!);
     }
 
-    return CustomBottomItemShadowContainer(
+    return BookingBarSizeReporter(
+      notifier: bookingBarHeight,
+      child: CustomBottomItemShadowContainer(
       color: appColors.white,
       padding: pad(w: 20, top: 25, bottom: 20),
       body: SafeArea(
@@ -133,7 +135,7 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
               ).toStretch(isExpanded: false))
         ].toRow(mainAxisAlignment: MainAxisAlignment.center),
       ),
-    );
+    ));
   }
 
   Widget _showCarReviewsInfo(
@@ -470,7 +472,14 @@ extension HomeItemDetailPart3 on HomeItemDetailState {
                   [recommendResults, "Similar123"],
                 );
               },
-            ).toPad(bottom: 100 + bottomViewPadding)
+            ),
+            // Room for the fixed booking bar (its measured height, safe area
+            // included) so the last similar car is fully visible above it.
+            ValueListenableBuilder<double>(
+              valueListenable: bookingBarHeight,
+              builder: (_, barHeight, __) =>
+                  SizedBox(height: barHeight > 0 ? barHeight + 8 : 100 + bottomViewPadding),
+            ),
           ].toColumn()
         : const SizedBox.shrink();
   }
@@ -878,4 +887,35 @@ Widget getPriceTextView(
             ].toColumn()),
           )
       ].toColumn();
+}
+
+
+/// Height of the fixed booking bar of the vehicle page (0 until measured).
+final ValueNotifier<double> bookingBarHeight = ValueNotifier<double>(0);
+
+/// Reports the height of [child] to [notifier] after each layout.
+class BookingBarSizeReporter extends StatefulWidget {
+  const BookingBarSizeReporter({super.key, required this.notifier, required this.child});
+  final ValueNotifier<double> notifier;
+  final Widget child;
+
+  @override
+  State<BookingBarSizeReporter> createState() => _BookingBarSizeReporterState();
+}
+
+class _BookingBarSizeReporterState extends State<BookingBarSizeReporter> {
+  final GlobalKey _key = GlobalKey();
+
+  void _report() {
+    final box = _key.currentContext?.findRenderObject();
+    if (box is RenderBox && box.hasSize && (box.size.height - widget.notifier.value).abs() > 0.5) {
+      widget.notifier.value = box.size.height;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _report());
+    return KeyedSubtree(key: _key, child: widget.child);
+  }
 }
