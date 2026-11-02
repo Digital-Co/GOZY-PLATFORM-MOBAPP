@@ -21,7 +21,7 @@ class OwnerReportingApi {
 
   Future<OwnerDashboardOutcome?> getDashboard(
     OwnerReportingFilters filters, {
-    required String currency,
+    required String? currency,
   }) async {
     final request = GgetOwnerDashboardReq((b) {
       b.vars
@@ -30,7 +30,7 @@ class OwnerReportingApi {
         ..endDate = filters.endArgument
         ..listId = filters.listId
         ..granularity = filters.granularity
-        ..convertCurrency = currency;
+        ..convertCurrency = (currency == null || currency.isEmpty) ? null : currency;
     });
     final json = await _run<GgetOwnerDashboardData>(
       request,
@@ -41,7 +41,7 @@ class OwnerReportingApi {
 
   Future<OwnerEarningsOutcome?> getEarnings(
     OwnerReportingFilters filters, {
-    required String currency,
+    required String? currency,
   }) async {
     final request = GgetOwnerEarningsReq((b) {
       b.vars
@@ -56,7 +56,7 @@ class OwnerReportingApi {
         ..page = filters.page
         ..pageSize = filters.pageSize
         ..granularity = filters.granularity
-        ..convertCurrency = currency;
+        ..convertCurrency = (currency == null || currency.isEmpty) ? null : currency;
     });
     final json = await _run<GgetOwnerEarningsData>(
       request,
