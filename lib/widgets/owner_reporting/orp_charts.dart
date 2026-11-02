@@ -311,11 +311,11 @@ class OrpDonut extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 34),
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(centerTitle, maxLines: 1, overflow: TextOverflow.ellipsis, style: orpStyle(11, AppFont.regular, color: OrpColors.muted)),
+                        Text(centerTitle, maxLines: 2, textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, style: orpStyle(10.5, AppFont.regular, color: OrpColors.muted, height: 1.1)),
                         OrpMoneyText(centerValue, style: orpStyle(15, AppFont.bold), alignment: Alignment.center),
                       ],
                     ),
@@ -331,11 +331,15 @@ class OrpDonut extends StatelessWidget {
                   children: [
                     Container(width: 12, height: 12, decoration: BoxDecoration(color: slices[i].color, borderRadius: BorderRadius.circular(3))),
                     const SizedBox(width: 8),
-                    Expanded(child: Text(slices[i].label, style: orpStyle(13, AppFont.regular))),
+                    Expanded(flex: 2, child: Text(slices[i].label, style: orpStyle(13, AppFont.regular))),
                     const SizedBox(width: 8),
-                    Flexible(
-                      child: Text('${slices[i].valueText} · ${percentages[i]} %',
-                          textAlign: TextAlign.end, style: orpStyle(13, AppFont.semiBold)),
+                    Expanded(
+                      flex: 3,
+                      child: Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: Text('${slices[i].valueText} · ${percentages[i]} %',
+                            textAlign: TextAlign.end, style: orpStyle(13, AppFont.semiBold)),
+                      ),
                     ),
                   ],
                 ),

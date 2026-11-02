@@ -56,7 +56,7 @@ class OwnerDashboardView extends StatelessWidget {
     if (d == null) return false;
     final split = d.split;
     final total = (split?.completed ?? 0) + (split?.upcoming ?? 0) + (split?.cancelled ?? 0);
-    return total == 0 && d.recentActivity.isEmpty && d.vehicles.isEmpty && (d.netRevenue?.value ?? 0) == 0;
+    return total == 0 && d.recentActivity.isEmpty && (d.netRevenue?.value ?? 0) == 0 && (d.volume?.value ?? 0) == 0;
   }
 
   @override
@@ -596,9 +596,9 @@ class _OperationalSection extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(child: Text(rows[i].$1, style: orpStyle(13.5, AppFont.regular, color: OrpColors.muted))),
+                          Expanded(flex: 3, child: Text(rows[i].$1, style: orpStyle(13.5, AppFont.regular, color: OrpColors.muted))),
                           const SizedBox(width: 10),
-                          Flexible(child: Text(rows[i].$2, textAlign: TextAlign.end, style: orpStyle(14, AppFont.bold))),
+                          Expanded(flex: 2, child: Align(alignment: AlignmentDirectional.centerEnd, child: Text(rows[i].$2, textAlign: TextAlign.end, style: orpStyle(14, AppFont.bold)))),
                         ],
                       ),
                     ),

@@ -154,7 +154,7 @@ const Map<String, String> ownerReportingTextEn = {
   'orp_period_year': 'This year',
   'orp_prev': 'Previous page',
   'orp_reset_filters': 'Clear filters',
-  'orp_result_count': '@count reservations - page @page of @pageCount',
+  'orp_result_count': '@count reservations - page @current of @total',
   'orp_retry': 'Try again',
   'orp_revenue_invariant': 'Upcoming + pending payout + paid = net revenue',
   'orp_search_clear': 'Clear search',
@@ -194,6 +194,7 @@ const Map<String, String> ownerReportingTextEn = {
   'orp_vs_prev_30': 'vs previous 30 days',
   'orp_vs_prev_7': 'vs previous 7 days',
   'orp_vs_prev_n': 'vs the previous @days days',
+  'orp_vs_previous': 'vs the previous period',
   'orp_vs_yesterday': 'vs yesterday',
 };
 
@@ -349,7 +350,7 @@ const Map<String, String> ownerReportingTextFr = {
   'orp_period_year': 'Cette année',
   'orp_prev': 'Page précédente',
   'orp_reset_filters': 'Effacer les filtres',
-  'orp_result_count': '@count réservations - page @page sur @pageCount',
+  'orp_result_count': '@count réservations - page @current sur @total',
   'orp_retry': 'Réessayer',
   'orp_revenue_invariant': 'À venir + en attente de versement + déjà versé = revenus nets',
   'orp_search_clear': 'Effacer la recherche',
@@ -389,5 +390,6 @@ const Map<String, String> ownerReportingTextFr = {
   'orp_vs_prev_30': 'vs 30 jours précédents',
   'orp_vs_prev_7': 'vs 7 jours précédents',
   'orp_vs_prev_n': 'vs les @days jours précédents',
+  'orp_vs_previous': 'vs la période précédente',
   'orp_vs_yesterday': 'vs hier',
 };

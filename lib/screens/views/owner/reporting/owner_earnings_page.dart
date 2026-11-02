@@ -32,6 +32,7 @@ class OwnerEarningsPageState extends CustomStatefulWidgetState<OwnerEarningsPage
     return CustomScaffold(
       controller: controller,
       isShowAppBar: true,
+      backIconWidget: getBackIconWidget(themeType: overALLThemeType),
       title: orpText('orp_earnings_title'),
       isDisableLoader: true,
       body: Obx(() => RefreshIndicator(

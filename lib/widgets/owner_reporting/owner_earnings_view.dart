@@ -633,7 +633,7 @@ class _Pager extends StatelessWidget {
   Widget build(BuildContext context) {
     final page = data.page ?? 1;
     final pageCount = data.pageCount ?? 1;
-    final summary = orpText('orp_result_count', {'count': orpCount(data.count), 'page': '$page', 'pageCount': '$pageCount'});
+    final summary = orpText('orp_result_count', {'count': orpCount(data.count), 'current': '$page', 'total': '$pageCount'});
     return Column(
       children: [
         Text(summary, textAlign: TextAlign.center, style: orpStyle(12.5, AppFont.regular, color: OrpColors.muted)),
@@ -811,9 +811,9 @@ class OrpEarningDetail extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: Text(label, style: orpStyle(13.5, strong ? AppFont.bold : AppFont.regular, color: strong ? OrpColors.text : OrpColors.muted))),
+          Expanded(flex: 3, child: Text(label, style: orpStyle(13.5, strong ? AppFont.bold : AppFont.regular, color: strong ? OrpColors.text : OrpColors.muted))),
           const SizedBox(width: 10),
-          Flexible(child: Text(value, textAlign: TextAlign.end, style: orpStyle(strong ? 16 : 14, strong ? AppFont.bold : AppFont.semiBold, color: color))),
+          Expanded(flex: 4, child: Align(alignment: AlignmentDirectional.centerEnd, child: Text(value, textAlign: TextAlign.end, style: orpStyle(strong ? 16 : 14, strong ? AppFont.bold : AppFont.semiBold, color: color)))),
         ],
       ),
     );

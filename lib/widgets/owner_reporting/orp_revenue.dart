@@ -43,6 +43,7 @@ class OrpRevenueTile extends StatelessWidget {
       label: '$label : $amount. $hint',
       child: ExcludeSemantics(
         child: Container(
+          width: double.infinity,
           margin: const EdgeInsets.only(bottom: 8),
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(

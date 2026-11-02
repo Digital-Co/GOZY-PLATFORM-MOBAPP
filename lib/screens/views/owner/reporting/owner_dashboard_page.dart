@@ -31,6 +31,7 @@ class OwnerDashboardPageState extends CustomStatefulWidgetState<OwnerDashboardPa
     return CustomScaffold(
       controller: controller,
       isShowAppBar: true,
+      backIconWidget: getBackIconWidget(themeType: overALLThemeType),
       title: orpText('orp_odb_title'),
       isDisableLoader: true,
       body: Obx(() => RefreshIndicator(

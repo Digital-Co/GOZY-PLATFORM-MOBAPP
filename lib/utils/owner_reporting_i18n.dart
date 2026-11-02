@@ -14,8 +14,10 @@ String orpText(String key, [Map<String, String>? params]) {
 String orpFallbackText(String key, {String? languageCode, Map<String, String>? params}) {
   final map = languageCode == 'fr' ? ownerReportingTextFr : ownerReportingTextEn;
   var text = map[key] ?? ownerReportingTextEn[key] ?? key;
-  params?.forEach((name, value) {
-    text = text.replaceAll('@$name', value);
-  });
+  // Longest names first so `@pageCount` is never half-replaced by `@page`.
+  final names = params?.keys.toList()?..sort((a, b) => b.length.compareTo(a.length));
+  for (final name in names ?? const <String>[]) {
+    text = text.replaceAll('@$name', params![name]!);
+  }
   return text;
 }

@@ -1357,5 +1357,6 @@ const String orp_vs_last_year = 'orp_vs_last_year'; // ignore: constant_identifi
 const String orp_vs_prev_30 = 'orp_vs_prev_30'; // ignore: constant_identifier_names
 const String orp_vs_prev_7 = 'orp_vs_prev_7'; // ignore: constant_identifier_names
 const String orp_vs_prev_n = 'orp_vs_prev_n'; // ignore: constant_identifier_names
+const String orp_vs_previous = 'orp_vs_previous'; // ignore: constant_identifier_names
 const String orp_vs_yesterday = 'orp_vs_yesterday'; // ignore: constant_identifier_names
 // ---- end owner reporting ----
