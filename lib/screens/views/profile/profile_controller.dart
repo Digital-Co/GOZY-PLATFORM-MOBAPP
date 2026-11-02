@@ -11,6 +11,7 @@ import 'package:gozy/screens/views/profile/profile_navigator.dart';
 
 import '../../../constant.dart';
 import '../../../resources/app_lang.dart';
+import '../../../utils/owner_reporting_i18n.dart';
 import '../../../utils/common_api_controller.dart';
 import '../../../widgets/common_extension_functions.dart';
 
@@ -57,6 +58,8 @@ class ProfileController extends BaseController {
 
       if (appPreference.isOwner!) {
         orderedSubMenuListItems['payout'] = subMenuListItems['payout'] ?? {};
+        orderedSubMenuListItems['owner_dashboard'] = subMenuListItems['owner_dashboard'] ?? {};
+        orderedSubMenuListItems['owner_earnings'] = subMenuListItems['owner_earnings'] ?? {};
         orderedSubMenuListItems['transaction_history'] = subMenuListItems['transaction_history'] ?? {};
       }
       orderedSubMenuListItems['settings'] = subMenuListItems['settings'] ?? {};
@@ -85,6 +88,8 @@ class ProfileController extends BaseController {
 
       if (appPreference.isOwner!) {
         orderedSubMenuListItems['payout'] = subMenuListItems['payout'] ?? {};
+        orderedSubMenuListItems['owner_dashboard'] = subMenuListItems['owner_dashboard'] ?? {};
+        orderedSubMenuListItems['owner_earnings'] = subMenuListItems['owner_earnings'] ?? {};
         orderedSubMenuListItems['transaction_history'] = subMenuListItems['transaction_history'] ?? {};
       }
       if (!isGrouping) {
@@ -263,6 +268,20 @@ class ProfileController extends BaseController {
       "name": payout_preference.tr,
       "onTap": () {
         profileNavigator?.navigateScreen(ProfileScreen.payoutPreference);
+      }
+    };
+    subMenuListItems['owner_dashboard'] = {
+      "icon": iconsData['owner_dashboard'] ?? '',
+      "name": orpText('orp_menu_dashboard'),
+      "onTap": () {
+        profileNavigator?.navigateScreen(ProfileScreen.ownerDashboard);
+      }
+    };
+    subMenuListItems['owner_earnings'] = {
+      "icon": iconsData['owner_earnings'] ?? '',
+      "name": orpText('orp_earnings_title'),
+      "onTap": () {
+        profileNavigator?.navigateScreen(ProfileScreen.ownerEarnings);
       }
     };
     subMenuListItems['transaction_history'] = {
