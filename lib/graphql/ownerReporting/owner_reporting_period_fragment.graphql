@@ -1,0 +1,9 @@
+fragment ownerReportingPeriodFragment on OwnerReportingPeriod {
+  preset
+  start
+  end
+  days
+  previousStart
+  previousEnd
+  previousDays
+}

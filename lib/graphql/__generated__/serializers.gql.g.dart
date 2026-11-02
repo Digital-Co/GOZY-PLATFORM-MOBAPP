@@ -1152,6 +1152,52 @@ Serializers _$serializers = (new Serializers().toBuilder()
           GgetListingSpecialPriceData_getListingSpecialPrice_results.serializer)
       ..add(GgetListingSpecialPriceReq.serializer)
       ..add(GgetListingSpecialPriceVars.serializer)
+      ..add(GgetOwnerDashboardData.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_indicators.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_indicators_bookings
+          .serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_indicators_cancellations
+          .serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_indicators_netRevenue
+          .serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_indicators_occupancy
+          .serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_indicators_rentedDays
+          .serializer)
+      ..add(
+          GgetOwnerDashboardData_getOwnerDashboard_indicators_volume.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_operational.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_period.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_recentActivity.serializer)
+      ..add(
+          GgetOwnerDashboardData_getOwnerDashboard_reservationsSplit.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_revenue.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_series.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_series_points.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_vehicleOptions.serializer)
+      ..add(GgetOwnerDashboardData_getOwnerDashboard_vehicles.serializer)
+      ..add(GgetOwnerDashboardReq.serializer)
+      ..add(GgetOwnerDashboardVars.serializer)
+      ..add(GgetOwnerEarningsData.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_breakdown.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_period.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_revenue.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_rows.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_rows_components.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_rows_payment.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_series.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_series_points.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_summary.serializer)
+      ..add(
+          GgetOwnerEarningsData_getOwnerEarnings_summary_netRevenue.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_summary_optionsAmount
+          .serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_summary_volume.serializer)
+      ..add(GgetOwnerEarningsData_getOwnerEarnings_vehicles.serializer)
+      ..add(GgetOwnerEarningsReq.serializer)
+      ..add(GgetOwnerEarningsVars.serializer)
       ..add(GgetPawaPayDepositStatusData.serializer)
       ..add(GgetPawaPayDepositStatusData_getPawaPayDepositStatus.serializer)
       ..add(GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation
@@ -1725,6 +1771,22 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GopenDisputeData_openDispute_dispute_statements.serializer)
       ..add(GopenDisputeReq.serializer)
       ..add(GopenDisputeVars.serializer)
+      ..add(GownerEarningsComponentsFragmentData.serializer)
+      ..add(GownerEarningsComponentsFragmentReq.serializer)
+      ..add(GownerEarningsComponentsFragmentVars.serializer)
+      ..add(GownerReportingIndicatorFragmentData.serializer)
+      ..add(GownerReportingIndicatorFragmentReq.serializer)
+      ..add(GownerReportingIndicatorFragmentVars.serializer)
+      ..add(GownerReportingPeriodFragmentData.serializer)
+      ..add(GownerReportingPeriodFragmentReq.serializer)
+      ..add(GownerReportingPeriodFragmentVars.serializer)
+      ..add(GownerReportingRevenueFragmentData.serializer)
+      ..add(GownerReportingRevenueFragmentReq.serializer)
+      ..add(GownerReportingRevenueFragmentVars.serializer)
+      ..add(GownerReportingSeriesFragmentData.serializer)
+      ..add(GownerReportingSeriesFragmentData_points.serializer)
+      ..add(GownerReportingSeriesFragmentReq.serializer)
+      ..add(GownerReportingSeriesFragmentVars.serializer)
       ..add(GpriceSettingsData.serializer)
       ..add(GpriceSettingsData_getSearchSettings.serializer)
       ..add(GpriceSettingsData_getSearchSettings_results.serializer)
@@ -2952,6 +3014,53 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(
+                GgetOwnerDashboardData_getOwnerDashboard_series_points)
+          ]),
+          () => new ListBuilder<
+              GgetOwnerDashboardData_getOwnerDashboard_series_points?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetOwnerDashboardData_getOwnerDashboard_vehicles)
+          ]),
+          () => new ListBuilder<
+              GgetOwnerDashboardData_getOwnerDashboard_vehicles?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetOwnerDashboardData_getOwnerDashboard_vehicleOptions)
+          ]),
+          () => new ListBuilder<
+              GgetOwnerDashboardData_getOwnerDashboard_vehicleOptions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetOwnerDashboardData_getOwnerDashboard_recentActivity)
+          ]),
+          () => new ListBuilder<
+              GgetOwnerDashboardData_getOwnerDashboard_recentActivity?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetOwnerEarningsData_getOwnerEarnings_series_points)
+          ]),
+          () => new ListBuilder<
+              GgetOwnerEarningsData_getOwnerEarnings_series_points?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
+                GgetOwnerEarningsData_getOwnerEarnings_vehicles)
+          ]),
+          () => new ListBuilder<
+              GgetOwnerEarningsData_getOwnerEarnings_vehicles?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(GgetOwnerEarningsData_getOwnerEarnings_rows)
+          ]),
+          () => new ListBuilder<GgetOwnerEarningsData_getOwnerEarnings_rows?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(
                 GgetPawaPayOptionsData_getPawaPayOptions_countries)
           ]),
           () => new ListBuilder<
@@ -3318,6 +3427,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new ListBuilder<
               GopenDisputeData_openDispute_dispute_decisions?>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType.nullable(GownerReportingSeriesFragmentData_points)
+          ]),
+          () => new ListBuilder<GownerReportingSeriesFragmentData_points?>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType.nullable(

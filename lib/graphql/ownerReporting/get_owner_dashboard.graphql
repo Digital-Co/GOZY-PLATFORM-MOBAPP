@@ -1,0 +1,96 @@
+# import 'package:gozy/graphql/ownerReporting/owner_reporting_period_fragment.graphql'
+# import 'package:gozy/graphql/ownerReporting/owner_reporting_indicator_fragment.graphql'
+# import 'package:gozy/graphql/ownerReporting/owner_reporting_revenue_fragment.graphql'
+# import 'package:gozy/graphql/ownerReporting/owner_reporting_series_fragment.graphql'
+
+# Owner dashboard. Every amount is already converted by the server: the app only displays it.
+query getOwnerDashboard(
+  $period: String
+  $startDate: String
+  $endDate: String
+  $listId: Int
+  $granularity: String
+  $convertCurrency: String
+) {
+  getOwnerDashboard(
+    period: $period
+    startDate: $startDate
+    endDate: $endDate
+    listId: $listId
+    granularity: $granularity
+    convertCurrency: $convertCurrency
+  ) {
+    status
+    errorMessage
+    convertCurrency
+    period {
+      ...ownerReportingPeriodFragment
+    }
+    indicators {
+      netRevenue {
+        ...ownerReportingIndicatorFragment
+      }
+      volume {
+        ...ownerReportingIndicatorFragment
+      }
+      bookings {
+        ...ownerReportingIndicatorFragment
+      }
+      rentedDays {
+        ...ownerReportingIndicatorFragment
+      }
+      occupancy {
+        ...ownerReportingIndicatorFragment
+      }
+      cancellations {
+        ...ownerReportingIndicatorFragment
+      }
+    }
+    revenue {
+      ...ownerReportingRevenueFragment
+    }
+    series {
+      ...ownerReportingSeriesFragment
+    }
+    vehicleCount
+    vehicles {
+      listId
+      title
+      photo
+      isOnline
+      bookings
+      rentedDays
+      occupancy
+      netRevenue
+    }
+    vehicleOptions {
+      listId
+      title
+      isOnline
+    }
+    reservationsSplit {
+      completed
+      upcoming
+      cancelled
+    }
+    recentActivity {
+      reservationId
+      confirmationCode
+      listId
+      title
+      photo
+      guestName
+      checkIn
+      checkOut
+      state
+      revenueStatus
+      netRevenue
+    }
+    operational {
+      onlineVehicles
+      pausedVehicles
+      totalDuration
+      averageDuration
+    }
+  }
+}

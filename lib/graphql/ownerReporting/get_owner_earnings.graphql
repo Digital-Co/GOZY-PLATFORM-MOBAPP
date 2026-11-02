@@ -1,0 +1,101 @@
+# import 'package:gozy/graphql/ownerReporting/owner_reporting_period_fragment.graphql'
+# import 'package:gozy/graphql/ownerReporting/owner_reporting_indicator_fragment.graphql'
+# import 'package:gozy/graphql/ownerReporting/owner_reporting_revenue_fragment.graphql'
+# import 'package:gozy/graphql/ownerReporting/owner_reporting_series_fragment.graphql'
+# import 'package:gozy/graphql/ownerReporting/owner_earnings_components_fragment.graphql'
+
+# "Revenues and payouts". Every amount is already converted by the server: the app only displays it.
+# payoutId is deliberately not requested (API-only field, to be removed).
+query getOwnerEarnings(
+  $period: String
+  $startDate: String
+  $endDate: String
+  $listId: Int
+  $tab: String
+  $search: String
+  $sortBy: String
+  $sortDir: String
+  $page: Int
+  $pageSize: Int
+  $granularity: String
+  $convertCurrency: String
+) {
+  getOwnerEarnings(
+    period: $period
+    startDate: $startDate
+    endDate: $endDate
+    listId: $listId
+    tab: $tab
+    search: $search
+    sortBy: $sortBy
+    sortDir: $sortDir
+    page: $page
+    pageSize: $pageSize
+    granularity: $granularity
+    convertCurrency: $convertCurrency
+  ) {
+    status
+    errorMessage
+    convertCurrency
+    period {
+      ...ownerReportingPeriodFragment
+    }
+    summary {
+      netRevenue {
+        ...ownerReportingIndicatorFragment
+      }
+      volume {
+        ...ownerReportingIndicatorFragment
+      }
+      optionsAmount {
+        ...ownerReportingIndicatorFragment
+      }
+    }
+    revenue {
+      ...ownerReportingRevenueFragment
+    }
+    breakdown {
+      ...ownerEarningsComponentsFragment
+    }
+    series {
+      ...ownerReportingSeriesFragment
+    }
+    vehicles {
+      listId
+      title
+      isOnline
+    }
+    tab
+    sortBy
+    sortDir
+    page
+    pageSize
+    count
+    pageCount
+    rows {
+      reservationId
+      confirmationCode
+      listId
+      title
+      photo
+      guestName
+      checkIn
+      checkOut
+      state
+      revenueStatus
+      grossAmount
+      netRevenue
+      commission
+      promoAdjustment
+      components {
+        ...ownerEarningsComponentsFragment
+      }
+      payment {
+        method
+        reference
+        providerStatus
+        paidAmount
+      }
+    }
+  }
+}

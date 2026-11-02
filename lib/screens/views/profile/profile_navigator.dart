@@ -3,6 +3,8 @@ import 'package:gozy/screens/binding/auth_binding.dart';
 import 'package:gozy/screens/binding/main_binding.dart';
 import 'package:gozy/screens/binding/profile_binding.dart';
 import 'package:gozy/screens/views/home/home_page.dart';
+import 'package:gozy/screens/views/owner/reporting/owner_dashboard_page.dart';
+import 'package:gozy/screens/views/owner/reporting/owner_earnings_page.dart';
 import 'package:gozy/screens/views/profile/about/about_your_page.dart';
 import 'package:gozy/screens/views/profile/edit_profile/edit_profile.dart';
 import 'package:gozy/screens/views/profile/manage_your_account/app_manage_your_account.dart';
@@ -45,7 +47,9 @@ enum ProfileScreen {
   reviewPayServicePlan,
   paymentType,
   servicePlanBack,
-  receipt
+  receipt,
+  ownerDashboard,
+  ownerEarnings
 }
 
 class ProfileNavigator {
@@ -89,6 +93,10 @@ class ProfileNavigator {
         return Get.to(() => AppReviews(), binding: ProfileBinding());
       case ProfileScreen.transactionHistory:
         return Get.to(() => TransactionHistory(), binding: ProfileBinding());
+      case ProfileScreen.ownerDashboard:
+        return Get.to(() => const OwnerDashboardPage(), binding: ProfileBinding(), routeName: '/OwnerDashboard');
+      case ProfileScreen.ownerEarnings:
+        return Get.to(() => const OwnerEarningsPage(), binding: ProfileBinding(), routeName: '/OwnerEarnings');
       case ProfileScreen.propertyDetail:
         return Get.to(() => HomeItemDetailView(), binding: ProfileBinding(), arguments: param);
       case ProfileScreen.servicePlan:

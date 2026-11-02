@@ -1,0 +1,7 @@
+fragment ownerReportingIndicatorFragment on OwnerReportingIndicator {
+  value
+  previous
+  change
+  trend
+  favorable
+}

@@ -1066,6 +1066,8 @@ type Query {
   siteSettings(type: String): SiteSettingsCommon
   getLayoutSettings: LayoutSettingsType
   getTransactionHistory(mode: String, payoutId: Int, listId: Int, currentPage: Int, searchKey: String, convertCurrency: String): AllReservation
+  getOwnerDashboard(period: String, startDate: String, endDate: String, listId: Int, granularity: String, convertCurrency: String): OwnerDashboard
+  getOwnerEarnings(period: String, startDate: String, endDate: String, listId: Int, tab: String, search: String, sortBy: String, sortDir: String, page: Int, pageSize: Int, granularity: String, convertCurrency: String): OwnerEarnings
   showDocumentList: AllDocumentType
   getAllDynamicListSettings(locale: String): GetAllDynamicListSettingsType
   getDynamicListingDetails(locale: String): GetAllDynamicListTitleType
@@ -2205,4 +2207,180 @@ type DisputeResult {
   status: Int
   errorMessage: String
   dispute: Dispute
+}
+
+type OwnerReportingPeriod {
+  preset: String
+  start: String
+  end: String
+  days: Int
+  previousStart: String
+  previousEnd: String
+  previousDays: Int
+}
+
+type OwnerReportingIndicator {
+  value: Float
+  previous: Float
+  change: Float
+  trend: String
+  favorable: Boolean
+}
+
+type OwnerReportingRevenue {
+  netRevenue: Float
+  upcoming: Float
+  pendingPayout: Float
+  paid: Float
+  paidAmount: Float
+}
+
+type OwnerReportingSeriesPoint {
+  key: String
+  start: String
+  end: String
+  netRevenue: Float
+  bookings: Int
+}
+
+type OwnerReportingSeries {
+  granularity: String
+  start: String
+  end: String
+  points: [OwnerReportingSeriesPoint]
+}
+
+type OwnerDashboardIndicators {
+  netRevenue: OwnerReportingIndicator
+  volume: OwnerReportingIndicator
+  bookings: OwnerReportingIndicator
+  rentedDays: OwnerReportingIndicator
+  occupancy: OwnerReportingIndicator
+  cancellations: OwnerReportingIndicator
+}
+
+type OwnerDashboardVehicle {
+  listId: Int
+  title: String
+  photo: String
+  isOnline: Boolean
+  bookings: Int
+  rentedDays: Int
+  occupancy: Float
+  netRevenue: Float
+}
+
+type OwnerDashboardVehicleOption {
+  listId: Int
+  title: String
+  isOnline: Boolean
+}
+
+type OwnerDashboardReservationsSplit {
+  completed: Int
+  upcoming: Int
+  cancelled: Int
+}
+
+type OwnerDashboardActivity {
+  reservationId: Int
+  confirmationCode: Int
+  listId: Int
+  title: String
+  photo: String
+  guestName: String
+  checkIn: String
+  checkOut: String
+  state: String
+  revenueStatus: String
+  netRevenue: Float
+}
+
+type OwnerDashboardOperational {
+  onlineVehicles: Int
+  pausedVehicles: Int
+  totalDuration: Int
+  averageDuration: Float
+}
+
+type OwnerDashboard {
+  status: Int
+  errorMessage: String
+  convertCurrency: String
+  period: OwnerReportingPeriod
+  indicators: OwnerDashboardIndicators
+  revenue: OwnerReportingRevenue
+  series: OwnerReportingSeries
+  vehicleCount: Int
+  vehicles: [OwnerDashboardVehicle]
+  vehicleOptions: [OwnerDashboardVehicleOption]
+  reservationsSplit: OwnerDashboardReservationsSplit
+  recentActivity: [OwnerDashboardActivity]
+  operational: OwnerDashboardOperational
+}
+
+type OwnerEarningsSummary {
+  netRevenue: OwnerReportingIndicator
+  volume: OwnerReportingIndicator
+  optionsAmount: OwnerReportingIndicator
+}
+
+type OwnerEarningsBreakdown {
+  rental: Float
+  options: Float
+  delivery: Float
+  other: Float
+}
+
+type OwnerEarningsPayment {
+  method: String
+  reference: String
+  providerStatus: String
+  paidAmount: Float
+}
+
+type OwnerEarningsVehicle {
+  listId: Int
+  title: String
+  isOnline: Boolean
+}
+
+type OwnerEarningsRow {
+  reservationId: Int
+  confirmationCode: Int
+  listId: Int
+  title: String
+  photo: String
+  guestName: String
+  checkIn: String
+  checkOut: String
+  state: String
+  revenueStatus: String
+  grossAmount: Float
+  netRevenue: Float
+  commission: Float
+  promoAdjustment: Float
+  components: OwnerEarningsBreakdown
+  payment: OwnerEarningsPayment
+  payoutId: Int
+}
+
+type OwnerEarnings {
+  status: Int
+  errorMessage: String
+  convertCurrency: String
+  period: OwnerReportingPeriod
+  summary: OwnerEarningsSummary
+  revenue: OwnerReportingRevenue
+  breakdown: OwnerEarningsBreakdown
+  series: OwnerReportingSeries
+  vehicles: [OwnerEarningsVehicle]
+  tab: String
+  sortBy: String
+  sortDir: String
+  page: Int
+  pageSize: Int
+  count: Int
+  pageCount: Int
+  rows: [OwnerEarningsRow]
 }

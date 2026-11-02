@@ -1128,6 +1128,83 @@ import 'package:gozy/graphql/manageListings/__generated__/manageListings.var.gql
         GUpdateSpecialPriceVars,
         GgetListingSpecialPriceVars,
         GlistBlockedDatesVars;
+import 'package:gozy/graphql/ownerReporting/__generated__/get_owner_dashboard.data.gql.dart'
+    show
+        GgetOwnerDashboardData,
+        GgetOwnerDashboardData_getOwnerDashboard,
+        GgetOwnerDashboardData_getOwnerDashboard_indicators,
+        GgetOwnerDashboardData_getOwnerDashboard_indicators_bookings,
+        GgetOwnerDashboardData_getOwnerDashboard_indicators_cancellations,
+        GgetOwnerDashboardData_getOwnerDashboard_indicators_netRevenue,
+        GgetOwnerDashboardData_getOwnerDashboard_indicators_occupancy,
+        GgetOwnerDashboardData_getOwnerDashboard_indicators_rentedDays,
+        GgetOwnerDashboardData_getOwnerDashboard_indicators_volume,
+        GgetOwnerDashboardData_getOwnerDashboard_operational,
+        GgetOwnerDashboardData_getOwnerDashboard_period,
+        GgetOwnerDashboardData_getOwnerDashboard_recentActivity,
+        GgetOwnerDashboardData_getOwnerDashboard_reservationsSplit,
+        GgetOwnerDashboardData_getOwnerDashboard_revenue,
+        GgetOwnerDashboardData_getOwnerDashboard_series,
+        GgetOwnerDashboardData_getOwnerDashboard_series_points,
+        GgetOwnerDashboardData_getOwnerDashboard_vehicleOptions,
+        GgetOwnerDashboardData_getOwnerDashboard_vehicles;
+import 'package:gozy/graphql/ownerReporting/__generated__/get_owner_dashboard.req.gql.dart'
+    show GgetOwnerDashboardReq;
+import 'package:gozy/graphql/ownerReporting/__generated__/get_owner_dashboard.var.gql.dart'
+    show GgetOwnerDashboardVars;
+import 'package:gozy/graphql/ownerReporting/__generated__/get_owner_earnings.data.gql.dart'
+    show
+        GgetOwnerEarningsData,
+        GgetOwnerEarningsData_getOwnerEarnings,
+        GgetOwnerEarningsData_getOwnerEarnings_breakdown,
+        GgetOwnerEarningsData_getOwnerEarnings_period,
+        GgetOwnerEarningsData_getOwnerEarnings_revenue,
+        GgetOwnerEarningsData_getOwnerEarnings_rows,
+        GgetOwnerEarningsData_getOwnerEarnings_rows_components,
+        GgetOwnerEarningsData_getOwnerEarnings_rows_payment,
+        GgetOwnerEarningsData_getOwnerEarnings_series,
+        GgetOwnerEarningsData_getOwnerEarnings_series_points,
+        GgetOwnerEarningsData_getOwnerEarnings_summary,
+        GgetOwnerEarningsData_getOwnerEarnings_summary_netRevenue,
+        GgetOwnerEarningsData_getOwnerEarnings_summary_optionsAmount,
+        GgetOwnerEarningsData_getOwnerEarnings_summary_volume,
+        GgetOwnerEarningsData_getOwnerEarnings_vehicles;
+import 'package:gozy/graphql/ownerReporting/__generated__/get_owner_earnings.req.gql.dart'
+    show GgetOwnerEarningsReq;
+import 'package:gozy/graphql/ownerReporting/__generated__/get_owner_earnings.var.gql.dart'
+    show GgetOwnerEarningsVars;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_earnings_components_fragment.data.gql.dart'
+    show GownerEarningsComponentsFragmentData;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_earnings_components_fragment.req.gql.dart'
+    show GownerEarningsComponentsFragmentReq;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_earnings_components_fragment.var.gql.dart'
+    show GownerEarningsComponentsFragmentVars;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_indicator_fragment.data.gql.dart'
+    show GownerReportingIndicatorFragmentData;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_indicator_fragment.req.gql.dart'
+    show GownerReportingIndicatorFragmentReq;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_indicator_fragment.var.gql.dart'
+    show GownerReportingIndicatorFragmentVars;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_period_fragment.data.gql.dart'
+    show GownerReportingPeriodFragmentData;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_period_fragment.req.gql.dart'
+    show GownerReportingPeriodFragmentReq;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_period_fragment.var.gql.dart'
+    show GownerReportingPeriodFragmentVars;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_revenue_fragment.data.gql.dart'
+    show GownerReportingRevenueFragmentData;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_revenue_fragment.req.gql.dart'
+    show GownerReportingRevenueFragmentReq;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_revenue_fragment.var.gql.dart'
+    show GownerReportingRevenueFragmentVars;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_series_fragment.data.gql.dart'
+    show
+        GownerReportingSeriesFragmentData,
+        GownerReportingSeriesFragmentData_points;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_series_fragment.req.gql.dart'
+    show GownerReportingSeriesFragmentReq;
+import 'package:gozy/graphql/ownerReporting/__generated__/owner_reporting_series_fragment.var.gql.dart'
+    show GownerReportingSeriesFragmentVars;
 import 'package:gozy/graphql/Payout/__generated__/payout.data.gql.dart'
     show
         GaddPawaPayPayoutAccountData,
@@ -2354,6 +2431,43 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetListingSpecialPriceData_getListingSpecialPrice_results,
   GgetListingSpecialPriceReq,
   GgetListingSpecialPriceVars,
+  GgetOwnerDashboardData,
+  GgetOwnerDashboardData_getOwnerDashboard,
+  GgetOwnerDashboardData_getOwnerDashboard_indicators,
+  GgetOwnerDashboardData_getOwnerDashboard_indicators_bookings,
+  GgetOwnerDashboardData_getOwnerDashboard_indicators_cancellations,
+  GgetOwnerDashboardData_getOwnerDashboard_indicators_netRevenue,
+  GgetOwnerDashboardData_getOwnerDashboard_indicators_occupancy,
+  GgetOwnerDashboardData_getOwnerDashboard_indicators_rentedDays,
+  GgetOwnerDashboardData_getOwnerDashboard_indicators_volume,
+  GgetOwnerDashboardData_getOwnerDashboard_operational,
+  GgetOwnerDashboardData_getOwnerDashboard_period,
+  GgetOwnerDashboardData_getOwnerDashboard_recentActivity,
+  GgetOwnerDashboardData_getOwnerDashboard_reservationsSplit,
+  GgetOwnerDashboardData_getOwnerDashboard_revenue,
+  GgetOwnerDashboardData_getOwnerDashboard_series,
+  GgetOwnerDashboardData_getOwnerDashboard_series_points,
+  GgetOwnerDashboardData_getOwnerDashboard_vehicleOptions,
+  GgetOwnerDashboardData_getOwnerDashboard_vehicles,
+  GgetOwnerDashboardReq,
+  GgetOwnerDashboardVars,
+  GgetOwnerEarningsData,
+  GgetOwnerEarningsData_getOwnerEarnings,
+  GgetOwnerEarningsData_getOwnerEarnings_breakdown,
+  GgetOwnerEarningsData_getOwnerEarnings_period,
+  GgetOwnerEarningsData_getOwnerEarnings_revenue,
+  GgetOwnerEarningsData_getOwnerEarnings_rows,
+  GgetOwnerEarningsData_getOwnerEarnings_rows_components,
+  GgetOwnerEarningsData_getOwnerEarnings_rows_payment,
+  GgetOwnerEarningsData_getOwnerEarnings_series,
+  GgetOwnerEarningsData_getOwnerEarnings_series_points,
+  GgetOwnerEarningsData_getOwnerEarnings_summary,
+  GgetOwnerEarningsData_getOwnerEarnings_summary_netRevenue,
+  GgetOwnerEarningsData_getOwnerEarnings_summary_optionsAmount,
+  GgetOwnerEarningsData_getOwnerEarnings_summary_volume,
+  GgetOwnerEarningsData_getOwnerEarnings_vehicles,
+  GgetOwnerEarningsReq,
+  GgetOwnerEarningsVars,
   GgetPawaPayDepositStatusData,
   GgetPawaPayDepositStatusData_getPawaPayDepositStatus,
   GgetPawaPayDepositStatusData_getPawaPayDepositStatus_reservation,
@@ -2695,6 +2809,22 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GopenDisputeData_openDispute_dispute_statements,
   GopenDisputeReq,
   GopenDisputeVars,
+  GownerEarningsComponentsFragmentData,
+  GownerEarningsComponentsFragmentReq,
+  GownerEarningsComponentsFragmentVars,
+  GownerReportingIndicatorFragmentData,
+  GownerReportingIndicatorFragmentReq,
+  GownerReportingIndicatorFragmentVars,
+  GownerReportingPeriodFragmentData,
+  GownerReportingPeriodFragmentReq,
+  GownerReportingPeriodFragmentVars,
+  GownerReportingRevenueFragmentData,
+  GownerReportingRevenueFragmentReq,
+  GownerReportingRevenueFragmentVars,
+  GownerReportingSeriesFragmentData,
+  GownerReportingSeriesFragmentData_points,
+  GownerReportingSeriesFragmentReq,
+  GownerReportingSeriesFragmentVars,
   GpriceSettingsData,
   GpriceSettingsData_getSearchSettings,
   GpriceSettingsData_getSearchSettings_results,

@@ -1,0 +1,12 @@
+fragment ownerReportingSeriesFragment on OwnerReportingSeries {
+  granularity
+  start
+  end
+  points {
+    key
+    start
+    end
+    netRevenue
+    bookings
+  }
+}
