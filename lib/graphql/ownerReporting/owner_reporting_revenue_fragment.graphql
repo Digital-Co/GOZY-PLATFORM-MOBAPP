@@ -1,0 +1,7 @@
+fragment ownerReportingRevenueFragment on OwnerReportingRevenue {
+  netRevenue
+  upcoming
+  pendingPayout
+  paid
+  paidAmount
+}

@@ -1,0 +1,6 @@
+fragment ownerEarningsComponentsFragment on OwnerEarningsBreakdown {
+  rental
+  options
+  delivery
+  other
+}
